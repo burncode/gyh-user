@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>在线问诊</title>
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" href="../css/input.css" />
+	</head>
+	<style>
+		.state-brief {
+			width: 100%;
+			margin-top: 5px;
+		}
+		
+		.state-brief-title {
+			border-bottom: 1px solid #DEDEDE;
+			line-height: 35px;
+			background-color: #FFFFFF;
+			padding-left: 15px;
+		}
+		
+		.state-brief textarea ,select{
+			border: 0;margin-bottom:0
+		}
+		
+		.choice-case {
+			background-color: #FFFFFF;
+			margin:  0 0 5px;
+		    padding: 10px 25px 10px 0;
+		}
+		
+		.choice-case-select {
+			width: 50%;
+			height: 36px !important;
+			border: 1px solid #DEDEDE !important;
+		}
+		.know{text-align: left;padding: 10px;}
+		.argee {
+			margin: 15px;
+			color: #999;
+		}
+		.service {
+			width: 50%;
+			margin: 0px auto;
+			text-align: right;
+			float: right;
+			padding-right: 20px;
+		}
+		.star {
+			color: red;
+		}
+		
+		.mui-table-view-inverted .mui-table-view-cell.mui-active {
+			background-color: #FFFFFF;
+		}
+		
+		.retrie {
+			position: relative;
+			border-bottom: 0;
+			z-index: 104;
+		}
+		
+		.retrie dt {
+			border-bottom: 1px solid #DEDEDE;
+		}
+		
+		.myicon {
+			position: absolute;
+			top: 11px;
+			width: 25px;
+		}
+		
+		.contact-icon {
+			content: url(../images/service-1.png);
+			right: 13px;
+		}
+		
+		.newContactNum {
+			position: absolute;
+			right: 5px;
+			top: 3px;
+		}
+		
+		#maleRadio {
+			width: 75px;
+			overflow: hidden;
+			float: left
+		}
+		
+		#femaleRadio {
+			width: 75px !important;
+			overflow: hidden !important
+		}
+		.mui-input-row .mui-btn{width: 50% !important;}
+		.line-space{height: 5px;background-color: #efeff4;width: 100%;}
+		.mui-table-view-cell{margin: 0;}
+		.retrie dt .up .up-nav:after{top: 18px;}
+		.next{background-color: #fff;}
+		.mui-input-group:after{height: 0;}
+		.mui-input-row select{font-size: 14px}
+	</style>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">在线问诊</h1>
+			<span id="service" class="mui-pull-right">
+				<span class="myicon contact-icon"></span>
+			<span id="newContactNum" class="mui-badge mui-badge-danger newContactNum m-undisplay">0</span>
+			</span>
+		</header>
+		<div class="mui-content">
+			<div class="retrie">
+				<dt>
+					<a class="font-size-14" id="areaA"><span id="area">選擇時長</span> <i class="up-nav"></i></a>
+					<a class="font-size-14" id="wage">咨詢費：<span class="main-font-color">¥<span id="consult-money"></span></span></a>
+				</dt>
+				<dd id="areaUl" class="area mui-hidden">
+					<ul id="durationList" class="slide downlist duration-cell">
+						<li class='mui-table-view-cell' id="firstTime" timeKeyAttr='phoneTimeLenFirst'></li>
+						<li class='mui-table-view-cell' id="secondTime" timeKeyAttr='phoneTimeLenSecond'></li>
+						<li class='mui-table-view-cell' id="thirdTime" timeKeyAttr='phoneTimeLenThird'></li>
+					</ul>
+				</dd>
+			</div>
+			<div class="line-space"></div>
+			<div class="font-size-14">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label class="label">聯&ensp;系&ensp;人<span class="star">*</span>：</label>
+						<input type="text" placeholder="請輸入姓名" id="name">
+					</div>
+					<div class="mui-input-row">
+						<label class="label">性&emsp;&emsp;别<span class="star">*</span>：</label>
+						<div class="mui-card">
+							<div class="mui-input-row mui-radio mui-left" id="maleRadio">
+								<input value="1" name="radio1" type="radio" checked id="male">
+								<label>男</label>
+							</div>
+							<div class="mui-radio mui-left" id="femaleRadio">
+								<input value="2" name="radio1" type="radio" id="female">
+								<label>女</label>
+							</div>
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label class="label">聯系電話<span class="star">*</span>：</label>
+						<input type="tel" class="mui-input-clear" placeholder="請輸入您的手機號碼" id="mobile">
+					</div>
+					<div class="mui-input-row">
+						<label class="label">鉤通時間<span class="star">*</span>：</label>
+						<button id='communicate' data-options='{"value":"2017-05-05","beginYear":2017,"endYear":2020}' class="btn mui-btn mui-btn-block font-size-14 font-color-666">請選擇鉤通時間</button>
+					</div>
+				</form>
+				<div class="state-brief">
+					<form>
+						<div class="state-brief-title font-size-14 font-color-666">病情簡要概述</div>
+						<textarea rows="5" placeholder="請輸入病情簡要概述" class="textarea" id="illDescription"></textarea>
+					</form>
+				</div>
+				<div class="choice-case font-color-666 font-size-14">
+					<div class="mui-input-row"><label>選擇病曆<span class="star">*</span>：</label><select class="choice-case-select" id="illnessSelect"></select></div>
+				</div>
+			</div>
+			<div class='next'>
+				<div class="know font-size-14"><span id="res" class="mui-icon main-font-color iconfont icon-xuanzhong"></span>&nbsp;<span id="know-agree" class="font-color-999">知情同意書</span></div>
+				<button type="button" class="mui-btn save-btn" id="order">預約</button>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.picker.min.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		var newContactNum = null;
+		(function(_, doc, u, w) {
+			_.init({
+				swipeBack: false
+			}), _(".mui-scroll-wrapper").scroll();
+			var type = null,
+				targetWeb = null;
+			var list = doc.getElementById('durationList');
+			var pdata = {},
+				li = null;
+			var illness = null,
+				timeLen = null;
+			var docId = null,
+				privateToken = null;
+			var optionhtml = "";
+			var orderId = null;
+			var userInfo = null;
+			var moneyObj = doc.getElementById("consult-money");
+			var orderObj = doc.getElementById("order"),
+				nameObj = doc.getElementById("name"),
+				sexObj = doc.getElementsByName("radio1"),
+				mobileObj = doc.getElementById("mobile"),
+				communicateObj = doc.getElementById("communicate"),
+				illDescriptionObj = doc.getElementById("illDescription"),
+				illnessSelectObj = doc.getElementById("illnessSelect");
+			var firstTimeObj = doc.getElementById("firstTime"),
+				secondTimeObj = doc.getElementById("secondTime"),
+				thirdTimeObj = doc.getElementById("thirdTime");
+
+			var areaObj = doc.getElementById("area"),areaAObj = doc.getElementById("areaA"),
+				areaUlObj = doc.getElementById("areaUl");
+			var picker = null,
+				currentDate = null,
+				dataOptions = null,
+				startDate = null;
+			var phoneTimeLen = null;
+			var timeLenKey = null;
+			var web = null;
+			newContactNum = doc.getElementById("newContactNum");
+			_.plusReady(function() {
+				privateToken = w.getItem("privateToken");
+				pdata.privateToken = privateToken;
+				var currentWeb = plus.webview.currentWebview();
+				docId = currentWeb.docId;
+				oid = currentWeb.oid;
+				pdata.docId = docId;
+				//根据醫生id 获取基本信息
+				u.mypost("diagnosis_online/diaSelectTimeLenView", pdata, true, function(data) {
+					if(data.code == 0) {
+						optionhtml = "";
+						illness = data.data.illness; //病曆列表
+						timeLen = data.data.timeLen; //選擇時長的费用
+						userInfo = data.data.userInfo; //聯系人信息
+						if(illness && illness.length > 0) {
+							_.each(illness, function(i, obj) {
+								optionhtml += "<option value='" + obj.illId + "'>" + obj.illName + "</option>";
+							});
+							illnessSelect.innerHTML = optionhtml;
+						}
+						//選擇時長,咨詢費
+						firstTimeObj.innerHTML = timeLen ? timeLen[0].phoneTimeLenFirst + "分鐘" : '';
+						secondTimeObj.innerHTML = timeLen ? timeLen[0].phoneTimeLenSecond + "分鐘" : '';
+						thirdTimeObj.innerHTML = timeLen ? timeLen[0].phoneTimeLenThird + "分鐘" : '';
+						firstTimeObj.addEventListener('tap', function() {
+							moneyObj.innerHTML = timeLen ? timeLen[0].phoneFeeFirst : '';
+						});
+						secondTimeObj.addEventListener('tap', function() {
+							moneyObj.innerHTML = timeLen ? timeLen[0].phoneFeeSecond : '';
+						});
+						thirdTimeObj.addEventListener('tap', function() {
+							moneyObj.innerHTML = timeLen ? timeLen[0].phoneFeeThird : '';
+						});
+						//聯系人、聯系電話、性别
+						nameObj.value = userInfo.nickname ? userInfo.nickname : '';
+						mobileObj.value = userInfo.phone ? userInfo.phone : '';
+						var sex = userInfo.sex?userInfo.sex:'';
+						if(sex == "男"){
+							doc.getElementById("male").checked = true;
+						}else if(sex == "女"){
+							doc.getElementById("female").checked = true;
+						}
+					}else if(data.code == 500 && "未登录" == data.msg){
+						u.goLogin();
+					} else {
+						_.toast(data.msg);
+					}
+				}, myerror);
+				type = currentWeb.type ? currentWeb.type : 2;
+				switch(type) {
+					case 1: //預約成功
+						targetWeb = "interview_submit_succeed.html"; //interview_order_succeed.html
+						break;
+					case 2: //支付
+						targetWeb = "pay.html";
+						break;
+					default:
+						break;
+				}
+			});
+			//選擇時長
+			areaAObj.addEventListener("tap", function() {
+				toggleClass(areaAObj, "up");
+				toggleClass(areaUlObj, "mui-hidden");
+			})
+			//选择病历
+			illnessSelectObj.addEventListener("tap", function() {
+				if(illness.length == undefined) {
+					this.setAttribute("disabled", "disabled");
+					_.toast("您還沒有病曆，請先添加病曆");
+					return;
+				}
+			});
+			_('.duration-cell').on('tap', 'li', function() {
+				//获取选择的沟通时长
+				var id = this.id;
+				timeLenKey = this.getAttribute("timeKeyAttr");
+				phoneTimeLen = doc.getElementById(id).textContent.replace("分鐘", ""); //截取数字
+				areaObj.innerHTML = this.innerHTML;
+				addClass(areaUlObj,'mui-hidden');
+				removeClass(areaAObj,'up');
+			})
+			//选择鉤通時間
+			communicateObj.addEventListener("tap", function() {
+				picker = null, currentDate = getCurrentTime(), dataOptions = {
+					"value": "2017-01-01",
+					"beginYear": 2017,
+					"endYear": 2020
+				};
+				dataOptions.value = currentDate;
+				dataOptions.beginYear = Number(currentDate && currentDate.substr(0, 4));
+				dataOptions.endYear = Number(dataOptions.beginYear) + 3;
+				picker = new _.DtPicker(dataOptions);
+				startDate = new Date(currentDate.replace(/-/g, "/")).getTime();
+				picker.show(function(rs) {
+					communicateObj.innerText = rs.text;
+					if(new Date(rs.text.replace(/-/g, "/")).getTime() < startDate) {
+						_.toast("鉤通時間不能早于当前時間");
+						return
+					}
+					picker.dispose();
+				});
+			})
+
+			//預約
+			orderObj.addEventListener('tap', function() {
+				var orderTime = communicateObj.innerText; //期望沟通时间
+				var orderDate = new Date(orderTime.replace(/-/g,"/")).getTime();; //所选期望沟通时间
+				if(u.isNull(moneyObj.textContent)) {
+					_.toast("請選擇时长");
+					return;
+				} else if(u.isNull(nameObj.value)) {
+					_.toast("請輸入姓名");
+					return;
+				} else if(u.isNull(mobileObj.value)) {
+					_.toast("請輸入手機號碼");
+					return;
+				} else if(!u.checkPhone(mobileObj.value)) {
+					_.toast("請輸入正確的手機號碼");
+					return;
+				} else if(u.isNull(communicateObj.innerText)) {
+					_.toast("請選擇期望鉤通時間");
+					return;
+				} else if(startDate > orderDate) {
+					_.toast('鉤通時間不能早于当前時間！');
+					return;
+				} else if(u.isNull(illnessSelectObj.value)) {
+					_.toast("请選擇病曆");
+					return;
+				} else if(isEmojiCharacter(nameObj.value) || isEmojiCharacter(mobileObj.value) || isEmojiCharacter(illDescriptionObj.value)) {
+					_.toast("不支持表情输入");
+					return;
+				}
+				pdata.privateToken = privateToken;
+				pdata.person = nameObj.value.trim();
+				pdata.sex = getRadioBoxValue(sexObj);
+				pdata.telephone = mobileObj.value.trim();
+				pdata.hopeCallDate = communicateObj.textContent;
+				pdata.content = illDescriptionObj.value.trim();
+				pdata.illnessId = illnessSelectObj.value;
+				pdata.price = moneyObj.textContent;
+				pdata.phoneTimeLen = phoneTimeLen;
+				pdata.timeLenKey = timeLenKey;
+				if(type == 1) {
+					//					pdata.oid = oid;//重新預約id
+					//重新預約  根据醫生id 获取基本信息
+					u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
+						if(data.code == 0) {
+							var ex = {
+								type: 4,
+								order_type: "在线问诊咨詢費",
+								orderId: oid,
+								fee: moneyObj.textContent
+							}
+							_.toast(data.msg);
+							w.openView("pay.html", ex);
+						} else {
+							_.toast(data.msg);
+						}
+					}, myerror);
+				} else if(type == 2) {
+					u.mypost("diagnosis_online/diaDoPostTempOne", pdata, true, function(data) {
+						if(data.code == 0) {
+							orderId = data.data.orderId;
+							var ex = {
+								type: 4,
+								order_type: "在线问诊咨詢費",
+								orderId: orderId,
+								fee: moneyObj.textContent
+							}
+							_.toast(data.msg);
+							w.openView("pay.html", ex);
+						} else {
+							_.toast(data.msg);
+						}
+					}, myerror);
+				}
+			})
+			//获取单选按钮
+			function getRadioBoxValue(obj) {
+				var value = 0;
+				for(i = 0; i < obj.length; i++) {
+					if(obj[i].checked) {
+						value = obj[i].value;
+					}
+				}
+				return value;
+			}
+			//知情同意書
+			doc.getElementById("res").addEventListener('tap', function() {
+				if(hasClass(this, "icon-xuanzhong")) {
+					removeClass(this, "icon-xuanzhong");
+					addClass(this, "icon-weixuanzhong");
+					orderObj.setAttribute("disabled", "disabled");
+				} else {
+					removeClass(this, "icon-weixuanzhong");
+					addClass(this, "icon-xuanzhong");
+					orderObj.removeAttribute("disabled");
+				}
+			});
+			//客服
+			doc.getElementById("service").addEventListener('tap', function() {
+				newContactNum.innerText = "";
+				newContactNum.className = "mui-badge mui-badge-danger newContactNum m-undisplay";
+				w.openView("../my_center/contactService.html");
+			});
+			//知情同意書跳转
+			doc.getElementById("know-agree").addEventListener('tap', function() {
+				w.openView("../know_agree.html")
+			});
+			//当点击事件选择器关闭其他输入法
+			//			communicateObj.addEventListener('tap', function() {
+			//				doc.activeElement.blur();
+			//			});
+			var oldBack = _.back;
+			_.back = function() {
+				picker ? picker.hide() : '';
+				doc.activeElement.blur();
+				areaObj.innerHTML = "選擇時長";
+				moneyObj.textContent = "";
+				oldBack();
+			};
+
+			//获取当前日期和時間
+			function getCurrentTime() {
+				var date = new Date();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if(month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if(strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + "-" + month + "-" + strDate +
+					" " + date.getHours() + ":" + date.getMinutes();
+				return currentdate;
+			}
+		})(mui, document, util, window)
+		/**
+		 * @description 提示客服消息
+		 */
+		function newContactInfo(unreadNum) {
+			var num = Number(newContactNum.innerHTML || '0') || 0;
+			unreadNum ? num += unreadNum : num++;
+			newContactNum.innerHTML = (num > 99) ? "99+" : num;
+			newContactNum.className = "mui-badge mui-badge-danger newContactNum";
+		}
+	</script>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>支付</title>
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/doctor/pay.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">支付</h1>
+		</header>
+		<div class="mui-content">
+			<div class="money">
+				<div id="for_order">
+					<span id="money" class="order-money"></span><br/>
+					<span id="pay-content"></span>
+				</div>
+			</div>
+			<div class="pay-way">
+				<ul class="mui-table-view mui-table-view-radio">
+					<li id="0" class="mui-table-view-cell mui-selected">
+						<a class="mui-navigate-right">
+							<div class="mui-media-body mui-pull-left">
+								使用余額支付&nbsp;<span class="balance" id="hasMoney" >( 余額：¥<span id="balance"></span> )</span>
+								<span id="noMoney" class="m-undisplay">( 余額不足 )</span>
+							</div>
+							<span class="mui-pull-right choice-img choose-pay-way on"></span>
+						</a>
+					</li>
+					<li id="1" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<img class="mui-media-object mui-pull-left" src="../images/weixin.png">
+							<div class="mui-media-body mui-pull-left">微信支付</div>
+							<span class="mui-pull-right choice-img choose-pay-way"></span>
+						</a>
+					</li>
+					<li id="2" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
+							<div class="mui-media-body mui-pull-left">支付寶支付</div>
+							<span class="mui-pull-right choice-img choose-pay-way"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="next" >
+				<button type="button" class="save-btn nextPage" id="pay">支付</button>
+			</div>
+			<div class="forgetPwd" id="forgetPwd">忘記密碼？</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js" ></script>
+	<script>
+		(function(_,doc,w,u){
+			_.init({swipeBack:false});
+			var pdata = {},privateToken = null,walletData = null,ways = null,self = null,type = null,targetWeb = null,money = null,balance = null,orderType = null,orderId = null;
+			var payWay = 1,pays={},channel = null;
+			_.plusReady(function(){
+				var currentPage = plus.webview.currentWebview();
+				type = currentPage.type?currentPage.type:'purchase_succeed.html';
+				orderType = currentPage.order_type;
+				orderId = currentPage.orderId;
+				money = currentPage.fee?currentPage.fee:'0.00';
+				doc.getElementById("money").textContent = "¥"+money;
+				doc.getElementById("pay-content").textContent = orderType;
+				switch (type){
+					case 2://疫苗接種
+						targetWeb = "purchase_succeed.html";
+						break;
+					case 3://基因检测
+						targetWeb = "purchase_succeed.html";
+						break;
+					case 4://在線問診
+						targetWeb = "interview_submit_succeed.html";
+						break;
+					case 5://留言問答
+						targetWeb = "submit_succeed.html";
+						break;
+					case 6://預約挂號
+						targetWeb = "order_audit.html";
+						break;
+					default:
+						break;
+				}
+				privateToken = w.getItem("privateToken");
+				pdata.privateToken = privateToken;
+				u.mypost("user_center/myMoneyIndex",pdata,true,function(data){
+					if(data.code == 0){
+						walletData = data.data[0][0];
+						balance = walletData?walletData.amount:'0.00';
+						doc.getElementById("balance").textContent = balance;
+					}else if(data.code == 500 && "未登录" == data.msg){
+						u.goLogin();
+					}else{
+						_.toast(data.msg || '服務器異常');
+					}
+				},myerror)
+			    getChannels();
+				//支付
+				doc.getElementById("pay").addEventListener('tap', function() {
+					privateToken = w.getItem("privateToken");
+					pdata.privateToken = privateToken;
+					payWay = doc.querySelector(".mui-table-view-cell.mui-selected").id;
+					if(payWay == 0){
+						u.mypost("user_center/checkUserPayPwd",pdata,true,function(data){
+							if(data.code == 1){
+								var btnArray = ['取消', '去設置'];
+								_.confirm('<div>您還未設置支付密碼</div>', '<div class="btn-title">提示</div>',btnArray, function(e) {
+									if(e.index == 1){
+										w.openView("../my_center/setPayPwd.html");
+									}
+								},'div');
+							}else if(data.code == 0){
+								showPwdInput();
+							}
+						},myerror);
+					}else if(payWay==1){//微信支付
+						pay('wxpay');
+					}else if(payWay==2){//支付宝
+						pay('alipay');
+					}
+				});
+				//忘記支付密碼
+				doc.getElementById("forgetPwd").addEventListener('tap', function() {
+					w.openView("../my_center/forgetPayPwd.html");
+				});
+			});
+			//检查服务的加载
+			function checkServices(pc){
+				if(!pc.serviceReady){
+					var txt=null;
+					switch(pc.id){
+						case "wxpay":
+						txt="系統未安裝“"+pc.description+"”服務，無法完成支付";
+						break;
+					}
+					plus.nativeUI.confirm(txt,function(e){
+						if(e.index==0){
+							pc.installService();
+						}
+					},pc.description);
+				}
+			}
+			//余額支付
+			function balancePay(payPwd){
+				privateToken = w.getItem("privateToken");
+				pdata.privateToken = privateToken;
+				pdata.payPwd = payPwd;//余額支付密码
+				pdata.payType = 0;//余額支付
+				pdata.orderType = type;//订单类型
+				pdata.amount = money * 100; 
+				pdata.orderId = orderId;//订单id
+				u.mypost('user_pay/orderPay',pdata, true, function(data) {
+					if(data.code == 0){
+						plus.nativeUI.alert("支付成功！",function(){
+							w.openView(targetWeb);
+							_.later(function(){
+								u.close('pay')
+							},200)
+							u.close('order_register');
+		                });
+					}else if(data.code == 500 && "未登录" == data.msg){
+						u.goLogin();
+					}else if(data.code == -1){
+						_.toast("余額不足，請充值或者選擇其他支付方式");
+					}else{
+						showPwdInput();
+						_.toast(data.msg);
+					}
+				},myerror);
+			}
+			
+			//余額支付时  输入密码
+			function showPwdInput(){
+				_.prompt(money+'元', '', '請輸入支付密碼', ['取消', '確定'], function(e) {
+					if (e.index == 1) {
+						//確定
+						if(u.isNull(e.value)){
+							_.toast("請輸入密碼");
+							return false;
+						}else{
+							balancePay(e.value);//余額支付
+						}
+					}
+				})
+			}
+			
+			//调用支付
+			function pay(id){
+				getChannels();
+				privateToken = w.getItem("privateToken");
+				pdata.privateToken = privateToken;
+				pdata.orderType = type;//订单类型
+				pdata.amount = money * 100;
+				pdata.orderId = orderId;//订单id
+		    	// 从服务器请求支付订单
+			    if(id=='alipay'){
+			    	pdata.payType = 2;
+			    }else if(id=='wxpay'){
+			    	pdata.payType = 1;
+			    }else{
+			        _.toast("不支持此支付通道！",null,"港醫匯");
+			        return;
+			    }
+				u.mypost('user_pay/orderPay',pdata, true, function(data) {
+					//支付寶支付
+					if(id=='alipay'){
+						plus.payment.request(pays[id],data.data.aliSubmitParam,function(result){
+		                	w.openView(targetWeb);
+			            },function(error){
+			            	var errCode = error.message && error.message.substr(12,4);
+			            	if("8000" ==  errCode){
+			            		_.toast("正在處理中")
+			            	}else if("6001" ==  errCode){
+			            		_.toast("已取消支付")
+			            	}else if("6002" ==  errCode){
+			            		_.toast("網絡連接出錯")
+			            	}else if("4000" ==  errCode){
+			            		_.toast("訂單支付失敗")
+			            	}else{
+			            		_.toast("請求異常，請重試")
+			            	}
+			            });
+				    }else if(id=='wxpay'){//微信支付
+				    	_.ajax({
+							url: data.data.wxPayUrl,type: "get",data:null,timeout:6000,
+							success: function(data) {
+								data = JSON.parse(data);
+								plus.payment.request(pays['wxpay'],data,function(result){
+				                	w.openView(targetWeb);
+					            },function(error){
+					            	if(error.code == '-8'){
+					            		_.toast("客戶端未安裝");
+					            	}
+					            });
+							},
+							error: function(xhr) {
+								_.toast("請求異常，請重試")
+							}
+						});
+				    }else{
+				        _.toast("不支持此支付通道！",null,"港醫匯");
+				        return;
+				    }
+				},function(xhr){
+					_.toast("請求異常，請重試")
+				});
+			}
+			//获取支付通道
+			function getChannels(){
+				//获取通道
+				plus.payment.getChannels(function(channels){
+			        channel=channels[0];
+			        for(var i in channels){
+						var channel=channels[i];
+						if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
+							continue;
+						}
+						pays[channel.id]=channel;
+						checkServices(channel);
+					}
+			    },function(e){
+			        alert("获取支付通道失败："+e.message);
+			    });
+			}
+			
+			_(doc).on("tap",".mui-table-view-cell",function(){
+				self = this;
+				ways = doc.querySelectorAll(".choose-pay-way");
+				if(ways && ways.length > 0){
+					_.each(ways,function(i,o){
+						if(o != self){
+							removeClass(this,"on");
+						}
+					});
+				}
+				toggleClass(this.querySelector(".choose-pay-way"),"on");
+			})
+		})(mui,document,window,util)
+	</script>
+</html>

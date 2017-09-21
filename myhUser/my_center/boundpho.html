@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>綁定手機</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common-form.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/login/boundpho.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
+			<h1 id="title" class="mui-title">綁定手機</h1>
+		</header>
+		<div class="mui-content">
+			<form class="phoneform">
+				<div class="pho-row">
+					<input type="tel" id="phone" placeholder="請輸入需要綁定的手機號" />
+				</div>
+				<div class="pho-row">
+					<input type="text" id="imgcodeinput" placeholder="請輸入圖形驗證碼" />
+					<img id="img_code" src="../images/default-news.png" />
+				</div>
+				<div class="pho-row">
+					<input type="text" id="code" placeholder="請輸入短信驗證碼" />
+					<button id="getCode" type="button" class="mui-btn mui-btn-blue main-bg-color" disabled="disabled">獲取驗證碼</button>
+				</div>
+				<button class="but" type="button" id="btnOk">确定</button>
+			</form>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		(function(_, doc, u, w) {
+			_.init({swipeBack: false});
+			var getCodeObj = doc.getElementById("getCode"),codeObj = doc.getElementById("code"),mobileObj = doc.getElementById("phone"),btnObj = doc.getElementById("btnOk"),mobileValue = null,privateToken = null;
+			var img_codeObj =document.getElementById("img_code"),imgcodeinputObj = document.getElementById("imgcodeinput");
+			//獲取驗證碼按钮控制
+			mobileObj.addEventListener("input",function(){
+				if(this.value.length > 0 && u.checkPhone(this.value)){
+					img_codeObj.src = SRC + "mobile="+this.value+"&random="+Math.random(1,9)*1000+"";
+				}
+				if(this.value.length > 0 && u.checkPhone(this.value) && imgcodeinputObj.value.length == 4){
+					getCodeObj.removeAttribute("disabled");
+				}else{
+					getCodeObj.setAttribute("disabled","disabled");
+				}
+			});
+			//检测图形验证码输入框
+			imgcodeinputObj.addEventListener("input",function(){
+				if(this.value.length == 4  && mobileObj.value.length > 0 && u.checkPhone(mobileObj.value)){
+					getCodeObj.removeAttribute("disabled");
+				}else{
+					getCodeObj.setAttribute("disabled","disabled");
+				}
+			})
+			//图片验证码
+			img_codeObj.addEventListener("tap",function(){
+				this.src = SRC + "mobile="+mobileObj.value+"&random="+Math.random(1,9)*1000+"";
+			})
+			//獲取驗證碼
+			getCodeObj.addEventListener("tap", function() {
+				var self = this;
+				mobileValue = mobileObj.value;
+				var pdata = {
+					mobile: mobileValue,
+					captcha:imgcodeinputObj.value
+				};
+				u.mypost("api/sendIdentifyCode", pdata, false, function(data) {
+					if(data.code.result == 0 && data.msg == '请求成功'){
+						_.toast("驗證碼已發送");
+						u.time(self);
+					}else{
+						_.toast(data.msg);
+					}
+				}, myerror);
+			});
+			//验证码检查
+			codeObj.addEventListener("input", function() {
+				if(this.value.length == 6) {
+					var pdata = {
+						mobile: mobileValue,
+						code: this.value
+					};
+					u.mypost("api/checkVerificationCode", pdata, false, function(data) {
+						if(data.code == 1) {
+							_.toast(data.msg)
+						}
+					}, myerror);
+				}
+			});
+			_.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var openId = web.openId;
+				var id = web.oId;
+				btnObj.addEventListener('tap', function() {
+					var phone = mobileObj.value.trim();
+					var code = codeObj.value.trim();
+					var pdata = {};
+					if(id == "weixin") {
+						pdata.bindType = 1;
+					} else if(id == "qq") {
+						pdata.bindType = 2;
+					}
+					pdata.openId = openId;
+					pdata.code = code;
+					pdata.telephone = phone;
+					if(u.isNull(phone) || !u.checkPhone(phone)) {
+						_.toast("請正確輸入手機號碼");
+					} else if(u.isNull(code) || code.length < 6) {
+						_.toast("請正確輸入短信驗證碼");
+					}
+					u.mypost("api/thirdPartBind", pdata, false, function(data) {
+						if(data.code == 0) {
+							_.toast(data.msg);
+							privateToken = data.data.privateToken;
+							w.setItem("privateToken", privateToken);
+							var main = plus.webview.getWebviewById("tabbar");
+							if(main) {
+								var myDWebView = plus.webview.getWebviewById("my_center/myD.html");
+								if(myDWebView){
+									myDWebView.evalJS("getMyInfo()");
+								}
+								w.toIndex(0, null);
+							} else {
+								w.openView("../tabbar.html");
+							}
+						} else {
+							_.toast(data.msg);
+						}
+					}, myerror);
+				});
+			})
+		})(mui, document, util, window)
+	</script>
+
+</html>

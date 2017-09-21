@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>預約挂號</title>
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../css/iconfont.css" />
+		<link rel="stylesheet" href="../css/input.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/order_register.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">預約挂號</h1>
+			<span id="service" class="mui-pull-right">
+				<span class="myicon contact-icon"></span>
+				<span id="newContactNum" class="mui-badge mui-badge-danger newContactNum m-undisplay">0</span>
+			</span>
+		</header>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="person-info mui-scroll">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label class="label">預約定金：</label>
+						<input type="text" placeholder="金額" id="fee" readonly="readonly" value="">
+					</div>
+					<div class="mui-input-row">
+						<label class="label">醫院地址：</label>
+						<input type="text" placeholder="請輸入地址" id="address">
+					</div>
+					<div class="mui-input-row pick">
+						<label class="label">选择時間<span class="star">*</span>：</label>
+						<button id='year' data-options='{"value":"2017-05-05","beginYear":2017,"endYear":2020}' class="btn mui-btn mui-btn-block">請選擇預約時間 </button>
+					</div>
+					<div class="mui-input-row">
+						<label class="label">聯&ensp;系&ensp;人<span class="star">*</span>：</label>
+						<input type="text" placeholder="聯系人姓名" id="person">
+					</div>
+					<div class="mui-input-row">
+						<label class="label">性&emsp;&emsp;别<span class="star">*</span>：</label>
+						<div class="mui-card">
+							<div class="mui-input-row mui-radio mui-left" id="maleRadio">
+								<input value="1" name="radio1" type="radio" checked id="male">
+								<label>男</label>
+							</div>
+							<div class="mui-radio mui-left" id="femaleRadio">
+								<input value="2" name="radio1" type="radio" id="female">
+								<label>女</label>
+							</div>
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label class="label">出生年月<span class="star">*</span>：</label>
+						<button id='birthday' data-options='{"type":"date","value":"1990-1-1","beginYear":1930,"endYear":2016}' class="btn mui-btn mui-btn-block">請選擇出生年月</button>
+					</div>
+					<div class="mui-input-row">
+						<label class="label">聯系電話<span class="star">*</span>：</label>
+						<input type="tel" readonly="readonly" placeholder="請輸入手機號碼" id="telephone">
+					</div>
+					<div class="mui-input-row">
+						<label class="label">選擇病曆<span class="star">*</span>：</label>
+						<select id="illnessSelect" class="choice-case-select font-size-14">
+							<option>點擊添加病曆</option>
+						</select>
+					</div>
+				</form>
+				<div class="state-brief">
+					<div class="state-brief-title">備注</div>
+					<textarea rows="5" id="remark" placeholder="字數限制100字" maxlength="100" class="textarea"></textarea>
+				</div>
+				<div class="know argee">
+					<span id="res" class="mui-icon iconfont icon-xuanzhong main-font-color"></span>&nbsp;<span id="know-agree">知情同意書</span>
+				</div>
+				<div class="next">
+					<button class="mui-btn save-btn" id="pay">提交預約</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/mui.picker.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script>
+		var newContactNum = null,privateToken = null,docId = null,illness = null;
+		(function(_, doc, u, w) {
+			_.init({swipeBack: false}),_(".mui-scroll-wrapper").scroll();
+			var payObj = doc.getElementById("pay"),illnessSelect = doc.getElementById("illnessSelect"),feeObj = doc.getElementById("fee");
+			var pdata = {},appointId = null,currentView = null,fee = null,address = null,userInfo = null,optionhtml = "",type = null,targetWeb = null,addressObj = doc.getElementById("address"),yearObj = doc.getElementById("year"),personObj = doc.getElementById("person");
+			var sexObj = doc.getElementsByName("radio1"),birthdayObj = doc.getElementById("birthday"),telephoneObj = doc.getElementById("telephone"),remarkObj = doc.getElementById("remark"),newContactNum = doc.getElementById("newContactNum");
+			var picker = null,startDate = null;
+			_.plusReady(function(){
+				privateToken = w.getItem("privateToken");
+				currentView = plus.webview.currentWebview();
+				docId = currentView.docId;
+				appointId = currentView.appointId;//預約id
+				pdata = {
+					privateToken:privateToken,
+					docId:docId
+				}
+				//根据醫生id 获取基本信息
+				u.mypost("reg_num/regNumView",pdata,true,function(data){
+					if(data.code == 0){
+						optionhtml = "";
+						illness = data.data.illness;//病曆列表
+						fee = data.data.fee;//费用
+						address = data.data.address;//地址
+						userInfo = data.data.userInfo;//聯系人信息
+						if(illness && illness.length > 0){
+							_.each(illness,function(i,obj){
+								optionhtml += "<option value='"+obj.illId+"'>"+obj.illName+"</option>";
+							});
+							illnessSelect.innerHTML = optionhtml;
+						}
+						//定金、地址
+						feeObj.value = fee&&fee.length > 0?fee[0].regNumFee:''; 
+						addressObj.value = address&&address.length > 0?address[0].address:'';
+						//聯系人、聯系電話、性别
+						personObj.value = userInfo.nickname?userInfo.nickname:'';
+						telephoneObj.value = userInfo.phone?userInfo.phone:'';
+						var sex = userInfo.sex?userInfo.sex:'';
+						if(sex == "男"){
+							doc.getElementById("male").checked = true;
+						}else if(sex == "女"){
+							doc.getElementById("female").checked = true;
+						}
+					}else if(data.code == 500 && "未登录" == data.msg){
+						u.goLogin();
+					}else{
+						_.toast(data.msg)
+					}
+				},myerror);
+				type = currentView.type ? currentView.type : 2;
+				switch(type) {
+					case 1: //重新預約提交审核
+						targetWeb = "order_audit.html";//order_succeed.html
+						break;
+					case 2: //支付
+						targetWeb = "pay.html";
+						break;
+					default:
+						break;
+				}
+			});
+			illnessSelect.addEventListener("tap",function(){
+				if(!illness || !illness.length){
+					this.setAttribute("disabled","disabled");
+					_.later(function(){
+						illnessSelect.removeAttribute("disabled")
+					},1000)
+					w.openView('../my_case_history/add_case.html');
+				}else{
+					this.removeAttribute("disabled")
+				}
+			});
+			//选择預約時間
+			yearObj.addEventListener("tap",function(){
+				picker = null,currentDate = getCurrentTime(),dataOptions = {"value":"2017-01-01","beginYear":2017,"endYear":2020};
+				dataOptions.value = currentDate;
+				dataOptions.beginYear =Number( currentDate && currentDate.substr(0,4));
+				dataOptions.endYear = Number(dataOptions.beginYear)+3; 
+				picker = new _.DtPicker(dataOptions);
+				startDate = new Date(currentDate.replace(/-/g,"/")).getTime();
+				picker.show(function(rs) {
+					yearObj.innerText = rs.text;
+					if(new Date(rs.text.replace(/-/g,"/")).getTime() < startDate){
+						_.toast("預約時間不能早于当前時間");
+						return
+					}
+					picker.dispose();
+				});
+			})
+			//选择出生年月
+			birthdayObj.addEventListener("tap",function(){
+				picker = null,currentDate = getCurrentTime(),dataOptions = {"type":"date","value":"1990-01-01","beginYear":1930,"endYear":2017};
+				dataOptions.endYear = Number(currentDate && currentDate.substr(0,4)); 
+				picker = new _.DtPicker(dataOptions);
+				picker.show(function(rs) {
+					birthdayObj.innerText = rs.text;
+					if(new Date(rs.text.replace(/-g/,"/")).getTime() > new Date(currentDate.replace(/-g/,"/")).getTime()){
+						_.toast("預約時間不能晚于当前時間");
+						return
+					}
+					picker.dispose();
+				});
+			})
+			//知情同意書选择
+			doc.getElementById("res").addEventListener('tap', function() {
+				if(hasClass(this, "icon-xuanzhong")) {
+					removeClass(this, "icon-xuanzhong");
+					addClass(this, "icon-weixuanzhong");
+					payObj.setAttribute("disabled","disabled");
+				} else {
+					removeClass(this, "icon-weixuanzhong");
+					addClass(this, "icon-xuanzhong");
+					payObj.removeAttribute("disabled");
+				}
+			});
+			//点击进入客服页面
+			doc.getElementById("service").addEventListener('tap', function() {
+				newContactNum.innerText = "";
+				newContactNum.className="mui-badge mui-badge-danger newContactNum m-undisplay";
+				w.openView("../my_center/contactService.html");
+			});
+			//进入知情同意書
+			doc.getElementById("know-agree").addEventListener('tap', function() {
+				w.openView("../know_agree.html");
+			});
+			//預約
+			payObj.addEventListener("tap", function() {
+				var controldate = birthdayObj.value;//出生日期
+				var sex = getRadioBoxValue(sexObj);
+				if(u.isNull(addressObj.value)){
+					_.toast("請輸入地址");
+					return;
+				}else if('請選擇預約時間' == yearObj.innerText){
+					_.toast("請選擇預約時間");
+					return;
+				}else if(startDate > new Date((yearObj.innerText).replace(/-/g,"/")).getTime()){
+					_.toast('預約時間不能早于当前時間！'); 
+					return;
+				}else if(u.isNull(personObj.value)){
+					_.toast("請輸入聯系人姓名");
+					return;
+				}else if('請選擇出生年月' == birthdayObj.innerText){
+					_.toast("請選擇出生年月");
+					return;
+				}else if(startDate < new Date((birthdayObj.innerText).replace(/-/g,"/")).getTime()){ 
+					_.toast('出生日期不能晚于当前日期！'); 
+					return;
+				}else if(u.isNull(telephoneObj.value)){
+					_.toast("請輸入手機號碼");
+					return;
+				}else if(!u.checkPhone(telephoneObj.value)){
+					_.toast("請输入正确的手机号码");
+					return;
+				}else if(u.isNull(illnessSelect.value)){
+					_.toast("請選擇病曆");
+					return;
+				}else if(remarkObj.value.length > 100){
+					_.toast("備注字數限制100字");
+					return;
+				}else if(isEmojiCharacter(addressObj.value) || isEmojiCharacter(personObj.value) || isEmojiCharacter(telephoneObj.value) || isEmojiCharacter(remarkObj.value)){
+					_.toast("不支持表情輸入");
+					return;
+				}
+				pdata = {
+					privateToken:privateToken,
+					docId:docId,
+					person:personObj.value,
+					sex:sex,
+					appointTime:yearObj.innerText,
+					userAddr:addressObj.value,
+					birthday:birthdayObj.innerText,
+					telephone:telephoneObj.value,
+					illId:illnessSelect.value,
+					remark:remarkObj.value
+				}
+				var orderId = null;
+				if(type == 1){
+					//重新預約  根据醫生id 获取基本信息
+					u.mypost("reg_num/reAppointSubmit",pdata,true,function(data){
+						if(data.code == 0){
+							orderId = data.data.orderId;
+							var ex = {
+								type: 6,
+								order_type:"預約挂號定金",//代表是預約挂號
+								orderId:appointId,
+								fee:feeObj.value,
+								orderTime:yearObj.value,
+								address:addressObj.value
+							}
+							_.toast(data.msg);
+							w.openView("pay.html", ex);
+						}else if(data.code == 500 && '未登录' == data.msg){
+							u.goLogin();
+						}else{
+							_.toast(data.msg);
+						}
+					},myerror);
+				}else if(type == 2){
+					//預約支付
+					u.mypost("reg_num/payView",pdata,true,function(data){
+						if(data.code == 0){
+							orderId = data.data.orderId;
+							var ex = {
+								type: 6,
+								order_type:"預約挂號定金",//代表是預約挂號
+								orderId:orderId,
+								fee:feeObj.value,
+								orderTime:yearObj.value,
+								address:addressObj.value
+							}
+							_.toast(data.msg);
+							w.openView("pay.html", ex);
+						}else if(data.code == 500 && '未登录' == data.msg){
+							u.goLogin();
+						}else{
+							_.toast(data.msg);
+						}
+					},myerror);
+				}
+			});
+			//获取单选按钮
+			function getRadioBoxValue(obj){
+                for(i=0; i<obj.length;i++){
+                    if(obj[i].checked){ 
+                        return obj[i].value; 
+                    } 
+	            }         
+             	return "undefined";
+			}
+			//当点击事件选择器关闭其他输入法
+			yearObj.addEventListener('tap', function() {
+				doc.activeElement.blur();
+			});
+			birthdayObj.addEventListener('tap', function() {
+				doc.activeElement.blur();
+			});
+			
+			var oldBack = _.back;
+			_.back = function() {
+				picker?picker.hide():'';
+				doc.activeElement.blur();
+				oldBack();
+			};
+			
+			//获取当前日期和時間
+			function getCurrentTime() {
+				var date = new Date();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if(month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if(strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + "-" + month + "-" + strDate +
+					" " + date.getHours() + ":" + date.getMinutes();
+				return currentdate;
+			}
+		})(mui, document, util, window)
+		//获取病曆列表
+		function getIllist(){
+			var pdata = {
+				privateToken:privateToken,
+				docId:docId
+			}
+			//根据醫生id 获取基本信息
+			util.mypost("reg_num/regNumView",pdata,false,function(data){
+				if(data.code == 0){
+					var optionhtml = "";
+					illness = data.data.illness || [];//病曆列表
+					if(illness && illness.length > 0){
+						mui.each(illness,function(i,obj){
+							optionhtml += "<option value='"+obj.illId+"'>"+obj.illName+"</option>";
+						});
+						illnessSelect.innerHTML = optionhtml;
+					}
+				}else if(data.code == 500 && "未登录" == data.msg){
+					u.goLogin();
+				}else{
+					_.toast(data.msg)
+				}
+			},myerror);
+		}
+	</script>
+</html>

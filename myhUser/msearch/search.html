@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>查找醫生</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/msearch/search.css" />
+	</head>
+	<body class="mui-fullscreen">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar"></div>
+				<div class="mui-pages"></div>
+			</div>
+		</div>
+		<!--单页面开始-->
+		<div id="seach" class="mui-page">
+			<!--页面标题栏开始-->
+			<header class="mui-navbar-inner mui-bar mui-bar-nav">
+				<div class="mui-navbar-inner mui-bar mui-bar-nav">
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+					<h1 class="mui-center mui-title">查找醫生</h1>
+				</div>
+			</header>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<form style="margin: 5px 0 -5px;">
+							<div class="mui-input-row mui-search">
+								<input type="search" id="keyword" class="mui-input-clear mui-search" placeholder="請輸入關鍵字" value="">
+							</div>
+						</form>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="#area" class="mui-navigate-right">地區<span id="choose_area" class="a-chosed main-font-color font-size-14">不限</span></a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#office" class="mui-navigate-right">科室<span id="choose_office" class="a-chosed main-font-color font-size-14">不限</span></a>
+							</li>
+						</ul>
+						<div class="next">
+							<button type="button" class="save-btn nextPage" id="toSearch">去搜索</button>
+						</div>
+						<p class="search_his">最近搜索<i id="clear" class="mui-icon mui-icon-trash mui-pull-right"></i></p>
+						<div id="search_his_content" class="search_his_content"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+		<div id="area" class="mui-page">
+			<header class="mui-navbar-inner mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-center mui-title">地區选择</h1>
+			</header>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul id="area_li" class="mui-table-view mui-grid-view mui-grid-9">
+							<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						        <div class="mui-media-body">不限</div>
+							</li>
+							<li id="1" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						        <div class="mui-media-body">九龙半岛</div>
+							</li>
+							<li id="2" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						        <div class="mui-media-body">新界</div>
+							</li>
+							<li id="3" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						        <div class="mui-media-body">香港岛</div>
+							</li>
+					    </ul>
+					    <ul id="area1" class="mui-table-view mui-hidden">
+				            <li class="mui-table-view-cell">九龍區</li>
+				            <li class="mui-table-view-cell">觀塘區</li>
+				            <li class="mui-table-view-cell">深水埗區</li>
+				            <li class="mui-table-view-cell">黃大仙區</li>
+				            <li class="mui-table-view-cell">油尖旺區</li>
+				        </ul>
+				         <ul id="area2" class="mui-table-view mui-hidden">
+				            <li class="mui-table-view-cell">離島區</li>
+				            <li class="mui-table-view-cell">葵青區</li>
+				            <li class="mui-table-view-cell">北區</li>
+				            <li class="mui-table-view-cell">西貢區</li>
+				            <li class="mui-table-view-cell">沙田區</li>
+				            <li class="mui-table-view-cell">大埔區</li>
+				            <li class="mui-table-view-cell">荃灣區</li>
+				            <li class="mui-table-view-cell">屯門區</li>
+				            <li class="mui-table-view-cell">元朗區</li>
+				        </ul>
+				         <ul id="area3" class="mui-table-view mui-hidden">
+				            <li class="mui-table-view-cell">中西區</li>
+				            <li class="mui-table-view-cell">東區</li>
+				            <li class="mui-table-view-cell">南區</li>
+				            <li class="mui-table-view-cell">灣仔區</li>
+				        </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+		<div id="office" class="mui-page">
+			<header class="mui-navbar-inner mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-center mui-title">科室选择</h1>
+			</header>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul id="office_li" class="mui-table-view mui-grid-view mui-grid-9"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js "></script>
+	<script type="text/javascript" src="../js/mui.view.js "></script>
+	<script type="text/javascript" src="../js/common.js" ></script>
+	<script>
+		(function(_, doc, u, w) {
+			var area_value = null,office_value = null,office_id = null,keyword = null;
+			var choose_areaObj = document.getElementById("choose_area");
+			var area1Obj = document.getElementById("area1"),area2Obj = document.getElementById("area2"),area3Obj = document.getElementById("area3");
+			var area_liObj = document.getElementById("area_li");
+			var keywordObj = document.getElementById("keyword");
+			var search_his_contentObj = document.getElementById("search_his_content");
+			mui.init();
+			//初始化单页view
+			var viewApi = mui('#app').view({
+				defaultPage: '#seach'
+			});
+			//初始化单页的区域滚动
+			mui('.mui-scroll-wrapper').scroll();
+			_.plusReady(function() {
+				u.mypost("hospital/getAllOffices",{},false,function(data){
+					if(data.code == 0){
+						document.getElementById("office_li").innerHTML += "<li class='mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6'><div class='mui-media-body'>不限</div></li>";
+						_.each(data.data[0],function(i,obj){
+							document.getElementById("office_li").innerHTML += "<li class='mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6' id='"+obj.officeId+"'><div class='mui-media-body'>"+obj.officeName+"</div></li>";
+						})
+					}
+				},myerror);
+				showSearchKey();
+			});
+			//监听科室选择
+			_("#office_li").on("tap","li",function(){
+				office_value = this.querySelector(".mui-media-body").innerHTML;
+				office_id = this.id;
+				document.getElementById("choose_office").innerHTML = this.querySelector(".mui-media-body").innerHTML;
+				//返回到搜索页面
+				mui.back();
+			})
+			//监听地區选择
+			_("#area_li").on("tap","li",function(){
+				var content = this.querySelector(".mui-media-body").innerHTML;
+				area_value = content;
+				for (var i = 0; i < area_liObj.children.length; i++) {
+					removeClass(area_liObj.children[i],"active");
+				}
+				addClass(this,"active");
+				if("不限" == content){
+					choose_areaObj.innerHTML = content;
+					//返回到搜索页面
+					mui.back();
+				}else{
+					if(this.id == '1'){
+						removeClass(area1Obj,"mui-hidden");
+						addClass(area2Obj,"mui-hidden");
+						addClass(area3Obj,"mui-hidden");
+					}else if(this.id == '2'){
+						removeClass(area2Obj,"mui-hidden");
+						addClass(area1Obj,"mui-hidden");
+						addClass(area3Obj,"mui-hidden");
+					}else{
+						removeClass(area3Obj,"mui-hidden");
+						addClass(area1Obj,"mui-hidden");
+						addClass(area2Obj,"mui-hidden");
+					}
+				}
+			})
+			//监听地區选择
+			_("#area1,#area2,#area3").on("tap","li",function(){
+				var content = this.innerHTML;
+				area_value = content;
+				choose_areaObj.innerHTML = content;
+				//返回到搜索页面
+				mui.back();
+			})
+			//搜索
+			document.getElementById("toSearch").addEventListener("tap",function(){
+				goSearch(keywordObj.value);
+			})
+			
+			//监听最近搜索的记录选择
+			_("#search_his_content").on("tap","span",function(){
+				goSearch(this.innerHTML);
+			})
+			
+			//去搜索
+			function goSearch(keyword){
+				if("" !=keyword){
+					saveKeySearch(keywordObj.value);
+					showSearchKey();
+				}
+				if("不限" == area_value){
+					area_value = null;
+				}
+				if("不限" == office_value){
+					office_value = null;
+				}
+				var ex = {
+					area_value:area_value,
+					office_value:office_id,
+					keyword:simplized(keyword)
+				}
+				window.openView("doctor_list_search.html",ex);
+			}
+			//存储最近搜索
+			function saveKeySearch(key){
+				key  = key && key.replace(/-/g,' ');
+				var keyStr = localStorage.getItem("keySearch") || '';
+				var ishave = false;
+				var arr = keyStr.split('-') || [];
+				for (var i = 0; i < arr.length; i++) {
+					if(key == arr[i]){
+						ishave = true;break;
+					}
+				}
+				if(!ishave){
+					arr.push(key);
+				}
+				localStorage.setItem("keySearch",arr.join('-'));
+			}
+			//显示搜索记录
+			function showSearchKey(){
+				var keystr= localStorage.getItem("keySearch");
+				var keyArr = keystr.split('-') ||[];
+				search_his_contentObj.innerHTML = '';
+				if(keyArr && keyArr.length > 0){
+					for (var i = 0; i < keyArr.length; i++) {
+						if("" != keyArr[i]){
+							search_his_contentObj.innerHTML += "<span>"+keyArr[i]+"</span>";
+						}
+					}
+				}
+			}
+			
+			//根据关键字搜索醫生
+			keywordObj.addEventListener('keypress',function(e){
+				if(isEmojiCharacter(keywordObj.value)){
+					mui.toast("不支持表情輸入");
+					e.preventDefault();// 阻止默认事件
+					return;
+				}
+				if(e.keyCode == "13"){
+					document.activeElement.blur();
+					saveKeySearch(keywordObj.value);
+					goSearch(keywordObj.value);
+					e.preventDefault();// 阻止默认事件
+				}
+			})
+			//清理最近搜索
+			document.getElementById("clear").addEventListener("tap",function(){
+				document.getElementById("search_his_content").innerHTML = "";
+				localStorage.setItem("keySearch","");
+			})
+			
+			var view = viewApi.view;
+			(function($) {
+				//处理view的后退与webview后退
+				var oldBack = $.back;
+				$.back = function() {
+					if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+						viewApi.back();
+					} else { //执行webview后退
+						oldBack();
+					}
+				};
+				view.addEventListener('pageShow', function(e) {
+					if("area" == e.detail.page.id || "office" == e.detail.page.id){
+						plus.webview.currentWebview().setStyle({popGesture:"none"})
+					}else{
+						plus.webview.currentWebview().setStyle({popGesture:"close"})
+					}
+				});
+			})(mui);
+		})(mui, document, util, window)
+	</script>
+</html>

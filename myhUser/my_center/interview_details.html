@@ -243,7 +243,7 @@
 						doc.getElementById("askContent").innerHTML = askContent;
 						doc.getElementById("remark").innerHTML = remark;
 					}
-					if(state == "已确认沟通时间") {
+					if(state == "已確認鉤通時間") {
 						btn = "取消預約";
 						butObj.innerHTML = btn; //给按钮赋值
 						cancelObj.className = "m-display";
@@ -255,7 +255,7 @@
 						btn = "支付";
 						butObj.innerHTML = btn; //给按钮赋值
 						cancelObj.className = "cancel-display";
-					} else if(state == "待处理") {
+					} else if(state == "待處理") {
 						btn = "取消預約";
 						butObj.innerHTML = btn; //给按钮赋值
 						cancelObj.className = "m-display";
@@ -265,7 +265,7 @@
 						cancelObj.className = "m-display";
 					}
 					butObj.addEventListener('tap', function(e) {
-						if(state == "已确认沟通时间") {
+						if(state == "已確認溝通時間") {
 							var exs = {
 								types: 1,
 								hospital: hosName,
@@ -274,7 +274,7 @@
 								time: hopeDate
 							}
 							var btnArray = ['取消', '确认'];
-							_.confirm('<div>提前一星期退全款</div><div>提前三天退一半</div><div>提前一天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
+							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
 										if(data.code == 0) {
@@ -298,7 +298,7 @@
 								fee: price
 							}
 							w.openView("pay.html", ex);
-						} else if(state == "待处理") {
+						} else if(state == "待處理") {
 							var exs = {
 								types: 1,
 								hospital: hosName,
@@ -307,7 +307,7 @@
 								time: hopeDate
 							}
 							var btnArray = ['取消', '确认'];
-							_.confirm('<div>提前一星期退全款</div><div>提前三天退一半</div><div>提前一天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
+							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
 										if(data.code == 0) {

@@ -129,7 +129,7 @@
 						}else if(sex == "女"){
 							doc.getElementById("female").checked = true;
 						}
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else{
 						_.toast(data.msg)
@@ -277,7 +277,7 @@
 							}
 							_.toast(data.msg);
 							w.openView("pay.html", ex);
-						}else if(data.code == 500 && '未登录' == data.msg){
+						}else if(data.code == 500 && '未登錄' == data.msg){
 							u.goLogin();
 						}else{
 							_.toast(data.msg);
@@ -298,7 +298,7 @@
 							}
 							_.toast(data.msg);
 							w.openView("pay.html", ex);
-						}else if(data.code == 500 && '未登录' == data.msg){
+						}else if(data.code == 500 && '未登錄' == data.msg){
 							u.goLogin();
 						}else{
 							_.toast(data.msg);
@@ -363,7 +363,7 @@
 						});
 						illnessSelect.innerHTML = optionhtml;
 					}
-				}else if(data.code == 500 && "未登录" == data.msg){
+				}else if(data.code == 500 && "未登錄" == data.msg){
 					u.goLogin();
 				}else{
 					_.toast(data.msg)

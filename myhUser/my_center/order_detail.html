@@ -69,13 +69,13 @@
 						doc.getElementById("price").innerHTML = price;
 						doc.getElementById("hosAddr").innerHTML = hosAddr;
 					}
-					if(status == "待处理"){
-						state = "待处理";
+					if(status == "待處理"){
+						state = "待處理";
 						btn = "取消預約";
 						doc.getElementById("order-state").innerHTML = state;
 						doc.getElementById("stateBtn").innerHTML = btn;
 						doc.getElementById("cancel").className = "m-display";
-					}else if(status == "预约成功"){
+					}else if(status == "預約成功"){
 						state = "預約成功";
 //						btn = "取消預約";
 						doc.getElementById("order-state").innerHTML = state;
@@ -87,7 +87,7 @@
 						doc.getElementById("order-state").innerHTML = state;
 						doc.getElementById("stateBtn").innerHTML = btn;
 						doc.getElementById("cancel").className = "m-display";
-					}else if(status == "预约失败"){
+					}else if(status == "預約失敗"){
 						state = "預約失败";
 						btn = "重新預約";
 						doc.getElementById("order-state").innerHTML = state;
@@ -101,7 +101,7 @@
 						doc.getElementById("cancel").className = "cancel-display";
 					}
 					doc.getElementById("stateBtn").addEventListener('tap', function(e) {
-						if(status == "待处理"){
+						if(status == "待處理"){
 							var exs ={
 								types:2,
 								hospital:hosName,
@@ -110,7 +110,7 @@
 								time:appointTime
 							}
 							var btnArray = ['取消', '确认'];
-							_.confirm('<div>提前一星期退全款</div><div>提前三天退一半</div><div>提前一天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
+							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
 								if(e.index == 1){
 									u.mypost("user_center/appointCancel",pdata,true,function(data){
 										if(data.code == 0){
@@ -119,7 +119,7 @@
 									},myerror);
 								}
 							},'div');
-						}else if(status == "预约成功"){
+						}else if(status == "預約成功"){
 							var exs ={
 								types:2,
 								hospital:hosName,
@@ -128,7 +128,7 @@
 								time:appointTime
 							}
 							var btnArray = ['取消', '确认'];
-							_.confirm('<div>提前一星期退全款</div><div>提前三天退一半</div><div>提前一天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
+							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
 								if(e.index == 1){
 									u.mypost("user_center/appointCancel",pdata,true,function(data){
 										if(data.code == 0){
@@ -145,7 +145,7 @@
 								docId:docId
 							}
 							w.openView("evaluate.html",evaluate);
-						}else if(status == "预约失败"){
+						}else if(status == "預約失敗"){
 							var ex ={
 								type:1,
 								docId:docId,

@@ -15,7 +15,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">信息列表</h1>
+			<h1 class="mui-title">消息列表</h1>
 		</header>
 		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div id="cases" class="mui-scroll">
@@ -39,7 +39,7 @@
 					down: {
 						callback: function() {
 							u.mypost('user_center/msgList',pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data || []).length == 10);
+								_pull.endPullDownToRefresh((data.data.msgList || []).length == 10);
 								if (data.code == 0) {
 									localStorage.setItem("allNewsNum",data.data.count || 0);
 									page = 1;
@@ -57,8 +57,11 @@
 					if(data.code == 0){
 						localStorage.setItem("allNewsNum",data.data.count || 0);
 						getData(data.data);
-					}else if(data.code == 500 && '未登录' == data.msg){
-						u.goLogin();
+					}else if(data.code == 500 && '未登錄' == data.msg){
+						_.toast("登錄身份過期，請重新登錄");
+						_.later(function() {
+							w.openView("userLogin.html");
+						}, 500)
 					}else{
 						_.toast(data.msg || '服務器異常');
 					}
@@ -71,7 +74,7 @@
 					var title = obj.docName || obj.packageTitle;
 					var officeName = obj.officeName || '';
 					var address = obj.address || '暫無詳細地址';
-					if(obj.msgType == "留言问答"){
+					if(obj.msgType == "留言問答"){
 						li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 								            "<div class='mui-table'>"+
 								                "<div class='mui-table-cell mui-col-xs-10'>"+
@@ -83,7 +86,7 @@
 								                "</div>"+
 								            "</div>"+
 								        "</li>";
-					}else if(obj.msgType == "在线问诊"){
+					}else if(obj.msgType == "在線問診"){
 						li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 								            "<div class='mui-table'>"+
 								                "<div class='mui-table-cell mui-col-xs-10'>"+
@@ -96,7 +99,7 @@
 								                "</div>"+
 								            "</div>"+
 								        "</li>";
-					}else if(obj.msgType == "预约挂号"){
+					}else if(obj.msgType == "預約掛號"){
 						li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 			            					"<div class='mui-table'>"+
 			               						"<div class='mui-table-cell mui-col-xs-10'>"+
@@ -109,7 +112,7 @@
 			                					"</div>"+
 			            					"</div>"+
 			       	 					"</li>";
-					}else if(obj.msgType == "检测服务"){
+					}else if(obj.msgType == "檢測服務"){
 						li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' data1='"+obj.gid+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 								            "<div class='mui-table'>"+
 								                "<div class='mui-table-cell mui-col-xs-10'>"+
@@ -121,7 +124,7 @@
 								                "</div>"+
 								            "</div>"+
 								        "</li>";
-					}else if(obj.msgType == "疫苗接种"){
+					}else if(obj.msgType == "疫苗接種"){
 						li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' data1='"+obj.gid+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 								            "<div class='mui-table'>"+
 								                "<div class='mui-table-cell mui-col-xs-10'>"+
@@ -133,7 +136,7 @@
 								                "</div>"+
 								            "</div>"+
 								        "</li>";
-					}else if(obj.msgType == "药品分配"){
+					}else if(obj.msgType == "藥品分配"){
 				        li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' data2='"+obj.medicineId+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
 					            "<div class='mui-table'>"+
 					                "<div class='mui-table-cell mui-col-xs-10'>"+
@@ -152,33 +155,33 @@
 			_('.mui-table-view').on('tap', 'li', function() {
 				var msgType = this.getAttribute("data");//类型
 				var gid = this.getAttribute("data1");//基因检测和疫苗接種的商品id
-				var medicineId = this.getAttribute("data2");//药品分配id
-				if(msgType == "留言问答"){
+				var medicineId = this.getAttribute("data2");//藥品分配id
+				if(msgType == "留言問答"){
 					var ex1 = {
 						recordId:this.id
 					}
 					w.openView("my_center/qa_details.html",ex1);
-				}else if(msgType == "预约挂号"){
+				}else if(msgType == "預約掛號"){
 					var ex2 = {
 						orderId:this.id
 					}
 					w.openView("my_center/order_detail.html",ex2);
-				}else if(msgType == "在线问诊"){
+				}else if(msgType == "在線問診"){
 					var ex3 = {
 						interviewId:this.id
 					}
 					w.openView("my_center/interview_details.html",ex3);
-				}else if(msgType == "检测服务"){
+				}else if(msgType == "檢測服務"){
 					var ex4 = {
 						geneId:gid
 					}
 					w.openView("gene_detect/gene_detect_detail.html",ex4);
-				}else if(msgType == "疫苗接种"){
+				}else if(msgType == "疫苗接種"){
 					var ex5 = {
 						vaccinumId:gid
 					}
 					w.openView("vaccine/vaccine_detail.html",ex5);
-				}else if(msgType == "药品分配"){
+				}else if(msgType == "藥品分配"){
 					var ex6 = {
 						mid:medicineId
 					}

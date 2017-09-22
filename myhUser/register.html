@@ -86,7 +86,7 @@
 					captcha:imgcodeinputObj.value
 				};
 				u.mypost("api/sendIdentifyCode",pdata,true,function(data){
-					if(data.code.result == 0 && data.msg == '请求成功'){
+					if(data.code.result == 0 && data.msg == '請求成功'){
 						_.toast("驗證碼已發送");
 						u.time(self);
 					}else{

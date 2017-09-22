@@ -80,7 +80,7 @@
 					captcha:imgcodeinputObj.value
 				};
 				u.mypost("api/sendIdentifyCode",pdata,true,function(data){
-					if(data.code.result == 0 && data.msg == '请求成功'){
+					if(data.code.result == 0 && data.msg == '請求成功'){
 						_.toast("驗證碼已發送");
 						u.time(self);
 					}else{
@@ -110,7 +110,7 @@
 					_.toast("請輸入您的手機號碼");
 					return;
 				}else if(!u.checkPhone(mobile)){
-					_.toast("您输入的手机号码有误");
+					_.toast("您輸入的手機號碼有誤");
 					return;
 				}else if(u.isNull(code)){
 					_.toast("請輸入短信驗證碼");

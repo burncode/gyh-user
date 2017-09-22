@@ -97,7 +97,7 @@
 						walletData = data.data[0][0];
 						balance = walletData?walletData.amount:'0.00';
 						doc.getElementById("balance").textContent = balance;
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else{
 						_.toast(data.msg || '服務器異常');
@@ -167,7 +167,7 @@
 							},200)
 							u.close('order_register');
 		                });
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else if(data.code == -1){
 						_.toast("余額不足，請充值或者選擇其他支付方式");

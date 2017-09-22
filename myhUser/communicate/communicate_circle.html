@@ -128,7 +128,7 @@
 								if (data.code == 0) {
 									page = 1;
 									u.emptyHtml(list), renderList(data.data || []);
-								}else if(data.code == 500 && "未登录" == data.msg){
+								}else if(data.code == 500 && "未登錄" == data.msg){
 									u.goLogin();
 								}else{
 									_.toast(data.msg || '服務器異常');
@@ -167,7 +167,7 @@
 				u.mypost('post/listPost',pdata, true, function(data) {
 					if (data.code == 0) {
 						u.emptyHtml(new_list), renderList(data.data || []);
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else{
 						_.toast(data.msg || '服務器異常');
@@ -183,7 +183,7 @@
 				u.mypost('post/listPost',pdata, true, function(data) {
 					if (data.code == 0) {
 						u.emptyHtml(hot_list), renderList(data.data || []);
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else{
 						_.toast(data.msg || '服務器異常');
@@ -199,7 +199,7 @@
 				u.mypost('post/listPost',pdata, true, function(data) {
 					if (data.code == 0) {
 						u.emptyHtml(list), renderList(data.data || []);
-					}else if(data.code == 500 && "未登录" == data.msg){
+					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
 					}else{
 						_.toast(data.msg || '服務器異常');
@@ -307,13 +307,13 @@
 										toggleClass(self,"p-active");
 										self.nextSibling.innerHTML = nextSbilingNum + 1;
 										allList();//刷新全部
-									}else if(data.code == 500 && "未登录" == data.msg){
+									}else if(data.code == 500 && "未登錄" == data.msg){
 										u.goLogin();
 									}else{
 										_.toast(data.msg || '服務器異常');
 									}
 								},myerror);
-							}else if(data.code == 500 && "未登录" == data.msg){
+							}else if(data.code == 500 && "未登錄" == data.msg){
 								u.goLogin();
 							}else{
 								_.toast("點贊失敗");

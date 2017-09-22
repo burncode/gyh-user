@@ -1,6 +1,6 @@
-﻿var ASKURL = "https://api.du-ms.com/",
+﻿var ASKURL = "https://api.hk-dr.com/",
 	token = '85FBCA0D01D6EB76A3888C5F8E4118D5',
-	SRC = "https://api.du-ms.com/verify/get_code?";
+	SRC = "https://api.hk-dr.com/verify/get_code?";
 var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-comiiszanwushuju'></div><div>暫無數據</div></div>";
 (function(w, _, u, owner) {
 	w.openView = function(url, extras) {
@@ -67,7 +67,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 	/**@des 辅助工具--请求数据
 	 * @param postUrl  请求接口
 	 * @param pdata  请求参数
-	 * @param success 请求成功回调函数
+	 * @param success 請求成功回调函数
 	 * @param error 请求失败回调函数
 	 * */
 	u.mypost = function(postUrl, pdata, show, success, error) {
@@ -84,13 +84,11 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 				data: pdata,
 				timeout: 60000,
 				success: function(data) {
-					_.later(function() {
-						plus.nativeUI.closeWaiting();
-					}, 100)
 					data = JSON.parse(data);
 					data = JSON.stringify(data);
 					data = traditionalized(data);
 					data = JSON.parse(data);
+					plus.nativeUI.closeWaiting();
 					_.isFunction(success) ? success(data) : '';
 				},
 				error: function(xhr) {

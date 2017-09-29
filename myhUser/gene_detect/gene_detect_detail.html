@@ -101,7 +101,7 @@
 								orderId:orderId,
 								fee:price
 							}
-							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到购买成功
+							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
 						}else if(data.code == 500 && '未登錄' == data.msg){
 							u.goLogin();
 						}

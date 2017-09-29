@@ -41,7 +41,7 @@
 				<div class="post-comment">
 					<div class="post-input">
 						<input type="text" id="to-comment"/>
-						<button type="button" class="comment-btn" id="comment" disabled="disabled">评论</button>
+						<button type="button" class="comment-btn" id="comment" disabled="disabled">評論</button>
 					</div>
 					<div class="comment-content">評論列表</div>
 					<div id="comment-list" class="comment-list"></div>
@@ -251,7 +251,7 @@
 					w.openView("release_post.html");
 				}
 			});
-			//提交评论
+			//提交評論
 			submitObj.addEventListener('tap', function() {
 				if(!w.getUser()){
 					w.openView("../userLogin.html");
@@ -280,7 +280,7 @@
 					},myerror);
 				}
 			});
-			//若是评论内容为空 无法点击评论按钮
+			//若是評論内容为空 无法点击評論按钮
 			toCommentObj.addEventListener("input",function(){
 				if(this.value.length > 0){
 					submitObj.removeAttribute("disabled");

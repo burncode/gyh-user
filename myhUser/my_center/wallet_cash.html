@@ -9,6 +9,14 @@
 		<link rel="stylesheet" href="../css/mui.picker.min.css" />
 		<link rel="stylesheet" href="../css/mui.poppicker.css" />
 		<link rel="stylesheet" href="../css/center/wallet_cash.css" />
+		<style>
+			.mui-input-group input{
+			    font-size: 15px;padding: 0;
+			}
+			label{
+				font-size: 14px;line-height: 1.3 !important;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -21,10 +29,36 @@
 				<div class="wallet-zh">账户余額</div>
 				<div class="wallet-ye"><span>￥</span><span id="balance"></span></div>
 			</div>
-			<ul class="width-line mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+			        <label>卡號:</label>
+			        <input type="number" id="cardId" maxlength="19" placeholder="請輸入您的銀行卡號">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>銀行:</label>
+			        <input id="bank" type="text" placeholder="請輸入您的開護銀行" style="padding-right: 32px;">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>開護地區:</label>
+			        <input id="address" type="text" placeholder="請輸入您的銀行開護地區" style="padding-right: 32px;">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>姓名:</label>
+			        <input type="text" id="name" placeholder="請輸入您的姓名" value="">
+			    </div>
+			     <div class="mui-input-row">
+			        <label>身份證:</label>
+			        <input type="number" id="idcard" placeholder="請輸入您的身份證號" value="">
+			    </div>
+			     <div class="mui-input-row">
+			        <label>金額:</label>
+			        <input type="number" id="money" placeholder="請輸入您要提現金額" maxlength="12" value="">
+			    </div>
+			</form>
+			<!--<ul class="width-line mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
 				<li class="mui-table-view-cell">
 					<span class="mui-pull-left">卡號：</span>
-					<span class="cash-input"><input type="number" id="cardId"  placeholder="請輸入銀行卡號"/></span>
+					<span class="cash-input"><input type="number" id="cardId"  placeholder="請輸入您的銀行卡號"/></span>
 				</li>
 				<li class="mui-table-view-cell">
 					<span class="mui-pull-left">銀行：</span>
@@ -48,8 +82,7 @@
 					<span class="mui-pull-left">金額：</span>
 					<span class="cash-input"><input id="money" type="number" value="" maxlength="9" placeholder="請輸入金額"></span>
 				</li>
-			</ul>
-			<div class="mui-clearfix"></div>
+			</ul>-->
 			<div class="but">
 				<p id="info" class="mui-text-center font-color-red mui-hidden">提現余額超过账户余額</p>
 				<p class="mui-text-center">提交後5-7個工作日到賬</p>
@@ -102,30 +135,6 @@
 					}, myerror)
 				}
 				
-				//编辑其他信息时 地址和銀行选择器隐藏
-				var objs = doc.querySelectorAll("input");
-				for(var i = 0; i < objs.length; i++) {
-					if(!objs[i].getAttribute("readonly")) {
-						objs[i].addEventListener("focus", function() {
-							setTimeout(function() {
-								city ? city.hide() : '';
-							}, 100);
-						});
-					}
-				}
-				city ? city.hide() : '';
-				cardIdObj.addEventListener('tap', function() {
-					city ? city.hide() : '';
-				})
-				nameObj.addEventListener('tap', function() {
-					city ? city.hide() : '';
-				})
-				idcardObj.addEventListener('tap', function() {
-					city ? city.hide() : '';
-				})
-				moneyObj.addEventListener('tap', function() {
-					city ? city.hide() : '';
-				})
 			});
 			//检测金額输入
 			moneyObj.addEventListener("input", function() {
@@ -185,27 +194,6 @@
 					}, myerror)
 				}
 			})
-			var city = new _.PopPicker({
-				layer: 3
-			});
-			city.setData(cityData3);
-			var address = doc.getElementById('address'),
-				province = null,
-				district = null;
-			address.addEventListener('tap', function(event) {
-				doc.activeElement.blur();
-				city.show(function(items) {
-					province = (items[0] || {}).text == (items[1] || {}).text ? (items[0] || {}).text : (items[0] || {}).text + "" + (items[1] || {}).text;
-					address.value = province + "" + (items[2] || {}).text;
-					if((items[0] || {}).text != null && (items[1] || {}).text != null && (items[2] || {}).text != null) {
-						address.value = province + "" + (items[2] || {}).text;
-					} else if((items[0] || {}).text == (items[1] || {}).text) {
-						address.value = province + "" + ""; //省市名称相同
-					} else if((items[2] || {}).text == undefined) {
-						address.value = province + "" + ""; //第三级没有值
-					}
-				});
-			}, false);
 		})(mui, document, util, window)
 	</script>
 

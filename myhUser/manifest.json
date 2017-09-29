@@ -104,7 +104,7 @@
 		"NativeObj": {
 			"description": "原生对象"
 		},
-		"OAuth": {}
+		"OAuth": {},"Share":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -116,13 +116,13 @@
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
-				"share": {
+				"share": {"weixin":{"appid":"wx82ed95575844a616","appsecret":"63e15cceead2ff623ea04833821a8341","description":"可选，微信分享"}
 					
 				},
 				"oauth": {
 					"qq": {
 						"appid": "1106352675"
-					}
+					},"weixin":{"appid":"wx82ed95575844a616","appsecret":"63e15cceead2ff623ea04833821a8341"}
 				}
 			},
 			"apple": {

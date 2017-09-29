@@ -68,7 +68,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 	 * @param postUrl  请求接口
 	 * @param pdata  请求参数
 	 * @param success 請求成功回调函数
-	 * @param error 请求失败回调函数
+	 * @param error 请求失敗回调函数
 	 * */
 	u.mypost = function(postUrl, pdata, show, success, error) {
 		if(show) {
@@ -305,7 +305,7 @@ function toggleClass(obj, cls) {
  * post - error
  * **/
 function myerror() {
-	mui.toast("访问失败，请重试");
+	mui.toast("访问失敗，请重试");
 }
 //过滤表情字符
 function filteremoji(emojireg) {

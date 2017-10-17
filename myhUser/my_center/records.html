@@ -64,7 +64,7 @@
 				_.each(data[0],function(i,obj){
 					li = doc.createElement("li");
 					mark = "-";//标记是"+"还是"-"
-					if(obj.tradeType == "充值" || obj.tradeType == "預約掛號退款" || obj.tradeType == "電話问诊退款"){
+					if(obj.tradeType == "充值" || obj.tradeType.indexOf('退款') > 0 || obj.tradeType.indexOf('收入') > 0){
 						mark = "+";
 					}
 					li.innerHTML = "<li class='mui-table-view-cell'><div class='mui-pull-left mui-col-sm-6'><span class='tit'>"+obj.tradeDesc+"</span><span class='time'>"+obj.tradeTime+"</span></div><span class='mui-pull-right mui-col-sm-6 worth'>"+mark+""+obj.tradeVolume+"</span></li>";

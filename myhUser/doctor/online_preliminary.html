@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -27,14 +28,16 @@
 			padding-left: 15px;
 		}
 		
-		.state-brief textarea ,select{
-			border: 0;margin-bottom:0
+		.state-brief textarea,
+		select {
+			border: 0;
+			margin-bottom: 0
 		}
 		
 		.choice-case {
 			background-color: #FFFFFF;
-			margin:  0 0 5px;
-		    padding: 10px 25px 10px 0;
+			margin: 0 0 5px;
+			padding: 10px 25px 10px 0;
 		}
 		
 		.choice-case-select {
@@ -42,11 +45,17 @@
 			height: 36px !important;
 			border: 1px solid #DEDEDE !important;
 		}
-		.know{text-align: left;padding: 10px;}
+		
+		.know {
+			text-align: left;
+			padding: 10px;
+		}
+		
 		.argee {
 			margin: 15px;
 			color: #999;
 		}
+		
 		.service {
 			width: 50%;
 			margin: 0px auto;
@@ -54,6 +63,7 @@
 			float: right;
 			padding-right: 20px;
 		}
+		
 		.star {
 			color: red;
 		}
@@ -99,13 +109,36 @@
 			width: 75px !important;
 			overflow: hidden !important
 		}
-		.mui-input-row .mui-btn{width: 50% !important;}
-		.line-space{height: 5px;background-color: #efeff4;width: 100%;}
-		.mui-table-view-cell{margin: 0;}
-		.retrie dt .up .up-nav:after{top: 18px;}
-		.next{background-color: #fff;}
-		.mui-input-group:after{height: 0;}
-		.mui-input-row select{font-size: 14px}
+		
+		.mui-input-row .mui-btn {
+			width: 50% !important;
+		}
+		
+		.line-space {
+			height: 5px;
+			background-color: #efeff4;
+			width: 100%;
+		}
+		
+		.mui-table-view-cell {
+			margin: 0;
+		}
+		
+		.retrie dt .up .up-nav:after {
+			top: 18px;
+		}
+		
+		.next {
+			background-color: #fff;
+		}
+		
+		.mui-input-group:after {
+			height: 0;
+		}
+		
+		.mui-input-row select {
+			font-size: 14px
+		}
 	</style>
 
 	<body>
@@ -167,7 +200,9 @@
 					</form>
 				</div>
 				<div class="choice-case font-color-666 font-size-14">
-					<div class="mui-input-row"><label>選擇病曆<span class="star">*</span>：</label><select class="choice-case-select" id="illnessSelect"></select></div>
+					<div class="mui-input-row"><label>選擇病曆<span class="star">*</span>：</label>
+						<select class="choice-case-select" id="illnessSelect"></select>
+					</div>
 				</div>
 			</div>
 			<div class='next'>
@@ -209,7 +244,8 @@
 				secondTimeObj = doc.getElementById("secondTime"),
 				thirdTimeObj = doc.getElementById("thirdTime");
 
-			var areaObj = doc.getElementById("area"),areaAObj = doc.getElementById("areaA"),
+			var areaObj = doc.getElementById("area"),
+				areaAObj = doc.getElementById("areaA"),
 				areaUlObj = doc.getElementById("areaUl");
 			var picker = null,
 				currentDate = null,
@@ -255,13 +291,13 @@
 						//聯系人、聯系電話、性别
 						nameObj.value = userInfo.nickname ? userInfo.nickname : '';
 						mobileObj.value = userInfo.phone ? userInfo.phone : '';
-						var sex = userInfo.sex?userInfo.sex:'';
-						if(sex == "男"){
+						var sex = userInfo.sex ? userInfo.sex : '';
+						if(sex == "男") {
 							doc.getElementById("male").checked = true;
-						}else if(sex == "女"){
+						} else if(sex == "女") {
 							doc.getElementById("female").checked = true;
 						}
-					}else if(data.code == 500 && "未登錄" == data.msg){
+					} else if(data.code == 500 && "未登錄" == data.msg) {
 						u.goLogin();
 					} else {
 						_.toast(data.msg);
@@ -298,8 +334,8 @@
 				timeLenKey = this.getAttribute("timeKeyAttr");
 				phoneTimeLen = doc.getElementById(id).textContent.replace("分鐘", ""); //截取数字
 				areaObj.innerHTML = this.innerHTML;
-				addClass(areaUlObj,'mui-hidden');
-				removeClass(areaAObj,'up');
+				addClass(areaUlObj, 'mui-hidden');
+				removeClass(areaAObj, 'up');
 			})
 			//选择鉤通時間
 			communicateObj.addEventListener("tap", function() {
@@ -326,75 +362,68 @@
 			//預約
 			orderObj.addEventListener('tap', function() {
 				var orderTime = communicateObj.innerText; //期望沟通时间
-				var orderDate = new Date(orderTime.replace(/-/g,"/")).getTime();; //所选期望沟通时间
+				var orderDate = new Date(orderTime.replace(/-/g, "/")).getTime();; //所选期望沟通时间
 				if(u.isNull(moneyObj.textContent)) {
 					_.toast("請選擇时长");
-					return;
 				} else if(u.isNull(nameObj.value)) {
 					_.toast("請輸入姓名");
-					return;
 				} else if(u.isNull(mobileObj.value)) {
 					_.toast("請輸入手機號碼");
-					return;
 				} else if(!u.checkPhone(mobileObj.value)) {
 					_.toast("請輸入正確的手機號碼");
-					return;
-				} else if(u.isNull(communicateObj.innerText)) {
-					_.toast("請選擇期望鉤通時間");
-					return;
+				} else if(u.isNull(orderTime) || '請選擇鉤通時間' == orderTime) {
+					_.toast("請選擇鉤通時間");
 				} else if(startDate > orderDate) {
 					_.toast('鉤通時間不能早于当前時間！');
-					return;
 				} else if(u.isNull(illnessSelectObj.value)) {
 					_.toast("请選擇病曆");
-					return;
 				} else if(isEmojiCharacter(nameObj.value) || isEmojiCharacter(mobileObj.value) || isEmojiCharacter(illDescriptionObj.value)) {
 					_.toast("不支持表情输入");
-					return;
-				}
-				pdata.privateToken = privateToken;
-				pdata.person = nameObj.value.trim();
-				pdata.sex = getRadioBoxValue(sexObj);
-				pdata.telephone = mobileObj.value.trim();
-				pdata.hopeCallDate = communicateObj.textContent;
-				pdata.content = illDescriptionObj.value.trim();
-				pdata.illnessId = illnessSelectObj.value;
-				pdata.price = moneyObj.textContent;
-				pdata.phoneTimeLen = phoneTimeLen;
-				pdata.timeLenKey = timeLenKey;
-				if(type == 1) {
-					//					pdata.oid = oid;//重新預約id
-					//重新預約  根据醫生id 获取基本信息
-					u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
-						if(data.code == 0) {
-							var ex = {
-								type: 4,
-								order_type: "在線問診咨詢費",
-								orderId: oid,
-								fee: moneyObj.textContent
+				} else {
+					pdata.privateToken = privateToken;
+					pdata.person = nameObj.value.trim();
+					pdata.sex = getRadioBoxValue(sexObj);
+					pdata.telephone = mobileObj.value.trim();
+					pdata.hopeCallDate = communicateObj.textContent;
+					pdata.content = illDescriptionObj.value.trim();
+					pdata.illnessId = illnessSelectObj.value;
+					pdata.price = moneyObj.textContent;
+					pdata.phoneTimeLen = phoneTimeLen;
+					pdata.timeLenKey = timeLenKey;
+					if(type == 1) {
+						//					pdata.oid = oid;//重新預約id
+						//重新預約  根据醫生id 获取基本信息
+						u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
+							if(data.code == 0) {
+								var ex = {
+									type: 4,
+									order_type: "在線問診咨詢費",
+									orderId: oid,
+									fee: moneyObj.textContent
+								}
+								_.toast(data.msg);
+								w.openView("pay.html", ex);
+							} else {
+								_.toast(data.msg);
 							}
-							_.toast(data.msg);
-							w.openView("pay.html", ex);
-						} else {
-							_.toast(data.msg);
-						}
-					}, myerror);
-				} else if(type == 2) {
-					u.mypost("diagnosis_online/diaDoPostTempOne", pdata, true, function(data) {
-						if(data.code == 0) {
-							orderId = data.data.orderId;
-							var ex = {
-								type: 4,
-								order_type: "在線問診咨詢費",
-								orderId: orderId,
-								fee: moneyObj.textContent
+						}, myerror);
+					} else if(type == 2) {
+						u.mypost("diagnosis_online/diaDoPostTempOne", pdata, true, function(data) {
+							if(data.code == 0) {
+								orderId = data.data.orderId;
+								var ex = {
+									type: 4,
+									order_type: "在線問診咨詢費",
+									orderId: orderId,
+									fee: moneyObj.textContent
+								}
+								_.toast(data.msg);
+								w.openView("pay.html", ex);
+							} else {
+								_.toast(data.msg);
 							}
-							_.toast(data.msg);
-							w.openView("pay.html", ex);
-						} else {
-							_.toast(data.msg);
-						}
-					}, myerror);
+						}, myerror);
+					}
 				}
 			})
 			//获取单选按钮

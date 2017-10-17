@@ -103,12 +103,8 @@
 							li.className = "mui-table-view-cell mui-media";
 							li.innerHTML = "<div class='mui-slider-handle'>" +
 								imgHtml +
-								"<div class='mui-media-body'>" +
-								"" + obj.postTitle + "" +
-								"<p>" + obj.postContent + "</p>" +
-								"<span>" + obj.dateline + "</span>" +
-								"</div>" +
-								"</div>";
+								"<div class='mui-media-body'>"+ obj.postTitle +
+								"<p>" + obj.postContent + "</p><span>" + obj.dateline + "</span></div></div>";
 							list.appendChild(li);
 						})
 					} else {
@@ -137,8 +133,8 @@
 								"<div class='time'>時間：" + obj.dateline + "</div>" +
 								"<p>" + (obj.commentContent || '') + "</p>" +
 								"<div class='answer'>" +
-								"<div class='tit'>" + obj.postTitle + "</div>" +
-								"<p>" + obj.postContent + "</p>" +
+								"<div class='tit'>" + (obj.postTitle || '该帖已被删除') + "</div>" +
+								"<p>" + (obj.postContent || '') + "</p>" +
 								"</div>";
 							comment_list.appendChild(commentli);
 						})

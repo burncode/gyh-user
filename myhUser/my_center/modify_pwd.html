@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>修改登錄密碼</title>
@@ -33,38 +32,32 @@
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript">
 		(function(_,doc,u,w){
-			_.init({swipeBack:true});
-			var pdata = {};
-			var privateToken = null;
+			_.init();
+			var pdata = {},privateToken = null;
 			var oldPwd = null,newPwd = null,reNewPwd = null;
-			var oldPwdObj = doc.getElementById("oldPwd");
-			var newPwdObj = doc.getElementById("newPwd");
-			var reNewPwdObj = doc.getElementById("reNewPwd");
+			var oldPwdObj = doc.getElementById("oldPwd"),newPwdObj = doc.getElementById("newPwd"),reNewPwdObj = doc.getElementById("reNewPwd");
 			_.plusReady(function(){
 				doc.getElementById("btnOk").addEventListener('tap', function() {
 					if(isEmojiCharacter(oldPwdObj.value) || isEmojiCharacter(newPwdObj.value) || isEmojiCharacter(reNewPwdObj.value)){
 						_.toast("不支持表情輸入");
-						return;
+					}else{
+						privateToken = w.getItem("privateToken");
+						pdata.privateToken = privateToken;
+						oldPwd = oldPwdObj.value.trim();
+						newPwd = newPwdObj.value.trim();
+						reNewPwd = reNewPwdObj.value.trim();
+						pdata.oldPwd = oldPwd;
+						pdata.newPwd = newPwd;
+						pdata.reNewPwd = reNewPwd;
+						u.mypost("user_center/updatePwd",pdata,true,function(data){
+							if(data.code == 0){
+								w.openView("../userLogin.html");
+								_.toast("密碼修改成功，請重新登錄");
+							}else{
+								_.toast(data.msg);
+							}
+						},myerror);
 					}
-					privateToken = w.getItem("privateToken");
-					pdata.privateToken = privateToken;
-					oldPwd = oldPwdObj.value.trim();
-					newPwd = newPwdObj.value.trim();
-					reNewPwd = reNewPwdObj.value.trim();
-					pdata.oldPwd = oldPwd;
-					pdata.newPwd = newPwd;
-					pdata.reNewPwd = reNewPwd;
-					u.mypost("user_center/updatePwd",pdata,true,function(data){
-						if(data.code == 0){
-							w.openView("../userLogin.html");
-							_.toast("密碼修改成功，請重新登錄");
-							oldPwdObj.value = "";
-							newPwdObj.value = "";
-							reNewPwdObj.value = "";
-						}else{
-							_.toast(data.msg);
-						}
-					},myerror);
 				});
 			})
 		})(mui,document,util,window)

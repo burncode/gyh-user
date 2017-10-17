@@ -117,6 +117,7 @@
 			}
 			//第三方登錄
 			var authBtns = ['weixin','qq'],auths = {},oauthArea = doc.querySelector('.oauth-area');
+			var unionid = null;
 			_.plusReady(function(){
 				//检查更新
 			    if(sessionStorage.getItem('upgrade') !='1'){
@@ -158,17 +159,18 @@
 							auth.getUserInfo(function() {
 								plus.nativeUI.toast("獲取用戶信息成功");
 								var name = auth.userInfo.nickname || auth.userInfo.name;
-								console.log("unionid============="+auth.userInfo.unionid);//获取微信用户的unionid
+								unionid = auth.userInfo.unionid;
+								console.log("auth============="+JSON.stringify(auth));//获取微信用户的unionid
+								console.log("unionid============="+unionid);//获取微信用户的unionid
 								app.createState(name, function() {
 									if(auth.id == "weixin"){
 										var pdata ={
 											bindType:1,
-											openId:auth.authResult.openid
+											openId:unionid
 										}
 										u.mypost("api/checkBind",pdata,true,function(data){
 											if(data.code == 5){
-												var oid = auth.authResult.openid;
-												w.openView("my_center/boundpho.html",{openId:oid,oId:auth.id});
+												w.openView("my_center/boundpho.html",{openId:unionid,oId:auth.id});
 											}else if(data.code == -1){
 												_.toast(data.msg ||'');
 											}else if(data.code == 0){
@@ -187,8 +189,7 @@
 										}
 										u.mypost("api/checkBind",pdata,true,function(data){
 											if(data.code == 5){
-												var oid = auth.authResult.openid;
-												w.openView("my_center/boundpho.html",{openId:oid,oId:auth.id});
+												w.openView("my_center/boundpho.html",{openId:auth.authResult.openid,oId:auth.id});
 											}else if(data.code == -1) {
 											}else if(data.code == 0){
 												data.data.privateToken?w.setUser(data.data.privateToken):_.toast("获取信息失敗");

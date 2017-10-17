@@ -34,13 +34,6 @@
 							<span class="mui-pull-right choice-img choose-pay-way on"></span>
 						</a>
 					</li>
-					<li id="1" class="mui-table-view-cell">
-						<a class="mui-navigate-right">
-							<img class="mui-media-object mui-pull-left" src="../images/weixin.png">
-							<div class="mui-media-body mui-pull-left">微信支付</div>
-							<span class="mui-pull-right choice-img choose-pay-way"></span>
-						</a>
-					</li>
 					<li id="2" class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
@@ -122,8 +115,6 @@
 								showPwdInput();
 							}
 						},myerror);
-					}else if(payWay==1){//微信支付
-						pay('wxpay');
 					}else if(payWay==2){//支付宝
 						pay('alipay');
 					}
@@ -133,22 +124,6 @@
 					w.openView("../my_center/forgetPayPwd.html");
 				});
 			});
-			//检查服务的加载
-			function checkServices(pc){
-				if(!pc.serviceReady){
-					var txt=null;
-					switch(pc.id){
-						case "wxpay":
-						txt="系統未安裝“"+pc.description+"”服務，無法完成支付";
-						break;
-					}
-					plus.nativeUI.confirm(txt,function(e){
-						if(e.index==0){
-							pc.installService();
-						}
-					},pc.description);
-				}
-			}
 			//余額支付
 			function balancePay(payPwd){
 				privateToken = w.getItem("privateToken");
@@ -162,9 +137,7 @@
 					if(data.code == 0){
 						plus.nativeUI.alert("支付成功！",function(){
 							w.openView(targetWeb);
-							_.later(function(){
-								u.close('pay')
-							},200)
+							_.later(function(){u.close('pay')},200)
 							u.close('order_register');
 		                });
 					}else if(data.code == 500 && "未登錄" == data.msg){
@@ -204,8 +177,6 @@
 		    	// 从服务器请求支付订单
 			    if(id=='alipay'){
 			    	pdata.payType = 2;
-			    }else if(id=='wxpay'){
-			    	pdata.payType = 1;
 			    }else{
 			        _.toast("不支持此支付通道！",null,"港醫匯");
 			        return;
@@ -229,26 +200,8 @@
 			            		_.toast("請求異常，請重試")
 			            	}
 			            });
-				    }else if(id=='wxpay'){//微信支付
-				    	_.ajax({
-							url: data.data.wxPayUrl,type: "get",data:null,timeout:6000,
-							success: function(data) {
-								data = JSON.parse(data);
-								plus.payment.request(pays['wxpay'],data,function(result){
-				                	w.openView(targetWeb);
-					            },function(error){
-					            	if(error.code == '-8'){
-					            		_.toast("客戶端未安裝");
-					            	}
-					            });
-							},
-							error: function(xhr) {
-								_.toast("請求異常，請重試")
-							}
-						});
 				    }else{
 				        _.toast("不支持此支付通道！",null,"港醫匯");
-				        return;
 				    }
 				},function(xhr){
 					_.toast("請求異常，請重試")
@@ -265,7 +218,6 @@
 							continue;
 						}
 						pays[channel.id]=channel;
-						checkServices(channel);
 					}
 			    },function(e){
 			        alert("获取支付通道失敗："+e.message);

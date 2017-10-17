@@ -207,7 +207,7 @@
 				pdata.oid = this.id;
 				pdata.orderType = 3;
 				var btnArray = ['否', '是'];
-				_.confirm('<div>確定要取消吗？</div>', '<div class="btn-title">取消</div>',btnArray, function(e) {
+				_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>',btnArray, function(e) {
 					if(e.index == 1){
 						u.mypost("user_center/orderCancel",pdata,true,function(data){
 							if(data.code == 0){

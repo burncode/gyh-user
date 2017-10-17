@@ -102,6 +102,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 	};
 	u.goLogin = function() {
 		mui.toast("登錄身份過期，請重新登錄");
+		w.removeItem('privateToken');
 		mui.later(function() {
 			w.openView("../userLogin.html");
 		}, 500)
@@ -179,13 +180,13 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 			id: idArr[i]
 		});
 		main.show();
-		if(i == 1) { //医生列表
-			var hid = ex && ex.hid;
-			var web = plus.webview.getWebviewById("doctor/doctor_list.html");
-			if(web) {
-				web.evalJS("getDocByHid('" + hid + "')");
-			}
-		}
+//		if(i == 1) { //医生列表
+//			var hid = ex && ex.hid;
+//			var web = plus.webview.getWebviewById("doctor/doctor_list.html");
+//			if(web) {
+//				web.evalJS("getDocByHid('" + hid + "')");
+//			}
+//		}
 	};
 	u.emptyHtml = function(list, flag) {
 		if(list && !flag) {

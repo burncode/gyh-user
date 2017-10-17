@@ -39,12 +39,16 @@
 	<script type="text/javascript" src="../js/common.js" ></script>
 	<script>
 		(function(_,doc,u,w){
-			doc.getElementById("return-index").addEventListener('tap', function() {
-				w.toIndex(0);
-			});
-			doc.getElementById("check-answer").addEventListener('tap', function() {
-				w.openView("../my_center/qa_record.html");
-			});
+			_.plusReady(function(){
+				doc.getElementById("return-index").addEventListener('tap', function() {
+					w.close('doctor_detail');
+					w.toIndex(0);
+				});
+				doc.getElementById("check-answer").addEventListener('tap', function() {
+					w.close('doctor_detail');
+					w.openView("../my_center/qa_record.html");
+				});
+			})
 		})(mui,document,util,window)
 	</script>
 </html>

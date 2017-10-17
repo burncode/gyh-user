@@ -241,7 +241,7 @@
 			}
 			//显示搜索记录
 			function showSearchKey(){
-				var keystr= localStorage.getItem("keySearch");
+				var keystr= localStorage.getItem("keySearch") || '';
 				var keyArr = keystr.split('-') ||[];
 				search_his_contentObj.innerHTML = '';
 				if(keyArr && keyArr.length > 0){

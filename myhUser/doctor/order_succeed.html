@@ -39,6 +39,7 @@
 	<script>
 		(function(_,doc,u,w){
 			doc.getElementById("return-index").addEventListener('tap', function() {
+				w.close('doctor_Detail');
 				w.toIndex(0);
 			});
 			doc.getElementById("check-answer").addEventListener('tap', function() {

@@ -50,19 +50,6 @@
 						</div>
 					</li>
 				</ul>
-				<ul class="width-line mui-table-view mui-table-view-chevron">							
-					<li class="mui-table-view-cell" id="pwd">
-						<div class="mui-navigate-right navigate">
-							<span class="mui-pull-left">修改登錄密碼</span>							
-						</div>
-					</li>	
-					<li class="mui-table-view-cell" id="payPwd">
-						<div class="mui-navigate-right navigate">
-							<span class="mui-pull-left">修改支付密碼</span>							
-						</div>
-					</li>	
-				</ul>
-				<div id="logout" class="logout mui-text-center color_red font-size-14">退出登錄</div>
 			</div>
 		</div>
 	</body>
@@ -74,7 +61,7 @@
 		(function(_,doc,u,w){
 			_.init({swipeBack: true}),_(".mui-scroll-wrapper").scroll();
 			var editTxt = "修改",finishTxt = "保存",isEditing = false,privateToken = null,pdata = {};
-			var nickNameObj = doc.getElementById("nickname"),sexObj = doc.getElementsByName("radio1"),birthdayObj = doc.getElementById("birthday"),sexInput = doc.getElementById("sexInput"),sexRadio = doc.getElementById("sexRadio"),logout = doc.getElementById("logout");
+			var nickNameObj = doc.getElementById("nickname"),sexObj = doc.getElementsByName("radio1"),birthdayObj = doc.getElementById("birthday"),sexInput = doc.getElementById("sexInput"),sexRadio = doc.getElementById("sexRadio");
 			var userInfo = null,picker = null;
 			_.plusReady(function(){
 				privateToken = w.getItem("privateToken");
@@ -95,30 +82,6 @@
 						}
 					}
 				},myerror)
-				//退出登錄
-				logout.addEventListener('tap',function(){
-					_.confirm('是否確定退出','提示',['否','是'],function(e){
-						if (e.index == 1) {
-							u.mypost("user_center/logout",pdata,true,function(data){
-								if(data.code == 0){
-									_.toast("退出成功");
-									var lauchFlag = w.getItem("lauchFlag") || null;
-									w.clearItem();
-									w.setItem("lauchFlag",lauchFlag);//存储启动页参数
-									plus.webview.getWebviewById("my_center/myD.html").evalJS("clearAvatar()");
-									window.setItem('WKIThaveLogin',false);
-									plus.webview.getWebviewById('myinfo').hide('none');
-									w.openView('../userLogin.html');
-								}else if(data.code == 500 && '未登錄' == data.msg){
-									u.goLogin();
-								}else{
-									_.toast(data.msg || '退出失敗');
-								}
-							},myerror)
-						}
-					})
-				})
-				
 				//选择出生年月
 				birthdayObj.addEventListener("tap",function(){
 					picker = null,currentDate = getCurrentTime(),dataOptions = {"type":"date","value":"1990-01-01","beginYear":1930,"endYear":2016};
@@ -128,26 +91,6 @@
 						picker.dispose();
 					});
 				})
-				
-				//修改登錄密碼
-				_('.width-line').on('tap','#pwd',function(){	      		
-		      		w.openView('modify_pwd.html');
-		    	})
-				//修改支付密碼
-				_('.width-line').on('tap','#payPwd',function(){	
-					u.mypost("user_center/checkUserPayPwd",pdata,false,function(data){
-						if(data.code == 1){
-							var btnArray = ['取消', '去設置'];
-							_.confirm('<div>您還未設置支付密碼</div>', '<div class="btn-title">提示</div>',btnArray, function(e) {
-								if(e.index == 1){
-									w.openView("setPayPwd.html");
-								}
-							},'div');
-						}else if(data.code == 0){
-							w.openView('modify_payPwd.html');
-						}
-					},myerror);
-		    	})
 			});
 			doc.getElementById("edit").addEventListener("tap",function(){
 				if(isEmojiCharacter(nickNameObj.value)){

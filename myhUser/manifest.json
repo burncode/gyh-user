@@ -7,7 +7,7 @@
 	"id": "H569ED84F",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "港醫匯",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "1.0.1",/*应用版本名称*/
 		"code": "1"
 	},
 	"description": "港醫匯",/*应用描述信息*/
@@ -104,7 +104,7 @@
 		"NativeObj": {
 			"description": "原生对象"
 		},
-		"OAuth": {},"Share":{}
+		"OAuth": {},"Share":{},"Payment":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -115,7 +115,7 @@
 		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {
+			"plugins": {"payment":{"alipay":{"description":"阿里支付","scheme":""}},
 				"share": {"weixin":{"appid":"wx82ed95575844a616","appsecret":"63e15cceead2ff623ea04833821a8341","description":"可选，微信分享"}
 					
 				},
@@ -208,29 +208,29 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
-						"retina47": "",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
-						"retina55": "",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-						"retina55l": ""
+						"retina35": "F:/qdy2017/ios_png/640x960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "F:/qdy2017/ios_png/640x1136.png",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
+						"retina47": "F:/qdy2017/ios_png/750x1334.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+						"retina55": "F:/qdy2017/ios_png/1242x2208.png",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
+						"retina55l": "F:/qdy2017/ios_png/2208x1242.png"
 					},
 					"ipad": {
-						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": ""
+						"portrait": "F:/qdy2017/ios_png/768x1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "F:/qdy2017/ios_png/1536x2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "F:/qdy2017/ios_png/1024x748.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "F:/qdy2017/ios_png/2048x1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "F:/qdy2017/ios_png/768x1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "F:/qdy2017/ios_png/1536x2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "F:/qdy2017/ios_png/1024x768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "F:/qdy2017/ios_png/2048x1536.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": ""
+					"hdpi": "F:/qdy2017/android_png/480x762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "F:/qdy2017/android_png/720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "F:/qdy2017/android_png/1080x1882.png"
 				}
 			}
 		}
@@ -292,7 +292,8 @@
 					"css/center/about.css",
 					"images/logo-copyright.png"
 				],
-				"priority": 4
+				"priority": 4,
+				"refer": []
 			},
 			"my_center/feedback.html": {
 				"href": "my_center/feedback.html",
@@ -321,7 +322,8 @@
 					"fonts/iconfont-nodata.ttf",
 					"images/logo-copyright.png"
 				],
-				"priority": 7
+				"priority": 7,
+				"refer": []
 			},
 			"my_center/help_detail.html": {
 				"href": "my_center/help_detail.html",
@@ -367,7 +369,8 @@
 					"userLogin.html",
 					"my_center/feedback.html",
 					"my_center/about_software.html",
-					"my_center/help.html"
+					"my_center/help.html",
+					"my_center/about.html"
 				],
 				"priority": 5
 			},
@@ -449,7 +452,8 @@
 					"fonts/iconfont-nodata.ttf",
 					"css/detail.css"
 				],
-				"priority": 9
+				"priority": 9,
+				"refer": []
 			},
 			"my_center/contactService.html": {
 				"href": "my_center/contactService.html",
@@ -466,7 +470,8 @@
 					"images/kf1.JPG",
 					"images/kf1.png",
 					"images/123.png",
-					"images/1231231.png"
+					"images/1231231.png",
+					"images/kefu.png"
 				],
 				"priority": 11,
 				"refer": []
@@ -632,7 +637,8 @@
 					"fonts/mui.ttf",
 					"css/my.css",
 					"css/common.css",
-					"fonts/iconfont-nodata.ttf"
+					"fonts/iconfont-nodata.ttf",
+					"css/imagePreview.css"
 				],
 				"priority": 13,
 				"refer": []
@@ -733,14 +739,16 @@
 					"css/common.css",
 					"fonts/iconfont-nodata.ttf",
 					"css/order_register.css",
-					"images/service-1.png"
+					"images/service-1.png",
+					"doctor/order_register.html"
 				],
 				"refer": [
 					"know_agree.html",
 					"my_case_history/add_case.html",
 					"doctor/pay.html",
 					"my_center/contactService.html",
-					"doctor/order_audit.html"
+					"doctor/order_audit.html",
+					"userLogin.html"
 				],
 				"priority": 11
 			},
@@ -984,7 +992,8 @@
 					"fonts/iconfont-nodata.ttf",
 					"css/center/records.css"
 				],
-				"priority": 13
+				"priority": 13,
+				"refer": []
 			},
 			"my_center/wallet_cash.html": {
 				"href": "my_center/wallet_cash.html",
@@ -1151,7 +1160,8 @@
 					"my_center/mywallet.html",
 					"my_center/tab_post.html",
 					"my_center/swipe.html",
-					"my_center/contactService.html"
+					"my_center/contactService.html",
+					"my_center/feedback.html"
 				],
 				"priority": 3
 			},
@@ -1169,7 +1179,8 @@
 					"fonts/mui.ttf",
 					"css/common.css",
 					"fonts/iconfont-nodata.ttf",
-					"css/pullRefresh.css"
+					"css/pullRefresh.css",
+					"css/main/communicate_circl.css"
 				],
 				"refer": [
 					"userLogin.html"
@@ -1314,7 +1325,8 @@
 					"fonts/iconfont-nodata.ttf",
 					"css/input.css",
 					"css/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"css/doctor/message_question_answer.css"
 				],
 				"refer": [
 					"user_manual.html",
@@ -1624,7 +1636,10 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"know_agree.html",
+					"doctor/pay.html"
+				],
 				"priority": 0
 			},
 			"msearch/setting.html": {
@@ -1643,7 +1658,9 @@
 					"js/mui.view.js",
 					"css/mui.min.css",
 					"js/common.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"css/msearch/search.css",
+					"css/common.css"
 				],
 				"refer": [
 					"msearch/doctor_list_search.html"
@@ -1655,7 +1672,14 @@
 					"css/mui.min.css",
 					"js/common.js",
 					"js/mui.min.js",
-					"images/default-doctor.png"
+					"images/default-doctor.png",
+					"css/base.css",
+					"css/main/doctorList.css",
+					"css/common.css",
+					"images/type.png",
+					"fonts/mui.ttf",
+					"images/hospital.png",
+					"fonts/iconfont-nodata.ttf"
 				],
 				"refer": [
 					"doctor/doctor_detail.html"

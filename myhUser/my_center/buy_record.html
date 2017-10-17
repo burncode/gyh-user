@@ -170,9 +170,9 @@
 			//订单詳情
 			_('.mui-table-view').on('tap','li',function(){
 				var order = this.orderType;
-				if(order == "疫苗订单"){
+				if(order == "疫苗訂單"){
 					w.openView('../vaccine/vaccine_detail.html',{vaccinumId:this.id});
-				}else if(order == "基因订单"){
+				}else if(order == "基因訂單"){
 					w.openView('../gene_detect/gene_detect_detail.html',{geneId:this.id});
 				}
 	    	})
@@ -181,7 +181,7 @@
 		      	var order = this.getAttribute("data");
 				var price = this.getAttribute("data1");
 				var orderId = this.id;
-				if(order == "疫苗订单"){
+				if(order == "疫苗訂單"){
 					var ex1 = {
 						type:2,
 						order_type:"疫苗接種費用",
@@ -190,7 +190,7 @@
 					}
 			      	w.openView('../doctor/pay.html',ex1);
 			      	e.stopPropagation();
-				}else if(order == "基因订单"){
+				}else if(order == "基因訂單"){
 					var ex2 = {
 						type:3,
 						order_type:"檢測服務专业咨询服务费",
@@ -207,7 +207,7 @@
 				pdata.privateToken = privateToken;
 				pdata.oid = this.id;
 				pdata.orderType = 4;
-				_.confirm('確定要取消吗？', '<div class="btn-title">提示</div>',['否', '是'], function(e) {
+				_.confirm('確定要取消嗎？', '<div class="btn-title">提示</div>',['否', '是'], function(e) {
 					if(e.index == 1){
 						u.mypost("user_center/orderCancel",pdata,true,function(data){
 							if(data.code == 0){

@@ -231,7 +231,7 @@
 					_.toast("請選擇出生年月");
 					return;
 				}else if(startDate < new Date((birthdayObj.innerText).replace(/-/g,"/")).getTime()){ 
-					_.toast('出生日期不能晚于当前日期！'); 
+					_.toast('出生日期不能晚於當前日期！'); 
 					return;
 				}else if(u.isNull(telephoneObj.value)){
 					_.toast("請輸入手機號碼");

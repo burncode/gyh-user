@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>问诊詳情</title>
+		<title>問診詳情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/my.css" />
@@ -170,7 +170,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-			<h1 id="title" class="mui-title">问诊詳情</h1>
+			<h1 id="title" class="mui-title">問診詳情</h1>
 		</header>
 		<div class="mui-content">
 			<div class="detail-content">
@@ -335,7 +335,7 @@
 						pdata.oid = id;
 						pdata.orderType = 2;
 						var btnArray = ['取消', '确认'];
-						_.confirm('<div>確定要取消吗？</div>', '<div class="btn-title">取消</div>', btnArray, function(e) {
+						_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>', btnArray, function(e) {
 							if(e.index == 1) {
 								u.mypost("user_center/orderCancel", pdata, true, function(data) {
 									if(data.code == 0) {

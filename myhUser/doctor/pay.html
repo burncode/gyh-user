@@ -218,11 +218,24 @@
 							continue;
 						}
 						pays[channel.id]=channel;
+						checkServices(channel);
 					}
 			    },function(e){
 			        alert("获取支付通道失敗："+e.message);
 			    });
 			}
+			
+			//检查服务的加载
+			function checkServices(pc){
+				if(!pc.serviceReady){
+					var txt=null;
+					if("alipay" == pc.id){
+						txt="檢測到系統未安裝“支付寶快捷支付服務”，請選擇余额支付";
+					}
+					plus.nativeUI.alert(txt,function(){},'提示','确定');
+				}
+			}
+			
 			
 			_(doc).on("tap",".mui-table-view-cell",function(){
 				self = this;

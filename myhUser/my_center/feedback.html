@@ -14,31 +14,31 @@
 			<h1 id="title" class="mui-title">聯系我們</h1>
 		</header>
 		<div class="mui-content">
-			<p class="main-font-color">如果您是醫生，希望加入到我們平臺中來，請填寫以下申請表單：</p>
+			<p class="main-font-color">如果您是醫生，希望進壹步了解我們平臺，請在下方填寫聯系方式：</p>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
-					<label><span class="star">*</span> 姓&ensp;&ensp;&ensp;&ensp;名:</label>
-					<input type="text" id="content_1" maxlength="10" placeholder="請輸入姓名">
+					<label><span class="star">*</span>&ensp;姓 名:</label>
+					<input type="text" id="content_1" maxlength="10">
 				</div>
 				<div class="mui-input-row">
-					<label><span class="star">*</span> 就職醫院:</label>
-					<input type="text" id="content_2" maxlength="20" placeholder="請輸入就職醫院">
+					<label><span class="star">*</span>&ensp;專 科:</label>
+					<input type="text" id="content_3" maxlength="20">
 				</div>
 				<div class="mui-input-row">
-					<label><span class="star">*</span> 科&ensp;&ensp;&ensp;&ensp;室:</label>
-					<input type="text" id="content_3" maxlength="20" placeholder="請輸入科室">
+					<label><span class="star">*</span>&ensp;電 話:</label>
+					<input type="tel" id="content_5" maxlength="15">
 				</div>
 				<div class="mui-input-row">
-					<label><span class="star">*</span> 郵箱地址:</label>
-					<input type="text" id="content_4" maxlength="30" placeholder="請輸入郵箱地址">
+					<label>&emsp;電 郵:</label>
+					<input type="tel" id="content_4" maxlength="20">
 				</div>
 				<div class="mui-input-row">
-					<label><span class="star">*</span> 电&ensp;&ensp;&ensp;&ensp;话:</label>
-					<input type="tel" id="content_5" maxlength="11" placeholder="請輸入電話">
+					<label>&emsp;醫 院:</label>
+					<input type="text" id="content_2" maxlength="30">
 				</div>
 			</form>
 			<div class="mui-input-row" style="margin: 15px 15px 0px 15px;">
-				<textarea id="content_6"  rows="5" placeholder="添加備註" maxlength="180"></textarea>
+				<textarea id="content_6"  rows="5" placeholder="添加備註" maxlength="150"></textarea>
 			</div>
 			<button id="submit">提交</button>
 		</div>
@@ -64,17 +64,13 @@
 					privateToken = w.getItem("privateToken");
 					if(u.isNull(content_1Obj.value)) {
 						_.toast("請輸入您的姓名");
-					} else if(u.isNull(content_2Obj.value)) {
-						_.toast("請輸入您的就職醫院");
-					} else if(u.isNull(content_3Obj.value)) {
-						_.toast("請輸入您的科室");
-					} else if(u.isNull(content_4Obj.value)) {
-						_.toast("請輸入您的郵箱地址");
-					} else if(u.isNull(content_5Obj.value)) {
+					}else if(u.isNull(content_3Obj.value)) {
+						_.toast("請輸入您的專科");
+					}else if(u.isNull(content_5Obj.value)) {
 						_.toast("請輸入您的電話");
 					}else{
 						pdata.privateToken = privateToken;
-						pdata.content = "医生姓名：" + content_1Obj.value + ";    就职医院:" + content_2Obj.value + ";    科室：" + content_3Obj.value + ";    邮箱地址:" + content_4Obj.value + ";    电话:" + content_5Obj.value + ";    备注:" + content_6Obj.value;
+						pdata.content = "医生姓名：" + content_1Obj.value + ";專科：" + content_3Obj.value +";電話:" + content_5Obj.value +  ";电郵:" + content_4Obj.value + ";醫院:" + content_2Obj.value + ";备注:" + content_6Obj.value;
 						u.mypost("user_center/feedback",pdata,true,function(data){
 							if(data.code == 0){
 							    _.toast("提交成功");

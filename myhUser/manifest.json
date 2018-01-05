@@ -7,8 +7,8 @@
 	"id": "H569ED84F",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "港醫匯",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.1",/*应用版本名称*/
-		"code": "1"
+		"name": "1.1.1",/*应用版本名称*/
+		"code": "2"
 	},
 	"description": "港醫匯",/*应用描述信息*/
 	"icons": {
@@ -55,9 +55,7 @@
 		"Gallery": {
 			"description": "访问系统相册"
 		},
-		"Geolocation": {
-			"description": "访问位置信息"
-		},
+		
 		"Invocation": {
 			"description": "使用Native.js能力"
 		},
@@ -169,31 +167,31 @@
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
-					"auto": "", /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					 /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
 					"iphone": {
 						"normal": "unpackage/res/icons/57x57.png", /*iPhone3/3GS程序图标，分辨率：57x57*/
 						"retina": "unpackage/res/icons/114x114.png", /*iPhone4程序图标，分辨率：114x114*/
-						"retina7": "unpackage/res/icons/120x120.png", /*iPhone4S/5/6程序图标，分辨率：120x120*/
-						"retina8": "unpackage/res/icons/180x180.png", /*iPhone6 Plus程序图标，分辨率：180x180*/
+						 /*iPhone4S/5/6程序图标，分辨率：120x120*/
+						 /*iPhone6 Plus程序图标，分辨率：180x180*/
 						"spotlight-normal": "unpackage/res/icons/29x29.png", /*iPhone3/3GS Spotlight搜索程序图标，分辨率：29x29*/
 						"spotlight-retina": "unpackage/res/icons/58x58.png", /*iPhone4 Spotlight搜索程序图标，分辨率：58x58*/
-						"spotlight-retina7": "unpackage/res/icons/80x80.png", /*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
+						 /*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
 						"settings-normal": "unpackage/res/icons/29x29.png", /*iPhone4设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png", /*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
-						"settings-retina8": "unpackage/res/icons/87x87.png"
+						 /*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
+						"app@3x":"unpackage/res/icons/180x180.png","app@2x":"unpackage/res/icons/120x120.png","settings@2x":"unpackage/res/icons/58x58.png","settings@3x":"unpackage/res/icons/87x87.png","spotlight@2x":"unpackage/res/icons/80x80.png","spotlight@3x":"unpackage/res/icons/120x120.png","notification@2x":"unpackage/res/icons/40x40.png","notification@3x":"unpackage/res/icons/60x60.png"
 					},
 					"ipad": {
 						"normal": "unpackage/res/icons/72x72.png", /*iPad普通屏幕程序图标，分辨率：72x72*/
 						"retina": "unpackage/res/icons/144x144.png", /*iPad高分屏程序图标，分辨率：144x144*/
-						"normal7": "unpackage/res/icons/76x76.png", /*iPad iOS7程序图标，分辨率：76x76*/
-						"retina7": "unpackage/res/icons/152x152.png", /*iPad iOS7高分屏程序图标，分辨率：152x152*/
+						 /*iPad iOS7程序图标，分辨率：76x76*/
+						 /*iPad iOS7高分屏程序图标，分辨率：152x152*/
 						"spotlight-normal": "unpackage/res/icons/50x50.png", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
 						"spotlight-retina": "unpackage/res/icons/100x100.png", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
-						"spotlight-normal7": "unpackage/res/icons/40x40.png",/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
-						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
-						"settings-normal": "unpackage/res/icons/29x29.png",/*iPad设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png"
-					}
+						/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
+						/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						/*iPad设置页面程序图标，分辨率：29x29*/
+						"app":"unpackage/res/icons/76x76.png","app@2x":"unpackage/res/icons/152x152.png","settings":"unpackage/res/icons/29x29.png","spotlight":"unpackage/res/icons/40x40.png","proapp@2x":"unpackage/res/icons/167x167.png","settings@2x":"unpackage/res/icons/58x58.png","spotlight@2x":"unpackage/res/icons/80x80.png","notification":"unpackage/res/icons/20x20.png","notification@2x":"unpackage/res/icons/40x40.png"
+					},"appstore":"unpackage/res/icons/1024x1024.png"
 				},
 				"android": {
 					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
@@ -208,29 +206,29 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "F:/qdy2017/ios_png/640x960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "F:/qdy2017/ios_png/640x1136.png",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
-						"retina47": "F:/qdy2017/ios_png/750x1334.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
-						"retina55": "F:/qdy2017/ios_png/1242x2208.png",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-						"retina55l": "F:/qdy2017/ios_png/2208x1242.png"
+						"retina35": "F:/gyhDQY2017/ios/640x960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "F:/gyhDQY2017/ios/640x1136.png",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
+						"retina47": "F:/gyhDQY2017/ios/750x1334.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+						"retina55": "F:/gyhDQY2017/ios/1242x2208.png",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
+						"retina55l": "F:/gyhDQY2017/ios/2208x1242.png"
 					},
 					"ipad": {
-						"portrait": "F:/qdy2017/ios_png/768x1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "F:/qdy2017/ios_png/1536x2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "F:/qdy2017/ios_png/1024x748.png", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "F:/qdy2017/ios_png/2048x1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "F:/qdy2017/ios_png/768x1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "F:/qdy2017/ios_png/1536x2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "F:/qdy2017/ios_png/1024x768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": "F:/qdy2017/ios_png/2048x1536.png"
+						"portrait": "F:/gyhDQY2017/ios/768x1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "F:/gyhDQY2017/ios/1536x2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "F:/gyhDQY2017/ios/1024x748.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "F:/gyhDQY2017/ios/2048x1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "F:/gyhDQY2017/ios/768x1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "F:/gyhDQY2017/ios/1536x2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "F:/gyhDQY2017/ios/1024x768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "F:/gyhDQY2017/ios/2048x1536.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "F:/qdy2017/android_png/480x762.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "F:/qdy2017/android_png/720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "F:/qdy2017/android_png/1080x1882.png"
+					"hdpi": "F:/gyhDQY2017/480x762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "F:/gyhDQY2017/720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "F:/gyhDQY2017/1080x1882.png"
 				}
 			}
 		}
@@ -370,7 +368,9 @@
 					"my_center/feedback.html",
 					"my_center/about_software.html",
 					"my_center/help.html",
-					"my_center/about.html"
+					"my_center/about.html",
+					"my_center/modify_payPwd.html",
+					"my_center/modify_pwd.html"
 				],
 				"priority": 5
 			},
@@ -638,7 +638,8 @@
 					"css/my.css",
 					"css/common.css",
 					"fonts/iconfont-nodata.ttf",
-					"css/imagePreview.css"
+					"css/imagePreview.css",
+					"css/qa_details.css"
 				],
 				"priority": 13,
 				"refer": []
@@ -1217,7 +1218,8 @@
 					"css/common-form.css",
 					"css/common.css",
 					"fonts/iconfont-nodata.ttf",
-					"css/login/boundpho.css"
+					"css/login/boundpho.css",
+					"images/default-news.png"
 				],
 				"refer": [
 					"tabbar.html"
@@ -1308,7 +1310,9 @@
 					"my_center/myD.html",
 					"my_center/contactService.html",
 					"tabbar.html",
-					"register.html"
+					"register.html",
+					"msearch/search.html",
+					"my_center/contactServiceOfNet.html"
 				],
 				"priority": 0
 			},
@@ -1600,7 +1604,9 @@
 					"images/index/icon_hos.png",
 					"images/index/icon_med.png",
 					"images/index/icon_server.png",
-					"images/index/icon_vac.png"
+					"images/index/icon_vac.png",
+					"img/address.png",
+					"img/subject.png"
 				],
 				"refer": [
 					"doctor/doctor_list.html",
@@ -1616,7 +1622,8 @@
 					"doctor/doctor_detail.html",
 					"doctor/order_register.html",
 					"msearch/setting.html",
-					"msearch/search.html"
+					"msearch/search.html",
+					"my_center/contactServiceOfNet.html"
 				],
 				"priority": 0
 			},

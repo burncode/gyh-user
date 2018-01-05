@@ -8,60 +8,8 @@
 		<link rel="stylesheet" href="../css/my.css" />
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/imagePreview.css" />
-		<style>
-			.detail-content,.outline{
-				padding: 15px 15px 0 15px;
-				border-bottom: 1px solid #DEDEDE;
-				margin-bottom: 10px;
-				background: #fff;
-			}
-			label{
-				color: #666666;
-				width: 75px;
-				text-align: left;
-				display: inline-block;
-			}
-			
-			.detail-content span{
-				color: #333333;
-			}
-			.outline{
-				padding: 0;
-				margin-bottom: 10px;
-			}
-			.tit{
-				height: 30px;
-				line-height: 30px;
-				font-size: 14px;
-				border-bottom: 1px solid #DEDEDE;
-				padding: 0 15px;
-				color: #333333;
-			}
-			.outline p{
-				padding: 15px 15px;
-				margin-bottom: 0;	
-				white-space: pre-wrap;	/*中文换行*/
-				word-break: break-all;/*英文换行*/
-			}
-			.mui-content-padded{
-				border-top: 1px solid #DEDEDE;
-				padding: 15px;
-			}
-			.mui-content-padded img{
-				width: 50px;
-				height: auto;
-				margin-right: 15px;
-			}
-			p img {
-				max-width: 100%;
-				height: auto;
-			}
-			.m-display{
-				display: none;
-			}
-		</style>
+		<link rel="stylesheet" href="../css/qa_details.css" />
 	</head>
-
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
@@ -75,16 +23,12 @@
 				<p><label>留言時間：</label><span id="dateline"></span></p>
 			</div>
 			<div class="outline">
-				<div class="tit">
-					询问问题：
-				</div>
+				<div class="tit">询问问题：</div>
 				<p id="askerContent"></p>
 				<div class="mui-content-padded" id="imgList"></div>
 			</div>
 			<div class="outline m-display" id="reply">
-				<div class="tit">
-					醫生回复：
-				</div>
+				<div class="tit">醫生回复：</div>
 				<p id="replyContent"></p>
 			</div>
 		</div>

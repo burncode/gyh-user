@@ -14,7 +14,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 					w.toIndex(0);
 				} else {
 					_.fire(web, "event", extras)
-					web.show('slide-in-right', 300);
+					web.show('slide-in-right', 400);
 				}
 			} else {
 				_.openWindow({

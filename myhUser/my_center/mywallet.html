@@ -76,10 +76,7 @@
 			});
 		})(mui,document,util,window)
 		function walletData(){
-			var pdata = {};
-			var money = null;
-			var privateToken = null;
-			var walletData = null;
+			var pdata = {},money = null,privateToken = null,walletData = null;
 			privateToken = window.getItem("privateToken");
 			pdata.privateToken = privateToken;
 			util.mypost("user_center/myMoneyIndex",pdata,true,function(data){

@@ -61,7 +61,7 @@
 	<script src="../js/common.js"></script>
 	<script>
 		(function(_,doc,u,w){
-			_.init({swipeBack:true,gestureConfig:{longtap: true}}),_(".mui-scroll-wrapper").scroll();
+			_.init({swipeBack:false,gestureConfig:{longtap: true}}),_(".mui-scroll-wrapper").scroll();
 			var saveObj = doc.getElementById("save"),titleObj = doc.getElementById("title"),contentObj = doc.getElementById("content");
 			var isAnonymous = 0,pdata = {};
 			var privateToken = null,imgs = new Array();
@@ -83,37 +83,6 @@
 						choicePic()
 					}
 				});
-				function choiceCamera() {
-					var cmr = plus.camera.getCamera();
-					cmr.captureImage(function(p) {
-						plus.io.resolveLocalFileSystemURL(p, function(entry) {
-							var dst = "_doc/temp"+addIndex+".jpg";
-							plus.zip.compressImage({
-								src:entry.toLocalURL(),dst:dst,width:'50%',overwrite:true
-							},function(even){
-								setImg(even.target);
-							});
-						}, function(e) {});
-					}, function(e) {}, {
-						index: 1,
-						filename: "_doc/camera/"
-					});
-				}
-				function choicePic() {
-					plus.gallery.pick(function(path) {
-						var dst = "_doc/temp"+addIndex+".jpg";
-						plus.zip.compressImage({
-							src:path,dst:dst,width:'50%',overwrite:true
-						},function(even){
-							setImg(even.target);
-						});
-					}, function(e) {}, {
-						filter: 'image'
-					});
-				}
-				function setImg(src) {
-					imgObj.setAttribute("src",src);
-				}
 				//长按删除所选图片
 				_(".release-post-img").on("longtap","img",function(){
 					var self = this;
@@ -185,6 +154,37 @@
 					task.start();
 				});
 			});
+			function choiceCamera() {
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p) {
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						var dst = "_doc/temp"+addIndex+".jpg";
+						plus.zip.compressImage({
+							src:entry.toLocalURL(),dst:dst,width:'50%',overwrite:true
+						},function(even){
+							setImg(even.target);
+						});
+					}, function(e) {});
+				}, function(e) {}, {
+					index: 1,
+					filename: "_doc/camera/"
+				});
+			}
+			function choicePic() {
+				plus.gallery.pick(function(path) {
+					var dst = "_doc/temp"+addIndex+".jpg";
+					plus.zip.compressImage({
+						src:path,dst:dst,width:'50%',overwrite:true
+					},function(even){
+						setImg(even.target);
+					});
+				}, function(e) {}, {
+					filter: 'image'
+				});
+			}
+			function setImg(src) {
+				imgObj.setAttribute("src",src);
+			}
 			//选择是否匿名發布
 			doc.getElementById("res").addEventListener('tap', function() {
 				if(hasClass(this,"icon-xuanzhong")){

@@ -12,7 +12,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-			<h1 id="title" class="mui-title">充值</h1>			
+			<h1 id="title" class="mui-title">充值</h1>
 		</header>
 		<div class="mui-content">
 			<p>充值金額</p>
@@ -20,7 +20,7 @@
 			<p>支付方式</p>
 			<div id="sheet" class="mui-popover-bottom mui-popover-action">
 			    <ul class="mui-table-view mui-table-view-radio">
-					<li id='1' class="mui-table-view-cell mui-selected">
+					<!--<li id='1' class="mui-table-view-cell mui-selected">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/weixin.png">
 							<div class="mui-media-body mui-pull-left">微信支付</div>
@@ -28,13 +28,13 @@
 								<span class="choose-pay-way on"></span>
 							</div>
 						</a>
-					</li>
-					<li id='2' class="mui-table-view-cell">
+					</li>-->
+					<li id='2' class="mui-table-view-cell mui-selected">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
 							<div class="mui-media-body mui-pull-left">支付寶支付</div>
 							<div class="mui-pull-right choice-img">
-								<span class="choose-pay-way"></span>
+								<span class="choose-pay-way on"></span>
 							</div>
 						</a>
 					</li>
@@ -105,17 +105,13 @@
 					var txt=null;
 					switch(pc.id){
 						case "alipay":
-						txt="檢測到系統未安裝“支付寶快捷支付服務”，無法完成支付操作，是否立即安裝？";
+						txt="檢測到系統未安裝“支付寶快捷支付服務”，無法完成支付";
 						break;
 						default:
-						txt="系統未安裝“"+pc.description+"”服務，無法完成支付，是否立即安装？";
+						txt="系統未安裝“"+pc.description+"”服務，無法完成支付";
 						break;
 					}
-					plus.nativeUI.confirm(txt,function(e){
-						if(e.index==0){
-							pc.installService();
-						}
-					},pc.description);
+					plus.nativeUI.confirm(txt,function(e){},pc.description);
 				}
 			}
 			//调用支付

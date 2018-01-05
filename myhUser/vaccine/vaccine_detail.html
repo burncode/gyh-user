@@ -27,7 +27,7 @@
 				<div class="pay-money"><span class="pay-title">定金：</span><span class="RMB">¥</span><span id="price"></span></div>
 				<div class="pay-money"><span class="pay-title">剩余款項<span class="paytoHK">（到港支付）</span>：</span><span class="RMB">HKD</span><span id="price2"></span></div>
 			</div>
-			<button type="button" class="mui-btn detail-btn-pay" id="pay">付款</button>
+			<button type="button" class="mui-btn detail-btn-pay" id="pay">预约</button>
 		</div>
 		<div class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -43,7 +43,7 @@
 		(function(_,doc,u,w){
 			_.init(),_(".mui-scroll-wrapper").scroll();
 			var payObj = doc.getElementById("pay"),detailObj = doc.getElementById("detail");
-			var pdata = {},vaccinumId = null,price =null,remainAmount = null;
+			var pdata = {},vaccinumId = null,price =null,remainAmount = null,name = '';
 			var orderId = null,web = null,privateToken = null;
 			newContactNum = doc.getElementById("newContactNum");
 			_.plusReady(function(){
@@ -73,22 +73,25 @@
 				if(!w.getUser()){
 					w.openView("../userLogin.html");
 				}else{
-					pdata.privateToken = privateToken;
-					pdata.vaccinumId = vaccinumId;
-					u.mypost("vaccinum/payView",pdata,true,function(data){
-						if(data.code == 0){
-							orderId = data.data.orderId;
-							var ex = {
-								type:2,
-								order_type:"疫苗接種定金",
-								orderId:orderId,
-								fee:price
-							}
-							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
-						}else if(data.code == 500 && '未登錄' == data.msg){
-							w.openView("../userLogin.html");
-						}
-					},myerror);
+//					pdata.privateToken = privateToken;
+//					pdata.vaccinumId = vaccinumId;
+
+					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name});
+					
+//					u.mypost("vaccinum/payView",pdata,true,function(data){
+//						if(data.code == 0){
+//							orderId = data.data.orderId;
+//							var ex = {
+//								type:2,
+//								order_type:"疫苗接種定金",
+//								orderId:orderId,
+//								fee:price
+//							}
+//							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
+//						}else if(data.code == 500 && '未登錄' == data.msg){
+//							w.openView("../userLogin.html");
+//						}
+//					},myerror);
 				}
 			});
 			//聯系客服

@@ -39,11 +39,11 @@
 							</div>
 						</form>
 						<ul class="mui-table-view mui-table-view-chevron">
-							<li class="mui-table-view-cell">
-								<a href="#area" class="mui-navigate-right">地區<span id="choose_area" class="a-chosed main-font-color font-size-14">不限</span></a>
+							<li  class="mui-table-view-cell">
+								<a id="aArea" href="#area" class="mui-navigate-right">地區<span id="choose_area" class="a-chosed main-font-color font-size-14">不限</span></a>
 							</li>
 							<li class="mui-table-view-cell">
-								<a href="#office" class="mui-navigate-right">科室<span id="choose_office" class="a-chosed main-font-color font-size-14">不限</span></a>
+								<a id="aOffice" href="#office" class="mui-navigate-right">科室<span id="choose_office" class="a-chosed main-font-color font-size-14">不限</span></a>
 							</li>
 						</ul>
 						<div class="next">
@@ -69,13 +69,13 @@
 						        <div class="mui-media-body">不限</div>
 							</li>
 							<li id="1" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
-						        <div class="mui-media-body">九龙半岛</div>
+						        <div class="mui-media-body">九龍半島</div>
 							</li>
 							<li id="2" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
 						        <div class="mui-media-body">新界</div>
 							</li>
 							<li id="3" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
-						        <div class="mui-media-body">香港岛</div>
+						        <div class="mui-media-body">香港島</div>
 							</li>
 					    </ul>
 					    <ul id="area1" class="mui-table-view mui-hidden">
@@ -131,7 +131,7 @@
 			var area1Obj = document.getElementById("area1"),area2Obj = document.getElementById("area2"),area3Obj = document.getElementById("area3");
 			var area_liObj = document.getElementById("area_li");
 			var keywordObj = document.getElementById("keyword");
-			var search_his_contentObj = document.getElementById("search_his_content");
+			var search_his_contentObj = document.getElementById("search_his_content"),aAreaObj = document.getElementById("aArea"),aOfficeObj = document.getElementById("aOffice");;
 			mui.init();
 			//初始化单页view
 			var viewApi = mui('#app').view({
@@ -139,6 +139,14 @@
 			});
 			//初始化单页的区域滚动
 			mui('.mui-scroll-wrapper').scroll();
+			w.addEventListener("event",function(e){
+				var ex = e.detail.ex;
+				if(ex == 1){
+					_.trigger(aAreaObj,'tap');
+				}else if(ex == 2){
+					_.trigger(aOfficeObj,'tap');
+				}
+			})
 			_.plusReady(function() {
 				u.mypost("hospital/getAllOffices",{},false,function(data){
 					if(data.code == 0){

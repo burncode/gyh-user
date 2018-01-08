@@ -59,6 +59,10 @@
 				url:"msearch/search.html",
 				id:"search",
 				styles:{popGesture: "hide"}
+			},{
+				url:"vaccine/vaccine_submit.html",
+				id:"vaccine_submit",
+				styles:{popGesture: "hide"}
 			}]}),_(".mui-scroll-wrapper").scroll();
 			
 			var accountObj = doc.getElementById("account"),passwordObj = doc.getElementById("password");
@@ -111,7 +115,7 @@
 			//登錄并隐藏登錄
 			function loginSkip(){
 				var all = plus.webview.all();
-				if(all.length > 4){
+				if(all.length > 5){
 					plus.webview.hide(plus.webview.getWebviewById("userLogin"),"slide-out-right",300);
 				}else{
 					w.openView("tabbar.html");

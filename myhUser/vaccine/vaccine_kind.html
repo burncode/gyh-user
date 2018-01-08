@@ -110,7 +110,8 @@
 			_('.gene-content').on('tap','.mui-col-xs-6.mui-col-sm-4',function(){
 				/*疫苗id*/
 				var ex  = {
-					vaccinumId:this.id
+					vaccinumId:this.id,
+					thumbnailImg:this.thumbnailImg
 				}
 	      		w.openView('vaccine_detail.html',ex);
 	   		})
@@ -161,6 +162,7 @@
 						dl.className ="mui-col-xs-6 mui-col-sm-4";
 						dl.id = obj.id;
 						img = obj.thumbnail == ""?"../images/default-record.png":imgserver+obj.thumbnail;
+						dl.thumbnailImg = img;
 						dl.innerHTML = "<dl><dt><img style='height:"+imgHeight+"px;' data-lazyload='"+img+"'></dt>"+
 						"<dd><span class='gene-content-title mui-ellipsis-2'>"+(obj.name || '-')+"</span>"+
 							"<span class='gene-content-money'>￥"+(obj.price || '-')+"</span>"+

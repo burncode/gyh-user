@@ -1578,7 +1578,7 @@ input[type=submit]:enabled:active {
 
 .mui-card {
 	overflow: hidden;
-	margin: 0 15px;
+	margin: 0 10px;
 	border: 1px solid #ddd;
 	border-radius: 6px;
 	background-color: #fff;

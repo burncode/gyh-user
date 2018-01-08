@@ -27,7 +27,7 @@
 				<div class="pay-money"><span class="pay-title">定金：</span><span class="RMB">¥</span><span id="price"></span></div>
 				<div class="pay-money"><span class="pay-title">剩余款項<span class="paytoHK">（到港支付）</span>：</span><span class="RMB">HKD</span><span id="price2"></span></div>
 			</div>
-			<button type="button" class="mui-btn detail-btn-pay" id="pay">预约</button>
+			<button type="button" class="mui-btn detail-btn-pay" id="pay">我要预约</button>
 		</div>
 		<div class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -43,13 +43,14 @@
 		(function(_,doc,u,w){
 			_.init(),_(".mui-scroll-wrapper").scroll();
 			var payObj = doc.getElementById("pay"),detailObj = doc.getElementById("detail");
-			var pdata = {},vaccinumId = null,price =null,remainAmount = null,name = '';
+			var pdata = {},vaccinumId = null,price =null,remainAmount = null,name = '',thumbnailImg = '';
 			var orderId = null,web = null,privateToken = null;
 			newContactNum = doc.getElementById("newContactNum");
 			_.plusReady(function(){
 				privateToken = w.getItem("privateToken");
 				web = plus.webview.currentWebview();
 				vaccinumId = web.vaccinumId;
+				thumbnailImg = web.thumbnailImg;
 				pdata.vaccinumId = vaccinumId;
 				u.mypost("vaccinum/vaccinumDetail",pdata,true,function(data){
 					if(data.code == 0){
@@ -76,7 +77,7 @@
 //					pdata.privateToken = privateToken;
 //					pdata.vaccinumId = vaccinumId;
 
-					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name});
+					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name,price:price,thumbnailImg:thumbnailImg});
 					
 //					u.mypost("vaccinum/payView",pdata,true,function(data){
 //						if(data.code == 0){

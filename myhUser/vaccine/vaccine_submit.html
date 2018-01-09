@@ -62,7 +62,7 @@
 				height: 0;
 			}
 			
-			.mui-btn.mui-btn-success {
+			.div_btn_add .mui-btn.mui-btn-blue {
 				padding: 6px 12px 2px;
 			}
 			
@@ -71,8 +71,6 @@
 				bottom: 1px;
 				right: 5px;
 			}
-			
-			.mui-input-group .mui-input-row:after {}
 			
 			.mui-table-view-cell {
 				padding: 0;
@@ -91,27 +89,42 @@
 			
 			#vaccineName {
 				font-size: 15px;
-				min-height: 60px;word-break: break-all;
+				min-height: 60px;
+				word-break: break-all;
 			}
 			
 			.mui-card {
 				border: 0;
 			}
 		</style>
+		<script>
+			//检查手机号
+			function checkPhone(phone) {
+				if(!util.checkPhone(phone)) {
+					mui.toast('请正确填写联系电话')
+				}
+			}
+			//检查身份证号
+			function checkCardId(val) {
+				if(!util.checkCardId(val)) {
+					mui.toast('请正确填写身份证号码')
+				}
+			}
+		</script>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">填写资料</h1>
-			<button id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="border: 0;">确认</button>
+			<button id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="border: 0;">提交</button>
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view mui-table-view-chevron" style="margin: 10px;">
 				<li class="mui-table-view-cell mui-media" style="padding:10px;border-radius: 6px;">
 					<img id="thumbnailImg" class="mui-media-object mui-pull-left" src="../images/default-record.png">
 					<div class="mui-media-body">
-						<div id="vaccineName">GSK-HPV二價疫苗 Cervarix®卉妍康</div>
+						<div id="vaccineName">疫苗名称</div>
 						<p class="main-font-color">定金: ¥<span id="price">0.00</span><span class="mui-pull-right">x1</span></p>
 					</div>
 				</li>
@@ -126,22 +139,22 @@
 							<form class="mui-input-group">
 								<div class="mui-input-row">
 									<label>到诊人</label>
-									<input type="text" class="mui-input-clear name" placeholder="请输入到诊人">
+									<input type="text" maxlength="10" class="mui-input-clear name" placeholder="请输入到诊人">
 								</div>
 								<div class="mui-input-row">
 									<label>联系电话</label>
-									<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话">
+									<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话" onblur="checkPhone(this.value)">
 								</div>
 								<div class="mui-input-row">
 									<label>身份证号码</label>
-									<input type="tel" class="mui-input-clear card" placeholder="接种人身份证号码">
+									<input type="tel" class="mui-input-clear card" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">
 								</div>
 							</form>
 						</div>
 					</li>
 				</ul>
 			</div>
-			<div class="div_btn_add"><button id='addBtn' type="button" class="mui-btn mui-btn-success mui-icon mui-icon-plus">添加到诊人</button></div>
+			<div class="div_btn_add"><button id='addBtn' type="button" class="mui-btn mui-btn-blue mui-icon mui-icon-plus">添加</button></div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
@@ -195,15 +208,15 @@
 					'<form class="mui-input-group">' +
 					'<div class="mui-input-row">' +
 					'<label>到诊人</label>' +
-					'<input type="text" class="mui-input-clear name" placeholder="请输入到诊人">' +
+					'<input type="text"  maxlength="10" class="mui-input-clear name" placeholder="请输入到诊人">' +
 					'</div>' +
 					'<div class="mui-input-row">' +
 					'<label>联系电话</label>' +
-					'<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话">' +
+					'<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
 					'</div>' +
 					'<div class="mui-input-row">' +
 					'<label>身份证号码</label>' +
-					'<input type="tel" class="mui-input-clear card" placeholder="接种人身份证号码">' +
+					'<input type="tel" class="mui-input-clear card" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">' +
 					'</div>' +
 					'</form>' +
 					'</div>';
@@ -246,7 +259,7 @@
 			_('#divForm').on('tap', '.mui-btn', function(event) {
 				var elem = this;
 				var li = elem.parentNode.parentNode;
-				_.confirm('确认删除该条记录？', 'Hello MUI', ['确认', '取消'], function(e) {
+				_.confirm('确认删除该条记录？', '提示', ['确认', '取消'], function(e) {
 					if(e.index == 0) {
 						li.parentNode.removeChild(li);
 					} else {

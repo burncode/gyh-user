@@ -74,25 +74,7 @@
 				if(!w.getUser()){
 					w.openView("../userLogin.html");
 				}else{
-//					pdata.privateToken = privateToken;
-//					pdata.vaccinumId = vaccinumId;
-
 					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name,price:price,thumbnailImg:thumbnailImg});
-					
-//					u.mypost("vaccinum/payView",pdata,true,function(data){
-//						if(data.code == 0){
-//							orderId = data.data.orderId;
-//							var ex = {
-//								type:2,
-//								order_type:"疫苗接種定金",
-//								orderId:orderId,
-//								fee:price
-//							}
-//							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
-//						}else if(data.code == 500 && '未登錄' == data.msg){
-//							w.openView("../userLogin.html");
-//						}
-//					},myerror);
 				}
 			});
 			//聯系客服

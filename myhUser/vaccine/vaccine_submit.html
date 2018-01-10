@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -9,94 +8,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>填写资料</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
-		<style>
-			.main-font-color,
-			header .mui-icon.mui-icon-left-nav,
-			.mui-icon-reload {
-				color: #33A2D7 !important
-			}
-			
-			.mui-bar {
-				background-color: #fff;
-			}
-			
-			.mui-bar-nav {
-				top: 0;
-				-webkit-box-shadow: 0 1px 6px #ccc;
-				box-shadow: 0 1px 6px transparent;
-				border-bottom: 1px solid #DEDEDE
-			}
-			
-			.mui-bar .mui-title {
-				right: 40px;
-				left: 40px;
-				display: inline-block;
-				overflow: hidden;
-				width: auto;
-				margin: 0;
-				text-overflow: ellipsis;
-				color: #33A2D7;
-				font-size: 17px !important
-			}
-			
-			body {
-				background-color: #efeff4 !important
-			}
-			
-			.div_btn_add {
-				margin: 15px auto;
-				width: 70%;
-			}
-			
-			.div_btn_add button {
-				width: 100%;
-			}
-			
-			label,
-			input {
-				font-size: 15px;
-			}
-			
-			.mui-table-view:before,
-			.mui-table-view:after {
-				height: 0;
-			}
-			
-			.div_btn_add .mui-btn.mui-btn-blue {
-				padding: 6px 12px 2px;
-			}
-			
-			.mui-icon-plus:before {
-				position: relative;
-				bottom: 1px;
-				right: 5px;
-			}
-			
-			.mui-table-view-cell {
-				padding: 0;
-				margin: 10px 0 0;
-			}
-			
-			.mui-table-view-chevron .mui-table-view-cell {
-				padding-right: 10px;
-			}
-			
-			.mui-table-view .mui-media-object {
-				line-height: 80px;
-				max-width: 120px;
-				height: 80px;
-			}
-			
-			#vaccineName {
-				font-size: 15px;
-				min-height: 60px;
-				word-break: break-all;
-			}
-			
-			.mui-card {
-				border: 0;
-			}
-		</style>
+		<link rel="stylesheet" href="../css/vaccine/vaccine_submit.css" />
 		<script>
 			//检查手机号
 			function checkPhone(phone) {
@@ -260,23 +172,22 @@
 				pdata.privateToken = w.getItem("privateToken");
 				pdata.vaccinumId = vaccinumId;
 				pdata.arrUser = JSON.stringify(arrUser);
-				
 				console.log('payView pdata=====' + JSON.stringify(pdata));
-				
-//				u.mypost("vaccinum/payView",pdata,true,function(data){
-//						if(data.code == 0){
-//							orderId = data.data.orderId;
-//							var ex = {
-//								type:2,
-//								order_type:"疫苗接種定金",
-//								orderId:orderId,
-//								fee:price
-//							}
-//							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
-//						}else if(data.code == 500 && '未登錄' == data.msg){
-//							w.openView("../userLogin.html");
-//						}
-//					},myerror);
+				u.mypost("vaccinum/payView",pdata,true,function(data){
+					console.log('payView data=====' + JSON.stringify(data));
+					if(data.code == 0){
+						orderId = data.data.orderId;
+						var ex = {
+							type:2,
+							order_type:"疫苗接種定金",
+							orderId:orderId,
+							fee:price
+						}
+						w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
+					}else if(data.code == 500 && '未登錄' == data.msg){
+						w.openView("../userLogin.html");
+					}
+				},myerror);
 				
 			})
 

@@ -106,7 +106,7 @@
 			}
 			//检查身份证号
 			function checkCardId(val) {
-				if(!util.checkCardId(val)) {
+				if(!util.checkIdCard(val)) {
 					mui.toast('请正确填写身份证号码')
 				}
 			}
@@ -125,7 +125,7 @@
 					<img id="thumbnailImg" class="mui-media-object mui-pull-left" src="../images/default-record.png">
 					<div class="mui-media-body">
 						<div id="vaccineName">疫苗名称</div>
-						<p class="main-font-color">定金: ¥<span id="price">0.00</span><span class="mui-pull-right">x1</span></p>
+						<p class="main-font-color">定金: ¥<span id="price">0.00</span></p>
 					</div>
 				</li>
 			</ul>
@@ -143,11 +143,11 @@
 								</div>
 								<div class="mui-input-row">
 									<label>联系电话</label>
-									<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话" onblur="checkPhone(this.value)">
+									<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">
 								</div>
 								<div class="mui-input-row">
 									<label>身份证号码</label>
-									<input type="tel" class="mui-input-clear card" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">
+									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">
 								</div>
 							</form>
 						</div>
@@ -165,27 +165,20 @@
 			var vaccinumId = null,
 				inputItmems = null,
 				thumbnailImg = '';
+			var arrUser = [],pdata= {};//用户信息数组
+			var user = {},len = 0,userNum = 1;//用户对象   数量
 			var divFormObj = document.getElementById("divForm"),
-				submitObj = document.getElementById("submit");
+				submitObj = document.getElementById("submit"),priceObj = document.getElementById("price");
 
 			w.addEventListener("event", function(e) {
-				privateToken = w.getItem("privateToken");
 				vaccinumId = e.detail.vaccinumId;
 				name = e.detail.name;
-				price = e.detail.price;
+				price = (e.detail.price) * userNum;
 				thumbnailImg = e.detail.thumbnailImg || '../images/default-record.png';
 				document.getElementById("thumbnailImg").setAttribute('src', thumbnailImg);
-				document.getElementById("price").innerHTML = price;
+				priceObj.innerHTML = price;
 				console.log(JSON.stringify(e.detail));
 				document.getElementById("vaccineName").innerHTML = name;
-
-			})
-
-			_.plusReady(function() {
-				//				privateToken = w.getItem("privateToken");
-				//				web = plus.webview.currentWebview();
-				//				vaccinumId = web.vaccinumId;
-				//				name = web.name;
 			})
 
 			//添加接种人信息
@@ -193,9 +186,20 @@
 				inputItmems = divFormObj.querySelectorAll('input');
 				if(inputItmems && inputItmems.length > 0) {
 					for(var i = 0; i < inputItmems.length; i++) {
-						if(u.isNull(inputItmems[i].value)) {
+						var vObj = inputItmems[i];
+						if(u.isNull(vObj.value)) {
 							_.toast('请补充完整到诊人信息');
 							return;
+						}else if(hasClass(vObj,'mobile')){
+							if(!util.checkPhone(vObj.value)) {
+								_.toast('请正确填写联系电话');
+								return;
+							}
+						}else if(hasClass(vObj,'identity')){
+							if(!util.checkIdCard(vObj.value)) {
+								mui.toast('请正确填写身份证号码');
+								return;
+							}
 						}
 					}
 				}
@@ -212,15 +216,17 @@
 					'</div>' +
 					'<div class="mui-input-row">' +
 					'<label>联系电话</label>' +
-					'<input type="tel" maxlength="11" class="mui-input-clear tel" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
+					'<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
 					'</div>' +
 					'<div class="mui-input-row">' +
 					'<label>身份证号码</label>' +
-					'<input type="tel" class="mui-input-clear card" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">' +
+					'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">' +
 					'</div>' +
 					'</form>' +
 					'</div>';
 				divFormObj.appendChild(liItem);
+				userNum++;
+				priceObj.innerHTML = price * userNum;
 			})
 
 			//提交
@@ -236,24 +242,42 @@
 				}
 
 				var names = document.getElementsByClassName('name');
-				var tels = document.getElementsByClassName('tel');
-				var cards = document.getElementsByClassName('card');
+				var mobiles = document.getElementsByClassName('mobile');
+				var identity = document.getElementsByClassName('identity');
 
-				var namesArr = [],
-					telsArr = [],
-					cardsArr = [];
-				for(var i = 0; i < names.length; i++) {
-					namesArr.push(names[i].value);
-					console.log('namesArr=====' + namesArr[i]);
+				arrUser = [];
+				len = 0;
+				len = names.length || 0;
+				for(var i = 0; i < len; i++) {
+					user = {};
+					user.name = names[i].value;
+					user.mobile = mobiles[i].value;
+					user.identity = identity[i].value;
+					arrUser.push(user);
 				}
-				for(var i = 0; i < tels.length; i++) {
-					telsArr.push(tels[i].value);
-					console.log('telsArr=====' + telsArr[i]);
-				}
-				for(var i = 0; i < cards.length; i++) {
-					cardsArr.push(cards[i].value);
-					console.log('cardsArr=====' + cardsArr[i]);
-				}
+				console.log('arrUser=====' + JSON.stringify(arrUser));
+				
+				pdata.privateToken = w.getItem("privateToken");
+				pdata.vaccinumId = vaccinumId;
+				pdata.arrUser = JSON.stringify(arrUser);
+				
+				console.log('payView pdata=====' + JSON.stringify(pdata));
+				
+//				u.mypost("vaccinum/payView",pdata,true,function(data){
+//						if(data.code == 0){
+//							orderId = data.data.orderId;
+//							var ex = {
+//								type:2,
+//								order_type:"疫苗接種定金",
+//								orderId:orderId,
+//								fee:price
+//							}
+//							w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
+//						}else if(data.code == 500 && '未登錄' == data.msg){
+//							w.openView("../userLogin.html");
+//						}
+//					},myerror);
+				
 			})
 
 			_('#divForm').on('tap', '.mui-btn', function(event) {
@@ -262,6 +286,8 @@
 				_.confirm('确认删除该条记录？', '提示', ['确认', '取消'], function(e) {
 					if(e.index == 0) {
 						li.parentNode.removeChild(li);
+						userNum--;
+						priceObj.innerHTML = price * userNum;
 					} else {
 						setTimeout(function() {
 							_.swipeoutClose(li);

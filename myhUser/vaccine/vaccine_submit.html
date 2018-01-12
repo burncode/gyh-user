@@ -9,7 +9,26 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>填写资料</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/simple-calendar.css" />
 		<link rel="stylesheet" href="../css/vaccine/vaccine_submit.css" />
+		<style>
+			#calendar {
+				width: 100%
+			}
+			
+			.clearfix {
+				margin-bottom: 10px !important
+			}
+			
+			select {
+				width: auto !important;
+				margin: 0
+			}
+			
+			.mui-popover.mui-popover-action {
+				background: #fff;
+			}
+		</style>
 		<script>
 			//检查手机号
 			function checkPhone(phone) {
@@ -59,12 +78,12 @@
 									<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">
 								</div>
 								<div class="mui-input-row">
-									<label>身份证号码</label>
-									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">
+									<label>身份证号</label>
+									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号" onblur="checkCardId(this.value)">
 								</div>
 								<div id="chooseDate" class="mui-input-row">
-									<label>选择日期</label>
-									<input type="text" class="mui-input-clear name" placeholder="请选择日期" readonly="readonly">
+									<label>预约日期</label>
+									<input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly">
 								</div>
 							</form>
 						</div>
@@ -72,9 +91,13 @@
 				</ul>
 			</div>
 			<div class="div_btn_add"><button id='addBtn' type="button" class="mui-btn mui-btn-blue mui-icon mui-icon-plus">添加</button></div>
+			<div id="time" class="mui-popover mui-popover-action mui-popover-bottom">
+				<div id='calendar'></div>
+			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/simple-calendar.js"></script>
 	<script src="../js/common.js"></script>
 	<script>
 		(function(_, doc, u, w) {
@@ -82,10 +105,21 @@
 			var vaccinumId = null,
 				inputItmems = null,
 				thumbnailImg = '';
-			var arrUser = [],pdata= {};//用户信息数组
-			var user = {},len = 0,userNum = 1;//用户对象   数量
+			var arrUser = [],
+				pdata = {}; //用户信息数组
+			var user = {},
+				len = 0,
+				userNum = 1; //用户对象   数量
+			var thisOrderDate = null;
 			var divFormObj = document.getElementById("divForm"),
-				submitObj = document.getElementById("submit"),priceObj = document.getElementById("price");
+				submitObj = document.getElementById("submit"),
+				priceObj = document.getElementById("price");
+
+			var calendarObj = document.getElementById("calendar");
+			var myCalendar = new SimpleCalendar('#calendar');
+			//可预约日期
+			var markObj = {}
+			myCalendar.addMark(markObj);
 
 			w.addEventListener("event", function(e) {
 				vaccinumId = e.detail.vaccinumId;
@@ -107,12 +141,12 @@
 						if(u.isNull(vObj.value)) {
 							_.toast('请补充完整到诊人信息');
 							return;
-						}else if(hasClass(vObj,'mobile')){
+						} else if(hasClass(vObj, 'mobile')) {
 							if(!util.checkPhone(vObj.value)) {
 								_.toast('请正确填写联系电话');
 								return;
 							}
-						}else if(hasClass(vObj,'identity')){
+						} else if(hasClass(vObj, 'identity')) {
 							if(!util.checkIdCard(vObj.value)) {
 								mui.toast('请正确填写身份证号码');
 								return;
@@ -136,8 +170,11 @@
 					'<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
 					'</div>' +
 					'<div class="mui-input-row">' +
-					'<label>身份证号码</label>' +
-					'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号码" onblur="checkCardId(this.value)">' +
+					'<label>身份证号</label>' +
+					'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="接种人身份证号" onblur="checkCardId(this.value)">' +
+					'</div><div id="chooseDate" class="mui-input-row">' +
+					'<label>预约日期</label>' +
+					'<input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly">' +
 					'</div>' +
 					'</form>' +
 					'</div>';
@@ -161,6 +198,7 @@
 				var names = document.getElementsByClassName('name');
 				var mobiles = document.getElementsByClassName('mobile');
 				var identity = document.getElementsByClassName('identity');
+				var orderDate = document.getElementsByClassName('orderDate');
 
 				arrUser = [];
 				len = 0;
@@ -170,30 +208,44 @@
 					user.name = names[i].value;
 					user.mobile = mobiles[i].value;
 					user.identity = identity[i].value;
+					user.orderDate = orderDate[i].value;
 					arrUser.push(user);
 				}
 				console.log('arrUser=====' + JSON.stringify(arrUser));
-				
+
 				pdata.privateToken = w.getItem("privateToken");
 				pdata.vaccinumId = vaccinumId;
 				pdata.arrUser = JSON.stringify(arrUser);
 				console.log('payView pdata=====' + JSON.stringify(pdata));
-				u.mypost("vaccinum/payView",pdata,true,function(data){
+				u.mypost("vaccinum/payView", pdata, true, function(data) {
 					console.log('payView data=====' + JSON.stringify(data));
-					if(data.code == 0){
+					if(data.code == 0) {
 						orderId = data.data.orderId;
 						var ex = {
-							type:2,
-							order_type:"疫苗接種定金",
-							orderId:orderId,
-							fee:price
+							type: 2,
+							order_type: "疫苗接種定金",
+							orderId: orderId,
+							fee: data.data.price
 						}
-						w.openView("../doctor/pay.html",ex);//1代表直接支付，并跳转到購買成功
-					}else if(data.code == 500 && '未登錄' == data.msg){
+						w.openView("../doctor/pay.html", ex); //1代表直接支付，并跳转到購買成功
+					} else if(data.code == 500 && '未登錄' == data.msg) {
 						w.openView("../userLogin.html");
 					}
-				},myerror);
-				
+				}, myerror);
+
+			})
+
+			var yearObj = document.getElementById("select-year"),
+				monthObj = document.getElementById("select-month")
+			//点击预约
+			_('#calendar').on('tap', '.sc-item', function() {
+				thisOrderDate.value = yearObj.value + '-' + monthObj.value + '-' + this.querySelector('.day').innerHTML;
+				_('#time').popover('toggle');
+			})
+			//点击选择时间
+			_('#divForm').on('tap', '.orderDate', function() {
+				thisOrderDate = this;
+				_('#time').popover('toggle');
 			})
 
 			_('#divForm').on('tap', '.mui-btn', function(event) {

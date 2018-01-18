@@ -88,9 +88,11 @@
 						userType:1
 					}
 					u.mypost("api/login",pdata,true,function(data){
+						console.log('data========' + JSON.stringify(data));
 						if(data.code == 0){
 							_.toast(data.msg);
 							w.setUser(data.data.privateToken);
+							w.setItem("role", data.data.userInfo.role);
 							loginSkip();
 							setTimeout(function(){
 								myDWebView = plus.webview.getWebviewById("my_center/myD.html");

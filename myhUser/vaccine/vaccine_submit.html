@@ -11,29 +11,6 @@
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/simple-calendar.css" />
 		<link rel="stylesheet" href="../css/vaccine/vaccine_submit.css" />
-		<style>
-			#calendar {
-				width: 100%
-			}
-			
-			.clearfix {
-				margin-bottom: 10px !important
-			}
-			
-			select {
-				width: auto !important;
-				margin: 0
-			}
-			
-			.mui-popover.mui-popover-action {
-				background: #fff;
-			}
-			
-			.mui-navigate-right>input[type='text']{
-			    width: 50%;
-    			padding: 0;
-			}
-		</style>
 		<script>
 			//检查手机号
 			function checkPhone(phone) {
@@ -95,7 +72,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="div_btn_add"><button id='addBtn' type="button" class="mui-btn mui-btn-blue mui-icon mui-icon-plus">添加</button></div>
+			<div id="d_btn_add" class="div_btn_add mui-hidden"><button id='addBtn' type="button" class="mui-btn mui-btn-blue mui-icon mui-icon-plus">添加</button></div>
 			<div id="time" class="mui-popover mui-popover-action mui-popover-bottom">
 				<div id='calendar'></div>
 			</div>
@@ -118,23 +95,29 @@
 			var thisOrderDate = null;
 			var divFormObj = document.getElementById("divForm"),
 				submitObj = document.getElementById("submit"),
-				priceObj = document.getElementById("price");
-
+				priceObj = document.getElementById("price"),
+				thumbnailImgObj = document.getElementById("thumbnailImg"),
+				vaccineNameObj =  document.getElementById("vaccineName");
+			var d_btn_addObj = document.getElementById("d_btn_add");
 			var calendarObj = document.getElementById("calendar");
 			var myCalendar = new SimpleCalendar('#calendar');
 			//可预约日期
 			var markObj = {}
 			myCalendar.addMark(markObj);
-
+			
 			w.addEventListener("event", function(e) {
+				if(w.getItem('role') == '代理人'){
+					removeClass(d_btn_addObj,'mui-hidden');
+				}else{
+					addClass(d_btn_addObj,'mui-hidden');
+				}
 				vaccinumId = e.detail.vaccinumId;
 				name = e.detail.name;
 				price = (e.detail.price) * userNum;
 				thumbnailImg = e.detail.thumbnailImg || '../images/default-record.png';
-				document.getElementById("thumbnailImg").setAttribute('src', thumbnailImg);
+				thumbnailImgObj.setAttribute('src', thumbnailImg);
 				priceObj.innerHTML = price;
-				console.log(JSON.stringify(e.detail));
-				document.getElementById("vaccineName").innerHTML = name;
+				vaccineNameObj.innerHTML = name;
 			})
 
 			//添加接种人信息

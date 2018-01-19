@@ -9,6 +9,15 @@
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/pay/confirmCss.css" />
 		<link rel="stylesheet" href="../css/order/buy_record.css" />
+		<style>
+			.mui-table-view-cell:after {
+			    left: 0;
+			    height: 1px;
+			}
+			.mui-table-view-cell{
+				margin: 0;
+			}
+		</style>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -17,7 +26,24 @@
 		</header>
 		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div id="cases" class="mui-scroll">
-				<ul id="buyRecord-list" class="mui-table-view"></ul>
+				<ul id="buyRecord-list" class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<img class='mui-media-object mui-pull-left' src='../images/default-news.png'>
+						<div class='mui-media-body'>
+							<div class='tit'><span class='mui-pull-left packageTitle'>疫苗名称</span><span class='state mui-pull-right color_f99'>未付款</span></div>
+							<p class='mui-pull-right price'>¥160</p>
+							<p data='2' class='mui-pull-right cancel' id='2'>取消</p>&nbsp;<p data='2' data1='150' class='mui-pull-right but' id='192'>支付</p>
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-media">
+						<img class='mui-media-object mui-pull-left' src='../images/default-news.png'>
+						<div class='mui-media-body'>
+							<div class='tit'><span class='mui-pull-left packageTitle'>疫苗名称</span><span class='state mui-pull-right color_f99'>未付款</span></div>
+							<p class='mui-pull-right price'>¥160</p>
+							<p data='2' class='mui-pull-right cancel' id='2'>取消</p>&nbsp;<p data='2' data1='150' class='mui-pull-right but' id='192'>支付</p>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</body>
@@ -31,6 +57,9 @@
 			var pdata={offset:0,limit:5};
 			var page = 0,li = null,privateToken = null,_pull = null,state = null,orderType = null,imgServer = null;
 			var list = doc.getElementById('buyRecord-list');
+			var stateClass = "",stateClass_01 = "color_f99",stateClass_02 = "color_f33";
+			var payBtn = "",pay = "",cancel = "",cancelBtn = "";
+			var payClass = "but",payText = "付款",cancelOrder = "取消",cancelClass = "cancel";
 			_.plusReady(function() {
 				privateToken = w.getItem("privateToken");
 				pdata.privateToken = privateToken;
@@ -69,12 +98,8 @@
 				});
 			});
 			function orderList(data){
+				console.log('data=======' + JSON.stringify(data));
 				imgServer = data.imgServer;//图片
-				var stateClass = "";
-				var stateClass_01 = "color_f99";
-				var stateClass_02 = "color_f33";
-				var payBtn = "",pay = "",cancel = "",cancelBtn = "";
-				var payClass = "but",payText = "付款",cancelOrder = "取消",cancelClass = "cancel";
 				_.each(data.order,function(i,obj){
 					li = doc.createElement("li");
 					li.id = obj.gid;
@@ -108,9 +133,9 @@
 					li.className = "mui-table-view-cell mui-media";
 					li.innerHTML = "<img class='mui-media-object mui-pull-left' src='"+img+"'>"+
 									"<div class='mui-media-body'>"+
-										"<div class='tit'><span class='mui-pull-left packageTitle'>"+obj.packageTitle+"</span><span class='state mui-pull-right "+stateClass+"'>"+state+"</span></div>"+
+										"<div class='tit'><span class='mui-pull-left packageTitle'>"+obj.packageTitle+"</span><span class='state mui-pull-right color_f99'>"+state+"</span></div>"+
 										"<p class='mui-pull-right price'>￥"+obj.price+"</p>"+
-										"<p data='"+obj.orderType+"' class='mui-pull-right "+cancelBtn+"' id='"+obj.oid+"'>"+cancel+"</p>&nbsp;<p data='"+obj.orderType+"' data1='"+obj.price+"' class='mui-pull-right "+payBtn+"' id='"+obj.oid+"'>"+pay+"</p>"+
+										"<p data='"+obj.orderType+"' class='mui-pull-right "+cancelBtn+"' id='"+obj.oid+"'>"+cancel+"</p>&nbsp;<p data='1' data1='120' class='mui-pull-right "+payBtn+"' id='"+obj.oid+"'>"+pay+"</p>"+
 									"</div>";
 					list.appendChild(li);
 				})
@@ -121,11 +146,6 @@
 				var pdata = {offset:0,limit:5};
 				pdata.privateToken = privateToken;
 				u.mypost('user_center/order',pdata, true, function(data) {
-					var stateClass = "";
-					var stateClass_01 = "color_f99";
-					var stateClass_02 = "color_f33";
-					var payBtn = "",pay = "",cancel = "",cancelBtn = "";
-					var payClass = "but",payText = "付款",cancelOrder = "取消",cancelClass = "cancel";
 					_.each(data.data.order,function(i,obj){
 						li = doc.createElement("li");
 						li.id = obj.gid;

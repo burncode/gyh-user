@@ -1025,8 +1025,7 @@
       "my_center/contactService.html",
       "tabbar.html",
       "register.html",
-      "msearch/search.html",
-      "my_center/contactServiceOfNet.html"
+      "msearch/search.html"
     ],
     "priority": 0
   },
@@ -1318,8 +1317,7 @@
       "doctor/doctor_detail.html",
       "doctor/order_register.html",
       "msearch/setting.html",
-      "msearch/search.html",
-      "my_center/contactServiceOfNet.html"
+      "msearch/search.html"
     ],
     "priority": 0
   },

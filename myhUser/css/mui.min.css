@@ -1763,7 +1763,7 @@ input[type=submit]:enabled:active {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #DEDEDE
+	background-color: #c8c7cc
 }
 
 .mui-table-view-cell.mui-checkbox input[type=checkbox],

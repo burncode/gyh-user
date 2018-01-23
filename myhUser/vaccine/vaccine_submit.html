@@ -67,6 +67,10 @@
 									<label>预约日期</label>
 									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly"></span>
 								</div>
+								<div id="chooseDate" class="mui-input-row">
+									<label>选择时间</label>
+									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear appointTimeId" value="12" placeholder="请选择时间" readonly="readonly"></span>
+								</div>
 							</form>
 						</div>
 					</li>
@@ -100,10 +104,41 @@
 				vaccineNameObj =  document.getElementById("vaccineName");
 			var d_btn_addObj = document.getElementById("d_btn_add");
 			var calendarObj = document.getElementById("calendar");
-			var myCalendar = new SimpleCalendar('#calendar');
-			//可预约日期
-			var markObj = {}
-			myCalendar.addMark(markObj);
+			
+			var markObj = {
+							'2018-1-4':'预约',
+							'2018-1-26':'预约',
+							'2018-2-5':'预约',
+							'2018-3-15':'预约'
+						},oTime = '';
+						var myCalendar = new SimpleCalendar('#calendar');
+						myCalendar.addMark(markObj); 
+//			getAppointTimeByMonth();
+			
+			function getAppointTimeByMonth(ym){
+				var pdata={}
+				pdata.privateToken = w.getItem("privateToken");
+				pdata.ym = ym;
+				u.mypost("appointMap/getAppointTimeByMonth", pdata, true, function(data) {
+					console.log('getAppointTimeByMonth data=====' + JSON.stringify(data));
+					if(data.code == 0) {
+						
+//						_.each(data.data[0],function(i,o){
+//						 	 oTime = formatTime(o.appointYM,o.appointDay);
+//						 	 markObj[oTime] = '预约';
+//						})
+						var myCalendar = new SimpleCalendar('#calendar');
+						myCalendar.addMark(markObj); 
+						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
+					} else if(data.code == 500 && '未登錄' == data.msg) {
+					}
+				}, myerror);
+			}
+			
+			//格式化时间
+			function formatTime(timeStr,dayStr){
+				return timeStr.substr(0,4) + '-' + Number(timeStr.substr(4,2) || 1) + '-' + dayStr;
+			}
 			
 			w.addEventListener("event", function(e) {
 				if(w.getItem('role') == '代理人'){
@@ -186,7 +221,8 @@
 				var names = document.getElementsByClassName('name');
 				var mobiles = document.getElementsByClassName('mobile');
 				var identity = document.getElementsByClassName('identity');
-				var orderDate = document.getElementsByClassName('orderDate');
+				var appointTimeId = document.getElementsByClassName('appointTimeId');
+//				var orderDate = document.getElementsByClassName('orderDate');
 
 				arrUser = [];
 				len = 0;
@@ -196,7 +232,8 @@
 					user.name = names[i].value;
 					user.mobile = mobiles[i].value;
 					user.identity = identity[i].value;
-					user.orderDate = orderDate[i].value;
+					user.appointTimeId = appointTimeId[i].value;
+//					user.orderDate = orderDate[i].value;
 					arrUser.push(user);
 				}
 				console.log('arrUser=====' + JSON.stringify(arrUser));
@@ -204,7 +241,6 @@
 				pdata.privateToken = w.getItem("privateToken");
 				pdata.vaccinumId = vaccinumId;
 				pdata.arrUser = JSON.stringify(arrUser);
-				console.log('payView pdata=====' + JSON.stringify(pdata));
 				u.mypost("vaccinum/payView", pdata, true, function(data) {
 					console.log('payView data=====' + JSON.stringify(data));
 					if(data.code == 0) {

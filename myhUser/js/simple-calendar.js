@@ -500,28 +500,24 @@ var SimpleCalendar = function () {
   }, {
     key: 'updateMark',
     value: function updateMark(year, month) {
-      var options = this._options,self  = this;
+      var options = this._options;
       if (options.showMark) {
         var daysElement = this.arrayfrom(this.container.querySelectorAll('.sc-item'));
         var currentmonth = month - 1;
-        //取得标记数据
+        //取得节日数据
         var data = options.mark;
         if (data) {
           daysElement.forEach(function (v, i) {
-
             var day = +v.querySelector('.day').innerHTML;
             if (day == 1) currentmonth++;
-            //过去的日期无需显示预约,提前一天预约
-            if(year >= self.tyear && currentmonth >= self.tmonth && day > (self.tday+1)){
-            	if (data[year + '-' + currentmonth + '-' + day]) {
-	              v.classList.add('sc-mark');
-	              v.querySelector('.lunar-day').innerHTML = data[year + '-' + currentmonth + '-' + day];
-	            } else {
-	              v.classList.remove('sc-mark');
-	            }
-            }else {
-	              v.classList.remove('sc-mark');
-	            }
+
+            if (data[year + '-' + currentmonth + '-' + day]) {
+              v.classList.add('sc-mark');
+              v.title = data[year + '-' + currentmonth + '-' + day];
+            } else {
+              v.classList.remove('sc-mark');
+              v.title = '';
+            }
           });
         }
       }
@@ -680,6 +676,7 @@ var SimpleCalendar = function () {
   }, {
     key: 'addMark',
     value: function addMark(markObj) {
+    	console.log("addMark=======" + JSON.stringify(markObj));
       this._options.mark = markObj;
       this.update();
     }

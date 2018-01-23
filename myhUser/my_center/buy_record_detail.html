@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的訂單</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<style>
+			.mui-table-view {
+				margin: 10px 0;
+			}
+			
+			.p_label {
+				background: #fff;
+				padding: 10px;
+			}
+			
+			.price {
+				color: #33a2d7;
+			}
+			p {
+			    color: #333;
+			}
+			.mui-table-view-cell{
+				margin: 0;
+			}
+			.mui-table-view-cell:after{
+				height: 1px;right: 15px;
+			}
+			.mui-table-view:before,.mui-table-view:after{
+				height: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
+			<h1 id="title" class="mui-title">訂單详情</h1>
+		</header>
+		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<img id="src" class='mui-media-object mui-pull-left' src='../images/default-news.png'>
+						<div class='mui-media-body'>
+							<div class='mui-ellipsis-2' id="packageTitle">疫苗名称疫苗名称疫苗名称疫苗名称疫苗名称疫苗名称疫苗名称</div>
+							<p class='price font-size-14' id="price">¥160<span class='mui-pull-right' id="state">未付款</span></p>
+						</div>
+					</li>
+				</ul>
+				<p class="p_label">接种人信息</p>
+				<ul id="userArr" class="mui-table-view"></ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/common.js"></script>
+	<script>
+		(function(_, doc, u, w) {
+			var userArrObj = document.getElementById("userArr"),packageTitleObj =document.getElementById("packageTitle"),priceObj = document.getElementById("price"),stateObj =document.getElementById("state"),srcObj =document.getElementById("src");
+			_.plusReady(function() {
+				var userArr = plus.webview.currentWebview().userArr;
+				srcObj.setAttribute('src',plus.webview.currentWebview().src);
+				packageTitleObj.innerHTML = plus.webview.currentWebview().packageTitle;
+				priceObj.innerHTML = plus.webview.currentWebview().price;
+				stateObj.innerHTML = plus.webview.currentWebview().state;
+				console.log('userArr======' + userArr);
+				//接种人列表
+				_.each(userArr, function(i, obj) {
+					var li = doc.createElement("li");
+					li.classList = 'mui-table-view-cell';
+					li.innerHTML = "<p>接种人 : " + obj.name + "</p>" +
+						"<p>手机号 : " + obj.mobile + "</p>" +
+						"<p>身份证号 : " + obj.identity + "</p>" +
+						"<p>预约时间 : " + obj.orderDate + "</p>";
+					userArrObj.appendChild(li);
+				})
+			});
+		})(mui, document, util, window)
+	</script>
+</html>

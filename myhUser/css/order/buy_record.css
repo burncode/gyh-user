@@ -8,7 +8,8 @@
 
 .mui-table-view .mui-media-object {
 	max-width: 85px;
-	height: auto
+	height: auto;
+	margin-left: 10px;
 }
 
 /*.tit {
@@ -35,17 +36,9 @@
 }*/
 
 .but {
-	width: 55px !important;
-	height: 20px;
-	text-align: center !important;
-	line-height: 20px;
 	background: #fcd765;
-	color: #6d3e14;
 	border-radius: 10px;
 	font-size: 12px;
-	display: block;
-	margin-top: 5px;
-	margin-right: 5px
 }
 
 .color_f99 {
@@ -69,18 +62,14 @@
 }
 
 .cancel {
-	width: 55px !important;
-	height: 20px;
-	text-align: center !important;
-	line-height: 20px;
-	background: #fcd765;
-	color: #6d3e14;
 	border-radius: 10px;
 	font-size: 12px;
-	display: block;
-	margin-top: 5px
 }
 
 .mui-content {
 	background-color: #fff
+}
+
+.mui-btn{
+	margin: 0 0 0 5px;
 }

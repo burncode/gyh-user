@@ -114,15 +114,38 @@
 						var myCalendar = new SimpleCalendar('#calendar');
 						myCalendar.addMark(markObj); 
 //			getAppointTimeByMonth();
+			getAppointTimeByDay('20180131');
 			
 			function getAppointTimeByMonth(ym){
 				var pdata={}
 				pdata.privateToken = w.getItem("privateToken");
 				pdata.ym = ym;
+				console.log(JSON.stringify(pdata));
 				u.mypost("appointMap/getAppointTimeByMonth", pdata, true, function(data) {
 					console.log('getAppointTimeByMonth data=====' + JSON.stringify(data));
 					if(data.code == 0) {
 						
+//						_.each(data.data[0],function(i,o){
+//						 	 oTime = formatTime(o.appointYM,o.appointDay);
+//						 	 markObj[oTime] = '预约';
+//						})
+						var myCalendar = new SimpleCalendar('#calendar');
+						myCalendar.addMark(markObj); 
+						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
+					} else if(data.code == 500 && '未登錄' == data.msg) {
+					}
+				}, myerror);
+			}
+			
+			
+			function getAppointTimeByDay(day){
+				var pdata={};
+				pdata.privateToken = w.getItem("privateToken");
+				pdata.day = day;
+				console.log(JSON.stringify(pdata));
+				u.mypost("appointMap/getAppointTimeByDay", pdata, true, function(data) {
+					console.log('getAppointTimeByDay data=====' + JSON.stringify(data));
+					if(data.code == 0) {
 //						_.each(data.data[0],function(i,o){
 //						 	 oTime = formatTime(o.appointYM,o.appointDay);
 //						 	 markObj[oTime] = '预约';
@@ -256,7 +279,6 @@
 						w.openView("../userLogin.html");
 					}
 				}, myerror);
-
 			})
 
 			var yearObj = document.getElementById("select-year"),

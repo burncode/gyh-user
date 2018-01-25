@@ -55,9 +55,9 @@
 		(function(_,doc,w,u){
 			_.init({swipeBack:false});
 			var pdata = {},privateToken = null,walletData = null,ways = null,self = null,type = null,targetWeb = null,money = null,balance = null,orderType = null,orderId = null;
-			var payWay = 1,pays={},channel = null;
+			var payWay = 1,pays={},channel = null,currentPage = null;
 			_.plusReady(function(){
-				var currentPage = plus.webview.currentWebview();
+				currentPage = plus.webview.currentWebview();
 				type = currentPage.type?currentPage.type:'purchase_succeed.html';
 				orderType = currentPage.order_type;
 				orderId = currentPage.orderId;
@@ -186,6 +186,7 @@
 					if(id=='alipay'){
 						plus.payment.request(pays[id],data.data.aliSubmitParam,function(result){
 		                	w.openView(targetWeb);
+		                	_.later(function(){u.close('pay')},200)
 			            },function(error){
 			            	var errCode = error.message && error.message.substr(12,4);
 			            	if("8000" ==  errCode){

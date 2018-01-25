@@ -64,11 +64,11 @@
 									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">
 								</div>
 								<div id="chooseDate" class="mui-input-row">
-									<label>预约日期</label>
+									 <label>预约日期</label>
 									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly"></span>
 								</div>
-								<div id="chooseDate" class="mui-input-row">
-									<label>选择时间</label>
+								<div class="mui-input-row">
+									 <label>选择时间</label>
 									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear appointTimeId" value="12" placeholder="请选择时间" readonly="readonly"></span>
 								</div>
 							</form>
@@ -102,9 +102,7 @@
 				priceObj = document.getElementById("price"),
 				thumbnailImgObj = document.getElementById("thumbnailImg"),
 				vaccineNameObj =  document.getElementById("vaccineName");
-			var d_btn_addObj = document.getElementById("d_btn_add");
-			var calendarObj = document.getElementById("calendar");
-			
+			var d_btn_addObj = document.getElementById("d_btn_add"),calendarObj = document.getElementById("calendar");
 			var markObj = {
 							'2018-1-4':'预约',
 							'2018-1-26':'预约',
@@ -124,11 +122,10 @@
 				u.mypost("appointMap/getAppointTimeByMonth", pdata, true, function(data) {
 					console.log('getAppointTimeByMonth data=====' + JSON.stringify(data));
 					if(data.code == 0) {
-						
-//						_.each(data.data[0],function(i,o){
-//						 	 oTime = formatTime(o.appointYM,o.appointDay);
-//						 	 markObj[oTime] = '预约';
-//						})
+						_.each(data.data[0],function(i,o){
+						 	 oTime = formatTime(o.appointYM,o.appointDay);
+						 	 markObj[oTime] = '预约';
+						})
 						var myCalendar = new SimpleCalendar('#calendar');
 						myCalendar.addMark(markObj); 
 						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
@@ -151,7 +148,7 @@
 //						 	 markObj[oTime] = '预约';
 //						})
 						var myCalendar = new SimpleCalendar('#calendar');
-						myCalendar.addMark(markObj); 
+						myCalendar.addMark(markObj);
 						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
 					} else if(data.code == 500 && '未登錄' == data.msg) {
 					}

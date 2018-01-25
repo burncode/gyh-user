@@ -43,6 +43,9 @@
 				w.toIndex(0);
 			});
 			doc.getElementById("purchase-record").addEventListener('tap', function() {
+				_.later(function(){
+					w.close('pay');
+				},50)
 				w.openView("../my_center/buy_record.html");
 			});
 		})(mui,document,util,window)

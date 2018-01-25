@@ -75,7 +75,7 @@
 					li.innerHTML = "<p>接种人 : " + obj.name + "</p>" +
 						"<p>手机号 : " + obj.mobile + "</p>" +
 						"<p>身份证号 : " + obj.identity + "</p>" +
-						"<p>预约时间 : " + obj.orderDate + "</p>";
+						"<p>预约时间 : " + obj.orderDate || '' + "</p>";
 					userArrObj.appendChild(li);
 				})
 			});

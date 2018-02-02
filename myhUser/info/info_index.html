@@ -9,134 +9,224 @@
 		<title>資訊</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<link rel="stylesheet" href="../css/pullRefresh.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/info/info_index.css" />
+		<style>
+			.mescroll{
+				top: 95px;
+			}
+		</style>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">資訊</h1>
 		</header>
-		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
-			<form>
+		<div id="app">
+			<form class="form-bg">
 				<div class="mui-input-row mui-search search-input">
-					<input type="search" id="keyword" class="mui-input-clear" placeholder="輸入關鍵字或標簽搜索">
+					<input type="search" id="seach" class="mui-input-clear" placeholder="輸入關鍵字或標簽搜索" v-model.trim="keyword">
 				</div>
 			</form>
-			<div id="cases" class="mui-scroll">
-				<div class="message-list">
-					<ul id="message-list" class="mui-table-view"></ul>
+				<div id="mescroll" class="mescroll">
+					<ul id="dataList" class="mui-table-view">
+						<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item.nid)">
+							<img class="mui-media-object mui-pull-left" v-lazy="imgServer + item.thumbnail">
+							<div class="mui-media-body">
+							<div class="mui-ellipsis-2 font-size-14 min-h">{{item.title}}</div>
+								<p class="vac">{{item.tag}}<span class="mui-pull-right font-color-666">
+									<i class="mui-icon mui-icon-person font-size-18"></i>
+									{{item.author}} {{item.createTime.substr(0,10)}}</span>
+								</p>
+							</div>
+						</li>
+					</ul>
 				</div>
-			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js"></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.min.js"></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.material.min.js"></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script>
 		(function(_, doc, u, w) {
-			_.init({swipeBack: false}), _(".mui-scroll-wrapper").scroll();
-			var list = doc.getElementById('message-list'),keywordPro = doc.getElementById("keyword");
-			var pdata = {offset: 0,limit: 5},imgserver = null,_pull = null;
-			var page = 0,privateToken = null;
-			_.plusReady(function() {
-				_pull = _('#cases').pullToRefresh({
-					down: {
-						callback: function() {
-							pdata.offset = 0;
-							pdata.keyword = "";
-							keywordPro.value = "";
-							doc.activeElement.blur();
-							u.mypost('news/getNewsList', pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data.news || []).length == pdata.limit);
-								if(data.code == 0) {
-									page = 1;
-									u.emptyHtml(list), infoList(data.data || []);
-								} else {
-									_.toast(data.msg || '服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
-							});
-						}
-					},
-					up: {
-						callback: function() {
-							pdata.offset = (pdata.limit) * page;
-							u.mypost('news/getNewsList', pdata, false, function(data) {
-								_pull.endPullUpToRefresh((data.data.news || []).length < pdata.limit);
-								if(data.code == 0) {
-									page++;
-									infoList(data.data || []);
-								} else {
-									_.toast(data.msg || '服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullUpToRefresh(true);
-							});
-						},
-						auto: true
-					}
-				});
+			_.init();
+			Vue.use(VueLazyload, {
+				preLoad: 1.3,
+				error: '../images/default-news.png',
+				loading: '../images/default-news.png',
+				attempt: 1
 			});
-			
-			//列表赋值
-			function infoList(data) {
-				imgserver = data.imgServer;
-				var li = null;
-				_.each(data.news || [], function(i, obj) {
-					li = doc.createElement("li");
-					li.id = obj.nid;
-					var img = obj.thumbnail == "" ? "images/default-news.png" : imgserver + obj.thumbnail;
-					li.className = "mui-table-view-cell mui-media";
-					li.innerHTML = "<img class='mui-media-object mui-pull-left' src='" + img + "'>" +
-						"<div class='mui-media-body'>" +
-						"<div class='mui-ellipsis-2 font-size-14 min-h'>" + obj.title + "</div>" +
-						"<p class='vac'>" + obj.tag + "<span class='mui-pull-right font-color-666'><i class='mui-icon mui-icon-person font-size-18'></i>" + obj.author + "&ensp;&ensp;" + (obj.createTime && obj.createTime.substr(0, 10)) + "</span></p>" +
-						"</div>";
-					list.appendChild(li);
-				})
-			}
-			
-			
-			_('.mui-table-view').on('tap', 'li', function(e) {
-				if(!w.getUser()) {
-					w.openView("../userLogin.html");
-				} else {
-					w.openView('info_detail.html', {
-						infoId: this.id
+
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					mescroll: null,
+					imgServer: imgServer,
+					items: [],
+					keyword:''
+				},
+				mounted: function() {
+					var self = this;
+					self.mescroll = new MeScroll("mescroll", {
+						up: {
+							callback: self.upCallback, //上拉回调
+							page: {
+								size: 8
+							},
+							toTop: { //配置回到顶部按钮
+								src: "../img/mescroll-totop.png"
+							},
+							empty: { //配置列表无任何数据的提示
+								warpId: "dataList",
+								tip: nodataHtmlInfo
+							}
+						}
 					});
-				}
-			})
-			//搜索	
-			function searchKey(key) {
-				key = simplized(key);
-				pdata.keyword = key;
-				pdata.offset = 0;
-				u.mypost('news/getNewsList', pdata, true, function(data) {
-					if(data.code == 0) {
-						u.emptyHtml(list), infoList(data.data || []);
-					} else {
-						_.toast(data.msg || '服務器異常');
+					//初始化vue后,显示vue模板布局
+					document.getElementById("dataList").style.display = "block";
+				},
+				methods: {
+					upCallback: function(page) {
+						//联网加载数据
+						vm.getListDataFromNet(page.num, page.size);
+					},
+					getListDataFromNet: function(pageNum, pageSize) {
+						util.mypost('news/getNewsList', {
+							offset: (pageNum - 1) * pageSize,
+							limit: pageSize,
+							keyword: vm.keyword
+						}, false, function(data) {
+							if(data.code == 0){
+								data = data.data.news || [];
+								console.log('data=====' + JSON.stringify(data));
+								if(pageNum == 1) vm.items = [];
+								vm.items = vm.items.concat(data);
+								vm.mescroll.endSuccess(data.length);
+							}else{
+								_.toast(data.msg ||  '請求失敗');
+								vm.mescroll.endErr();
+							}
+						}, function() {
+							vm.mescroll.endErr();
+						})
+					},openDetail:function(nid){
+						w.openView('info_detail.html',{infoId:nid});
 					}
-				}, function() {
-					_.toast('獲取列表失敗');
-				});
-			}
-			//关键字搜索
-			keywordPro.addEventListener('keypress', function(e) {
-				if(isEmojiCharacter(keywordPro.value)) {
-					_.toast("不支持表情輸入");
-					e.preventDefault(); // 阻止默认事件
-					return;
 				}
+			});
+			//搜索
+			doc.getElementById("seach").addEventListener('keypress', function(e) {
 				if(e.keyCode == "13") {
 					doc.activeElement.blur();
-					searchKey(keywordPro.value);
+					vm.getListDataFromNet(1, 5);
 					e.preventDefault(); // 阻止默认事件
 				}
 			})
+			
+//			_.init({swipeBack: false}), _(".mui-scroll-wrapper").scroll();
+//			var list = doc.getElementById('message-list'),keywordPro = doc.getElementById("keyword");
+//			var pdata = {offset: 0,limit: 5},imgserver = null,_pull = null;
+//			var page = 0,privateToken = null;
+//			_.plusReady(function() {
+//				_pull = _('#cases').pullToRefresh({
+//					down: {
+//						callback: function() {
+//							pdata.offset = 0;
+//							pdata.keyword = "";
+//							keywordPro.value = "";
+//							doc.activeElement.blur();
+//							u.mypost('news/getNewsList', pdata, false, function(data) {
+//								_pull.endPullDownToRefresh((data.data.news || []).length == pdata.limit);
+//								if(data.code == 0) {
+//									page = 1;
+//									u.emptyHtml(list), infoList(data.data || []);
+//								} else {
+//									_.toast(data.msg || '服務器異常');
+//								}
+//							}, function() {
+//								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
+//							});
+//						}
+//					},
+//					up: {
+//						callback: function() {
+//							pdata.offset = (pdata.limit) * page;
+//							u.mypost('news/getNewsList', pdata, false, function(data) {
+//								_pull.endPullUpToRefresh((data.data.news || []).length < pdata.limit);
+//								if(data.code == 0) {
+//									page++;
+//									infoList(data.data || []);
+//								} else {
+//									_.toast(data.msg || '服務器異常');
+//								}
+//							}, function() {
+//								_.toast('獲取列表失敗'), _pull.endPullUpToRefresh(true);
+//							});
+//						},
+//						auto: true
+//					}
+//				});
+//			});
+//			
+//			//列表赋值
+//			function infoList(data) {
+//				imgserver = data.imgServer;
+//				var li = null;
+//				_.each(data.news || [], function(i, obj) {
+//					li = doc.createElement("li");
+//					li.id = obj.nid;
+//					var img = obj.thumbnail == "" ? "images/default-news.png" : imgserver + obj.thumbnail;
+//					li.className = "mui-table-view-cell mui-media";
+//					li.innerHTML = "<img class='mui-media-object mui-pull-left' src='" + img + "'>" +
+//						"<div class='mui-media-body'>" +
+//						"<div class='mui-ellipsis-2 font-size-14 min-h'>" + obj.title + "</div>" +
+//						"<p class='vac'>" + obj.tag + "<span class='mui-pull-right font-color-666'><i class='mui-icon mui-icon-person font-size-18'></i>" + obj.author + "&ensp;&ensp;" + (obj.createTime && obj.createTime.substr(0, 10)) + "</span></p>" +
+//						"</div>";
+//					list.appendChild(li);
+//				})
+//			}
+//			
+//			
+//			_('.mui-table-view').on('tap', 'li', function(e) {
+//				if(!w.getUser()) {
+//					w.openView("../userLogin.html");
+//				} else {
+//					w.openView('info_detail.html', {
+//						infoId: this.id
+//					});
+//				}
+//			})
+//			//搜索	
+//			function searchKey(key) {
+//				key = simplized(key);
+//				pdata.keyword = key;
+//				pdata.offset = 0;
+//				u.mypost('news/getNewsList', pdata, true, function(data) {
+//					if(data.code == 0) {
+//						u.emptyHtml(list), infoList(data.data || []);
+//					} else {
+//						_.toast(data.msg || '服務器異常');
+//					}
+//				}, function() {
+//					_.toast('獲取列表失敗');
+//				});
+//			}
+//			//关键字搜索
+//			keywordPro.addEventListener('keypress', function(e) {
+//				if(isEmojiCharacter(keywordPro.value)) {
+//					_.toast("不支持表情輸入");
+//					e.preventDefault(); // 阻止默认事件
+//					return;
+//				}
+//				if(e.keyCode == "13") {
+//					doc.activeElement.blur();
+//					searchKey(keywordPro.value);
+//					e.preventDefault(); // 阻止默认事件
+//				}
+//			})
 		})(mui, document, util, window)
 	</script>
 </html>

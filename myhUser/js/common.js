@@ -1,6 +1,7 @@
 ﻿var ASKURL = "https://api.hk-dr.com/",
 	token = '85FBCA0D01D6EB76A3888C5F8E4118D5',
-	SRC = "https://api.hk-dr.com/verify/get_code?";
+	SRC = "https://api.hk-dr.com/verify/get_code?",
+	imgServer = "https://img.hk-dr.com/";
 var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-comiiszanwushuju'></div><div>暫無數據</div></div>";
 (function(w, _, u, owner) {
 	w.openView = function(url, extras) {
@@ -77,6 +78,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		_.extend(true, pdata, {
 			'token': token
 		});
+		console.log(postUrl + '===pdata========' +  JSON.stringify(pdata));
 		setTimeout(function() {
 			_.ajax({
 				url: ASKURL + postUrl,

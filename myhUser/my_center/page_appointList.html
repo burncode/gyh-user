@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>预约挂号</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="../css/pay/confirmCss.css" />
+		<link rel="stylesheet" href="../css/center/myorder.css" />
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div id="mescroll" class="mescroll">
+				<!--展示上拉加载的数据列表-->
+				<app-list-appoint :data='items'></app-list-appoint>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/components/list_item_appoint.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		mui.init();
+		var privateToken = null;
+		var arr = [];
+
+		privateToken = window.getItem("privateToken");
+		//创建vue对象
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				mescroll: null,
+				imgServer: imgServer,
+				items: arr
+			},
+			mounted: function() {
+				//创建MeScroll对象,down可以不用配置,因为内部已默认开启下拉刷新,重置列表数据为第一页
+				//解析: 下拉回调默认调用mescroll.resetUpScroll(); 而resetUpScroll会将page.num=1,再执行up.callback,从而实现刷新列表数据为第一页;
+				var self = this;
+				self.mescroll = new MeScroll("mescroll", {
+					up: {
+						callback: self.upCallback, //上拉回调
+						//以下参数可删除,不配置
+						page: {
+							size: 5
+						},
+						toTop: { //配置回到顶部按钮
+							src: "../img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+							//offset : 1000
+						},
+						empty: { //配置列表无任何数据的提示
+							warpId: "dataList"
+						}
+					}
+				});
+				//初始化vue后,显示vue模板布局
+				document.getElementById("dataList").style.display = "block";
+			},
+			methods: {
+				//上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
+				upCallback: function(page) {
+					//联网加载数据
+					var self = this;
+					console.log('page=='  +  page.num)
+					getListDataFromNet(page.num, page.size, function(data) {
+						//data=[]; //打开本行注释,可演示列表无任何数据empty的配置
+//						data = convert(data.data || []);
+						console.log('data========' + JSON.stringify(data));
+						data = data.data || [];
+						console.log('data========' + JSON.stringify(data));
+						//如果是第一页需手动制空列表
+						if(page.num == 1) self.items = [];
+						//更新列表数据
+						self.items = self.items.concat(data);
+						//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+						//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
+						self.mescroll.endSuccess(data.length);
+					}, function() {
+						//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+						self.mescroll.endErr();
+					});
+				},
+			},
+		});
+
+		/*
+		 * user_center/vaccinumAppointList 主题首页接收 get 参数
+		 * page Number 页数
+		 * limit Number 每一页的数量
+		 * */
+		function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
+			util.mypost('user_center/appointList', {
+				privateToken: privateToken,
+				offset: (pageNum-1) * pageSize,
+				limit: pageSize
+			}, null, successCallback, errorCallback)
+		}
+
+		/**
+		 * 1、将服务端返回数据，转换成前端需要的格式
+		 * @param {Array} items 
+		 */
+		function convert(items) {
+			var newItems = [];
+			items.forEach(function(item) {
+				newItems.push({
+					oid: item.oid,
+					gid: item.gid,
+					cover: imgServer + item.thumbnail,
+					packageTitle: item.packageTitle,
+					status: item.status,
+					price: item.price,
+					orderType: item.orderType,
+					arrUser: item.arrUser,
+					class_status: (item.status == "未付款") ? true : false
+				});
+			});
+			return newItems;
+		}
+	</script>
+
+</html>

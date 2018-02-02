@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title>醫院</title>
+		<title>查找結果</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
-		<link rel="stylesheet" href="../css/main/hospital.css" />
+		<link rel="stylesheet" href="../css/main/doctorList.css"/>
 		<style>
-			.mescroll{
-				top: 95px;
+			#dataList {
+				background: #fff;
+			}
+			#dataList .mui-table-view-cell:after {
+				height: 1px;
+				left: 0;
+			}
+			.mui-table-view:after{
+				height: 0;
+			}
+			.mescroll {
+				top: 45px;
 			}
 		</style>
 	</head>
-
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">醫院列表</h1>
+			<h1 class="mui-title">醫生列表</h1>
 		</header>
-		<div id="app" style="margin: 44px 0;">
-			<form class="form-bg">
-				<div class="mui-input-row mui-search search-input">
-					<input type="search" id="seach" placeholder="点击搜索醫院" v-model.trim="keyword">
-				</div>
-			</form>
+		<div id="app" class="mui-content">
 			<div id="mescroll" class="mescroll">
-				<ul id="dataList" class="hospital-list mui-table-view">
-					<li v-for="item in items" class="mui-table-view-cell mui-media" @tap="openDetail(item.hid)">
-						<img class='mui-media-object mui-pull-left' v-lazy="imgServer + item.img">
-						<div class='font-size-14'>{{item.hospitalName}}</div>
-						<p><i class='icon-addr'></i> {{item.address}}</p>
-					</li>
-				</ul>
+				<app-list-doctors :data='items'></app-list-doctors>
 			</div>
 		</div>
 	</body>
@@ -45,17 +42,18 @@
 	<script type="text/javascript" src="../js/mescroll.min.js"></script>
 	<script type="text/javascript" src="../js/vue.min.js"></script>
 	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
+	<script type="text/javascript" src="../js/components/list_item_doctors.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script>
 		(function(_, doc, u, w) {
 			_.init();
 			Vue.use(VueLazyload, {
 				preLoad: 1.3,
-				error: '../images/default-news.png',
-				loading: '../images/default-news.png',
+				error: '../images/default-doctor.png',
+				loading: '../images/default-doctor.png',
 				attempt: 1
 			});
-
+			
 			//创建vue对象
 			var vm = new Vue({
 				el: "#app",
@@ -63,16 +61,21 @@
 					mescroll: null,
 					imgServer: imgServer,
 					items: [],
-					hid: null,
-					keyword:''
+					officeId: null,
+					area:'',
+					hid:null
 				},
 				mounted: function() {
 					var self = this;
 					self.mescroll = new MeScroll("mescroll", {
+						down:{
+							auto:false//设置不自动下拉,
+						},
 						up: {
 							callback: self.upCallback, //上拉回调
+							auto:false,
 							page: {
-								size: 8
+								size: 5
 							},
 							toTop: { //配置回到顶部按钮
 								src: "../img/mescroll-totop.png"
@@ -91,38 +94,39 @@
 						//联网加载数据
 						vm.getListDataFromNet(page.num, page.size);
 					},
-					getListDataFromNet: function(pageNum, pageSize) {
-						util.mypost('hospital/getHospitalList', {
+					getListDataFromNet:function(pageNum, pageSize) {
+						util.mypost('doctor/getDoctorList', {
 							offset: (pageNum - 1) * pageSize,
 							limit: pageSize,
-							keyword: vm.keyword
+							officeId: vm.officeId,
+							keyword: vm.keyword,
+							area:vm.area,
+							hid:vm.hid
 						}, false, function(data) {
-							if(data.code == 0){
-								data = data.data.hospitals || [];
-								console.log('data=====' + JSON.stringify(data));
-								if(pageNum == 1) vm.items = [];
-								vm.items = vm.items.concat(data);
-								vm.mescroll.endSuccess(data.length);
-							}else{
-								_.toast(data.msg ||  '請求失敗');
-								vm.mescroll.endErr();
-							}
+							data = data.data.doctors || [];
+							console.log('data========' + JSON.stringify(data));
+							//如果是第一页需手动制空列表
+							if(pageNum == 1) vm.items = [];
+							vm.items = vm.items.concat(data);
+							vm.mescroll.endSuccess(data.length);
 						}, function() {
+							//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
 							vm.mescroll.endErr();
 						})
-					},openDetail:function(hid){
-						w.openView('doctor_list_search.html',{hid:hid});
 					}
 				}
 			});
-			//搜索
-			doc.getElementById("seach").addEventListener('keypress', function(e) {
-				if(e.keyCode == "13") {
-					doc.activeElement.blur();
-					vm.getListDataFromNet(1, 5);
-					e.preventDefault(); // 阻止默认事件
-				}
+			
+			_.plusReady(function(){
+				var currentWeb = plus.webview.currentWebview();
+				vm.area = currentWeb.area_value || "";
+				vm.hid = currentWeb.hid || "";
+				vm.officeId = currentWeb.office_value || "";
+				vm.keyword = currentWeb.keyword || '';
+				vm.mescroll.triggerDownScroll();//触发下拉
+				vm.mescroll.endDownScroll();//隐藏下拉的效果
 			})
+			
 		})(mui, document, util, window)
 	</script>
 </html>

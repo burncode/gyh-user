@@ -1312,7 +1312,9 @@
 					"tabbar.html",
 					"register.html",
 					"msearch/search.html",
-					"my_center/contactServiceOfNet.html"
+					"my_center/contactServiceOfNet.html",
+					"vaccine/vaccine_submit.html",
+					"doctor/search.html"
 				],
 				"priority": 0
 			},
@@ -1506,7 +1508,8 @@
 					"images/icon_add.png"
 				],
 				"refer": [
-					"doctor/doctor_list_hospital.html"
+					"doctor/doctor_list_hospital.html",
+					"doctor/doctor_list_search.html"
 				],
 				"priority": 4
 			},
@@ -1688,6 +1691,20 @@
 					"images/hospital.png",
 					"fonts/iconfont-nodata.ttf"
 				],
+				"refer": [
+					"doctor/doctor_detail.html"
+				],
+				"priority": 0
+			},
+			"doctor/search.html": {
+				"resources": [],
+				"refer": [
+					"doctor/doctor_list_search.html"
+				],
+				"priority": 0
+			},
+			"doctor/doctor_list_search.html": {
+				"resources": [],
 				"refer": [
 					"doctor/doctor_detail.html"
 				],

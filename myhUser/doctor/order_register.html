@@ -262,9 +262,11 @@
 					remark:remarkObj.value
 				}
 				var orderId = null;
+				console.log('pdata========' + JSON.stringify(pdata));
 				if(type == 1){
 					//重新預約  根据醫生id 获取基本信息
 					u.mypost("reg_num/reAppointSubmit",pdata,true,function(data){
+						console.log('預約=' + JSON.stringify(data));
 						if(data.code == 0){
 							orderId = data.data.orderId;
 							var ex = {
@@ -286,6 +288,7 @@
 				}else if(type == 2){
 					//預約支付
 					u.mypost("reg_num/payView",pdata,true,function(data){
+						console.log('預約=' + JSON.stringify(data));
 						if(data.code == 0){
 							orderId = data.data.orderId;
 							var ex = {

@@ -1223,7 +1223,7 @@ input[type=submit]:enabled:active {
 	padding-right: 10px;
 	padding-left: 10px;
 	border-bottom: 0;
-	background-color: #f7f7f7;
+	background-color: #fff;
 	-webkit-box-shadow: 0 0 1px #ccc;
 	box-shadow: 0 0 1px #ccc;
 	-webkit-backface-visibility: hidden;
@@ -3695,7 +3695,7 @@ body>.mui-progressbar {
 
 .mui-slider-progress-bar {
 	z-index: 1;
-	height: 2px;
+	height: 1px;
 	-webkit-transform: translateZ(0);
 	transform: translateZ(0)
 }

@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/pullRefresh.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/list.css" />
 		<style type="text/css">
@@ -16,6 +16,9 @@
 				margin-top: 5px;
 				text-align: center;
 			}
+			.mescroll{
+				top:45px
+			}
 		</style>
 	</head>
 	<body>
@@ -23,98 +26,93 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">檢測服務</h1>
 		</header>
-		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
-			<div id="cases" class="mui-scroll">
-				<div id="gene-list" class="mui-row gene-content">
+		<div id="app">
+			<div id="mescroll" class="mescroll">
+				<div id="dataList" class="mui-row gene-content">
+					<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items" @tap="openDetail(item.id)">
+						<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
+							<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
+							<span class='gene-content-money'>￥{{item.price}}</span>
+							</dd>
+						</dl>
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js" ></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.min.js" ></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.material.min.js" ></script>
-	<script type="text/javascript" src="../js/mui.lazyload.js" ></script>
-	<script type="text/javascript" src="../js/mui.lazyload.img.js" ></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
 	<script type="text/javascript" src="../js/common.js" ></script>
 	<script>
 		(function(_, doc, u, w) {
-			_.init(),_(".mui-scroll-wrapper").scroll();
-			var list = doc.getElementById('gene-list'),dl = null,imgserver = null,_pull=null,pdata = {offset:0 ,limit:6},page = 0;
-			var bodyWidth = document.body.clientWidth;
-			_.plusReady(function() {
-				_pull = _('#cases').pullToRefresh({
-					down: {
-						callback: function() {
-							pdata.offset = 0;
-							u.mypost('gene_check/geneCheckList',pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data.GeneList || []).length == 6);
-								if (data.code == 0) {
-									page = 1;
-									u.emptyHtml(list), renderList(data.data || []);
-								}else{
-									_.toast(data.msg || '服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
-							});
-						}
-					},up: {
-						callback: function() {
-							pdata.offset=(pdata.limit)*page;
-							u.mypost('gene_check/geneCheckList',pdata, false, function(data) {
-								_pull.endPullUpToRefresh((data.data.GeneList || []).length < 6);
-								if (data.code  == 0) {
-									page++;
-									renderList(data.data || []);
-								} else {
-									_.toast(data.msg ||'服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullUpToRefresh(true);
-							});
-						},auto: true
-					}
-				});
+			_.init();
+			Vue.use(VueLazyload, {
+				preLoad: 1.3,
+				error: '../images/default-news.png',
+				loading: '../images/default-news.png',
+				attempt: 1
 			});
-			/**
-			 * @des 設置数据
-			 * @param data 列表数据
-			 * **/
-			function renderList(data){
-				var img = null,imgWith = 0,imgHeight = 100;
-				//大屏
-				if(bodyWidth >= 400){
-					imgWith = (bodyWidth / 3 - 25);
-				}else{
-					imgWith = (bodyWidth / 2 - 25);
-				}
-				imgHeight = imgWith / 1.48;
-				if(data.GeneList && data.GeneList.length > 0){
-					imgserver = data.imgServer;
-					_.each(data.GeneList,function(i,obj){
-						dl = doc.createElement("div");
-						dl.className ="mui-col-xs-6 mui-col-sm-4";
-						dl.id = obj.id;
-						if(obj.thumbnail == ""){
-							img = "../images/default-record.png";
-						}else{
-							img = imgserver+obj.thumbnail;
+
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					mescroll: null,
+					imgServer: imgServer,
+					imgHeight:100,
+					items: []
+				},
+				mounted: function() {
+					var self = this;
+					self.mescroll = new MeScroll("mescroll", {
+						up: {
+							callback: self.upCallback, //上拉回调
+							page: {
+								size: 6
+							},
+							toTop: { //配置回到顶部按钮
+								src: "../img/mescroll-totop.png"
+							},
+							empty: { //配置列表无任何数据的提示
+								warpId: "dataList",
+								tip: nodataHtmlInfo
+							}
 						}
-						dl.innerHTML = "<dl><dt><img style='height:"+imgHeight+"px;' data-lazyload='"+img+"'></dt>"+
-						"<dd><span class='gene-content-title mui-ellipsis-2'>"+obj.name+"</span>"+
-							"<span class='gene-content-money'>￥"+obj.price+"</span>"+
-						"</dd></dl>";
-						list.appendChild(dl);
-					})
-					_("#gene-list").imageLazyload({
-						placeholder: '../images/default-news.png'
 					});
+					//初始化vue后,显示vue模板布局
+					document.getElementById("dataList").style.display = "block";
+					var bodyWidth = document.body.clientWidth
+					self.imgHeight = (bodyWidth >= 400)?(bodyWidth / 3 - 25)/ 1.48:(bodyWidth / 2 - 25)/ 1.48;
+				},
+				methods: {
+					upCallback: function(page) {
+						//联网加载数据
+						vm.getListDataFromNet(page.num, page.size);
+					},
+					getListDataFromNet: function(pageNum, pageSize) {
+						util.mypost('gene_check/geneCheckList', {
+							offset: (pageNum - 1) * pageSize,
+							limit: pageSize
+						}, false, function(data) {
+							if(data.code == 0){
+								data = data.data.GeneList || [];
+								if(pageNum == 1) vm.items = [];
+								vm.items = vm.items.concat(data);
+								vm.mescroll.endSuccess(data.length);
+							}else{
+								_.toast(data.msg ||  '請求失敗');
+								vm.mescroll.endErr();
+							}
+						}, function() {
+							vm.mescroll.endErr();
+						})
+					},openDetail:function(id){
+						w.openView('gene_detect_detail.html',{geneId:id});
+					}
 				}
-			}
-			//跳转到詳情页面
-			_('.gene-content').on('tap', '.mui-col-xs-6.mui-col-sm-4', function() {
-				w.openView('gene_detect_detail.html',{geneId:this.id});
-			})
+			});
 		})(mui, document, util, window)
 	</script>
 </html>

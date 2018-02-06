@@ -71,7 +71,7 @@
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_all" @tap="openDetail(item)">
 							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
-									<span class='gene-content-money'>￥{{item.price}}</span>
+									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
 							</dl>
 						</div>
@@ -84,7 +84,7 @@
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_au" @tap="openDetail(item)">
 							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
-									<span class='gene-content-money'>￥{{item.price}}</span>
+									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
 							</dl>
 						</div>
@@ -97,7 +97,7 @@
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_ch" @tap="openDetail(item)">
 							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
-									<span class='gene-content-money'>￥{{item.price}}</span>
+									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
 							</dl>
 						</div>
@@ -145,7 +145,6 @@
 						vm.getListDataFromNet(page.num, page.size);
 					},
 					getListDataFromNet: function(pageNum, pageSize,vacciType) {
-						console.log('联网加载数据');
 						util.mypost('vaccinum/vaccinumList', { /*可选参数  1成人疫苗  2儿童疫苗 */
 							offset: (pageNum - 1) * pageSize,
 							limit: pageSize,

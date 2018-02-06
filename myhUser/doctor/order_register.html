@@ -20,7 +20,6 @@
 			<h1 class="mui-title">預約挂號</h1>
 			<span id="service" class="mui-pull-right">
 				<span class="myicon contact-icon"></span>
-				<span id="newContactNum" class="mui-badge mui-badge-danger newContactNum m-undisplay">0</span>
 			</span>
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
@@ -87,12 +86,12 @@
 	<script type="text/javascript" src="../js/mui.picker.min.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script>
-		var newContactNum = null,privateToken = null,docId = null,illness = null;
+		var privateToken = null,docId = null,illness = null;
 		(function(_, doc, u, w) {
 			_.init({swipeBack: false}),_(".mui-scroll-wrapper").scroll();
 			var payObj = doc.getElementById("pay"),illnessSelect = doc.getElementById("illnessSelect"),feeObj = doc.getElementById("fee");
 			var pdata = {},appointId = null,currentView = null,fee = null,address = null,userInfo = null,optionhtml = "",type = null,targetWeb = null,addressObj = doc.getElementById("address"),yearObj = doc.getElementById("year"),personObj = doc.getElementById("person");
-			var sexObj = doc.getElementsByName("radio1"),birthdayObj = doc.getElementById("birthday"),telephoneObj = doc.getElementById("telephone"),remarkObj = doc.getElementById("remark"),newContactNum = doc.getElementById("newContactNum");
+			var sexObj = doc.getElementsByName("radio1"),birthdayObj = doc.getElementById("birthday"),telephoneObj = doc.getElementById("telephone"),remarkObj = doc.getElementById("remark");
 			var picker = null,startDate = null;
 			_.plusReady(function(){
 				privateToken = w.getItem("privateToken");
@@ -203,8 +202,6 @@
 			});
 			//点击进入客服页面
 			doc.getElementById("service").addEventListener('tap', function() {
-				newContactNum.innerText = "";
-				newContactNum.className="mui-badge mui-badge-danger newContactNum m-undisplay";
 				w.openView("../my_center/contactService.html");
 			});
 			//进入知情同意書
@@ -262,7 +259,6 @@
 					remark:remarkObj.value
 				}
 				var orderId = null;
-				console.log('pdata========' + JSON.stringify(pdata));
 				if(type == 1){
 					//重新預約  根据醫生id 获取基本信息
 					u.mypost("reg_num/reAppointSubmit",pdata,true,function(data){

@@ -93,12 +93,6 @@
 			right: 13px;
 		}
 		
-		.newContactNum {
-			position: absolute;
-			right: 5px;
-			top: 3px;
-		}
-		
 		#maleRadio {
 			width: 75px;
 			overflow: hidden;
@@ -147,7 +141,6 @@
 			<h1 class="mui-title">在線問診</h1>
 			<span id="service" class="mui-pull-right">
 				<span class="myicon contact-icon"></span>
-			<span id="newContactNum" class="mui-badge mui-badge-danger newContactNum m-undisplay">0</span>
 			</span>
 		</header>
 		<div class="mui-content">
@@ -215,7 +208,6 @@
 	<script src="../js/mui.picker.min.js"></script>
 	<script src="../js/common.js"></script>
 	<script type="text/javascript">
-		var newContactNum = null;
 		(function(_, doc, u, w) {
 			_.init({
 				swipeBack: false
@@ -254,7 +246,6 @@
 			var phoneTimeLen = null;
 			var timeLenKey = null;
 			var web = null;
-			newContactNum = doc.getElementById("newContactNum");
 			_.plusReady(function() {
 				privateToken = w.getItem("privateToken");
 				pdata.privateToken = privateToken;
@@ -450,8 +441,6 @@
 			});
 			//客服
 			doc.getElementById("service").addEventListener('tap', function() {
-				newContactNum.innerText = "";
-				newContactNum.className = "mui-badge mui-badge-danger newContactNum m-undisplay";
 				w.openView("../my_center/contactService.html");
 			});
 			//知情同意書跳转
@@ -487,15 +476,6 @@
 				return currentdate;
 			}
 		})(mui, document, util, window)
-		/**
-		 * @description 提示客服消息
-		 */
-		function newContactInfo(unreadNum) {
-			var num = Number(newContactNum.innerHTML || '0') || 0;
-			unreadNum ? num += unreadNum : num++;
-			newContactNum.innerHTML = (num > 99) ? "99+" : num;
-			newContactNum.className = "mui-badge mui-badge-danger newContactNum";
-		}
 	</script>
 
 </html>

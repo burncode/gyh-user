@@ -32,7 +32,7 @@
 					<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items" @tap="openDetail(item.id)">
 						<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
 							<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
-							<span class='gene-content-money'>￥{{item.price}}</span>
+							<span class='gene-content-money'>¥{{item.price}}</span>
 							</dd>
 						</dl>
 					</div>

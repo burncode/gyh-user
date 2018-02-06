@@ -5,72 +5,100 @@
 		<title>交易記錄</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
-		<link rel="stylesheet" href="../css/pullRefresh.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<link rel="stylesheet" href="../css/center/records.css" />
+		<style>
+			.mescroll{
+				top: 45px;
+			}
+		</style>
 	</head>
-
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-			<h1 id="title" class="mui-title">交易記錄</h1>	
+			<h1 id="title" class="mui-title">交易記錄</h1>
 		</header>
-		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
-			<div id="cases" class="mui-scroll">			
-				<ul id="record-list" class="mui-table-view"></ul>
+		<div id="app" class="mui-content">
+			<div id="mescroll" class="mescroll">
+				<ul id="dataList" class="mui-table-view">
+					<li class='mui-table-view-cell' v-for="item in items">
+						<div class='mui-pull-left mui-col-sm-6'>
+							<span class='font-size-16 font-color-333'>{{item.tradeDesc}}</span>
+							<div class='font-color-999 font-size-12'>{{item.tradeTime}}</div>
+						</div>
+						<div class='mui-pull-right mui-col-sm-6 main-font-color'>
+							<span v-if="item.tradeType == '充值' || item.tradeType.indexOf('退款') > 0 || item.tradeType.indexOf('收入') > 0">
+								+{{item.tradeVolume}}
+							</span>
+							<span v-else>
+								-{{item.tradeVolume}}
+							</span>
+						</div>
+				</ul>
 			</div>
 		</div>
 	</body>
-	<script src="../js/mui.min.js"></script>
-	<script src="../js/mui.pullToRefresh.min.js"></script>
-	<script src="../js/mui.pullToRefresh.material.min.js"></script>
-	<script src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript">
-		(function(_,doc,u,w){
-			_.init({swipeBack: false}),_(".mui-scroll-wrapper").scroll();
-			var pdata = {},privateToken = null,page = 0;
-			var list = doc.getElementById("record-list");
-			_.plusReady(function(){
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-				//刷新
-				_pull = _('#cases').pullToRefresh({
-					down: {
-						callback: function() {
-							u.mypost('user_center/tradeLog',pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data || []).length == 10);
-								if (data.code == 0) {
-									page = 1;
-									u.emptyHtml(list),getData(data.data || []);
-								}else{
-									_.toast(data.msg || '服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
-							});
+		(function(_, doc, u, w) {
+			_.init();
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					mescroll: null,
+					items: []
+				},
+				mounted: function() {
+					var self = this;
+					self.mescroll = new MeScroll("mescroll", {
+						up: {
+							callback: self.upCallback, //上拉回调
+							page: {
+								size: 5
+							},
+							toTop: { //配置回到顶部按钮
+								src: "../img/mescroll-totop.png"
+							},
+							empty: { //配置列表无任何数据的提示
+								warpId: "dataList",
+								tip: nodataHtmlInfo
+							}
 						}
+					});
+					//初始化vue后,显示vue模板布局
+					document.getElementById("dataList").style.display = "block";
+				},
+				methods: {
+					upCallback: function(page) {
+						//联网加载数据
+						vm.getListDataFromNet(page.num, page.size);
+					},
+					getListDataFromNet: function(pageNum, pageSize) {
+						util.mypost('user_center/tradeLog', {
+							offset: (pageNum - 1) * pageSize,
+							limit: pageSize,
+							privateToken: w.getItem("privateToken")
+						}, false, function(data) {
+							if(data.code == 0) {
+								data = data.data[0] || [];
+								if(pageNum == 1) vm.items = [];
+								vm.items = vm.items.concat(data);
+								vm.mescroll.endSuccess(data.length);
+							} else {
+								_.toast(data.msg || '請求失敗');
+								vm.mescroll.endErr();
+							}
+						}, function() {
+							vm.mescroll.endErr();
+						})
 					}
-				});
-				u.mypost("user_center/tradeLog",pdata,true,function(data){
-					if(data.code == 0){
-						getData(data.data);
-					}else{
-						list.innerHTML = nodataHtmlInfo;
-					}
-				},myerror);
-			})
-			function getData(data){
-				var li = null,mark = "";
-				_.each(data[0],function(i,obj){
-					li = doc.createElement("li");
-					mark = "-";//标记是"+"还是"-"
-					if(obj.tradeType == "充值" || obj.tradeType.indexOf('退款') > 0 || obj.tradeType.indexOf('收入') > 0){
-						mark = "+";
-					}
-					li.innerHTML = "<li class='mui-table-view-cell'><div class='mui-pull-left mui-col-sm-6'><span class='tit'>"+obj.tradeDesc+"</span><span class='time'>"+obj.tradeTime+"</span></div><span class='mui-pull-right mui-col-sm-6 worth'>"+mark+""+obj.tradeVolume+"</span></li>";
-					list.appendChild(li);
-				})
-			}
-		})(mui,document,util,window)
+				}
+			});
+		})(mui, document, util, window)
 	</script>
+
 </html>

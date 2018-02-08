@@ -136,18 +136,6 @@
 								                "</div>"+
 								            "</div>"+
 								        "</li>";
-					}else if(obj.msgType == "藥品分配"){
-				        li.innerHTML = "<li data='"+obj.msgType+"' id='"+obj.id+"' data2='"+obj.medicineId+"' class='mui-table-view-cell' style='border-bottom:1px solid #dedede;'>"+
-					            "<div class='mui-table'>"+
-					                "<div class='mui-table-cell mui-col-xs-10'>"+
-					                    "<h4 class='mui-ellipsis'>"+obj.medicineName+"</h4>"+
-					                "</div>"+
-					                "<div class='mui-table-cell mui-col-xs-2 mui-text-right'>"+
-					                    "<span class='mui-h5'>"+obj.msgType+"&nbsp;"+(obj.guysName || '')+"</span>"+
-					                    "<p class='message-time'>"+obj.dateline+"</p>"+
-					                "</div>"+
-					            "</div>"+
-					        "</li>";
 					}
 					list.appendChild(li);
 				})
@@ -181,11 +169,6 @@
 						vaccinumId:gid
 					}
 					w.openView("vaccine/vaccine_detail.html",ex5);
-				}else if(msgType == "藥品分配"){
-					var ex6 = {
-						mid:medicineId
-					}
-					w.openView("medicine_center/medicine_detail.html",ex6);
 				}
 			})
 		})(mui,document,util,window)

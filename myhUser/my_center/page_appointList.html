@@ -72,7 +72,6 @@
 					getListDataFromNet(page.num, page.size, function(data) {
 						//data=[]; //打开本行注释,可演示列表无任何数据empty的配置
 //						data = convert(data.data || []);
-						console.log('data========' + JSON.stringify(data));
 						data = data.data || [];
 						console.log('data========' + JSON.stringify(data));
 						//如果是第一页需手动制空列表

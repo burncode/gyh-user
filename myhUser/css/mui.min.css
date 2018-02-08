@@ -2188,8 +2188,8 @@ input[type=submit]:enabled:active {
 .mui-grid-view.mui-grid-9 {
 	margin: 0;
 	padding: 0;
-	border-top: 1px solid #eee;
-	border-left: 1px solid #eee;
+	/*border-top: 1px solid #eee;
+	border-left: 1px solid #eee;*/
 	background-color: #f2f2f2
 }
 
@@ -3076,16 +3076,16 @@ select:focus {
 	height: 0
 }
 
-.mui-popover .mui-table-view .mui-table-view-cell:first-child,
-.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
-	border-top-left-radius: 12px;
-	border-top-right-radius: 12px
+.mui-popover .mui-table-view .mui-table-view-cell,
+.mui-popover .mui-table-view .mui-table-view-cell>a:not(.mui-btn) {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px
 }
 
-.mui-popover .mui-table-view .mui-table-view-cell:last-child,
-.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn) {
-	border-bottom-right-radius: 12px;
-	border-bottom-left-radius: 12px
+.mui-popover .mui-table-view .mui-table-view-cell,
+.mui-popover .mui-table-view .mui-table-view-cell>a:not(.mui-btn) {
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px
 }
 
 .mui-popover.mui-bar-popover .mui-table-view {

@@ -109,7 +109,7 @@
 			_.plusReady(function(){
 				privateToken = w.getItem("privateToken");
 				pdata.privateToken = privateToken;
-				u.mypost("user_center/userCenterIndex",pdata,true,function(data){
+				u.mypost("user_center/userCenterIndex",pdata,false,function(data){
 					if(data.code == 0){
 						personData = data.data.userInfo;
 						imgServer = data.data.imgServer;

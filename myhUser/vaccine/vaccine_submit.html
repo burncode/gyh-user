@@ -11,6 +11,21 @@
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/simple-calendar.css" />
 		<link rel="stylesheet" href="../css/vaccine/vaccine_submit.css" />
+		<style>
+			.mui-popover.mui-popover-action .mui-table-view .mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				border: 1px solid #eee;
+				margin: 5px 0;
+			}
+			
+			.mui-popover.mui-popover-action .mui-table-view {
+				margin: 8px 0;
+				background: #fff;
+			}
+		</style>
 		<script>
 			//检查手机号
 			function checkPhone(phone) {
@@ -33,7 +48,7 @@
 			<h1 class="mui-title">填写资料</h1>
 			<button id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="border: 0;">提交</button>
 		</header>
-		<div class="mui-content">
+		<div id="app" class="mui-content">
 			<ul class="mui-table-view mui-table-view-chevron" style="margin: 10px;">
 				<li class="mui-table-view-cell mui-media" style="padding:10px;border-radius: 6px;">
 					<img id="thumbnailImg" class="mui-media-object mui-pull-left" src="../images/default-record.png">
@@ -64,12 +79,11 @@
 									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">
 								</div>
 								<div id="chooseDate" class="mui-input-row">
-									 <label>预约日期</label>
-									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly"></span>
-								</div>
-								<div class="mui-input-row">
-									 <label>选择时间</label>
-									 <span class="mui-navigate-right"><input type="text" class="mui-input-clear appointTimeId" value="12" placeholder="请选择时间" readonly="readonly"></span>
+									<label>预约时间</label>
+									<span class="mui-navigate-right">
+										<input type="text" class="orderDate" placeholder="请选择日期" readonly="readonly">
+										<input type="hidden" class="appointTimeId" value=""></span>
+									</span>
 								</div>
 							</form>
 						</div>
@@ -80,11 +94,25 @@
 			<div id="time" class="mui-popover mui-popover-action mui-popover-bottom">
 				<div id='calendar'></div>
 			</div>
+			<div id="timeQuantum" class="mui-popover mui-popover-action mui-popover-bottom">
+				<div class="time-h">
+					<p id="appointDay"></p>
+					<p>香港诺健医务中心</p>
+					<p>地址 : 新界上水龙琛路48号上水汇9楼4号室</p>
+				</div>
+				<ul id="timeQuantumUl" class="mui-table-view mui-grid-view mui-grid-9">
+					<!--<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<p>{{item.startTime}}-{{item.endTime}}</p>
+						<p>({{item.appointCounted}}/{{item.appointCount}})</p>
+					</li>-->
+				</ul>
+			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
-	<script type="text/javascript" src="../js/simple-calendar.js"></script>
+	<!--<script type="text/javascript" src="../js/vue.min.js"></script>-->
 	<script src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/simple-calendar.js"></script>
 	<script>
 		(function(_, doc, u, w) {
 			_.init(), _(".mui-scroll-wrapper").scroll();
@@ -101,70 +129,114 @@
 				submitObj = document.getElementById("submit"),
 				priceObj = document.getElementById("price"),
 				thumbnailImgObj = document.getElementById("thumbnailImg"),
-				vaccineNameObj =  document.getElementById("vaccineName");
-			var d_btn_addObj = document.getElementById("d_btn_add"),calendarObj = document.getElementById("calendar");
+				vaccineNameObj = document.getElementById("vaccineName");
+			var d_btn_addObj = document.getElementById("d_btn_add"),
+				calendarObj = document.getElementById("calendar");
+			var timeQuantumUlObj = document.getElementById("timeQuantumUl"),//时间段ul
+				appointDayObj = document.getElementById("appointDay");
 			var markObj = {
-							'2018-1-4':'预约',
-							'2018-1-26':'预约',
-							'2018-2-5':'预约',
-							'2018-3-15':'预约'
-						},oTime = '';
-						var myCalendar = new SimpleCalendar('#calendar');
-						myCalendar.addMark(markObj); 
-//			getAppointTimeByMonth();
-			getAppointTimeByDay('20180131');
+					'2018-1-4': '预约',
+					'2018-1-26': '预约',
+					'2018-2-5': '预约',
+					'2018-3-15': '预约'
+				},
+				oTime = '';
+			var myCalendar = new SimpleCalendar('#calendar');
+			myCalendar.addMark(markObj);
+			//			getAppointTimeByMonth(201803);
+			//			getAppointTimeByDay(20180301);
 			
-			function getAppointTimeByMonth(ym){
-				var pdata={}
+			var timeQuantum = [{
+						"id": "17",
+						"appointYM": "201803",
+						"appointDay": "1",
+						"startTime": "13:00",
+						"endTime": "16:00",
+						"appointCount": "20",
+						"appointCounted": "0"
+					}, {
+						"id": "18",
+						"appointYM": "201803",
+						"appointDay": "1",
+						"startTime": "17:00",
+						"endTime": "19:00",
+						"appointCount": "15",
+						"appointCounted": "0"
+					}];
+
+//			var vm = new Vue({
+//				el: "#app",
+//				data: {
+//					appointDay: '',
+//					timeQuantum: [{
+//						"id": "17",
+//						"appointYM": "201803",
+//						"appointDay": "1",
+//						"startTime": "13:00",
+//						"endTime": "16:00",
+//						"appointCount": "20",
+//						"appointCounted": "0"
+//					}, {
+//						"id": "18",
+//						"appointYM": "201803",
+//						"appointDay": "1",
+//						"startTime": "17:00",
+//						"endTime": "19:00",
+//						"appointCount": "15",
+//						"appointCounted": "0"
+//					}]
+//				},
+//				methods: {
+//					sureTime: function(item) { //设置选好的时间
+//						if(Number(item.appointCount) > Number(item.appointCounted)) {
+//							thisOrderDate.value = item.appointYM + (Number(item.appointDay) < 10 ? '0' + item.appointDay : item.appointDay) + '-' + item.startTime + '-' + item.endTime;
+//							(thisOrderDate.nextElementSibling || thisOrderDate.nextSibling).value = item.id;
+//							_('#timeQuantum').popover('toggle');
+//						} else {
+//							_.toast('该时间段名额已满，请重新选择')
+//						}
+//					}
+//				}
+//			});
+
+			function getAppointTimeByMonth(ym) {
+				var pdata = {}
 				pdata.privateToken = w.getItem("privateToken");
 				pdata.ym = ym;
 				console.log(JSON.stringify(pdata));
 				u.mypost("appointMap/getAppointTimeByMonth", pdata, true, function(data) {
 					console.log('getAppointTimeByMonth data=====' + JSON.stringify(data));
 					if(data.code == 0) {
-						_.each(data.data[0],function(i,o){
-						 	 oTime = formatTime(o.appointYM,o.appointDay);
-						 	 markObj[oTime] = '预约';
+						_.each(data.data[0], function(i, o) {
+							oTime = formatTime(o.appointYM, o.appointDay);
+							markObj[oTime] = '预约';
 						})
-						var myCalendar = new SimpleCalendar('#calendar');
-						myCalendar.addMark(markObj); 
-						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
-					} else if(data.code == 500 && '未登錄' == data.msg) {
-					}
-				}, myerror);
-			}
-			
-			
-			function getAppointTimeByDay(day){
-				var pdata={};
-				pdata.privateToken = w.getItem("privateToken");
-				pdata.day = day;
-				console.log(JSON.stringify(pdata));
-				u.mypost("appointMap/getAppointTimeByDay", pdata, true, function(data) {
-					console.log('getAppointTimeByDay data=====' + JSON.stringify(data));
-					if(data.code == 0) {
-//						_.each(data.data[0],function(i,o){
-//						 	 oTime = formatTime(o.appointYM,o.appointDay);
-//						 	 markObj[oTime] = '预约';
-//						})
 						var myCalendar = new SimpleCalendar('#calendar');
 						myCalendar.addMark(markObj);
 						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
-					} else if(data.code == 500 && '未登錄' == data.msg) {
-					}
+					} else if(data.code == 500 && '未登錄' == data.msg) {}
 				}, myerror);
 			}
-			
-			//格式化时间
-			function formatTime(timeStr,dayStr){
-				return timeStr.substr(0,4) + '-' + Number(timeStr.substr(4,2) || 1) + '-' + dayStr;
+
+			//得到某一天的时间段
+			function getAppointTimeByDay(day, callback) {
+				var pdata = {};
+				pdata.privateToken = w.getItem("privateToken");
+				pdata.day = day;
+				console.log(JSON.stringify(pdata));
+				u.mypost("appointMap/getAppointTimeByDay", pdata, true, callback, myerror);
 			}
-			
+
+			//格式化时间
+			function formatTime(timeStr, dayStr) {
+				return timeStr.substr(0, 4) + '-' + Number(timeStr.substr(4, 2) || 1) + '-' + dayStr;
+			}
+
 			w.addEventListener("event", function(e) {
-				if(w.getItem('role') == '代理人'){
-					removeClass(d_btn_addObj,'mui-hidden');
-				}else{
-					addClass(d_btn_addObj,'mui-hidden');
+				if(w.getItem('role') == '代理人') {
+					removeClass(d_btn_addObj, 'mui-hidden');
+				} else {
+					addClass(d_btn_addObj, 'mui-hidden');
 				}
 				vaccinumId = e.detail.vaccinumId;
 				name = e.detail.name;
@@ -242,7 +314,7 @@
 				var mobiles = document.getElementsByClassName('mobile');
 				var identity = document.getElementsByClassName('identity');
 				var appointTimeId = document.getElementsByClassName('appointTimeId');
-//				var orderDate = document.getElementsByClassName('orderDate');
+				//				var orderDate = document.getElementsByClassName('orderDate');
 
 				arrUser = [];
 				len = 0;
@@ -253,7 +325,7 @@
 					user.mobile = mobiles[i].value;
 					user.identity = identity[i].value;
 					user.appointTimeId = appointTimeId[i].value;
-//					user.orderDate = orderDate[i].value;
+					//					user.orderDate = orderDate[i].value;
 					arrUser.push(user);
 				}
 				console.log('arrUser=====' + JSON.stringify(arrUser));
@@ -282,8 +354,22 @@
 				monthObj = document.getElementById("select-month")
 			//点击预约
 			_('#calendar').on('tap', '.sc-item', function() {
-				thisOrderDate.value = yearObj.value + '-' + monthObj.value + '-' + this.querySelector('.day').innerHTML;
 				_('#time').popover('toggle');
+				appointDayObj.value = yearObj.value + '-' + monthObj.value + '-' + this.querySelector('.day').innerHTML;;
+				getAppointTimeByDay(appointDayObj.value, function(data) {
+					console.log('getAppointTimeByDay data=====' + JSON.stringify(data));
+						console.log("timeQuantum===" + JSON.stringify(data));
+//						timeQuantum = data.data || [];//赋值时间段
+						timeQuantum || [].forEach(function(item){
+							u.emptyHtml(timeQuantumUlObj);
+							timeQuantumUlObj.appendChild('<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">'+
+						    '<p>item.startTime-item.endTime</p>'+
+							'<p>(item.appointCounted/item.appointCount)</p>'+
+							'</li>');
+						})
+						_('#timeQuantum').popover('toggle');
+					}
+				);
 			})
 			//点击选择时间
 			_('#divForm').on('tap', '.orderDate', function() {

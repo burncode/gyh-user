@@ -1787,7 +1787,8 @@
 	        "css/common.css",
 	        "fonts/iconfont-nodata.ttf"
 	      ],
-	      "priority": 1
+	      "priority": 1,
+	      "refer": []
 	    },
 	    "my_center/page_appointList.html": {
 	      "href": "my_center/page_appointList.html",
@@ -1828,7 +1829,8 @@
 	        "css/mescroll/mescroll.min.css",
 	        "css/order/buy_record.css"
 	      ],
-	      "priority": 4
+	      "priority": 4,
+	      "refer": []
 	    },
 	    "vaccine/vaccine_submit.html": {
 	      "href": "vaccine/vaccine_submit.html",
@@ -1851,7 +1853,6 @@
 	  },
 	  "idle": {
 	    "resources": [
-	      "my_center/my_order1.html",
 	      "img/choice-after.png",
 	      "doctor/order_succeed.html",
 	      "css/stylesheet.css",

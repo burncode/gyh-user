@@ -99,7 +99,6 @@
 						}, false, function(data) {
 							if(data.code == 0){
 								data = data.data.hospitals || [];
-								console.log('data=====' + JSON.stringify(data));
 								if(pageNum == 1) vm.items = [];
 								vm.items = vm.items.concat(data);
 								vm.mescroll.endSuccess(data.length);

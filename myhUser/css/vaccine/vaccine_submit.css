@@ -108,5 +108,6 @@ select {
 }
 
 .time-h>p {
-	text-align: justify;margin: 10px;
+	text-align: justify;
+	margin:10px;
 }

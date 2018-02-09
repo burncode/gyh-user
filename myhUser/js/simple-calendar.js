@@ -287,7 +287,7 @@ var SimpleCalendar = function () {
       var header = root.querySelector('.sc-header');
       var scbody = root.querySelector('.sc-body');
       //actions
-      header.innerHTML = header.innerHTML + '<div class="sc-actions">' + '<select id="select-year" disabled="disabled" class="sc-select-year" name="">' + '</select>' + '<span>年</span>' + ' </div>';
+      header.innerHTML = header.innerHTML + '<div class="sc-actions">' + '<select id="select-year" class="sc-select-year" name="">' + '</select>' + '<span>年</span>' + ' </div>';
       header.innerHTML = header.innerHTML + '<div class="sc-actions">' + '<div id="sc-mleft" class="sc-mleft" style="padding-right: 18px;">' + '&lsaquo;</div>' + '<select id="select-month" disabled="disabled" class="sc-select-month selectMonth" name="">' + '</select>' + '<div id="sc-mright" class="sc-mright" style="padding-left: 12px;">&rsaquo;</div>' + '</div>';
       header.innerHTML = header.innerHTML + '<div class="sc-actions"><span id="sc-return-today" class="sc-return-today ">返回今天</span></div>';
 //    header.innerHTML = header.innerHTML + '<div class="sc-actions"><span class="sc-time"></span></div>';

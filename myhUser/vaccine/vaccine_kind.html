@@ -127,7 +127,7 @@
 				el: "#app",
 				data: {
 					imgServer: imgServer,
-					imgHeight: 100,
+					imgHeight: 120,
 					vacciType: null,
 					items_all: [],
 					items_au:[],
@@ -138,6 +138,7 @@
 					mescrollArr[0] = initMescroll("mescroll0", "dataList0", this.upCallback);
 					var bodyWidth = document.body.clientWidth;
 					self.imgHeight = (bodyWidth >= 400) ? (bodyWidth / 3 - 25) / 1.48 : (bodyWidth / 2 - 25) / 1.48;
+					console.log('self.imgHeight=' + self.imgHeight);
 				},
 				methods: {
 					upCallback: function(page) {
@@ -146,6 +147,7 @@
 					},
 					getListDataFromNet: function(pageNum, pageSize,vacciType) {
 						util.mypost('vaccinum/vaccinumList', { /*可选参数  1成人疫苗  2儿童疫苗 */
+							privateToken:w.getUser(),
 							offset: (pageNum - 1) * pageSize,
 							limit: pageSize,
 							vacciType: vacciType || vm.vacciType,
@@ -212,7 +214,7 @@
 			doc.getElementById("search").addEventListener('keypress', function(e) {
 				if(e.keyCode == "13") {
 					doc.activeElement.blur();
-					vm.getListDataFromNet(1, 5 ,0);
+					vm.getListDataFromNet(1, 6 ,0);
 					e.preventDefault(); // 阻止默认事件
 				}
 			})

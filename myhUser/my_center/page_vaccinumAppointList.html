@@ -148,7 +148,7 @@
 		 * */
 		function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
 			util.mypost('user_center/vaccinumAppointList', {
-				privateToken: privateToken,
+				privateToken: window.getUser(),
 				offset: (pageNum -1) * pageSize,
 				limit: pageSize
 			}, null, successCallback, errorCallback)

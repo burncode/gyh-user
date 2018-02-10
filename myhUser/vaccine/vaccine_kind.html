@@ -69,7 +69,7 @@
 				<div id="mescroll0" class="mescroll">
 					<div id="dataList0" class="mui-row gene-content">
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_all" @tap="openDetail(item)">
-							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
+							<dl><dt><img v-bind:style="{height:item.imgHeight + 'px'}" v-lazy="item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
 									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
@@ -82,7 +82,7 @@
 				<div id="mescroll1" class="mescroll">
 					<div id="dataList1" class="mui-row gene-content">
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_au" @tap="openDetail(item)">
-							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
+							<dl><dt><img v-bind:style="{height:item.imgHeight + 'px'}" v-lazy="item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
 									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
@@ -95,7 +95,7 @@
 				<div id="mescroll2" class="mescroll">
 					<div id="dataList2" class="mui-row gene-content">
 						<div class="mui-col-xs-6 mui-col-sm-4" v-for="item in items_ch" @tap="openDetail(item)">
-							<dl><dt><img v-bind:style="{height:imgHeight + 'px'}" v-lazy="imgServer + item.thumbnail"></dt>
+							<dl><dt><img v-bind:style="{height:item.imgHeight + 'px'}" v-lazy="item.thumbnail"></dt>
 								<dd><span class='gene-content-title mui-ellipsis-2'>{{item.name}}</span>
 									<span class='gene-content-money'>¥{{item.price}}</span>
 								</dd>
@@ -121,13 +121,13 @@
 				loading: '../images/default-news.png',
 				attempt: 1
 			});
-
+			
+			var imgHeight = 0;
 			//创建vue对象
 			var vm = new Vue({
 				el: "#app",
 				data: {
 					imgServer: imgServer,
-					imgHeight: 120,
 					vacciType: null,
 					items_all: [],
 					items_au:[],
@@ -137,8 +137,7 @@
 				mounted: function() {
 					mescrollArr[0] = initMescroll("mescroll0", "dataList0", this.upCallback);
 					var bodyWidth = document.body.clientWidth;
-					self.imgHeight = (bodyWidth >= 400) ? (bodyWidth / 3 - 25) / 1.48 : (bodyWidth / 2 - 25) / 1.48;
-					console.log('self.imgHeight=' + self.imgHeight);
+					imgHeight = (bodyWidth >= 400) ? (bodyWidth / 3 - 25) / 1.48 : (bodyWidth / 2 - 25) / 1.48;
 				},
 				methods: {
 					upCallback: function(page) {
@@ -154,7 +153,7 @@
 							keyword: vm.keyword
 						}, false, function(data) {
 							if(data.code == 0) {
-								data = data.data.vaccinumList || [];
+								data = convert(data.data.vaccinumList || []);
 								if(null == vm.vacciType || 0 == vm.vacciType){
 									vm.vacciType = 0;
 									if(pageNum == 1) vm.items_all = [];
@@ -178,7 +177,7 @@
 					openDetail: function(item) {
 						w.openView('vaccine_detail.html', {
 							vaccinumId: item.id,
-							thumbnailImg: item.thumbnailImg
+							thumbnailImg: item.thumbnail
 						});
 					},
 					setVacciType: function(vacciType) {
@@ -218,6 +217,23 @@
 					e.preventDefault(); // 阻止默认事件
 				}
 			})
+			
+			/**
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						id: item.id,
+						name: item.name,
+						price: item.price,
+						thumbnail: imgServer + item.thumbnail,
+						imgHeight: imgHeight
+					});
+				});
+				return newItems;
+			}
 		})(mui, document, util, window)
 	</script>
 

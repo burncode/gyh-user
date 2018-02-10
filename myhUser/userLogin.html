@@ -47,24 +47,7 @@
 	<script type="text/javascript" src="js/common.js" ></script>
 	<script type="text/javascript">
 		(function(_,doc,w,u){
-			_.init({swipeBack:false,preloadPages:[
-			{
-				url:"my_center/contactService.html",
-				id:"contactService",
-				styles:{popGesture: "hide"}
-			},{
-				url:"communicate/post_detail.html",
-				id:"post_detail",styles:{popGesture: "hide"}
-			},{
-				url:"doctor/search.html",
-				id:"search",
-				styles:{popGesture: "hide"}
-			},{
-				url:"vaccine/vaccine_submit.html",
-				id:"vaccine_submit",
-				styles:{popGesture: "hide"}
-			}]}),_(".mui-scroll-wrapper").scroll();
-			
+			_.init(),_(".mui-scroll-wrapper").scroll();
 			var accountObj = doc.getElementById("account"),passwordObj = doc.getElementById("password");
 			var myDWebView = null;
 			doc.getElementById("forget").addEventListener("tap",function(){
@@ -115,12 +98,7 @@
 			});
 			//登錄并隐藏登錄
 			function loginSkip(){
-				var all = plus.webview.all();
-				if(all.length > 5){
-					plus.webview.hide(plus.webview.getWebviewById("userLogin"),"slide-out-right",300);
-				}else{
-					w.openView("tabbar.html");
-				}
+				plus.webview.hide(plus.webview.getWebviewById("userLogin"),"slide-out-right",300);
 			}
 			//第三方登錄
 			var authBtns = ['weixin','qq'],auths = {},oauthArea = doc.querySelector('.oauth-area');
@@ -139,9 +117,6 @@
 						u.close("userLogin.html");
 					},10);
 				}
-				setTimeout(function() {
-					plus.navigator.closeSplashscreen(); //手动关闭启动页
-				}, 3000);
 				plus.oauth.getServices(function(services) {
 					for (var i in services) {
 						var service = services[i];
@@ -220,10 +195,6 @@
 					oauthArea.style.display = 'none';
 					plus.nativeUI.toast("獲取登錄認證失敗：" + e.message);
 				});
-				if(!w.getItem("lauchFlag")){
-					w.openView("guide.html");
-					return;
-				}
 			})
 			//连续双击退出系统
 			w.doubleTapExit();

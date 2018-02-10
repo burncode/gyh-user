@@ -51,10 +51,10 @@
 				web = plus.webview.currentWebview();
 				vaccinumId = web.vaccinumId;
 				thumbnailImg = web.thumbnailImg;
+				console.log("thumbnailImg==" + thumbnailImg);
 				pdata.vaccinumId = vaccinumId;
 				pdata.privateToken = privateToken;
 				u.mypost("vaccinum/vaccinumDetail",pdata,true,function(data){
-					console.log("vaccinumDetail data====" + JSON.stringify(data));
 					if(data.code == 0){
 						orderId = data.data.orderId;
 						data = data.data[0][0];
@@ -74,7 +74,7 @@
 			})
 			payObj.addEventListener('tap',function(){
 				if(!w.getUser()){
-					w.openView("../userLogin.html");
+					u.goLogin();
 				}else{
 					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name,price:price,thumbnailImg:thumbnailImg});
 				}
@@ -82,7 +82,7 @@
 			//聯系客服
 			doc.getElementById("service").addEventListener('tap',function(){
 				if(!w.getUser()){
-					w.openView("../userLogin.html");
+					u.goLogin();
 				}else{
 					w.openView("../my_center/contactService.html");
 				}

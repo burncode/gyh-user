@@ -173,44 +173,9 @@
 			var myCalendar = new SimpleCalendar('#calendar');
 			myCalendar.addMark(markObj);
 			
-			getAppointTimeByMonth(201803);
-
+			getAppointTimeByMonth(201803);//获取某个月的预约额度
 			var timeQuantum = []; //时间段数组
 
-			//			var vm = new Vue({
-			//				el: "#app",
-			//				data: {
-			//					appointDay: '',
-			//					timeQuantum: [{
-			//						"id": "17",
-			//						"appointYM": "201803",
-			//						"appointDay": "1",
-			//						"startTime": "13:00",
-			//						"endTime": "16:00",
-			//						"appointCount": "20",
-			//						"appointCounted": "0"
-			//					}, {
-			//						"id": "18",
-			//						"appointYM": "201803",
-			//						"appointDay": "1",
-			//						"startTime": "17:00",
-			//						"endTime": "19:00",
-			//						"appointCount": "15",
-			//						"appointCounted": "0"
-			//					}]
-			//				},
-			//				methods: {
-			//					sureTime: function(item) { //设置选好的时间
-			//						if(Number(item.appointCount) > Number(item.appointCounted)) {
-			//							thisOrderDate.value = item.appointYM + (Number(item.appointDay) < 10 ? '0' + item.appointDay : item.appointDay) + '-' + item.startTime + '-' + item.endTime;
-			//							(thisOrderDate.nextElementSibling || thisOrderDate.nextSibling).value = item.id;
-			//							_('#timeQuantum').popover('toggle');
-			//						} else {
-			//							_.toast('该时间段名额已满，请重新选择')
-			//						}
-			//					}
-			//				}
-			//			});
 			//通过月份得到预约时间
 			function getAppointTimeByMonth(ym) {
 				var pdata = {
@@ -233,6 +198,7 @@
 
 			//页面初始进来
 			w.addEventListener("event", function(e) {
+				console.log("event detail=====" + JSON.stringify(e.detail));
 				if(w.getItem('role') == '代理人') {
 					removeClass(d_btn_addObj, 'mui-hidden');
 				} else {
@@ -314,7 +280,6 @@
 				var mobiles = document.getElementsByClassName('mobile');
 				var identity = document.getElementsByClassName('identity');
 				var appointTimeId = document.getElementsByClassName('appointTimeId');
-				//				var orderDate = document.getElementsByClassName('orderDate');
 
 				arrUser = [];
 				len = 0;
@@ -343,7 +308,7 @@
 						}
 						w.openView("../doctor/pay.html", ex);
 					} else if(data.code == 500 && '未登錄' == data.msg) {
-						w.openView("../userLogin.html");
+						u.goLogin();
 					}
 				}, myerror);
 			})

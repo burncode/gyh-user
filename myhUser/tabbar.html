@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -10,6 +11,7 @@
 		<link rel="stylesheet" href="css/common.css">
 		<link rel="stylesheet" href="css/iconfont-nav.css" />
 	</head>
+
 	<body>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="gohome" class="mui-tab-item mui-active" href="index.html">
@@ -30,65 +32,101 @@
 			</a>
 		</nav>
 		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/common.js" ></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			 //mui初始化
-			mui.init();
-			var subpages = ['index.html', 'doctor/doctor_list.html', 'communicate/communicate_circle.html', 'my_center/myD.html'];
-			var subpage_style = {
-				top: '0',
-				bottom: '51px'
-			};
-			var aniShow = {};
-			 //创建子页面，首个选项卡页面显示，其它均隐藏；
-			mui.plusReady(function() {
-				var self = plus.webview.currentWebview();
-				//首頁关闭ios右划
-				self.setStyle({
-					popGesture:"none"
+			(function(_, doc, w, u) {
+				//mui初始化
+				_.init({
+					preloadPages: [{
+						url: "my_center/contactService.html",
+						id: "contactService",
+						styles: {
+							popGesture: "hide"
+						}
+					}, {
+						url: "communicate/post_detail.html",
+						id: "post_detail",
+						styles: {
+							popGesture: "hide"
+						}
+					}, {
+						url: "doctor/search.html",
+						id: "search",
+						styles: {
+							popGesture: "hide"
+						}
+					}, {
+						url: "vaccine/vaccine_submit.html",
+						id: "vaccine_submit",
+						styles: {
+							popGesture: "hide"
+						}
+					}]
 				});
-				var sub = plus.webview.create(subpages[0], subpages[0], subpage_style);
-				self.append(sub);
-				aniShow[subpages[0]] = true;
-				 //当前激活选项
-				var activeTab = subpages[0];
-					 //选项卡点击事件
-				mui('.mui-bar-tab').on('tap', 'a', function(e) {
-					var targetTab = this.getAttribute('href');
-					if (targetTab == activeTab) {
+				var subpages = ['index.html', 'doctor/doctor_list.html', 'communicate/communicate_circle.html', 'my_center/myD.html'];
+				var subpage_style = {
+					top: 0,
+					bottom: '51px'
+				};
+				var aniShow = {};
+				//创建子页面，首个选项卡页面显示，其它均隐藏；
+				_.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					//首頁关闭ios右划
+					self.setStyle({
+						popGesture: "none"
+					});
+					var sub = plus.webview.create(subpages[0], subpages[0], subpage_style);
+					self.append(sub);
+					aniShow[subpages[0]] = true;
+					//当前激活选项
+					var activeTab = subpages[0];
+					//选项卡点击事件
+					_('.mui-bar-tab').on('tap', 'a', function(e) {
+						var targetTab = this.getAttribute('href');
+						if(targetTab == activeTab) {
+							return;
+						}
+						//显示目标选项卡
+						//若为iOS平台或非首次显示，则直接显示
+						if(aniShow[targetTab]) {
+							plus.webview.show(targetTab);
+						} else {
+							//否则，创建页面并 使用fade-in动画，且保存变量
+							var temp = {};
+							temp[targetTab] = "true";
+							_.extend(aniShow, temp);
+							var sub = plus.webview.create(targetTab, targetTab, subpage_style);
+							self.append(sub);
+							sub.show(targetTab, "fade-in", 300);
+						}
+						//隐藏当前;
+						plus.webview.hide(activeTab);
+						//更改当前活跃的选项卡
+						activeTab = targetTab;
+					});
+					setTimeout(function() {
+						plus.navigator.closeSplashscreen(); //手动关闭启动页
+					}, 2000);
+					if(!w.getItem("lauchFlag")){
+						w.openView("guide.html");
 						return;
 					}
-					//显示目标选项卡
-					//若为iOS平台或非首次显示，则直接显示
-					if(aniShow[targetTab]){
-						plus.webview.show(targetTab);
-					}else{
-						//否则，创建页面并 使用fade-in动画，且保存变量
-						var temp = {};
-						temp[targetTab] = "true";
-						mui.extend(aniShow,temp);
-						var sub = plus.webview.create(targetTab, targetTab, subpage_style);
-						self.append(sub);
-						sub.show(targetTab,"fade-in",300);
-					}
-					//隐藏当前;
-					plus.webview.hide(activeTab);
-					//更改当前活跃的选项卡
-					activeTab = targetTab;
 				});
-			});
-			 //自定义事件，模拟点击“选项卡”
-			document.addEventListener('goIndex', function(e) {
-				var id  = e.detail.id?e.detail.id:'gohome';
-				var defaultTab = document.getElementById(id);
-				mui.trigger(defaultTab, 'tap');
-				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-				if (defaultTab !== current) {
-					current.classList.remove('mui-active');
-					defaultTab.classList.add('mui-active');
-				}
-			});
-			window.doubleTapExit();
+				//自定义事件，模拟点击“选项卡”
+				document.addEventListener('goIndex', function(e) {
+					var id = e.detail.id ? e.detail.id : 'gohome';
+					var defaultTab = document.getElementById(id);
+					_.trigger(defaultTab, 'tap');
+					var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+					if(defaultTab !== current) {
+						current.classList.remove('mui-active');
+						defaultTab.classList.add('mui-active');
+					}
+				});
+				window.doubleTapExit();
+			})(mui, document, window, util)
 		</script>
 	</body>
+
 </html>

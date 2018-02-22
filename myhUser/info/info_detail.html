@@ -12,25 +12,54 @@
 		<link rel="stylesheet" href="../css/detail.css" />
 		<link rel="stylesheet" href="../css/iconfont.css"/>
 		<link rel="stylesheet" href="../css/info/info_detail.css" />
+		<link rel="stylesheet" href="../css/info/list-to-detail.css" />
 		<style>
 			.info-detail{
 				text-align: center;
 				margin: 10px 0 10px;
 			}
+			.handel{
+				
+			}
 		</style>
 	</head>
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!--<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">詳情</h1>
 			<a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue" id="share" href="#shareList"><img src="../images/transmit.png"></a>
 			<a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue" id="collect"><img id="love" class="love"></a>
-		</header>
+		</header>-->
 		<div class="mui-content">
+			<!--顶部banner图 开始-->
+			<div id="kr-article-banner" class="kr-article-banner">
+				<div id="kr-article-cover" class="kr-article-cover">
+					<img :src="thumbnail">
+				</div>
+				<h2 id="kr-article-title" class="kr-article-title">{{title}}</h2>
+			</div>
+			<!--顶部banner图 结束-->
+			<div class="kr-article-content">
+				<!-- 文章作者、发布时间等信息 -->
+				<div class="kr-article-meta">
+					<div id="kr-article-author" class="kr-article-author">{{author}}</div>
+					<div class="kr-article-text">发表于</div>
+					<div id="kr-article-time" class="kr-article-time">{{createTime}}</div>
+					<!--<div class="handel mui-pull-right">
+						<a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue" id="share" href="#shareList"><img src="../images/transmit.png"></a>
+						<a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue" id="collect"><img id="love" class="love"></a>
+					</div>-->
+				</div>
+				<!--文章详细内容-->
+				<div id="kr-article-article" class="kr-article-article" v-html="content"></div>
+			</div>
+		</div>
+		
+		<!--<div class="mui-content">
 			<div class="info-title" id="title"></div>
 			<div class="info-detail font-size-14"><span id="createDate"></span>&ensp;&ensp;<span class="main-font-color" id="author"></span></div>
 			<div class="info-content" id="content"></div>
-		</div>
+		</div>-->
 		<div id="shareList" class="mui-popover mui-popover-action mui-popover-bottom">
 			<div class="popover-title">分享</div>
 			<div class="popover-content">
@@ -54,115 +83,187 @@
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js" ></script>
 	<script src="../js/clipboard.min.js"></script>
 	<script>
 		(function(_,doc,u,w){
-			_.init({swipeBack:false}),_(".mui-scroll-wrapper").scroll();
+			_.init();
 			var list = doc.getElementById('comment'),loveObj = doc.getElementById("love");
 			var web = null,title = null,author = null,createDate = null,content = null;
 			var pdata = {},infoId = null,detail = null,privateToken = null,isColl = true,collId = null;
 			//分享
 			var title_share = null,shares = {},weixinss = null,weixinShareSession = null;
 			var href = null,newsData = null,thumbs = [],imgserver = null,isPengyouquan = false;
-			_.plusReady(function(){
-				privateToken = w.getItem("privateToken");
-				//更新分享服务
-				updateSerivces();
-				//点击按钮 点击微信好友分享
-				doc.querySelector(".btnweixin").addEventListener("tap",function(){
-					isPengyouquan = false;
-					shareAction(weixinShareSession,false);
-				});
-				//点击朋友圈分享
-				doc.querySelector(".btnpengyouquan").addEventListener("tap",function(){
-					isPengyouquan = true;
-					shareAction(weixinShare,false);
-				});
-				//点击複制鏈接
-				doc.querySelector(".btntengxunweibo").addEventListener("tap",function(){
-					isPengyouquan = false;
-					if(plus.os.name =='Android'){
-						copyToClipAndroid(href);
-					}else{
-						copyToClipIos(href);
-					}
-				});
-				infoId = plus.webview.currentWebview().infoId;
-				pdata.nid = infoId;
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-				u.mypost("news/getNewsDetail",pdata,true,function(data){
-					if(data.code == 0){
-						imgserver = data.data.imgServer;
-						//分享链接
-						href = data.data.shareLink;
-						newsData = data.data.news;
-						isColl = "未收藏" == data.data.isColl?false:true;
-						isColl?addClass(loveObj,"love-detail"):'';
-						collId = data.data.collId;
-						title = newsData.title?newsData.title:'';
-						author = newsData.author?newsData.author:'';
-						createDate = newsData.createTime?newsData.createTime:'';
-						content = newsData.content?newsData.content:nodataHtmlInfo;
-						title_share = newsData.title;
-						thumbs = [imgserver+newsData.thumbnail+"_50x50.jpg" || ''];//缩略图
-						doc.getElementById("title").innerHTML = title;
-						doc.getElementById("author").innerHTML = author;
-						doc.getElementById("createDate").innerHTML = createDate;
-						doc.getElementById("content").innerHTML = content;
-					}else{
-						content = newsData.content?newsData.content:nodataHtmlInfo;
-					}
-				},myerror);
-			});
-			
-			//添加或是取消收藏
-			loveObj.addEventListener("tap",function(){
-				if(!w.getUser()){
-					w.openView("../userLogin.html");
-				}else{
-					var pdata = {};
-					privateToken = w.getItem("privateToken");
-					pdata.privateToken = privateToken;
-					var self = this;
-					//取消收藏
-					if(isColl){
-						var pdata ={
-							collId:collId,
-							privateToken:privateToken
-						}
-						u.mypost('user_center/delCollection',pdata, false, function(data) {
-							if (data.code  == 0) {
-								_.toast('取消成功');
-								isColl = false;
-								toggleClass(self,"love-detail");
-							} else {
-								_.toast('取消失敗');
-							}
-						},myerror);
-					}else{
-						var pdata ={
-							nid:infoId,
-							privateToken:privateToken
-						}
-						//添加收藏
-						u.mypost("news/newsCollection",pdata,false,function(data){
-							if(data.code == 0){
-								u.mypost("news/getNewsDetail",pdata,true,function(data){
-									if(data.code == 0){
-										collId = data.data.collId;
-										_.toast("收藏成功");
-										isColl = true;
-										toggleClass(self,"love-detail");
-									}
-								},myerror);
-							}else{
-								_.toast(data.msg);
-							}
-						},myerror);
+
+			function getDefaultData() {
+				return {
+					title: '',
+					author: '',
+					createTime: '',
+					content: '',
+					thumbnail:''
+				}
+			}
+
+			var vm = new Vue({
+				el: '.mui-content',
+				data: getDefaultData(),
+				methods: {
+					resetData: function() {//重置数据
+						Object.assign(this.$data, getDefaultData());
 					}
 				}
 			});
+
+			//监听自定义事件，获取新闻详情
+			document.addEventListener('get_detail', function(event) {
+				var nid = event.detail.nid;
+				if(!nid) {
+					return;
+				}
+				
+				//前页传入的数据，直接渲染，无需等待ajax请求详情后
+				vm.title = event.detail.title;
+				vm.thumbnail = imgServer + event.detail.thumbnail;
+				
+				pdata.nid = nid;
+				privateToken = w.getUser();
+				pdata.privateToken = privateToken;
+				u.mypost("news/getNewsDetail",pdata,false,function(data){
+					if(data.code == 0){
+//						imgserver = data.data.imgServer;
+//						//分享链接
+//						href = data.data.shareLink;
+						newsData = data.data.news;
+						console.log('newsData======' + JSON.stringify(newsData));
+						vm.author = newsData.author;
+						vm.createTime = newsData.createTime;
+//						isColl = "未收藏" == data.data.isColl?false:true;
+//						isColl?addClass(loveObj,"love-detail"):'';
+//						collId = data.data.collId;
+//						content = newsData.content?newsData.content:nodataHtmlInfo;
+//						title_share = newsData.title;
+//						thumbs = [imgserver+newsData.thumbnail+"_50x50.jpg" || ''];//缩略图
+						vm.content = newsData.content?newsData.content:nodataHtmlInfo;
+					}else{
+						vm.content = newsData.content?newsData.content:nodataHtmlInfo;
+					}
+				},myerror);
+			});
+
+			//重写返回逻辑
+			mui.back = function() {
+				plus.webview.currentWebview().hide("auto", 300);
+			}
+			
+			//窗口隐藏时，重置页面数据
+			mui.plusReady(function () {
+				var self = plus.webview.currentWebview();
+				self.addEventListener("hide",function (e) {
+					window.scrollTo(0, 0);
+					vm.resetData();
+				},false);
+			})
+			
+//			_.plusReady(function(){
+//				privateToken = w.getItem("privateToken");
+//				//更新分享服务
+//				updateSerivces();
+//				//点击按钮 点击微信好友分享
+//				doc.querySelector(".btnweixin").addEventListener("tap",function(){
+//					isPengyouquan = false;
+//					shareAction(weixinShareSession,false);
+//				});
+//				//点击朋友圈分享
+//				doc.querySelector(".btnpengyouquan").addEventListener("tap",function(){
+//					isPengyouquan = true;
+//					shareAction(weixinShare,false);
+//				});
+//				//点击複制鏈接
+//				doc.querySelector(".btntengxunweibo").addEventListener("tap",function(){
+//					isPengyouquan = false;
+//					if(plus.os.name =='Android'){
+//						copyToClipAndroid(href);
+//					}else{
+//						copyToClipIos(href);
+//					}
+//				});
+//				infoId = plus.webview.currentWebview().infoId;
+//				pdata.nid = infoId;
+//				privateToken = w.getItem("privateToken");
+//				pdata.privateToken = privateToken;
+//				u.mypost("news/getNewsDetail",pdata,true,function(data){
+//					if(data.code == 0){
+//						imgserver = data.data.imgServer;
+//						//分享链接
+//						href = data.data.shareLink;
+//						newsData = data.data.news;
+//						isColl = "未收藏" == data.data.isColl?false:true;
+//						isColl?addClass(loveObj,"love-detail"):'';
+//						collId = data.data.collId;
+//						title = newsData.title?newsData.title:'';
+//						author = newsData.author?newsData.author:'';
+//						createDate = newsData.createTime?newsData.createTime:'';
+//						content = newsData.content?newsData.content:nodataHtmlInfo;
+//						title_share = newsData.title;
+//						thumbs = [imgserver+newsData.thumbnail+"_50x50.jpg" || ''];//缩略图
+//						doc.getElementById("title").innerHTML = title;
+//						doc.getElementById("author").innerHTML = author;
+//						doc.getElementById("createDate").innerHTML = createDate;
+//						doc.getElementById("content").innerHTML = content;
+//					}else{
+//						content = newsData.content?newsData.content:nodataHtmlInfo;
+//					}
+//				},myerror);
+//			});
+			
+//			//添加或是取消收藏
+//			loveObj.addEventListener("tap",function(){
+//				if(!w.getUser()){
+//					w.openView("../userLogin.html");
+//				}else{
+//					var pdata = {};
+//					privateToken = w.getItem("privateToken");
+//					pdata.privateToken = privateToken;
+//					var self = this;
+//					//取消收藏
+//					if(isColl){
+//						var pdata ={
+//							collId:collId,
+//							privateToken:privateToken
+//						}
+//						u.mypost('user_center/delCollection',pdata, false, function(data) {
+//							if (data.code  == 0) {
+//								_.toast('取消成功');
+//								isColl = false;
+//								toggleClass(self,"love-detail");
+//							} else {
+//								_.toast('取消失敗');
+//							}
+//						},myerror);
+//					}else{
+//						var pdata ={
+//							nid:infoId,
+//							privateToken:privateToken
+//						}
+//						//添加收藏
+//						u.mypost("news/newsCollection",pdata,false,function(data){
+//							if(data.code == 0){
+//								u.mypost("news/getNewsDetail",pdata,true,function(data){
+//									if(data.code == 0){
+//										collId = data.data.collId;
+//										_.toast("收藏成功");
+//										isColl = true;
+//										toggleClass(self,"love-detail");
+//									}
+//								},myerror);
+//							}else{
+//								_.toast(data.msg);
+//							}
+//						},myerror);
+//					}
+//				}
+//			});
 			/**
 			 * 更新分享服务
 			 */

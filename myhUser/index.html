@@ -75,7 +75,7 @@
 					<div @tap="openView('info/info_index.html')" class="tuijian font-size-14"><i class="icon_index_info"></i>&ensp;最新資訊<i class="icon_more mui-pull-right"></i></div>
 					<div class="message-list">
 						<ul id="dataList" class="mui-table-view">
-							<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item.nid)">
+							<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item)">
 								<img class="mui-media-object mui-pull-left" v-lazy="imgServer + item.thumbnail">
 								<div class="mui-media-body">
 									<div class="mui-ellipsis-2 font-size-14 min-h">{{item.title}}</div>
@@ -99,8 +99,20 @@
 	<script type="text/javascript" src="js/common.js"></script>
 	<script>
 		var newContactNum = document.getElementById("newContactNum");
+		var info_detail = null;
+		var titleNView = { //详情页原生导航配置
+			backgroundColor: '#fff', //导航栏背景色
+			titleText: '', //导航栏标题
+			titleColor: '#000000', //文字颜色
+			type: 'transparent', //透明渐变样式
+			autoBackButton: true, //自动绘制返回箭头
+			splitLine: { //底部分割线
+				color: '#dedede'
+			}
+		};
 		(function(_, doc, u, w) {
 			_.init();
+
 			Vue.use(VueLazyload, {
 				preLoad: 1.3,
 				error: 'images/default-news.png',
@@ -108,13 +120,30 @@
 				attempt: 1
 			});
 
+			_.plusReady(function() {
+				//预加载详情页
+				info_detail = _.preload({
+					url: 'info/info_detail.html',
+					id: 'info_detail',
+					styles: {
+						"render": "always",
+						"popGesture": "hide",
+						"bounce": "vertical",
+						"bounceBackground": "#fff",
+						"titleNView": titleNView
+					}
+				});
+			});
 			//创建vue对象
 			var vm = new Vue({
 				el: "#app",
 				data: {
 					mescroll: null,
 					items: [],
-					carouseData: [{"nid": "41","img": "images/default-banner.png"}]
+					carouseData: [{
+						"nid": "41",
+						"img": "images/default-banner.png"
+					}]
 				},
 				mounted: function() {
 					var self = this;
@@ -148,10 +177,24 @@
 							vm.mescroll.endErr();
 						})
 					},
-					openDetail: function(nid) {
-						w.openView('info/info_detail.html', {
-							infoId: nid
+					openDetail: function(item) {
+						//触发子窗口变更新闻详情
+						mui.fire(info_detail, 'get_detail', {
+							nid: item.nid,
+							title: item.title,
+							author: item.author,
+							createTime: item.createTime,
+							thumbnail: item.thumbnail
 						});
+
+						//更改详情页原生导航条信息
+						titleNView.titleText = item.title;
+						info_detail.setStyle({
+							"titleNView": titleNView
+						});
+						setTimeout(function() {
+							info_detail.show("slide-in-right", 300);
+						}, 150);
 					},
 					openView: function(url) {
 						w.openView(url);
@@ -164,7 +207,7 @@
 					openViewByptoken: function(url) {
 						if(!w.getUser()) {
 							url = "userLogin.html"
-						}else if('contactService' == url) {
+						} else if('contactService' == url) {
 							newContactNum.innerText = "";
 							newContactNum.classList = "mui-badge mui-badge-danger newContactNum m-undisplay";
 						}

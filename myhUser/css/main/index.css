@@ -183,3 +183,7 @@ header {
 	position: relative;
 	bottom: 5px
 }
+
+.mui-table-view-cell{
+	margin: 0;
+}

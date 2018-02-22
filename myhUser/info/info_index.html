@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -12,11 +13,12 @@
 		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/info/info_index.css" />
 		<style>
-			.mescroll{
+			.mescroll {
 				top: 95px;
 			}
 		</style>
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -28,20 +30,20 @@
 					<input type="search" id="seach" class="mui-input-clear" placeholder="輸入關鍵字或標簽搜索" v-model.trim="keyword">
 				</div>
 			</form>
-				<div id="mescroll" class="mescroll">
-					<ul id="dataList" class="mui-table-view">
-						<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item.nid)">
-							<img class="mui-media-object mui-pull-left" v-lazy="imgServer + item.thumbnail">
-							<div class="mui-media-body">
+			<div id="mescroll" class="mescroll">
+				<ul id="dataList" class="mui-table-view">
+					<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item)">
+						<img class="mui-media-object mui-pull-left" v-lazy="imgServer + item.thumbnail">
+						<div class="mui-media-body">
 							<div class="mui-ellipsis-2 font-size-14 min-h">{{item.title}}</div>
-								<p class="vac">{{item.tag}}<span class="mui-pull-right font-color-666">
+							<p class="vac">{{item.tag}}<span class="mui-pull-right font-color-666">
 									<i class="mui-icon mui-icon-person font-size-18"></i>
 									{{item.author}} {{item.createTime.substr(0,10)}}</span>
-								</p>
-							</div>
-						</li>
-					</ul>
-				</div>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js"></script>
@@ -58,6 +60,34 @@
 				loading: '../images/default-news.png',
 				attempt: 1
 			});
+			var info_detail = null;
+			var titleNView = { //详情页原生导航配置
+				backgroundColor: '#fff', //导航栏背景色
+				titleText: '', //导航栏标题
+				titleColor: '#000000', //文字颜色
+				type: 'transparent', //透明渐变样式
+				autoBackButton: true, //自动绘制返回箭头
+				splitLine: { //底部分割线
+					color: '#dedede'
+				}
+			};
+			_.plusReady(function() {
+				info_detail = plus.webview.getWebviewById('info_detail');
+				if(!info_detail) {
+					//预加载详情页
+					info_detail = _.preload({
+						url: 'info_detail.html',
+						id: 'info_detail',
+						styles: {
+							"render": "always",
+							"popGesture": "hide",
+							"bounce": "vertical",
+							"bounceBackground": "#fff",
+							"titleNView": titleNView
+						}
+					});
+				}
+			})
 
 			//创建vue对象
 			var vm = new Vue({
@@ -66,7 +96,7 @@
 					mescroll: null,
 					imgServer: imgServer,
 					items: [],
-					keyword:''
+					keyword: ''
 				},
 				mounted: function() {
 					var self = this;
@@ -99,21 +129,37 @@
 							limit: pageSize,
 							keyword: vm.keyword
 						}, false, function(data) {
-							if(data.code == 0){
+							if(data.code == 0) {
 								data = data.data.news || [];
 								console.log('data=====' + JSON.stringify(data));
 								if(pageNum == 1) vm.items = [];
 								vm.items = vm.items.concat(data);
 								vm.mescroll.endSuccess(data.length);
-							}else{
-								_.toast(data.msg ||  '請求失敗');
+							} else {
+								_.toast(data.msg || '請求失敗');
 								vm.mescroll.endErr();
 							}
 						}, function() {
 							vm.mescroll.endErr();
 						})
-					},openDetail:function(nid){
-						w.openView('info_detail.html',{infoId:nid});
+					},
+					openDetail: function(item) {
+						//触发子窗口变更新闻详情
+						_.fire(info_detail, 'get_detail', {
+							nid: item.nid,
+							title: item.title,
+							author: item.author,
+							createTime: item.createTime,
+							thumbnail: item.thumbnail
+						});
+
+						titleNView.titleText = item.title;
+						info_detail.setStyle({
+							"titleNView": titleNView
+						});
+						setTimeout(function() {
+							info_detail.show("slide-in-right", 300);
+						}, 150);
 					}
 				}
 			});
@@ -127,4 +173,5 @@
 			})
 		})(mui, document, util, window)
 	</script>
+
 </html>

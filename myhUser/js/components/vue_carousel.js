@@ -5,7 +5,7 @@
 	var template = '<div class="mui-slider"><div class="mui-slider-group mui-slider-loop">' +
 		'<div class="mui-slider-item mui-slider-item-duplicate">' +
 		'<a href="#"><img :src="carouseData[(carouseData.length || 1)-1].img"></a></div>' +
-		'<div @tap="tap(o.nid)" v-for="(o,index) of carouseData" class="mui-slider-item">' +
+		'<div @tap="tap(o)" v-for="(o,index) of carouseData" class="mui-slider-item">' +
 		'<a href="#"><img :src="o.img"></a></div><div class="mui-slider-item mui-slider-item-duplicate">' +
 		'<a href="#"><img :src="carouseData[0].img"></a></div></div><div class="mui-slider-indicator">' +
 		'<div class="mui-indicator" v-for="(o,index) in carouseData" :class=\'{"mui-active":index===0}\'></div>' +
@@ -24,8 +24,21 @@
 			});
 		},
 		methods: {
-			tap: function(id) {
-				w.openView('info/info_detail.html',{infoId:id});
+			tap: function(item) {
+				//触发子窗口变更新闻详情
+				mui.fire(info_detail, 'get_detail', {
+					nid: item.nid,
+					title: item.title,
+					thumbnail: item.img
+				});
+				//更改详情页原生导航条信息
+				titleNView.titleText = item.title;
+				info_detail.setStyle({
+					"titleNView": titleNView
+				});
+				setTimeout(function() {
+					info_detail.show("slide-in-right", 300);
+				}, 150);
 			}
 		}
 	})

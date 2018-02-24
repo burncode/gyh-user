@@ -904,7 +904,8 @@
 			"my_center/tab_post.html",
 			"my_center/swipe.html",
 			"my_center/contactService.html",
-			"my_center/feedback.html"
+			"my_center/feedback.html",
+			"my_center/my_favorite.html"
 		],
 		"priority": 0
 	},

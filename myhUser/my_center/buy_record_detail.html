@@ -69,7 +69,7 @@
 	<script>
 		(function(_, doc, u, w) {
 			_.init();
-			var id = null;
+			var oid = null,status = null;
 			//创建vue对象
 			var vm = new Vue({
 				el: "#app",
@@ -82,14 +82,18 @@
 				}
 			});
 			_.plusReady(function() {
-				id = plus.webview.currentWebview().oid;
-				util.mypost('user_center/appointDetail', {
-					privateToken: w.getItem("privateToken"),
-					id:id
+				oid = plus.webview.currentWebview().oid;
+				status = plus.webview.currentWebview().status;
+				util.mypost('user_center/orderDetail', {
+					privateToken: w.getUser(),
+					id:oid
 				}, null, function(data){
 					console.log("data==" +JSON.stringify(data));
 					if(data.code == 0){
-						
+						vm.packageTitle = data.data.packageTitle;
+						vm.price = data.data.price;
+						vm.status = status;
+						vm.userArr = data.data.userArr;
 					}else{
 						
 					}

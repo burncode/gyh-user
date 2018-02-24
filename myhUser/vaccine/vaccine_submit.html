@@ -83,7 +83,7 @@
 									<label>身份证号</label>
 									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">
 								</div>
-								<div id="chooseDate" class="mui-input-row">
+								<div class="mui-input-row">
 									<label>预约时间</label>
 									<span class="mui-navigate-right">
 										<input type="text" class="orderDate" placeholder="请选择日期" readonly="readonly">
@@ -105,36 +105,7 @@
 					<p>香港诺健医务中心</p>
 					<p>地址 : 新界上水龙琛路48号上水汇9楼4号室</p>
 				</div>
-				<ul id="timeQuantumUl" class="mui-table-view mui-grid-view mui-grid-9">
-					<li id="1" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>10:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li id="6" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>10:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li id="2" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>10:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li id="3" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>10:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>10:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>13:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-						<p>11:00-12:00</p>
-						<p>(1/5)</p>
-					</li>
-				</ul>
+				<ul id="timeQuantumUl" class="mui-table-view mui-grid-view mui-grid-9"></ul>
 			</div>
 		</div>
 	</body>
@@ -143,7 +114,7 @@
 	<script type="text/javascript" src="../js/simple-calendar.js"></script>
 	<script>
 		(function(_, doc, u, w) {
-			_.init(), _(".mui-scroll-wrapper").scroll();
+			_.init();
 			var vaccinumId = null,
 				inputItmems = null,
 				thumbnailImg = '';
@@ -163,45 +134,10 @@
 				calendarObj = document.getElementById("calendar");
 			var timeQuantumUlObj = document.getElementById("timeQuantumUl"), //时间段ul
 				appointDayObj = document.getElementById("appointDay");
-			var markObj = {
-					'2018-1-4': '预约',
-					'2018-1-26': '预约',
-					'2018-2-5': '预约',
-					'2018-3-15': '预约'
-				},
-				oTime = '';
-			var myCalendar = new SimpleCalendar('#calendar');
-			var tmonth = myCalendar.tmonth;
-			var tyear = myCalendar.tyear;
+				
 			
-			console.log('tmonth=======' + tmonth);
-			console.log('tyear=======' + tyear);
+			getAppointTimeByYear();//获取某年的预约额度
 			
-			myCalendar.addMark(markObj);
-			
-			getAppointTimeByMonth('201803');//获取某个月的预约额度
-			var timeQuantum = []; //时间段数组
-
-			//通过月份得到预约时间
-			function getAppointTimeByMonth(ym) {
-				var pdata = {
-					privateToken: w.getItem("privateToken"),
-					ym: ym
-				}
-				console.log("getAppointTimeByMonth======" + JSON.stringify(pdata));
-				u.mypost("appointMap/getAppointTimeByMonth", pdata, true, function(data) {
-					console.log('getAppointTimeByMonth data=====' + JSON.stringify(data));
-					if(data.code == 0) {
-						_.each(data.data[0], function(i, o) {
-							oTime = formatTime(o.appointYM, o.appointDay);
-							markObj[oTime] = '预约';
-						})
-						myCalendar.addMark(markObj);
-						console.log("arrAppTimeYM===" + JSON.stringify(markObj));
-					}
-				}, myerror);
-			}
-
 			//页面初始进来
 			w.addEventListener("event", function(e) {
 				console.log("event detail=====" + JSON.stringify(e.detail));
@@ -248,22 +184,26 @@
 					'</div>' +
 					'<div class="mui-slider-handle">' +
 					'<form class="mui-input-group">' +
-					'<div class="mui-input-row">' +
-					'<label>到診人</label>' +
-					'<input type="text"  maxlength="10" class="mui-input-clear name" placeholder="请输入到诊人">' +
-					'</div>' +
-					'<div class="mui-input-row">' +
-					'<label>聯繫電話</label>' +
-					'<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
-					'</div>' +
-					'<div class="mui-input-row">' +
-					'<label>身份證號</label>' +
-					'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">' +
-					'</div><div id="chooseDate" class="mui-input-row">' +
-					'<label>預約日期</label>' +
-					'<span class="mui-navigate-right"><input type="text" class="mui-input-clear orderDate" placeholder="请选择日期" readonly="readonly"></span>' +
-					'</div>' +
-					'</form>' +
+								'<div class="mui-input-row">' +
+									'<label>到诊人</label>' +
+									'<input type="text" maxlength="10" class="mui-input-clear name" placeholder="请输入到诊人">' +
+								'</div>' +
+								'<div class="mui-input-row">' +
+									'<label>联系电话</label>' +
+									'<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
+								'</div>' +
+								'<div class="mui-input-row">' +
+									'<label>身份证号</label>' +
+									'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">' +
+								'</div>' +
+								'<div class="mui-input-row">' +
+									'<label>预约时间</label>' +
+									'<span class="mui-navigate-right">' +
+										'<input type="text" class="orderDate" placeholder="请选择日期" readonly="readonly">' +
+										'<input type="hidden" class="appointTimeId" value=""></span>' +
+									'</span>' +
+								'</div>' +
+							'</form>' +
 					'</div>';
 				divFormObj.appendChild(liItem);
 				userNum++;
@@ -328,10 +268,9 @@
 				dayVal = (Number(dayVal) > 9) ? dayVal : '0' + dayVal;
 				appointDayObj.innerHTML = yearObj.value + (Number(monthObj.value) > 9 ? monthObj.value : '0' + monthObj.value) + '' + dayVal;
 				getAppointTimeByDay(appointDayObj.innerHTML, function(data) {
-					console.log('appointMap/getAppointTimeByDay data===' + JSON.stringify(data));
-					timeQuantum = data.data[0] || []; //赋值时间段
+					console.log("getAppointTimeByDay=====" + JSON.stringify(data));
 					u.emptyHtml(timeQuantumUlObj);
-					timeQuantum.forEach(function(item) {
+					data.data[0].forEach(function(item) {//赋值时间段
 						if(Number(item.appointCounted) < Number(item.appointCount)) {
 							timeQuantumUlObj.innerHTML += '<li id=' + item.id + ' class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">' +
 								'<p>' + item.startTime + '-' + item.endTime + '</p>' +
@@ -378,17 +317,47 @@
 					}
 				});
 			});
-
+			
+			//通过年份得到预约时间
+			function getAppointTimeByYear(year) {
+				var myCalendar = new SimpleCalendar('#calendar');
+				u.mypost("appointMap/getAppointTimeByYear", {year: myCalendar.tyear}, false, function(data) {
+					if(data.code == 0) {
+						//格式化预约日期
+						var markObj = {};
+						markObj = formatDate(data.data[0],myCalendar.tmonth,myCalendar.tday);
+						myCalendar.addMark(markObj);
+					}else{
+						_.toast(data.msg || '获取数据异常')
+					}
+				}, myerror);
+			}
+			
 			//得到某一天的时间段
 			function getAppointTimeByDay(date, callback) {
-				var pdata = {};
-				pdata.privateToken = w.getItem("privateToken");
-				pdata.date = date;
-				u.mypost("appointMap/getAppointTimeByDay", pdata, true, callback, myerror);
+				u.mypost("appointMap/getAppointTimeByDay", {date:date}, true, callback, myerror);
 			}
-			//格式化时间
-			function formatTime(timeStr, dayStr) {
-				return timeStr.substr(0, 4) + '-' + Number(timeStr.substr(4, 2) || 1) + '-' + dayStr;
+			
+			//格式化预约日期
+			function formatDate(dateArr,tmonth,tday){
+				var markObj = {},oTime = '';
+				_.each(dateArr, function(i, o) {
+					oTime = formatTime(o.appointYM, o.appointDay,tmonth,tday);
+					markObj[oTime] = '预约';
+				})
+				return markObj;
+			}
+			
+			//格式化时间 剔除过去日期
+			function formatTime(timeStr, dayStr,tmonth,tday) {
+				var month = Number(timeStr.substr(4, 2) || 1);
+				if(month > tmonth){
+					return time = timeStr.substr(0, 4) + '-' + month + '-' + dayStr;
+				}else if(month == tmonth && Number(dayStr) > Number(tday)){
+					return time = timeStr.substr(0, 4) + '-' + month + '-' + dayStr;
+				}else{
+					return ''
+				}
 			}
 		})(mui, document, util, window)
 	</script>

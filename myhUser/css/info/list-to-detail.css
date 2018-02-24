@@ -29,7 +29,7 @@
 
 .kr-article .kr-slider a .mui-slider-title {
 	background: transparent;
-	color: white;
+	color: #fff;
 	opacity: 1;
 	bottom: 15px;
 	font-size: 20px;
@@ -83,9 +83,6 @@
 .kr-article-cover img {
 	width: 100%;
 }
-.kr-article-bar a {
-	color: gray;
-}
 .kr-article-title {
 	position: absolute;
 	left: 15px;
@@ -100,27 +97,8 @@
 .kr-article-content {
 	background: #fff;
 }
-.kr-article-meta {
-	padding: 10px 0 10px 20px;
-	display: table;
-}
-.kr-article-meta div {
-	height: 30px;
-	font-size: 15px;
-	display: table-cell;
-	vertical-align: middle;
-	color: gray;
-	padding: 0 5px;
-}
-.kr-article-avatar img {
-	width: 30px;
-}
-.kr-article-text {
-	font-size: 13px!important;
-}
-.kr-article-author,
-.kr-article-time {
-	font-weight: 600;
+.kr-article-meta  {
+	text-align: center;margin: 10px 0;
 }
 .kr-article-article {
 	font-size: 15px;
@@ -144,18 +122,6 @@
 	width: 100%;
 	height: auto;
 }
-embed,object{
-	display: none;
-}
-.kr-article-content {}
-.kr-browser .mui-bar .mui-btn {
-	top: 10px;
-	padding: 2px 12px 2px;
-}
-.kr-browser-bar .mui-spinner {
-	width: 20px;
-	height: 20px;
-}
-.kr-browser-bar a {
-	color: gray;
+.kr-article-time{
+	margin: 0 0 0 10px;
 }

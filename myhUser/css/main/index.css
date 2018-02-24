@@ -37,7 +37,7 @@ header {
 	width: 80%;
 	height: 100%;
 	background-color: transparent;
-	float: left;
+	float: left;font-size: 14px;
 	border: 0
 }
 
@@ -187,3 +187,7 @@ header {
 .mui-table-view-cell{
 	margin: 0;
 }
+
+.mescroll {
+				top: 44px;
+			}

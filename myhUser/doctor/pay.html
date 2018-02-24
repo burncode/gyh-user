@@ -185,8 +185,11 @@
 					//支付寶支付
 					if(id=='alipay'){
 						plus.payment.request(pays[id],data.data.aliSubmitParam,function(result){
-		                	w.openView(targetWeb);
-		                	_.later(function(){u.close('pay')},200)
+							plus.nativeUI.alert("支付成功！",function(){
+								_.back();
+			                });
+//		                	w.openView(targetWeb);
+//		                	_.later(function(){u.close('pay')},200)
 			            },function(error){
 			            	var errCode = error.message && error.message.substr(12,4);
 			            	if("8000" ==  errCode){

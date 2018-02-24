@@ -1,39 +1,29 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta charset="utf-8">
+		<title>我的收藏</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="format-detection" content="telephone=no">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title>資訊</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
-		<link rel="stylesheet" href="../css/info/info_index.css" />
+		<link rel="stylesheet" href="../css/center/my_favorite.css" />
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">資訊</h1>
+			<h1 class="mui-title">我的收藏</h1>
 		</header>
 		<div id="app">
-			<form class="form-bg">
-				<div class="mui-input-row mui-search search-input">
-					<input type="search" id="seach" class="mui-input-clear" placeholder="輸入關鍵字或標簽搜索" v-model.trim="keyword">
-				</div>
-			</form>
 			<div id="mescroll" class="mescroll">
 				<ul id="dataList" class="mui-table-view">
 					<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openDetail(item)">
-						<img class="mui-media-object mui-pull-left" v-lazy="imgServer + item.thumbnail">
-						<div class="mui-media-body">
-							<div class="mui-ellipsis-2 font-size-14 min-h">{{item.title}}</div>
-							<p class="vac">{{item.tag}}<span class="mui-pull-right font-color-666">
-									<i class="mui-icon mui-icon-person font-size-18"></i>
-									{{item.author}} {{item.createTime.substr(0,10)}}</span>
-							</p>
+						<img class='mui-media-object mui-pull-left' v-lazy="imgServer + item.thumbnail">
+						<div class='mui-media-body'>
+							<div class='mui-ellipsis-2 font-size-14 min-h'>{{item.title}}</div>
+							<p class="font-color-666">{{item.dateline.substr(0,10)}}</p>
 						</div>
 					</li>
 				</ul>
@@ -45,8 +35,8 @@
 	<script type="text/javascript" src="../js/vue.min.js"></script>
 	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
-	<script>
-		(function(_, doc, u, w) {
+	<script type="text/javascript">
+		(function(_,doc,u,w){
 			_.init();
 			Vue.use(VueLazyload, {
 				preLoad: 1.3,
@@ -118,13 +108,14 @@
 						vm.getListDataFromNet(page.num, page.size);
 					},
 					getListDataFromNet: function(pageNum, pageSize) {
-						util.mypost('news/getNewsList', {
+						util.mypost('doctor_center/myCollections', {
+							privateToken:w.getUser(),
 							offset: (pageNum - 1) * pageSize,
 							limit: pageSize,
 							keyword: vm.keyword
 						}, false, function(data) {
 							if(data.code == 0) {
-								data = data.data.news || [];
+								data = data.data.collections || [];
 								if(pageNum == 1) vm.items = [];
 								vm.items = vm.items.concat(data);
 								vm.mescroll.endSuccess(data.length);
@@ -142,7 +133,7 @@
 							nid: item.nid,
 							title: item.title,
 							author: item.author,
-							createTime: item.createTime,
+							createTime: item.dateline,
 							thumbnail: item.thumbnail
 						});
 						titleNView.titleText = item.title;
@@ -155,15 +146,6 @@
 					}
 				}
 			});
-			//搜索
-			doc.getElementById("seach").addEventListener('keypress', function(e) {
-				if(e.keyCode == "13") {
-					doc.activeElement.blur();
-					vm.getListDataFromNet(1, 5);
-					e.preventDefault(); // 阻止默认事件
-				}
-			})
-		})(mui, document, util, window)
+		})(mui,document,util,window)
 	</script>
-
 </html>

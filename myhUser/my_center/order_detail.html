@@ -20,7 +20,7 @@
 				<p><label>指定醫生：</label><span id="docName"></span></p>
 				<p><label>挂号時間：</label><span id="appointTime"></span></p>
 				<p><label>聯系手機：</label><span id="appointTel"></span></p>
-				<p><label>已付定金：</label><span id="price"></span></p>
+				<p><label>支付定金：</label><span id="price"></span></p>
 				<p><label>醫院地址：</label><span id="hosAddr"></span></p>
 				<p><label>訂單狀態：</label><span class="order-state" id="order-state"></span></p>
 			</div>
@@ -108,7 +108,7 @@
 								doctor:docName,
 								time:appointTime
 							}
-							var btnArray = ['取消', '确认'];
+							var btnArray = ['否', '是'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
 								if(e.index == 1){
 									u.mypost("user_center/appointCancel",pdata,true,function(data){
@@ -126,7 +126,7 @@
 								doctor:docName,
 								time:appointTime
 							}
-							var btnArray = ['取消', '确认'];
+							var btnArray = ['否', '是'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>',btnArray, function(e) {
 								if(e.index == 1){
 									u.mypost("user_center/appointCancel",pdata,true,function(data){
@@ -170,7 +170,7 @@
 						pdata.privateToken = privateToken;
 						pdata.oid = id;
 						pdata.orderType = 3;
-						var btnArray = ['取消', '确认'];
+						var btnArray = ['否', '是'];
 						_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>',btnArray, function(e) {
 							if(e.index == 1){
 								u.mypost("user_center/orderCancel",pdata,true,function(data){

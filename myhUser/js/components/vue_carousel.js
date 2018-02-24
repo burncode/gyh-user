@@ -29,7 +29,7 @@
 				mui.fire(info_detail, 'get_detail', {
 					nid: item.nid,
 					title: item.title,
-					thumbnail: item.img
+					thumbnail: item.thumbnail
 				});
 				//更改详情页原生导航条信息
 				titleNView.titleText = item.title;

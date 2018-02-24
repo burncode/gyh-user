@@ -29,7 +29,8 @@
 			open_detail: function(item) {
 				if(item.orderType) { //疫苗
 					window.openView('buy_record_detail.html', {
-						oid: item.oid
+						oid: item.oid,
+						status:item.status
 					});
 				}else{//检测服务
 					w.openView('gene_detect_detail.html',{geneId:item.gid});

@@ -514,6 +514,7 @@ var SimpleCalendar = function () {
             if (data[year + '-' + currentmonth + '-' + day]) {
               v.classList.add('sc-mark');
               v.title = data[year + '-' + currentmonth + '-' + day];
+              v.querySelector('.lunar-day').innerHTML = data[year + '-' + currentmonth + '-' + day];
             } else {
               v.classList.remove('sc-mark');
               v.title = '';
@@ -650,9 +651,9 @@ var SimpleCalendar = function () {
         };
         v.onclick = function () {
           calendar.selectDay = v;
-          var pre = container.querySelector('.sc-selected');
-          if (pre) pre.classList.remove('sc-selected');
-          this.classList.add('sc-selected');
+//        var pre = container.querySelector('.sc-selected');
+//        if (pre) pre.classList.remove('sc-selected');
+//        this.classList.add('sc-selected');
         };
       });
 

@@ -1915,7 +1915,8 @@
 	        "fonts/iconfont-nodata.ttf",
 	        "css/order/order_detail.css"
 	      ],
-	      "priority": 9
+	      "priority": 9,
+	      "refer": []
 	    },
 	    "my_center/my_appoint.html": {
 	      "href": "my_center/my_appoint.html",
@@ -1940,7 +1941,6 @@
 	      "img/share.png",
 	      "img/circle.png",
 	      "img/choice-after.png",
-	      "css/stylesheet.css",
 	      "img/choice-before.png"
 	    ]
 	  }

@@ -1843,7 +1843,8 @@
 				"priority": 4,
 				"refer": [
 					"userLogin.html",
-					"my_center/buy_record_detail.html"
+					"my_center/buy_record_detail.html",
+					"my_center/page_vaccinumAppoint_detail.html"
 				]
 			},
 			"vaccine/vaccine_submit.html": {

@@ -6,72 +6,26 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
-		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
-		<link rel="stylesheet" href="../css/order/buy_record.css" />
-		<style>
-			.mui-table-view-cell {
-				padding-bottom: 0;
-			}
-			
-			.mui-navigate-right:after {
-				right: 5px;
-			}
-			
-			.mui-table-view-cell>a:not(.mui-btn) {
-				margin: -15px -20px 0;
-				border-bottom: 1px solid #dedede;
-				padding-bottom: 15px;
-			}
-			
-			.mui-table-view-cell .price {
-				margin: 10px 0;
-			}
-			
-			.mui-media-body {
-				padding: 0 10px 0 0;
-			}
-			
-			.btns {
-				text-align: right;
-				padding: 10px 0;
-			}
-			
-			.mui-table-view:after {
-				height: 0;
-			}
-			
-			.mui-table-view-cell p {
-				margin: 2px 0 0;
-			}
-		</style>
+		<link rel="stylesheet" href="../css/center/page_appointList.css" />
 	</head>
 
 	<body>
 		<div id="app">
 			<div id="mescroll" class="mescroll">
-				<!--展示上拉加载的数据列表-->
-				<app-list-vaccinum :data='items'></app-list-vaccinum>
+				<app-list-vappoint :data='items'></app-list-vappoint>
 			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript" src="../js/mescroll.min.js"></script>
 	<script type="text/javascript" src="../js/vue.min.js"></script>
-	<!--<script type="text/javascript" src="../js/components/list_item_vaccinum.js"></script>-->
-	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
+	<script type="text/javascript" src="../js/components/list_item_vaccinumAppoint.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		(function(_, doc, w, u) {
 			_.init();
-			var arr = [],
-				privateToken = null;
-			Vue.use(VueLazyload, {
-				preLoad: 1.3,
-				error: '../images/default-news.png',
-				loading: '../images/default-news.png',
-				attempt: 1
-			});
+			var privateToken = null;
 			_.plusReady(function() {
 				privateToken = plus.webview.currentWebview().privateToken;
 				//创建vue对象
@@ -79,7 +33,7 @@
 					el: "#app",
 					data: {
 						mescroll: null,
-						items: convert(arr)
+						items: []
 					},
 					mounted: function() {
 						var self = this;
@@ -98,7 +52,6 @@
 								}
 							}
 						});
-						//初始化vue后,显示vue模板布局
 						document.getElementById("dataList").style.display = "block";
 					},
 					methods: {
@@ -109,12 +62,8 @@
 								if(data.code == 0) {
 									console.log('data========' + JSON.stringify(data));
 									data = convert(data.data[0] || []);
-									//如果是第一页需手动制空列表
 									if(page.num == 1) self.items = [];
-									//更新列表数据
 									self.items = self.items.concat(data);
-									//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
-									//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
 									self.mescroll.endSuccess(data.length);
 								} else {
 									_.toast(data.msg || '服務器異常');
@@ -150,13 +99,13 @@
 				items.forEach(function(item) {
 					newItems.push({
 						oid: item.id,
-//						cover: imgServer + item.thumbnail,
-//						packageTitle: item.packageTitle,
+						packageTitle: '疫苗名称',
 						status: item.status,
-						price: item.price,
-						orderType: true,
-						arrUser: item.arrUser,
-						class_status: (item.status == "未付款") ? true : false
+						hosAddr: item.hosAddr,
+						contacts: item.contacts,
+						appointTel:item.appointTel,
+						appointTime:item.appointYM + (Number(item.appointDay) < 10?'0'+item.appointDay:item.appointDay) + ' ' + item.startTime+'-'+item.endTime,
+						userRemark:item.userRemark
 					});
 				});
 				return newItems;

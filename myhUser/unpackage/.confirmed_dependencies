@@ -1517,7 +1517,8 @@
 		],
 		"refer": [
 			"userLogin.html",
-			"my_center/buy_record_detail.html"
+			"my_center/buy_record_detail.html",
+			"my_center/page_vaccinumAppoint_detail.html"
 		],
 		"priority": 0
 	},

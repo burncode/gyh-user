@@ -15,8 +15,7 @@
 				width: 100%;
 			}
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
-				background-color: #33A2D7;
-				    color: #fff;
+				    color: #33A2D7;
 			}
 			.mui-segmented-control .mui-control-item {
 			    line-height: 35px;
@@ -30,17 +29,17 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">我的预约</h1>
+		    <h1 class="mui-title">我的預約</h1>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
 						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="page_vaccinumAppointList.html">
-							<span>疫苗预约</span>
+							預約疫苗
 						</a>
 						<a class="mui-control-item" href="#item2mobile" data-wid="page_appointList.html">
-							<span>预约挂号</span>
+							預約掛號
 						</a>
 					</div>
 				</div>
@@ -54,10 +53,9 @@
 		(function(_, doc, u, w) {
 			_.plusReady(function() {
 				var _self = plus.webview.currentWebview();
-				console.log("privateToken========" + w.getUser());
 				var privateToken = w.getUser();
 				var group = new webviewGroup(_self.id, {
-					top:83,
+					top:79,
 					items: [{
 						id: "page_vaccinumAppointList.html",
 						url: "page_vaccinumAppointList.html",

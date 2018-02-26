@@ -182,13 +182,6 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 			id: idArr[i]
 		});
 		main.show();
-//		if(i == 1) { //医生列表
-//			var hid = ex && ex.hid;
-//			var web = plus.webview.getWebviewById("doctor/doctor_list.html");
-//			if(web) {
-//				web.evalJS("getDocByHid('" + hid + "')");
-//			}
-//		}
 	};
 	u.emptyHtml = function(list, flag) {
 		if(list && !flag) {

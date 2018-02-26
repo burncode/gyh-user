@@ -3,107 +3,67 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>疫苗预约详情</title>
+		<title>預約詳情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<style>
-			.price {
-				color: #33a2d7;
-			}
-			
-			p {
-				color: #333;
-			}
-			
-			.mui-table-view-cell {
-				margin: 0;
-			}
-			#userArr{
-				margin: 10px 0 0;
-			}
-			.mui-table-view-cell:after {
-				height: 1px;
-				right: 15px;
-			}
-			
-			.mui-table-view:before,
-			.mui-table-view:after {
-				height: 0;
-			}
-		</style>
+		<link rel="stylesheet" href="../css/order/order_detail.css" />
 	</head>
 
 	<body>
-		<div id="app">
-			<header class="mui-bar mui-bar-nav">
-				<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-				<h1 id="title" class="mui-title">疫苗预约详情</h1>
-			</header>
-			<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-media">
-							<img v-bind:src="src" class="mui-media-object mui-pull-left">
-							<div class="mui-media-body">
-								<div class="mui-ellipsis-2">{{packageTitle}}</div>
-								<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{state}}</span></p>
-							</div>
-						</li>
-					</ul>
-					<ul id="userArr" class="mui-table-view">
-						<li v-for="obj in userArr" class="mui-table-view-cell">
-							<p>接種人 : {{obj.name}}</p>
-							<p>手機號 : {{obj.mobile}}</p>
-							<p>身份證號 : {{obj.identity}}</p>
-							<p>預約時間 : {{obj.orderDate}}</p>
-						</li>
-					</ul>
-				</div>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
+			<h1 id="title" class="mui-title">預約詳情</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<img v-bind:src="cover" class="mui-media-object mui-pull-left">
+					<div class="mui-media-body">
+						<div class="mui-ellipsis-2">{{packageTitle}}</div>
+						<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{status}}</span></p>
+					</div>
+				</li>
+			</ul>
+			<div class="detail-content">
+				<p><label>就诊人：</label>{{contacts}}</p>
+				<p><label>预约時間：</label>{{appointTime}}</p>
+				<p><label>聯系手機：</label>{{appointTel}}</p>
+				<p><label>醫院地址：</label>{{hosAddr}}</p>
+				<p><label>备注：</label>{{userRemark}}</p>
 			</div>
 		</div>
 	</body>
-	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
 	<script type="text/javascript" src="../js/vue.min.js"></script>
-	<script src="../js/common.js"></script>
-	<script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
 		(function(_, doc, u, w) {
-			_.init();
-			var oid = null,status = null;
-			//创建vue对象
-			var vm = new Vue({
-				el: "#app",
-				data: {
-					packageTitle: '',
-					price: 0,
-					state: '',
-					src: '../images/default-news.png',
-					userArr: []
-				}
-			});
 			_.plusReady(function() {
-				oid = plus.webview.currentWebview().oid;
-				status = plus.webview.currentWebview().status;
-				util.mypost('user_center/orderDetail', {
-					privateToken: w.getUser(),
-					id:oid
-				}, null, function(data){
-					console.log("data==" +JSON.stringify(data));
-					if(data.code == 0){
-						vm.packageTitle = data.data.packageTitle;
-						vm.price = data.data.price;
-						vm.status = status;
-						vm.userArr = data.data.userArr;
-					}else{
-						
+				var web = plus.webview.currentWebview();
+				var vm = new Vue({
+					el: ".mui-content",
+					data: {
+						packageTitle:'',
+						cover: '',
+						price: '100',
+						status: '',
+						contacts: '',
+						appointTel:'',
+						appointTime: '',
+						appointTel: '',
+						hosAddr: '',
+						userRemark: '',
+					},
+					mounted: function() {
+						this.appointTime = web.appointTime;
+						this.contacts = web.contacts;
+						this.hosAddr = web.hosAddr;
+						this.userRemark = web.userRemark;
+						this.appointTel = web.appointTel;
 					}
-				}, myerror)
-				
-//				vm.packageTitle = plus.webview.currentWebview().packageTitle;
-//				vm.price = plus.webview.currentWebview().price;
-//				vm.state = plus.webview.currentWebview().state;
-//				vm.userArr = eval(plus.webview.currentWebview().userArr);
-			});
+				})
+			})
 		})(mui, document, util, window)
 	</script>
 

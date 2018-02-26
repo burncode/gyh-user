@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -9,8 +10,9 @@
 		<title>取消成功</title>
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/order.css" />
+		<link rel="stylesheet" href="../css/order_succeed.css" />
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -18,58 +20,59 @@
 		</header>
 		<div class="mui-content">
 			<div class="order-audit">
-				<div><img src="../images/order-bg.png" /></div>
-				<div class="commit-success-btn">
-					<div class="commit-success-text">
-						<img src="../images/succeed.png"><br /> 取消成功
-					</div>
+				<img src="../images/order-bg.png" />
+				<div class="order-audit-content font-size-16">
+					<p>您預約的 ：{{hospital}} {{apartment}} {{doctor}}醫生</p>
+					<p>预约时间为 : {{time}}</p>
+					<p>的订单已成功取消!</p>
 				</div>
-				<div class="order-audit-content">
-					<div class="waiting">您預約的：<span id="hospital"></span> <span id="apartment"></span> <span id="doctor"></span></div>
-					<div class="waiting" id="time"></div>
-					<div class="cancel">
-						已成功取消
-					</div>
-					<div class="order-audit-btn">
-						<div class="check-btn" id="check"></div>
-						<div class="return-btn" id="return-index">返回首頁</div>
-					</div>
-				</div>
+				<button class="check-btn" @tap="openView()">{{btnContentHtml}}</button>
+				<button class="return-btn" @tap="back()">返回</button>
 			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
 	<script src="../js/common.js"></script>
 	<script>
 		(function(_, doc, u, w) {
-			doc.getElementById("return-index").addEventListener('tap', function() {
-				w.toIndex(0);
-			});
-			var web = null,
-				btn = null;
+			var targetWeb = '';
 			_.plusReady(function() {
-				web = plus.webview.currentWebview();
+				var web = plus.webview.currentWebview();
 				var types = web.types ? web.types : 1;
-				var hospital = web.hospital;
-				var doctor = web.doctor;
-				var time = web.time;
-				var apartment = web.apartment;
-				doc.getElementById("hospital").innerHTML = hospital;
-				doc.getElementById("apartment").innerHTML = apartment;
-				doc.getElementById("doctor").innerHTML = doctor;
-				doc.getElementById("time").innerHTML = time;
-				if(types == 1) {
-					btn = "查看我的問診";
-					doc.getElementById("check").addEventListener('tap', function(e) {
-						w.openView("../my_center/myInterview.html");
-					});
-				} else {
-					btn = "查看我的預約單";
-					doc.getElementById("check").addEventListener('tap', function() {
-						w.openView("../my_center/my_appoint.html");
-					});
-				}
-				doc.getElementById("check").innerText = btn;
+				var vm = new Vue({
+					el: '.mui-content',
+					data: {
+						hospital: '',
+						apartment: '',
+						doctor: '',
+						time: '',
+						btnContentHtml: '查看我的問診'
+					},
+					mounted: function() {
+						
+						this.hospital = web.hospital;
+						this.doctor = web.doctor;
+						this.time = web.time;
+						this.apartment = web.apartment;
+						
+						if(types == 1) {
+							this.btnContentHtml = "查看我的問診";
+							targetWeb = "../my_center/myInterview.html";
+						} else {
+							this.btnContentHtml = "查看我的預約";
+							targetWeb = "../my_center/my_appoint.html";
+						}
+					},
+					methods: {
+						back: function() {
+							_.back();
+						},
+						openView: function() {
+							w.openView(targetWeb); //查看
+						}
+					}
+				})
 			});
 		})(mui, document, util, window)
 	</script>

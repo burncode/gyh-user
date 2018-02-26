@@ -20,15 +20,6 @@
 			<p>支付方式</p>
 			<div id="sheet" class="mui-popover-bottom mui-popover-action">
 			    <ul class="mui-table-view mui-table-view-radio">
-					<!--<li id='1' class="mui-table-view-cell mui-selected">
-						<a class="mui-navigate-right">
-							<img class="mui-media-object mui-pull-left" src="../images/wechat.png">
-							<div class="mui-media-body mui-pull-left">微信支付</div>
-							<div class="mui-pull-right choice-img">
-								<span class="choose-pay-way on"></span>
-							</div>
-						</a>
-					</li>-->
 					<li id='2' class="mui-table-view-cell mui-selected">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
@@ -116,7 +107,7 @@
 			}
 			//调用支付
 			function pay(id){
-				privateToken = w.getItem("privateToken");
+				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
 		    	// 从服务器请求支付订单
 			    if(id=='alipay'){

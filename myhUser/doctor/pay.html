@@ -53,7 +53,7 @@
 	<script type="text/javascript" src="../js/common.js" ></script>
 	<script>
 		(function(_,doc,w,u){
-			_.init({swipeBack:false});
+			_.init();
 			var pdata = {},privateToken = null,walletData = null,ways = null,self = null,type = null,targetWeb = null,money = null,balance = null,orderType = null,orderId = null;
 			var payWay = 1,pays={},channel = null,currentPage = null;
 			_.plusReady(function(){
@@ -64,26 +64,8 @@
 				money = currentPage.fee?currentPage.fee:'0.00';
 				doc.getElementById("money").textContent = "¥"+money;
 				doc.getElementById("pay-content").textContent = orderType;
-				switch (type){
-					case 2://疫苗接種
-						targetWeb = "purchase_succeed.html";
-						break;
-					case 3://基因检测
-						targetWeb = "purchase_succeed.html";
-						break;
-					case 4://在線問診
-						targetWeb = "interview_submit_succeed.html";
-						break;
-					case 5://留言問答
-						targetWeb = "submit_succeed.html";
-						break;
-					case 6://預約挂號
-						targetWeb = "order_audit.html";
-						break;
-					default:
-						break;
-				}
-				privateToken = w.getItem("privateToken");
+				targetWeb = "purchase_succeed.html";
+				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
 				u.mypost("user_center/myMoneyIndex",pdata,true,function(data){
 					if(data.code == 0){
@@ -99,8 +81,6 @@
 			    getChannels();
 				//支付
 				doc.getElementById("pay").addEventListener('tap', function() {
-					privateToken = w.getItem("privateToken");
-					pdata.privateToken = privateToken;
 					payWay = doc.querySelector(".mui-table-view-cell.mui-selected").id;
 					if(payWay == 0){
 						u.mypost("user_center/checkUserPayPwd",pdata,true,function(data){
@@ -126,7 +106,8 @@
 			});
 			//余額支付
 			function balancePay(payPwd){
-				privateToken = w.getItem("privateToken");
+				var pdata = {};
+				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
 				pdata.payPwd = payPwd;//余額支付密码
 				pdata.payType = 0;//余額支付
@@ -135,10 +116,9 @@
 				pdata.orderId = orderId;//订单id
 				u.mypost('user_pay/orderPay',pdata, true, function(data) {
 					if(data.code == 0){
+						u.close('order_register');
 						plus.nativeUI.alert("支付成功！",function(){
-							w.openView(targetWeb);
-							_.later(function(){u.close('pay')},200)
-							u.close('order_register');
+							w.openView(targetWeb,{type:type});
 		                });
 					}else if(data.code == 500 && "未登錄" == data.msg){
 						u.goLogin();
@@ -169,7 +149,7 @@
 			//调用支付
 			function pay(id){
 				getChannels();
-				privateToken = w.getItem("privateToken");
+				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
 				pdata.orderType = type;//订单类型
 				pdata.amount = money * 100;
@@ -185,11 +165,10 @@
 					//支付寶支付
 					if(id=='alipay'){
 						plus.payment.request(pays[id],data.data.aliSubmitParam,function(result){
+							u.close('order_register');
 							plus.nativeUI.alert("支付成功！",function(){
-								_.back();
+								w.openView(targetWeb,{type:type});
 			                });
-//		                	w.openView(targetWeb);
-//		                	_.later(function(){u.close('pay')},200)
 			            },function(error){
 			            	var errCode = error.message && error.message.substr(12,4);
 			            	if("8000" ==  errCode){

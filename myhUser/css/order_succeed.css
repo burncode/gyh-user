@@ -1,0 +1,42 @@
+.order-audit {
+	margin: 15px;
+}
+
+.order-audit img {
+	width: 100%
+}
+
+.order-audit-content {
+	text-align: center;
+	position: relative;
+	bottom: 100px;
+}
+.order-audit-content p{
+	margin-bottom: 5px;
+}
+
+.check-btn {
+	width: 49%;
+	height: 40px;
+	border-radius: 30px;
+	border: 0;
+	background-color: #33A2D7;
+	color: #FFFFFF
+}
+
+.return-btn {
+	width: 49%;
+	height: 40px;
+	border: 1px solid #DEDEDE;
+	border-radius: 30px
+}
+
+.mui-content {
+	background-color: #fff
+}
+
+.commit-success {
+	position: relative;
+	bottom: 50px;
+	text-align: center;
+}

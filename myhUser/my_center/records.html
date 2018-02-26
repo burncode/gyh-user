@@ -11,6 +11,9 @@
 			.mescroll{
 				top: 45px;
 			}
+			.mui-table-view-cell{
+				margin:0
+			}
 		</style>
 	</head>
 	<body>
@@ -81,7 +84,7 @@
 						util.mypost('user_center/tradeLog', {
 							offset: (pageNum - 1) * pageSize,
 							limit: pageSize,
-							privateToken: w.getItem("privateToken")
+							privateToken: w.getUser()
 						}, false, function(data) {
 							if(data.code == 0) {
 								data = data.data[0] || [];

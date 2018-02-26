@@ -176,9 +176,9 @@
 								u.mypost("user_center/orderCancel",pdata,true,function(data){
 									if(data.code == 0){
 										_.toast("取消成功");
-										u.close("order_detail");
+										_.later(function(){_.back()},500)
 									}else{
-										
+										_.toast(data.msg || '請求異常，請重試')
 									}
 								},myerror);
 							}

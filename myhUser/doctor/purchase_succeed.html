@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -9,45 +10,69 @@
 		<title>購買成功</title>
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/order.css">
+		<link rel="stylesheet" href="../css/order_succeed.css">
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">購買成功</h1>
+			<h1 class="mui-title">提交成功</h1>
 		</header>
 		<div class="mui-content">
 			<div class="order-audit">
-				<div><img src="../images/order-bg.png" /></div>
-				<div class="commit-success-btn">
-					<div class="commit-success-text">
-						<img src="../images/succeed.png"><br /> 購買成功
-					</div>
-				</div>
-				<div class="order-audit-content">
-					<div class="commit-success">恭喜您，購買成功！</div>
-					<div class="waiting">客服將會跟您聯系，請保持手機暢通</div>
-					<div class="order-audit-btn">
-						<div class="check-btn" id="purchase-record">查看我的訂單</div>
-						<div class="return-btn" id="return-index">返回首頁</div>
-					</div>
-				</div>
+				<img src="../images/order-bg.png" />
+				<p class="commit-success">恭喜您，提交成功！</p>
+				<button class="check-btn" @tap="openView()">{{btnContentHtml}}</button>
+				<button class="return-btn" @tap="back()">返回</button>
 			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
-	<script type="text/javascript" src="../js/common.js" ></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
 	<script>
-		(function(_,doc,u,w){
-			doc.getElementById("return-index").addEventListener('tap', function() {
-				w.toIndex(0);
-			});
-			doc.getElementById("purchase-record").addEventListener('tap', function() {
-				_.later(function(){
-					w.close('pay');
-				},50)
-				w.openView("../my_center/buy_record.html");
-			});
-		})(mui,document,util,window)
+		(function(_, doc, u, w) {
+			_.plusReady(function() {
+				var cweb = plus.webview.currentWebview();
+				var type = cweb.cweb;
+				var targetWeb = '';
+				plus.webview.getWebviewById('pay').close('none');
+				var vm = new Vue({
+					el: '.mui-content',
+					data: {
+						btnContentHtml: '查看我的預約'
+					},
+					mounted: function(){
+						switch(type) {
+							case 3: //基因检测服务
+								targetWeb = "../my_center/buy_record.html";
+								this.btnContentHtml = '查看我的订单';
+								break;
+							case 4: //在線問診
+								targetWeb = "../my_center/myInterview.html";
+								this.btnContentHtml = '查看我的問診';
+								break;
+							case 5: //留言問答
+								targetWeb = "../my_center/qa_record.html";
+								this.btnContentHtml = '查看我的問答';
+								break;
+							default:
+								targetWeb = "../my_center/my_appoint.html";
+								this.btnContentHtml = '查看我的預約';
+								break;
+						}
+					},
+					methods: {
+						back:function(){
+							_.back();
+						},
+						openView:function(){
+							w.openView(targetWeb); //查看
+						}
+					}
+				})
+			})
+		})(mui, document, util, window)
 	</script>
+
 </html>

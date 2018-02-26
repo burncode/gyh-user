@@ -74,6 +74,7 @@
 						if(data.code == 0){
 							_.toast(data.msg);
 							w.setUser(data.data.privateToken);
+							console.log('login over=====' + w.getUser());
 							w.setItem("role", data.data.userInfo.role);
 							loginSkip();
 							setTimeout(function(){

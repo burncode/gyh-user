@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>我的訂單详情页面</title>
+		<title>疫苗预约详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
@@ -38,16 +38,16 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-				<h1 id="title" class="mui-title">訂單详情</h1>
+				<h1 id="title" class="mui-title">疫苗预约详情</h1>
 			</header>
 			<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen">
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell mui-media">
-							<img v-bind:src="cover" class="mui-media-object mui-pull-left">
+							<img v-bind:src="src" class="mui-media-object mui-pull-left">
 							<div class="mui-media-body">
 								<div class="mui-ellipsis-2">{{packageTitle}}</div>
-								<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{status}}</span></p>
+								<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{state}}</span></p>
 							</div>
 						</li>
 					</ul>
@@ -56,8 +56,7 @@
 							<p>接種人 : {{obj.name}}</p>
 							<p>手機號 : {{obj.mobile}}</p>
 							<p>身份證號 : {{obj.identity}}</p>
-							<p>預約日期 : {{obj.appointYM}}{{obj.appointDay}}</p>
-							<p>預約時間 : {{obj.startTime}}-{{obj.endTime}}</p>
+							<p>預約時間 : {{obj.orderDate}}</p>
 						</li>
 					</ul>
 				</div>
@@ -70,7 +69,7 @@
 	<script>
 		(function(_, doc, u, w) {
 			_.init();
-			var oid = null,status = null,cover='';
+			var oid = null,status = null;
 			//创建vue对象
 			var vm = new Vue({
 				el: "#app",
@@ -78,50 +77,33 @@
 					packageTitle: '',
 					price: 0,
 					state: '',
-					cover: '../images/default-news.png',
+					src: '../images/default-news.png',
 					userArr: []
 				}
 			});
 			_.plusReady(function() {
-				var privateToken = w.getUser();
 				oid = plus.webview.currentWebview().oid;
 				status = plus.webview.currentWebview().status;
-				cover = plus.webview.currentWebview().cover || '../images/default-news.png';
 				util.mypost('user_center/orderDetail', {
-					privateToken: privateToken,
+					privateToken: w.getUser(),
 					id:oid
 				}, null, function(data){
+					console.log("data==" +JSON.stringify(data));
 					if(data.code == 0){
-						vm.cover = cover;
 						vm.packageTitle = data.data.packageTitle;
 						vm.price = data.data.price;
 						vm.status = status;
-						vm.userArr = convert(data.data.userArr || []);
+						vm.userArr = data.data.userArr;
 					}else{
-						_.toast(data.msg || '請求失敗');
+						
 					}
 				}, myerror)
+				
+//				vm.packageTitle = plus.webview.currentWebview().packageTitle;
+//				vm.price = plus.webview.currentWebview().price;
+//				vm.state = plus.webview.currentWebview().state;
+//				vm.userArr = eval(plus.webview.currentWebview().userArr);
 			});
-			
-			/**
-			 * 1、将服务端返回数据，转换成前端需要的格式
-			 * @param {Array} items 
-			 */
-			function convert(items) {
-				var newItems = [];
-				items.forEach(function(item) {
-					newItems.push({
-						name: item.name,
-						mobile: item.mobile,
-						identity:item.identity.substr(0,4)+'xxxxxxxxxx'+item.identity.substr(14,4),
-						appointYM: item.appointData.appointYM,
-						appointDay:Number(item.appointData.appointDay) < 10?'0'+item.appointData.appointDay:item.appointData.appointDay,
-						startTime:item.appointData.startTime,
-						endTime:item.appointData.endTime
-					});
-				});
-				return newItems;
-			}
 		})(mui, document, util, window)
 	</script>
 

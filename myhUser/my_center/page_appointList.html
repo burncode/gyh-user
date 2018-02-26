@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/center/page_appointList.css" />
 	</head>
+
 	<body>
 		<div id="app">
 			<div id="mescroll" class="mescroll">
@@ -23,78 +24,83 @@
 	<script type="text/javascript" src="../js/components/list_item_appoint.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		mui.init();
-		var arr = [];
-		//创建vue对象
-		var vm = new Vue({
-			el: "#app",
-			data: {
-				mescroll: null,
-				imgServer: imgServer,
-				items: arr
-			},
-			mounted: function() {
-				//创建MeScroll对象,down可以不用配置,因为内部已默认开启下拉刷新,重置列表数据为第一页
-				//解析: 下拉回调默认调用mescroll.resetUpScroll(); 而resetUpScroll会将page.num=1,再执行up.callback,从而实现刷新列表数据为第一页;
-				var self = this;
-				self.mescroll = new MeScroll("mescroll", {
-					up: {
-						callback: self.upCallback, //上拉回调
-						//以下参数可删除,不配置
-						page: {
-							size: 5
+		(function(_, doc, w, u) {
+			_.init();
+			var arr = [],
+				privateToken = null;
+			_.plusReady(function() {
+				privateToken = plus.webview.currentWebview().privateToken;
+				//创建vue对象
+				var vm = new Vue({
+					el: "#app",
+					data: {
+						mescroll: null,
+						items: arr
+					},
+					mounted: function() {
+						//创建MeScroll对象,down可以不用配置,因为内部已默认开启下拉刷新,重置列表数据为第一页
+						//解析: 下拉回调默认调用mescroll.resetUpScroll(); 而resetUpScroll会将page.num=1,再执行up.callback,从而实现刷新列表数据为第一页;
+						var self = this;
+						self.mescroll = new MeScroll("mescroll", {
+							up: {
+								callback: self.upCallback, //上拉回调
+								//以下参数可删除,不配置
+								page: {
+									size: 5
+								},
+								toTop: { //配置回到顶部按钮
+									src: "../img/mescroll-totop.png"
+								},
+								empty: { //配置列表无任何数据的提示
+									warpId: "dataList"
+								}
+							}
+						});
+						//初始化vue后,显示vue模板布局
+						document.getElementById("dataList").style.display = "block";
+					},
+					methods: {
+						upCallback: function(page) {
+							//联网加载数据
+							var self = this;
+							getListDataFromNet(page.num, page.size, function(data) {
+								if(data.code == 0) {
+									data = data.data[0] || [];
+									console.log('data========' + JSON.stringify(data));
+									//如果是第一页需手动制空列表
+									if(page.num == 1) self.items = [];
+									//更新列表数据
+									self.items = self.items.concat(data);
+									//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+									//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
+									self.mescroll.endSuccess(data.length);
+								} else if(data.code == 500 && "未登錄" == data.msg) {
+									util.goLogin();
+								} else {
+									_.toast(data.msg || '服務器異常');
+								}
+							}, function() {
+								//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+								self.mescroll.endErr();
+							});
 						},
-						toTop: { //配置回到顶部按钮
-							src: "../img/mescroll-totop.png"
-						},
-						empty: { //配置列表无任何数据的提示
-							warpId: "dataList"
-						}
-					}
+					},
 				});
-				//初始化vue后,显示vue模板布局
-				document.getElementById("dataList").style.display = "block";
-			},
-			methods: {
-				upCallback: function(page) {
-					//联网加载数据
-					var self = this;
-					getListDataFromNet(page.num, page.size, function(data) {
-						if(data.code == 0){
-							data = data.data[0] || [];
-							console.log('data========' + JSON.stringify(data));
-							//如果是第一页需手动制空列表
-							if(page.num == 1) self.items = [];
-							//更新列表数据
-							self.items = self.items.concat(data);
-							//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
-							//传参:数据的总数; mescroll会自动判断列表是否有无下一页数据,如果数据不满一页则提示无更多数据;
-							self.mescroll.endSuccess(data.length);
-						}else if(data.code == 500 && "未登錄" == data.msg){
-							util.goLogin();
-						}else{
-							_.toast(data.msg || '服務器異常');
-						}
-					}, function() {
-						//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
-						self.mescroll.endErr();
-					});
-				},
-			},
-		});
+			})
 
-		/*
-		 * user_center/vaccinumAppointList 主题首页接收 get 参数
-		 * page Number 页数
-		 * limit Number 每一页的数量
-		 * */
-		function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
-			util.mypost('user_center/appointList', {
-				privateToken: window.getUser(),
-				offset: (pageNum-1) * pageSize,
-				limit: pageSize
-			}, null, successCallback, errorCallback)
-		}
+			/*
+			 * user_center/appointList 主题首页接收 get 参数
+			 * page Number 页数
+			 * limit Number 每一页的数量
+			 * */
+			function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
+				u.mypost('user_center/appointList', {
+					privateToken: privateToken,
+					offset: (pageNum - 1) * pageSize,
+					limit: pageSize
+				}, null, successCallback, errorCallback)
+			}
+		})(mui, document, window, util)
 	</script>
 
 </html>

@@ -32,16 +32,16 @@
 			}
 		</style>
 		<script>
-			//检查手机号
+			//检查手機號
 			function checkPhone(phone) {
 				if(!util.checkPhone(phone)) {
 					mui.toast('请正确填写联系电话')
 				}
 			}
-			//检查身份证号
+			//检查身份證號
 			function checkCardId(val) {
 				if(!util.checkIdCard(val)) {
-					mui.toast('请正确填写身份证号码')
+					mui.toast('请正确填写身份證號码')
 				}
 			}
 		</script>
@@ -80,11 +80,11 @@
 									<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">
 								</div>
 								<div class="mui-input-row">
-									<label>身份证号</label>
-									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">
+									<label>身份證號</label>
+									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份證號" onblur="checkCardId(this.value)">
 								</div>
 								<div class="mui-input-row">
-									<label>预约时间</label>
+									<label>預約時間</label>
 									<span class="mui-navigate-right">
 										<input type="text" class="orderDate" placeholder="请选择日期" readonly="readonly">
 										<input type="hidden" class="appointTimeId" value=""></span>
@@ -124,7 +124,7 @@
 				len = 0,
 				userNum = 1; //用户对象   数量
 			var thisOrderDate = null,
-				thisAppointTimeId = null; //当前选择的预约时间
+				thisAppointTimeId = null; //当前选择的預約時間
 			var divFormObj = document.getElementById("divForm"),
 				submitObj = document.getElementById("submit"),
 				priceObj = document.getElementById("price"),
@@ -155,7 +155,7 @@
 				vaccineNameObj.innerHTML = name;
 			})
 
-			//添加接种人信息
+			//添加接種人信息
 			document.getElementById("addBtn").addEventListener('tap', function() {
 				inputItmems = divFormObj.querySelectorAll('input');
 				if(inputItmems && inputItmems.length > 0) {
@@ -171,7 +171,7 @@
 							}
 						} else if(hasClass(vObj, 'identity')) {
 							if(!util.checkIdCard(vObj.value)) {
-								mui.toast('请正确填写身份证号码');
+								mui.toast('请正确填写身份證號码');
 								return;
 							}
 						}
@@ -193,11 +193,11 @@
 									'<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="请输入联系电话" onblur="checkPhone(this.value)">' +
 								'</div>' +
 								'<div class="mui-input-row">' +
-									'<label>身份证号</label>' +
-									'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份证号" onblur="checkCardId(this.value)">' +
+									'<label>身份證號</label>' +
+									'<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到诊人身份證號" onblur="checkCardId(this.value)">' +
 								'</div>' +
 								'<div class="mui-input-row">' +
-									'<label>预约时间</label>' +
+									'<label>預約時間</label>' +
 									'<span class="mui-navigate-right">' +
 										'<input type="text" class="orderDate" placeholder="请选择日期" readonly="readonly">' +
 										'<input type="hidden" class="appointTimeId" value=""></span>' +
@@ -318,12 +318,12 @@
 				});
 			});
 			
-			//通过年份得到预约时间
+			//通过年份得到預約時間
 			function getAppointTimeByYear(year) {
 				var myCalendar = new SimpleCalendar('#calendar');
 				u.mypost("appointMap/getAppointTimeByYear", {year: myCalendar.tyear}, false, function(data) {
 					if(data.code == 0) {
-						//格式化预约日期
+						//格式化預約日期
 						var markObj = {};
 						markObj = formatDate(data.data[0],myCalendar.tmonth,myCalendar.tday);
 						myCalendar.addMark(markObj);
@@ -338,7 +338,7 @@
 				u.mypost("appointMap/getAppointTimeByDay", {date:date}, true, callback, myerror);
 			}
 			
-			//格式化预约日期
+			//格式化預約日期
 			function formatDate(dateArr,tmonth,tday){
 				var markObj = {},oTime = '';
 				_.each(dateArr, function(i, o) {

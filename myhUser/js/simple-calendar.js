@@ -495,7 +495,7 @@ var SimpleCalendar = function () {
       }
     }
 
-    //刷新标记可预约日期 
+    //刷新标记可預約日期 
 
   }, {
     key: 'updateMark',

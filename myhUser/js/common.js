@@ -47,16 +47,16 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		};
 	};
 	w.setItem = function(key, value) {
-		w.plus ? plus.storage.setItem(key, value) : localStorage.setItem(key, value);
+		localStorage.setItem(key, value);
 	};
 	w.getItem = function(key) {
-		return w.plus ? plus.storage.getItem(key) : localStorage.getItem(key);
+		return localStorage.getItem(key);
 	};
 	w.clearItem = function() {
-		w.plus ? plus.storage.clear() : localStorage.clearItem();
+		localStorage.clearItem();
 	};
 	w.removeItem = function(key) {
-		w.plus ? plus.storage.removeItem(key) : localStorage.removeItem(key);
+		localStorage.removeItem(key);
 	};
 	w.getUser = function() {
 		return w.getItem("privateToken");
@@ -309,16 +309,6 @@ function toggleClass(obj, cls) {
  * **/
 function myerror() {
 	mui.toast("访问失敗，请重试");
-}
-//过滤表情字符
-function filteremoji(emojireg) {
-	var ranges = [
-		'\ud83c[\udf00-\udfff]',
-		'\ud83d[\udc00-\ude4f]',
-		'\ud83d[\ude80-\udeff]'
-	];
-	emojireg = emojireg.replace(new RegExp(ranges.join('|'), 'g'), '');
-	return emojireg;
 }
 
 /**

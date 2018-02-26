@@ -54,16 +54,18 @@
 		(function(_, doc, u, w) {
 			_.plusReady(function() {
 				var _self = plus.webview.currentWebview();
+				console.log("privateToken========" + w.getUser());
+				var privateToken = w.getUser();
 				var group = new webviewGroup(_self.id, {
 					top:83,
 					items: [{
 						id: "page_vaccinumAppointList.html",
 						url: "page_vaccinumAppointList.html",
-						extras: {}
+						extras: {privateToken:privateToken}
 					}, {
 						id: "page_appointList.html",
 						url: "page_appointList.html",
-						extras: {}
+						extras: {privateToken:privateToken}
 					}],
 					onChange: function(obj) {
 						var c = document.querySelector(".mui-control-item.mui-active");

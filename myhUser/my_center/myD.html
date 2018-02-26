@@ -104,10 +104,10 @@
 	<script type="text/javascript" src="../js/mui.previewimage.js"></script>
 	<script type="text/javascript">
 		(function(_,doc,u,w){
-			_.init({swipeBack: false}),_(".mui-scroll-wrapper").scroll();
+			_.init(),_(".mui-scroll-wrapper").scroll();
 			var imgobj = null,pdata = {},showPhoto = doc.getElementById("headImg"),photo = null,nickName = null,privateToken = null,imgServer = null,personData = null;
 			_.plusReady(function(){
-				privateToken = w.getItem("privateToken");
+				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
 				u.mypost("user_center/userCenterIndex",pdata,false,function(data){
 					if(data.code == 0){

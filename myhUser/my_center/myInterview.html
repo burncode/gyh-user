@@ -211,7 +211,7 @@
 				pdata.privateToken = privateToken;
 				pdata.oid = this.id;
 				pdata.orderType = 2;
-				var btnArray = ['取消', '确认'];
+				var btnArray = ['取消', '確認'];
 				_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>',btnArray, function(e) {
 					if(e.index == 1){
 						u.mypost("user_center/orderCancel",pdata,true,function(data){

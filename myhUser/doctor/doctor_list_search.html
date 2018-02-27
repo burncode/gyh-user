@@ -104,7 +104,6 @@
 							hid:vm.hid
 						}, false, function(data) {
 							data = data.data.doctors || [];
-							console.log('data========' + JSON.stringify(data));
 							//如果是第一页需手动制空列表
 							if(pageNum == 1) vm.items = [];
 							vm.items = vm.items.concat(data);

@@ -30,7 +30,7 @@
 					<div class="case-detail-item"><div class="detail-title">基本病情：</div><div id="situation" class="detail-content"></div></div>
 				</div>
 			</div>
-			<div class="treatment">就诊记录<span id="delCase" class="mui-pull-right main-font-color">删除病曆</span></div>
+			<div class="treatment">就诊记录<span id="delCase" class="mui-pull-right main-font-color">刪除病曆</span></div>
 			<div class="treatment-detail" id="treatment-detail"></div>
 		</div>
 	</body>
@@ -144,13 +144,13 @@
 				doc.getElementById("collect").addEventListener('tap',function(){
 					w.openView("edit_case.html",{illId:illId});
 				});
-				//删除病曆
+				//刪除病曆
 				doc.getElementById("delCase").addEventListener('tap',function(){
-					_.confirm('是否確定删除该病曆','提示',['是','否'],function(e){
+					_.confirm('是否確定刪除该病曆','提示',['是','否'],function(e){
 						if(e.index == 0){
 							u.mypost("medical/delIllness",{privateToken:privateToken,illId:illId},true,function(data){
 								if(data.code == 0){
-									_.toast('删除成功');
+									_.toast('刪除成功');
 									plus.webview.getWebviewById('case_list').evalJS('getCaseList()');
 									_.later(function(){
 										_.back();

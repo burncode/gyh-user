@@ -118,12 +118,12 @@
                 illId = web.illId;
                 pdata.illId = illId;
 				getData();
-				//删除记录
+				//刪除记录
 				_('#del-record').on('tap', '.delete-record', function(event) {
 					var elem = this;
 					var delDiv = elem.parentNode;
 					var pdata = {remarkId:this.id,privateToken:privateToken};
-					_.confirm('确认删除该条病曆记录吗？', '提示',['确认', '取消'], function(e) {
+					_.confirm('確認刪除该条病曆记录吗？', '提示',['確認', '取消'], function(e) {
 						if (e.index == 0) {
 							u.mypost("medical/delRemark",pdata,true,function(data){
 								_.toast(data.msg);
@@ -437,7 +437,7 @@
              	return value;
 			}
 			
-			//长按删除所选图片
+			//长按刪除所选图片
 			_(doc).on("longtap","img",function(){
 				var self = this;
 				if(self.src.indexOf("medical-add.png") == -1){
@@ -535,7 +535,7 @@
 													"<div class='state-record'>病情記錄</div>"+
 													"<textarea class='state-description illRecord' rows='5' placeholder='描述病情300字以內' maxlength='300'>"+obj.content+"</textarea>"+
 												"</div>"+
-												"<div class='delete-record' id='"+obj.id+"'>删除</div>"+
+												"<div class='delete-record' id='"+obj.id+"'>刪除</div>"+
 											"</div>";
 							list.appendChild(div);
 						})

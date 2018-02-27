@@ -58,10 +58,10 @@
 				mounted: function() {
 					var self = this;
 					self.mescroll = new MeScroll("mescroll", {
-						up: {
+						down: {
 							callback: self.upCallback, //上拉回调
 							page: {
-								size: 5
+								size: 1000
 							},
 							toTop: { //配置回到顶部按钮
 								src: "../img/mescroll-totop.png"
@@ -70,6 +70,8 @@
 								warpId: "dataList",
 								tip: nodataHtmlInfo
 							}
+						},up:{
+							use:false
 						}
 					});
 					//初始化vue后,显示vue模板布局
@@ -82,14 +84,14 @@
 					},
 					getListDataFromNet: function(pageNum, pageSize) {
 						util.mypost('user_center/tradeLog', {
-							offset: (pageNum - 1) * pageSize,
+							offset: 0,
 							limit: pageSize,
 							privateToken: w.getUser()
 						}, false, function(data) {
 							if(data.code == 0) {
 								data = data.data[0] || [];
 								if(pageNum == 1) vm.items = [];
-								vm.items = vm.items.concat(data);
+								vm.items = data;
 								vm.mescroll.endSuccess(data.length);
 							} else {
 								_.toast(data.msg || '請求失敗');

@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title>購買成功</title>
+		<title>提交成功</title>
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/order_succeed.css">
@@ -21,7 +21,11 @@
 		<div class="mui-content">
 			<div class="order-audit">
 				<img src="../images/order-bg.png" />
-				<p class="commit-success">恭喜您，提交成功！</p>
+				<div class="commit-success-btn">
+					<div class="commit-success-text">
+						<img src="../images/succeed.png"><br /> 提交成功
+					</div>
+				</div>
 				<button class="check-btn" @tap="openView()">{{btnContentHtml}}</button>
 				<button class="return-btn" @tap="back()">返回</button>
 			</div>
@@ -34,9 +38,10 @@
 		(function(_, doc, u, w) {
 			_.plusReady(function() {
 				var cweb = plus.webview.currentWebview();
-				var type = cweb.cweb;
+				var type = cweb.type;
 				var targetWeb = '';
 				plus.webview.getWebviewById('pay').close('none');
+				console.log('succeed type====' + type);
 				var vm = new Vue({
 					el: '.mui-content',
 					data: {

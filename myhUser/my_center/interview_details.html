@@ -273,7 +273,7 @@
 								doctor: docName,
 								time: hopeDate
 							}
-							var btnArray = ['取消', '确认'];
+							var btnArray = ['取消', '確認'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
@@ -306,7 +306,7 @@
 								doctor: docName,
 								time: hopeDate
 							}
-							var btnArray = ['取消', '确认'];
+							var btnArray = ['取消', '確認'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
@@ -334,7 +334,7 @@
 						pdata.privateToken = privateToken;
 						pdata.oid = id;
 						pdata.orderType = 2;
-						var btnArray = ['取消', '确认'];
+						var btnArray = ['取消', '確認'];
 						_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>', btnArray, function(e) {
 							if(e.index == 1) {
 								u.mypost("user_center/orderCancel", pdata, true, function(data) {

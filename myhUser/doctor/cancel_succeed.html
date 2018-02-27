@@ -21,10 +21,10 @@
 		<div class="mui-content">
 			<div class="order-audit">
 				<img src="../images/order-bg.png" />
-				<div class="order-audit-content font-size-16">
-					<p>您預約的 ：{{hospital}} {{apartment}} {{doctor}}醫生</p>
-					<p>预约时间为 : {{time}}</p>
-					<p>的订单已成功取消!</p>
+				<div class="commit-success-btn">
+					<div class="commit-success-text">
+						<img src="../images/succeed.png"><br /> 取消成功
+					</div>
 				</div>
 				<button class="check-btn" @tap="openView()">{{btnContentHtml}}</button>
 				<button class="return-btn" @tap="back()">返回</button>
@@ -38,24 +38,13 @@
 		(function(_, doc, u, w) {
 			var targetWeb = '';
 			_.plusReady(function() {
-				var web = plus.webview.currentWebview();
-				var types = web.types ? web.types : 1;
+				var types = plus.webview.currentWebview().types;
 				var vm = new Vue({
 					el: '.mui-content',
 					data: {
-						hospital: '',
-						apartment: '',
-						doctor: '',
-						time: '',
 						btnContentHtml: '查看我的問診'
 					},
 					mounted: function() {
-						
-						this.hospital = web.hospital;
-						this.doctor = web.doctor;
-						this.time = web.time;
-						this.apartment = web.apartment;
-						
 						if(types == 1) {
 							this.btnContentHtml = "查看我的問診";
 							targetWeb = "../my_center/myInterview.html";

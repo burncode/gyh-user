@@ -20,17 +20,17 @@
 				<li class="mui-table-view-cell mui-media">
 					<img v-bind:src="cover" class="mui-media-object mui-pull-left">
 					<div class="mui-media-body">
-						<div class="mui-ellipsis-2">{{packageTitle}}</div>
-						<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{status}}</span></p>
+						<div class="mui-ellipsis-2">{{vaccinumName}}</div>
+						<p class="price font-size-14 main-font-color">¥{{remainAmount}}<span class="mui-pull-right">{{status}}</span></p>
 					</div>
 				</li>
 			</ul>
 			<div class="detail-content">
-				<p><label>就诊人：</label>{{contacts}}</p>
-				<p><label>预约時間：</label>{{appointTime}}</p>
-				<p><label>聯系手機：</label>{{appointTel}}</p>
-				<p><label>醫院地址：</label>{{hosAddr}}</p>
-				<p><label>备注：</label>{{userRemark}}</p>
+				<p><label>就诊人 ：</label>{{contacts}}</p>
+				<p><label>預約時間 ：</label>{{appointTime}}</p>
+				<p><label>聯系手機 ：</label>{{appointTel}}</p>
+				<p><label>醫院地址 ：</label>{{hosAddr}}</p>
+				<p><label>备注 ：</label>{{userRemark}}</p>
 			</div>
 		</div>
 	</body>
@@ -44,9 +44,9 @@
 				var vm = new Vue({
 					el: ".mui-content",
 					data: {
-						packageTitle:'',
+						vaccinumName:'',
 						cover: '',
-						price: '100',
+						remainAmount: '0.00',
 						status: '',
 						contacts: '',
 						appointTel:'',
@@ -56,7 +56,11 @@
 						userRemark: '',
 					},
 					mounted: function() {
+						this.vaccinumName = web.vaccinumName;
+						this.remainAmount = web.remainAmount || '0.00';
+						this.cover = imgServer +  web.thumbnail;
 						this.appointTime = web.appointTime;
+						this.status = web.status;
 						this.contacts = web.contacts;
 						this.hosAddr = web.hosAddr;
 						this.userRemark = web.userRemark;

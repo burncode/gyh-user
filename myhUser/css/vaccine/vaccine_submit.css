@@ -109,5 +109,24 @@ select {
 
 .time-h>p {
 	text-align: justify;
-	margin:10px;
+	margin: 10px;
+}
+
+.mui-popover.mui-popover-action .mui-table-view .mui-table-view-cell:after {
+	height: 0;
+}
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+	border: 1px solid #eee;
+	margin: 5px 0;
+}
+
+.mui-popover.mui-popover-action .mui-table-view {
+	margin: 8px 0;
+	background: #fff;
+}
+
+#timeQuantumUl {
+	min-height: 180px;
+	border-top: 1px solid #dedede;
 }

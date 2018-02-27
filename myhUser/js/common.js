@@ -53,7 +53,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		return localStorage.getItem(key);
 	};
 	w.clearItem = function() {
-		localStorage.clearItem();
+		localStorage.clear();
 	};
 	w.removeItem = function(key) {
 		localStorage.removeItem(key);

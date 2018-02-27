@@ -27,7 +27,7 @@
 				<div class="pay-money"><span class="pay-title">定金：</span><span class="RMB">¥</span><span id="price"></span></div>
 				<div class="pay-money"><span class="pay-title">剩余款項<span class="paytoHK">（到港支付）</span>：</span><span class="RMB">HKD</span><span id="price2"></span></div>
 			</div>
-			<button type="button" class="mui-btn detail-btn-pay" id="pay">我要预约</button>
+			<button type="button" class="mui-btn detail-btn-pay" id="pay">我要預約</button>
 		</div>
 		<div class="mui-content mui-fullscreen mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -51,7 +51,6 @@
 				web = plus.webview.currentWebview();
 				vaccinumId = web.vaccinumId;
 				thumbnailImg = web.thumbnailImg;
-				console.log("thumbnailImg==" + thumbnailImg);
 				pdata.vaccinumId = vaccinumId;
 				pdata.privateToken = privateToken;
 				u.mypost("vaccinum/vaccinumDetail",pdata,true,function(data){

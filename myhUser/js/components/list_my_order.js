@@ -33,8 +33,8 @@
 						status:item.status,
 						cover:item.cover
 					});
-				}else{//检测服务
-					window.openView('gene_detect_detail.html',{geneId:item.gid});
+				}else{//检测服务详情页面
+					window.openView('../gene_detect/gene_detect_detail.html',{geneId:item.gid});
 				}
 			},
 			toCancel: function(oid) {

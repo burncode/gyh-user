@@ -12,12 +12,6 @@
 	margin-left: 10px;
 }
 
-/*.tit {
-	color: #333333;
-	display: block;
-	overflow: hidden
-}
-*/
 .price {
 	color: #33a2d7;
 	font-size: 12px
@@ -27,13 +21,6 @@
 	font-size: 12px;
 	color: #6cb327
 }
-
-/*.mui-media-body p {
-	width: 100%;
-	display: block;
-	overflow: hidden;
-	text-align: right
-}*/
 
 .but {
 	background: #fcd765;
@@ -70,6 +57,46 @@
 	background-color: #fff
 }
 
-.mui-btn{
+.mui-btn {
 	margin: 0 0 0 5px;
+}
+
+.mui-table-view-cell {
+	padding-bottom: 0;
+	margin: 0;
+}
+
+.mui-navigate-right:after {
+	right: 5px;
+}
+
+.mui-table-view-cell>a:not(.mui-btn) {
+	margin: -15px -20px 0;
+	border-bottom: 1px solid #dedede;
+	padding-bottom: 15px;
+}
+
+.mui-table-view-cell .price {
+	margin: 10px 0;
+}
+
+.mui-media-body {
+	padding: 0 10px 0 0;
+}
+
+.btns {
+	text-align: right;
+	padding: 10px 0;
+}
+
+.mui-table-view:after {
+	height: 0;
+}
+
+.mui-table-view-cell p {
+	margin: 2px 0 0;
+}
+
+.mescroll {
+	top: 44px;
 }

@@ -7,7 +7,7 @@
 				'<li class="mui-table-view-cell mui-media" v-for="item in data">'+
 					'<a @tap="open_detail(item)" class="mui-navigate-right">'+
 	                	'<p class="doctors mui-ellipsis-2">{{item.packageTitle}}</p>'+
-	                	'<p class="describe font-size-12">就诊人：{{item.contacts}}<span class="state mui-pull-right">{{item.status}}</span></p>'+
+	                	'<p class="describe font-size-12">就诊人：{{item.contacts}}<span class="main-font-color mui-pull-right">{{item.status}}</span></p>'+
 	                	'<p class="describe font-size-12">預約时间 :  {{item.appointTime}}</p>'+
 	                	'<p class="describe font-size-12 mui-ellipsis">诊所地址：{{item.hosAddr}}</p>'+
 	                	'<p class="describe font-size-12">备注 :  {{item.userRemark}}</p>'+

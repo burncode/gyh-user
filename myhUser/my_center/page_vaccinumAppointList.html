@@ -60,7 +60,6 @@
 							//联网加载数据
 							var self = this;
 							getListDataFromNet(page.num, page.size, function(data) {
-								console.log('data======' + JSON.stringify(data));
 								if(data.code == 0) {
 									data = convert(data.data[0] || []);
 									if(page.num == 1) self.items = [];

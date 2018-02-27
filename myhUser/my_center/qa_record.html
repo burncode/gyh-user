@@ -1,99 +1,110 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title>問答記錄</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
-		<link rel="stylesheet" href="../css/pullRefresh.css" />
 		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/order/qa_record.css" />
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
-			<h1 id="title" class="mui-title">問答記錄</h1>	
+			<h1 id="title" class="mui-title">問答記錄</h1>
 		</header>
-		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
-			<div id="cases" class="mui-scroll">	
-				<ul id="record-list" class="mui-table-view"></ul>
+		<div id="app">
+			<div id="mescroll" class="mescroll">
+				<ul id="dataList" class="mui-table-view">
+					<li class="mui-table-view-cell mui-media" v-for="item in items" @tap="openView(item.id)">
+						<a class="mui-navigate-right">
+							<p class='font-color-333'>{{item.docName}}</p>
+							<p class='font-size-12 font-color-666'>{{item.dateline}}<span class='state stateClass_01 mui-pull-right'>{{item.state}}</span></p>
+							<p class='font-size-12 mui-ellipsis-2 font-color-666 content'>{{item.content}}</p>
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js"></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.min.js" ></script>
-	<script type="text/javascript" src="../js/mui.pullToRefresh.material.min.js" ></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript">
-		(function(_,doc,u,w){
-			_.init({swipeBack: true}),_(".mui-scroll-wrapper").scroll();
-			var pdata = {offset:0,limit:5},page = 0,privateToken = null;
-			var _pull = null,list = doc.getElementById('record-list');
+		(function(_, doc, w, u) {
+			_.init();
 			_.plusReady(function() {
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-				_pull = _('#cases').pullToRefresh({
-					down: {
-						callback: function() {
-							pdata.offset = 0;
-							u.mypost('user_center/askAnswerList',pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data[0] || []).length == 5);
-								if (data.code == 0) {
-									page = 1;
-									u.emptyHtml(list), qaList(data.data || []);
-								}else{
+				//创建vue对象
+				var vm = new Vue({
+					el: "#app",
+					data: {
+						mescroll: null,
+						items: []
+					},
+					mounted: function() {
+						var self = this;
+						self.mescroll = new MeScroll("mescroll", {
+							up: {
+								callback: self.upCallback, //上拉回调
+								page: {
+									size: 5
+								},
+								toTop: { //配置回到顶部按钮
+									src: "../img/mescroll-totop.png"
+								},
+								empty: { //配置列表无任何数据的提示
+									warpId: "dataList",
+									tip: nodataHtmlInfo
+								}
+							}
+						});
+						document.getElementById("dataList").style.display = "block";
+					},
+					methods: {
+						upCallback: function(page) {
+							//联网加载数据
+							var self = this;
+							getListDataFromNet(page.num, page.size, function(data) {
+								if(data.code == 0) {
+									data = data.data[0] || [];
+									if(page.num == 1) self.items = [];
+									self.items = self.items.concat(data);
+									self.mescroll.endSuccess(data.length);
+								} else {
 									_.toast(data.msg || '服務器異常');
 								}
 							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
+								//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+								self.mescroll.endErr();
+							});
+						},
+						openView: function(rid) {
+							w.openView('qa_details.html', {
+								recordId: rid
 							});
 						}
 					},
-					up: {
-						callback: function() {
-							pdata.offset=(pdata.limit)*page;
-							u.mypost('user_center/askAnswerList',pdata, false, function(data) {
-								_pull.endPullUpToRefresh((data.data[0] || []).length < 5);
-								if (data.code  == 0) {
-									page++;
-									qaList(data.data || []);
-								} else {
-									_.toast(data.msg ||'服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullUpToRefresh(true);
-							});
-						},auto: true
-					}
 				});
-			});
-			function qaList(data){
-				var li = null,state = null;
-				_.each(data[0],function(i,obj){
-					li = doc.createElement("li");
-					li.id = obj.id;
-					state = obj.state;
-					var stateClass = "",stateClass_01 = "color_f99";
-					if(state == "已支付"){
-						stateClass = stateClass_01;
-					}else if(state == "已回復"){
-						stateClass = "";
-					}
-					li.className = "mui-table-view-cell mui-media";
-					li.innerHTML = "<div class='mui-pull-left mui-col-sm-8 left'>"+
-                						"<div class='font-color-333'>"+(obj.docName || '-')+"</div>"+
-                						"<div class='font-size-12 font-color-999'>"+(obj.dateline || '-')+"</div>"+
-                						"<div class='describe'>"+ (obj.content || '-')+"</div></div>"+
-               							"<div class='mui-pull-right mui-col-sm-4 right mui-text-right'>"+
-               							"<span class='state "+stateClass+"'>"+state+"</span>"+
-              						"</div>";
-					list.appendChild(li);
-				})
+			})
+
+			/*
+			 * user_center/vaccinumAppointList 主题首页接收 get 参数
+			 * page Number 页数
+			 * limit Number 每一页的数量
+			 * */
+			function getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
+				util.mypost('user_center/askAnswerList', {
+					privateToken: w.getUser(),
+					offset: (pageNum - 1) * pageSize,
+					limit: pageSize
+				}, null, successCallback, errorCallback)
 			}
-			//问答詳情
-			_('.mui-table-view').on('tap','li',function(){
-	      		w.openView('qa_details.html',{recordId:this.id});
-	    	})
-		})(mui,document,util,window)
+
+		})(mui, document, window, util)
 	</script>
+
 </html>

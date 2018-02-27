@@ -416,7 +416,11 @@
       "css/pullRefresh.css",
       "css/common.css",
       "css/order/qa_record.css",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
     ],
     "refer": [
       "my_center/qa_details.html"
@@ -619,7 +623,12 @@
       "css/common.css",
       "css/pay/confirmCss.css",
       "css/order/myInterview.css",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css",
+      "css/order/qa_record.css"
     ],
     "refer": [
       "my_center/interview_details.html"

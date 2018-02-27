@@ -671,7 +671,11 @@
 	        "css/pullRefresh.css",
 	        "css/common.css",
 	        "fonts/iconfont-nodata.ttf",
-	        "css/order/qa_record.css"
+	        "css/order/qa_record.css",
+	        "js/mescroll.min.js",
+	        "js/vue.min.js",
+	        "img/mescroll-totop.png",
+	        "css/mescroll/mescroll.min.css"
 	      ],
 	      "refer": [
 	        "my_center/qa_details.html"
@@ -886,7 +890,12 @@
 	        "css/common.css",
 	        "fonts/iconfont-nodata.ttf",
 	        "css/pay/confirmCss.css",
-	        "css/order/myInterview.css"
+	        "css/order/myInterview.css",
+	        "js/mescroll.min.js",
+	        "js/vue.min.js",
+	        "img/mescroll-totop.png",
+	        "css/mescroll/mescroll.min.css",
+	        "css/order/qa_record.css"
 	      ],
 	      "refer": [
 	        "my_center/interview_details.html"

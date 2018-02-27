@@ -1,1 +1,25 @@
-{}
+{
+  "my_center/qa_record.html": {
+    "href": "my_center/qa_record.html",
+    "resources": [
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [],
+    "priority": 8
+  },
+  "my_center/myInterview.html": {
+    "href": "my_center/myInterview.html",
+    "resources": [
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css",
+      "css/order/qa_record.css"
+    ],
+    "refer": [],
+    "priority": 7
+  }
+}

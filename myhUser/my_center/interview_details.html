@@ -219,6 +219,7 @@
 				privateToken = w.getItem("privateToken");
 				pdata.privateToken = privateToken;
 				u.mypost("user_center/onlineAskDetail", pdata, true, function(data) {
+					console.log('data====' + JSON.stringify(data));
 					if(data.code == 0) {
 						data = data.data[0];
 						id = data.id ? data.id : '';
@@ -243,27 +244,20 @@
 						doc.getElementById("askContent").innerHTML = askContent;
 						doc.getElementById("remark").innerHTML = remark;
 					}
-					if(state == "已確認鉤通時間") {
+					cancelObj.className = "m-display";
+					if(state == "已確認溝通時間") {
 						btn = "取消預約";
-						butObj.innerHTML = btn; //给按钮赋值
-						cancelObj.className = "m-display";
 					} else if(state == "完成") {
 						btn = "評論";
-						butObj.innerHTML = btn; //给按钮赋值
-						cancelObj.className = "m-display";
 					} else if(state == "未支付") {
 						btn = "支付";
-						butObj.innerHTML = btn; //给按钮赋值
 						cancelObj.className = "cancel-display";
 					} else if(state == "待處理") {
 						btn = "取消預約";
-						butObj.innerHTML = btn; //给按钮赋值
-						cancelObj.className = "m-display";
 					} else if(state == "失敗") {
 						btn = "重新預約";
-						butObj.innerHTML = btn; //给按钮赋值
-						cancelObj.className = "m-display";
 					}
+					butObj.innerHTML = btn; //给按钮赋值
 					butObj.addEventListener('tap', function(e) {
 						if(state == "已確認溝通時間") {
 							var exs = {
@@ -273,7 +267,7 @@
 								doctor: docName,
 								time: hopeDate
 							}
-							var btnArray = ['取消', '確認'];
+							var btnArray = ['否', '是'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
@@ -306,7 +300,7 @@
 								doctor: docName,
 								time: hopeDate
 							}
-							var btnArray = ['取消', '確認'];
+							var btnArray = ['否', '是'];
 							_.confirm('<div>提前壹星期退全款</div><div>提前三天退壹半</div><div>提前壹天不可退款</div>', '<div class="btn-title">取消預約</div>', btnArray, function(e) {
 								if(e.index == 1) {
 									u.mypost("user_center/cancelOnlineAsk", pdata, true, function(data) {
@@ -334,13 +328,13 @@
 						pdata.privateToken = privateToken;
 						pdata.oid = id;
 						pdata.orderType = 2;
-						var btnArray = ['取消', '確認'];
+						var btnArray = ['否', '是'];
 						_.confirm('<div>確定要取消嗎？</div>', '<div class="btn-title">取消</div>', btnArray, function(e) {
 							if(e.index == 1) {
 								u.mypost("user_center/orderCancel", pdata, true, function(data) {
 									if(data.code == 0) {
 										_.toast("取消成功");
-										u.close();
+										_.later(function(){_.back()},500)
 									}
 								}, myerror);
 							}

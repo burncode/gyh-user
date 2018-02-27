@@ -1,5 +1,5 @@
 /**
- * @description 数据列表组件
+ * @description 预约挂号组件
  * */
 (function(V, name,_) {
 	var temlate_list = 
@@ -12,7 +12,7 @@
 		                	'<div class="describe font-size-12">时间 :  {{item.dateline}}</div>'+
 		               '</div>'+
 		               '<div class="mui-pull-right mui-col-sm-4 right mui-text-right">'+
-		                	'<span class="state font-size-12">{{item.status}}</span>'+
+		                	'<span class="main-font-color font-size-12">{{item.status}}</span>'+
 		               '</div>'+
 	               '</a>'+
 				'</li>'+

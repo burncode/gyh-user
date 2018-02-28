@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -9,188 +10,227 @@
 		<title>醫生詳情</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<link rel="stylesheet" href="../css/pullRefresh.css" />
 		<link rel="stylesheet" href="../css/iconfont.css" />
-		<link rel="stylesheet" href="../css/imagePreview.css" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
 		<link rel="stylesheet" href="../css/doctor/doctor_detail.css" />
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">醫生詳情</h1>
 		</header>
-		<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen mui-scroll-wrapper">
-			<div id="cases" class="mui-scroll">	
-				<div class="doctor-introduce">
-					<div class="introduce-info">
-						<img src="../images/default-doctor.png" id="docImg" data-preview-src='' data-preview-group='1'/>
-						<div><span class="doctor-name" id="nickname"></span>&nbsp;&nbsp;( <span id="docLevel"></span> )</div>
-						<div><span id="hospitalName"></span>( <span id="officeName"></span> )</div>
-					</div>
+		<div id="app">
+
+			<div class="doctor-introduce">
+				<div class="introduce-info">
+					<img :src="avatar" />
+					<div>{{nickname}}&nbsp;&nbsp;( {{docLevel}} )</div>
+					<div>{{hospitalName}} ( {{officeName}} )</div>
 				</div>
-				<div class="introduce-info-btn">
-					<div id="segmentedControl" class="mui-segmented-control">
-						<a id="homepage" class="mui-control-item mui-active" href="#homepage-list">主頁</a>
-						<a class="mui-control-item" id="commentBtn" href="#comment-list">評價</a>
-					</div>
+			</div>
+			<div class="introduce-info-btn">
+				<div class="mui-segmented-control">
+					<a class="mui-control-item mui-active" href="#homepage-list">主頁</a>
+					<a class="mui-control-item" href="#comment-list" @tap="getEvaluate()">評價</a>
 				</div>
 				<div id="homepage-list" class="homepage-list mui-control-content mui-active">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
-							<div id="ser" class="mui-media-body homepage-content">
-								<dl id="message_question_answer.html">
+							<div class="mui-media-body homepage-content">
+								<dl @tap="openView('message_question_answer.html')">
 									<dt><img src="../images/note2.png"></dt>
-									<dd>留言問答</dd>
+									<dd class="font-color-666 font-size-12">留言問答</dd>
 								</dl>
-								<dl id="online_preliminary.html">
+								<dl @tap="openView('online_preliminary.html')">
 									<dt><img src="../images/online2.png"></dt>
-									<dd>在線問診</dd>
+									<dd class="font-color-666 font-size-12">在線問診</dd>
 								</dl>
-								<dl id="order_register.html">
+								<dl @tap="openView('order_register.html')">
 									<dt><img src="../images/appointment.png"></dt>
-									<dd>預約挂號</dd>
+									<dd class="font-color-666 font-size-12">預約挂號</dd>
 								</dl>
 							</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="homepage-title">簡介</div>
-							<div class="mui-media-body homepage-content wrap-content" id="summary"></div>
+							<div class="font-size-14 font-color-666 wrap-content">{{summary}}</div>
 						</li>
 						<li class="mui-table-view-cell">
 							<div class="homepage-title">诊所時間</div>
-							<div class="mui-media-body homepage-content wrap-content" id="goodAt"></div>
+							<div class="font-size-14 font-color-666 wrap-content">{{goodAt}}</div>
 						</li>
 					</ul>
 				</div>
 				<div id="comment-list" class="comment-list mui-control-content">
-					<ul id="comment" class="mui-table-view"></ul>
+					<div id="mescroll" class="mescroll">
+						<ul id="dataList" class="mui-table-view">
+							<li class='mui-table-view-cell mui-media' v-for="item in evaluate">
+								<img class='mui-media-object mui-pull-left' :src='item.avatar'>
+								<div class='mui-media-body'>{{item.username}}<span class='font-color-999 font-size-12 mui-pull-right'>{{item.evaluateTime}}</span>
+									<p class='mui-ellipsis-2 font-color-666'>{{item.content}}</p>
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
-	<script src="../js/mui.pullToRefresh.min.js"></script>
-	<script src="../js/mui.pullToRefresh.material.min.js"></script>
-	<script src="../js/mui.zoom.js"></script>
-	<script src="../js/mui.previewimage.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
 	<script src="../js/common.js"></script>
 	<script>
-		(function(_,doc,u,w){
-			_.init({swipeBack:false}),_(".mui-scroll-wrapper").scroll();
-			var list = doc.getElementById('comment');
-			var avatar = null,nickname = null,docLevel = null,hospitalName = null,officeName = null,summary = null,goodAt = null;
-			var pdata={}, li = null,docId = null,detail = null,_pull = null;
-			var page = 0;
-			var imgserver = null;
-			_.plusReady(function(){
-				_('#mui-scroll-wrapper').scroll().scrollTo(0,0,100);
-				doc.getElementById("homepage").className = "mui-control-item mui-active";
-				doc.getElementById("commentBtn").className = "mui-control-item";
-				doc.getElementById("comment-list").className = "comment-list mui-control-content";
-				doc.getElementById("homepage-list").className = "homepage-list mui-control-content mui-active";
+		(function(_, doc, u, w) {
+			_.init();
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					mescroll: null,
+					nickname: '',
+					avatar: '../images/default-doctor.png',
+					docLevel: '',
+					hospitalName: '',
+					officeName: '',
+					summary: '',
+					goodAt: '',
+					evaluate: []
+				},
+				mounted: function() {
+
+				},
+				methods: {
+					getEvaluate: function() {
+						if(!vm.mescroll) {
+							vm.mescroll = new MeScroll("mescroll", {
+								up: {
+									callback: vm.upCallback, //上拉回调
+									page: {
+										size: 5
+									},
+									toTop: { //配置回到顶部按钮
+										src: "../img/mescroll-totop.png"
+									},
+									empty: { //配置列表无任何数据的提示
+										warpId: "dataList",
+										tip: nodataHtmlInfo
+									}
+								}
+							});
+						}
+					},
+					upCallback: function(page) {
+						//联网加载数据
+						vm.getListDataFromNet(page.num, page.size);
+					},
+					getListDataFromNet: function(pageNum, pageSize) {
+						util.mypost('doctor/getDoctorDetail', {
+							offset: (pageNum - 1) * pageSize,
+							limit: pageSize,
+							docId: docId
+						}, false, function(data) {
+							if(data.code == 0) {
+								data = data.data.evaluate || [];
+								data = convert(data);
+								if(pageNum == 1) vm.evaluate = [];
+								vm.evaluate = vm.evaluate.concat(data);
+								vm.mescroll.endSuccess(data.length);
+							} else {
+								_.toast(data.msg || '請求失敗');
+								vm.mescroll.endErr();
+							}
+						}, function() {
+							vm.mescroll.endErr();
+						})
+					},
+					openView: function(web) {
+						if(!w.getUser()) {
+							w.openView("../userLogin.html");
+						} else {
+							w.openView(web, {type: 2,docId: docId});
+						}
+					}
+				}
+			})
+
+			var docId = null;
+			_.plusReady(function() {
 				docId = plus.webview.currentWebview().docId;
-				pdata = {
-					docId:docId
-				}
-				u.mypost("doctor/getDoctorDetail",pdata,true,function(data){
-					imgserver = data.data.imgServer;
-					if(data.code == 0){
+				u.mypost("doctor/getDoctorDetail", {docId: docId}, true, function(data) {
+					if(data.code == 0) {
 						doctorData = data.data.doctor[0];
-						avatar = doctorData?doctorData.avatar:'';
-						if(avatar == ""){
-							avatar = "../images/default-doctor.png";
-						}else{
-							avatar = imgserver+avatar;
-						}
-						nickname = doctorData?doctorData.nickname:'';
-						docLevel = doctorData?doctorData.docLevel:'';
-						hospitalName = doctorData?doctorData.hospitalName:'';
-						officeName = doctorData?doctorData.officeName:'';
-						summary = doctorData?doctorData.summary:'';
-						goodAt = doctorData?doctorData.goodAt:'';
-						doc.getElementById("docImg").src = avatar;
-						doc.getElementById("nickname").innerHTML = nickname;
-						doc.getElementById("docLevel").innerHTML = docLevel || '无';
-						doc.getElementById("hospitalName").innerHTML = hospitalName;
-						doc.getElementById("officeName").innerHTML = officeName;
-						doc.getElementById("summary").innerHTML = summary || '暂无簡介';
-						doc.getElementById("goodAt").innerHTML = goodAt || '暂无';
-					}else{
-						detail = doctorData?doctorData.detail:nodataHtmlInfo;
+						vm.nickname = doctorData.nickname ? doctorData.nickname : '医生';
+						vm.docLevel = doctorData.docLevel ? doctorData.docLevel : '医生';
+						vm.avatar = doctorData.avatar ? imgServer + doctorData.avatar : '../images/default-doctor.png';
+						vm.hospitalName = doctorData.hospitalName ? doctorData.hospitalName : '';
+						vm.officeName = doctorData.officeName ? doctorData.officeName : '';
+						vm.summary = doctorData.summary ? doctorData.summary : '暂无簡介';
+						vm.goodAt = doctorData.goodAt ? doctorData.goodAt : '暂无';
+					} else {
+						detail = doctorData ? doctorData.detail : nodataHtmlInfo;
 					}
-				},myerror);
+				}, myerror);
 			})
-			doc.getElementById("homepage").addEventListener("tap",function(){
-				_('#mui-scroll-wrapper').scroll().scrollTo(0,0,100);
-			});
-			//評價
-			doc.getElementById("commentBtn").addEventListener("tap",function(){
-				_('#mui-scroll-wrapper').scroll().scrollTo(0,0,100);
-				//初始化显示5条数据
-				pdata.offset = 0;
-				pdata.limit = 5;
-				_pull = _('#cases').pullToRefresh({
-					down: {
-						callback: function() {
-							pdata.offset = 0;
-							u.mypost('doctor/getDoctorDetail',pdata, false, function(data) {
-								_pull.endPullDownToRefresh((data.data.evaluate || []).length == 5);
-								if (data.code == 0) {
-									page = 1;
-									u.emptyHtml(list), commentList(data.data || []);
-								}else{
-									_.toast(data.msg || '服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullDownToRefresh();
-							});
-						}
-					},up: {
-						callback: function() {
-							pdata.offset=(pdata.limit)*page;
-							u.mypost('doctor/getDoctorDetail',pdata, false, function(data) {
-								_pull.endPullUpToRefresh((data.data.evaluate || []).length < 5);
-								if (data.code == 0) {
-									page++;
-									commentList(data.data || []);
-								} else {
-									_.toast(data.msg ||'服務器異常');
-								}
-							}, function() {
-								_.toast('獲取列表失敗'), _pull.endPullUpToRefresh(true);
-							});
-						},auto: true
-					}
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						username: item.username,
+						content: item.content,
+						evaluateTime: dateUtils.format(item.evaluateTime),
+						avatar: imgServer + item.avatar,
+					});
 				});
-			});
-			//評論列表
-			function commentList(data){
-				_.each(data.evaluate,function(i,obj){
-					li = doc.createElement("li");
-					li.id = obj.docId;
-					li.innerHTML = "<li class='mui-table-view-cell mui-media' style='border-bottom:1px solid #dedede;'>"+
-										"<img class='mui-media-object mui-pull-left' src='"+imgserver+obj.avatar+"'>"+
-										"<div class='mui-media-body'>"+
-											""+obj.username+"<span class='comment-date'>"+obj.evaluateTime+"</span>"+
-											"<p class='mui-ellipsis hos-img'>"+obj.content+"</p>"+
-										"</div>"+
-									"</li>";
-					list.appendChild(li);
-				})
+				return newItems;
 			}
-			//留言問答---在線問診---預約挂號 跳转
-			_("#ser").on("tap","dl",function(e){
-				if(!w.getUser()){
-					w.openView("../userLogin.html");
-				}else{
-					var ex = {
-						type:2,
-						docId:docId
+
+			/**
+			 * 格式化时间的辅助类，将一个时间转换成x小时前、y天前等
+			 */
+			var dateUtils = {
+				UNITS: {
+					'年': 31557600000,
+					'月': 2629800000,
+					'天': 86400000,
+					'小时': 3600000,
+					'分钟': 60000,
+					'秒': 1000
+				},
+				humanize: function(milliseconds) {
+					var humanize = '';
+					mui.each(this.UNITS, function(unit, value) {
+						if(milliseconds >= value) {
+							humanize = Math.floor(milliseconds / value) + unit + '前';
+							return false;
+						}
+						return true;
+					});
+					return humanize || '刚刚';
+				},
+				format: function(dateStr) {
+					var date = this.parse(dateStr)
+					var diff = Date.now() - date.getTime();
+					if(diff < this.UNITS['天']) {
+						return this.humanize(diff);
 					}
-					w.openView(this.id,ex);
+
+					var _format = function(number) {
+						return(number < 10 ? ('0' + number) : number);
+					};
+					return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay());
+				},
+				parse: function(str) { //将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+					var a = str.split(/[^0-9]/);
+					return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
 				}
-			})
-			_.previewImage();
-		})(mui,document,util,window)
+			};
+		})(mui, document, util, window)
 	</script>
+
 </html>

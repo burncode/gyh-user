@@ -41,7 +41,6 @@
 				var type = cweb.type;
 				var targetWeb = '';
 				plus.webview.getWebviewById('pay').close('none');
-				console.log('succeed type====' + type);
 				var vm = new Vue({
 					el: '.mui-content',
 					data: {
@@ -51,7 +50,7 @@
 						switch(type) {
 							case 3: //基因检测服务
 								targetWeb = "../my_center/buy_record.html";
-								this.btnContentHtml = '查看我的订单';
+								this.btnContentHtml = '查看我的訂單';
 								break;
 							case 4: //在線問診
 								targetWeb = "../my_center/myInterview.html";
@@ -65,6 +64,11 @@
 								targetWeb = "../my_center/my_appoint.html";
 								this.btnContentHtml = '查看我的預約';
 								break;
+						}
+						
+						if(w.getItem('role') == '代理人') {
+							targetWeb = "../my_center/buy_record.html";
+							this.btnContentHtml = '查看我的訂單';
 						}
 					},
 					methods: {

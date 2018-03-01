@@ -127,7 +127,7 @@
 				pdata.nid = nid;
 				privateToken = w.getUser();
 				pdata.privateToken = privateToken;
-				u.mypost("news/getNewsDetail", pdata, false, function(data) {
+				u.mypost("news/getNewsDetail", pdata, true, function(data) {
 					if(data.code == 0) {
 						href = data.data.shareLink;
 						newsData = data.data.news;

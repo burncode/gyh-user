@@ -202,6 +202,7 @@
 		   	function checkUpdate(wgtVer){
 		       	u.mypost("api/checkVersion",{clientVersion:wgtVer,pos:1},false,function(data){
 		       		plus.nativeUI.closeWaiting();
+		       		console.log('api/checkVersion========' + JSON.stringify(data));
 			        if(parseInt(data.code) == 0){
 			        	var lastVer = data.data.version || '1.0.0';
 			        	wgtVer = wgtVer && wgtVer.substring(0,wgtVer.lastIndexOf('.'));
@@ -211,7 +212,6 @@
 			                function(event){
 			                    if(event.index ==0){
 			                    	plus.runtime.openURL('http://a.app.qq.com/o/simple.jsp?pkgname=io.dcloud.H569ED84F',function(err){
-					        			console.log("open err==="+JSON.stringify(err));
 					        		})
 			                    }                        
 			                } ,'系统消息',['馬上下載','下次再說']); 

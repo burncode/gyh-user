@@ -54,12 +54,11 @@
 	<script>
 		(function(_,doc,w,u){
 			_.init();
-			var pdata = {},privateToken = null,walletData = null,ways = null,self = null,type = null,targetWeb = null,money = null,balance = null,orderType = null,orderId = null;
+			var pdata = {},privateToken = null,walletData = null,type = null,targetWeb = null,money = null,balance = null,orderType = null,orderId = null;
 			var payWay = 1,pays={},channel = null,currentPage = null;
 			_.plusReady(function(){
 				currentPage = plus.webview.currentWebview();
 				type = currentPage.type?currentPage.type:3;
-				console.log('payweb type====' + type);
 				orderType = currentPage.order_type;
 				orderId = currentPage.orderId;
 				money = currentPage.fee?currentPage.fee:'0.00';
@@ -222,6 +221,7 @@
 			
 			
 			_(doc).on("tap",".mui-table-view-cell",function(){
+				var ways = null,self = null;
 				self = this;
 				ways = doc.querySelectorAll(".choose-pay-way");
 				if(ways && ways.length > 0){

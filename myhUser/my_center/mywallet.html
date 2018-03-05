@@ -5,7 +5,6 @@
 		<title>我的錢包</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
-		<link rel="stylesheet" href="../css/my.css" />
 		<link rel="stylesheet" href="../css/center/mywallet.css" />
 	</head>
 	<body>
@@ -18,20 +17,20 @@
 				<div class="wallet-zh">账户余額</div>
 				<div class="wallet-ye"><span>¥</span><span id="balance"></span></div>
 			</div>
-			<ul class="width-line mui-table-view mui-table-view-chevron" style="margin-top: 10px;">							
+			<ul class="mui-table-view mui-table-view-chevron">							
 				<li class="mui-table-view-cell" id="cz">
 					<div class="mui-navigate-right" >
-						<span class="mui-pull-left">充值</span>
+						<span class="mui-pull-left font-size-14">充值</span>
 					</div>
 				</li>
 				<li class="mui-table-view-cell" id="tx">
 					<div class="mui-navigate-right" >
-						<span class="mui-pull-left">提現</span>
+						<span class="mui-pull-left font-size-14">提現</span>
 					</div>
 				</li>
 				<li class="mui-table-view-cell" id="jl">
 					<div class="mui-navigate-right" >
-						<span class="mui-pull-left">交易記錄</span>
+						<span class="mui-pull-left font-size-14">交易記錄</span>
 					</div>
 				</li>
 			</ul>
@@ -40,31 +39,23 @@
 	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript" src="../js/common.js" ></script>
 	<script type="text/javascript">
-		mui.init({
-			swipeBack: false //启用右滑关闭功能
-		});
 		(function(_,doc,u,w){
-			_.init({swipeBack: false});
-			var pdata = {};
+			_.init();
 			var money = null;
-			var privateToken = null;
-			var walletData = null;
-			_('.width-line').on('tap','#cz',function(){
-	      		w.openView('recharge.html')
-	    	})
-			_('.width-line').on('tap','#tx',function(){	      		
-	      		w.openView('wallet_cash.html')
-	    	})
-			_('.width-line').on('tap','#jl',function(){	      		
-	      		w.openView('records.html')
-	    	})
+			
+			document.getElementById("cz").addEventListener('tap',function(){
+				w.openView('recharge.html')
+			})
+			document.getElementById("tx").addEventListener('tap',function(){
+				w.openView('wallet_cash.html')
+			})
+			document.getElementById("jl").addEventListener('tap',function(){
+				w.openView('records.html')
+			})
 			_.plusReady(function(){
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-				u.mypost("user_center/myMoneyIndex",pdata,false,function(data){
+				u.mypost("user_center/myMoneyIndex",{privateToken:w.getUser()},false,function(data){
 					if(data.code == 0){
-						walletData = data.data[0][0];
-						money = walletData?walletData.amount:'0.00';
+						money = data.data[0][0].amount || '0.00';
 						doc.getElementById("balance").textContent = money;
 						w.setItem("amount",money);
 					}else if(data.code == 500 && "未登錄" == data.msg){
@@ -76,14 +67,9 @@
 			});
 		})(mui,document,util,window)
 		function walletData(){
-			var pdata = {},money = null,privateToken = null,walletData = null;
-			privateToken = window.getItem("privateToken");
-			pdata.privateToken = privateToken;
-			util.mypost("user_center/myMoneyIndex",pdata,true,function(data){
+			util.mypost("user_center/myMoneyIndex",{privateToken:w.getUser()},true,function(data){
 				if(data.code == 0){
-					walletData = data.data[0][0];
-					money = walletData?walletData.amount:'0.00';
-					document.getElementById("balance").textContent = money;
+					document.getElementById("balance").textContent = data.data[0][0].amount || '0.00';
 				}
 			},myerror)
 		}

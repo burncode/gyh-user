@@ -202,7 +202,6 @@
 		   	function checkUpdate(wgtVer){
 		       	u.mypost("api/checkVersion",{clientVersion:wgtVer,pos:1},false,function(data){
 		       		plus.nativeUI.closeWaiting();
-		       		console.log('api/checkVersion========' + JSON.stringify(data));
 			        if(parseInt(data.code) == 0){
 			        	var lastVer = data.data.version || '1.0.0';
 			        	wgtVer = wgtVer && wgtVer.substring(0,wgtVer.lastIndexOf('.'));

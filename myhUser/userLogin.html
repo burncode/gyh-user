@@ -104,19 +104,6 @@
 			var authBtns = ['weixin','qq'],auths = {},oauthArea = doc.querySelector('.oauth-area');
 			var unionid = null;
 			_.plusReady(function(){
-				//检查更新
-			    if(sessionStorage.getItem('upgrade') !='1'){
-	                plus.runtime.getProperty(plus.runtime.appid,function(inf){ 
-	                    checkUpdate(inf.version);//跳转第三方平台更新违反goole市场政策
-	                    sessionStorage.setItem('upgrade','1');
-	                });
-	            }
-				if(w.getUser()){
-					w.openView("tabbar.html");
-					setTimeout(function(){
-						u.close("userLogin.html");
-					},10);
-				}
 				plus.oauth.getServices(function(services) {
 					for (var i in services) {
 						var service = services[i];
@@ -198,60 +185,6 @@
 			})
 			//连续双击退出系统
 			w.doubleTapExit();
-			//需要传递当前的版本
-		   	function checkUpdate(wgtVer){
-		       	u.mypost("api/checkVersion",{clientVersion:wgtVer,pos:1},false,function(data){
-		       		plus.nativeUI.closeWaiting();
-			        if(parseInt(data.code) == 0){
-			        	var lastVer = data.data.version || '1.0.0';
-			        	wgtVer = wgtVer && wgtVer.substring(0,wgtVer.lastIndexOf('.'));
-			        	lastVer = lastVer && lastVer.substring(0,lastVer.lastIndexOf('.'));
-			        	if(Number(lastVer) > Number(wgtVer)){//如果最新的大版本号较大 需要下载新安装包
-			        		plus.nativeUI.confirm("檢查到當前版本有更新，下載最新安裝包？",
-			                function(event){
-			                    if(event.index ==0){
-			                    	plus.runtime.openURL('http://a.app.qq.com/o/simple.jsp?pkgname=io.dcloud.H569ED84F',function(err){
-					        		})
-			                    }                        
-			                } ,'系统消息',['馬上下載','下次再說']); 
-			        	}else{
-			        		plus.nativeUI.confirm("检查到当前版本有更新，在线升级？",
-			                function(event){
-			                    if(event.index ==0){
-			                        downWgt(data.data.downloadURL); //下载更新版的地址
-			                    }                        
-			                } ,'系统消息',['馬上升級','下次再說']); 
-			        	}
-			        }
-				},function(){
-				    _.toast('檢測更新失敗！') ;
-				});
-		   	}
-		   	// 下载wgt文件
-		   	function downWgt(wgtUrl){
-		       	plus.nativeUI.showWaiting("下載更新文件...");
-		       	plus.downloader.createDownload(wgtUrl,{filename:"_doc/update/"}, function(d,status){
-		           	if (status == 200) {
-		               	installWgt(d.filename); // 安装wgt包
-		           	} else {
-		               	plus.nativeUI.alert("下載更新失敗！");
-		           	}
-		           	plus.nativeUI.closeWaiting();
-		       	}).start();
-		   	}
-		   	// 更新应用资源  
-		   	function installWgt(path){
-		       	plus.nativeUI.showWaiting("安裝更新文件...");
-		       	plus.runtime.install(path,{},function(){
-		           	plus.nativeUI.closeWaiting();        
-		           	plus.nativeUI.alert("應用資源更新完成！",function(){
-		               	plus.runtime.restart();
-		           	});
-		       	},function(e){
-		           	plus.nativeUI.closeWaiting();        
-		           	plus.nativeUI.alert("安裝更新文件失敗["+e.code+"]："+e.message);
-		       	});
-		   	}
 		})(mui,document,window,util)
 	</script>
 </html>

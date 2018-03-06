@@ -73,7 +73,7 @@
 			})
 			payObj.addEventListener('tap',function(){
 				if(!w.getUser()){
-					u.goLogin();
+					w.openView("../userLogin.html");
 				}else{
 					w.openView("vaccine_submit.html",{vaccinumId:vaccinumId,name:name,price:price,thumbnailImg:thumbnailImg});
 				}
@@ -81,7 +81,7 @@
 			//聯系客服
 			doc.getElementById("service").addEventListener('tap',function(){
 				if(!w.getUser()){
-					u.goLogin();
+					w.openView("../userLogin.html");
 				}else{
 					w.openView("../my_center/contactService.html");
 				}

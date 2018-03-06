@@ -182,7 +182,7 @@
 
 			function toCollection() {
 				if(!w.getUser()) {
-					w.goLogin();
+					w.openView("../userLogin.html");
 				} else {
 					//取消收藏
 					if(vm.isColl) {

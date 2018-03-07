@@ -61,6 +61,7 @@
 							var self = this;
 							getListDataFromNet(page.num, page.size, function(data) {
 								if(data.code == 0) {
+									console.log(JSON.stringify(data.data[0]));
 									data = convert(data.data[0] || []);
 									if(page.num == 1) self.items = [];
 									self.items = self.items.concat(data);
@@ -106,7 +107,7 @@
 						hosAddr: item.hosAddr,
 						contacts: item.contacts,
 						appointTel:item.appointTel,
-						appointTime:item.appointYM + (Number(item.appointDay) < 10?'0'+item.appointDay:item.appointDay) + ' ' + item.startTime+'-'+item.endTime,
+						appointTime:(item.appointYM.substr(0,4))+ '/'+(Number(item.appointYM.substr(4,2) || 1)) + '/'+item.appointDay + ' ' + item.startTime+'-'+item.endTime,
 						userRemark:item.userRemark
 					});
 				});

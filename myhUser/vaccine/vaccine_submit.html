@@ -46,32 +46,27 @@
 			<div class="mui-card">
 				<ul id="divForm" class="mui-table-view">
 					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">刪除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<form class="mui-input-group">
-								<div class="mui-input-row">
-									<label>到診人</label>
-									<input type="text" maxlength="10" class="mui-input-clear name" placeholder="請輸入到診人">
-								</div>
-								<div class="mui-input-row">
-									<label>聯繫電話</label>
-									<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="請輸入聯繫電話" onblur="checkPhone(this.value)">
-								</div>
-								<div class="mui-input-row">
-									<label>身份證號</label>
-									<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到診人身份證號" onblur="checkCardId(this.value)">
-								</div>
-								<div class="mui-input-row">
-									<label>預約時間</label>
-									<span class="mui-navigate-right">
-										<input type="text" class="orderDate" placeholder="請選擇日期" readonly="readonly">
-										<input type="hidden" class="appointTimeId" value=""></span>
-									</span>
-								</div>
-							</form>
-						</div>
+						<form class="mui-input-group">
+							<div class="mui-input-row">
+								<label>到診人</label>
+								<input type="text" maxlength="10" class="mui-input-clear name" placeholder="請輸入到診人">
+							</div>
+							<div class="mui-input-row">
+								<label>聯繫電話</label>
+								<input type="tel" maxlength="11" class="mui-input-clear mobile" placeholder="請輸入聯繫電話" onblur="checkPhone(this.value)">
+							</div>
+							<div class="mui-input-row">
+								<label>身份證號</label>
+								<input type="tel" class="mui-input-clear identity" maxlength="20" placeholder="到診人身份證號" onblur="checkCardId(this.value)">
+							</div>
+							<div class="mui-input-row">
+								<label>預約時間</label>
+								<span class="mui-navigate-right">
+									<input type="text" class="orderDate" placeholder="請選擇日期" readonly="readonly">
+									<input type="hidden" class="appointTimeId" value=""></span>
+								</span>
+							</div>
+						</form>
 					</li>
 				</ul>
 			</div>
@@ -115,8 +110,8 @@
 			var timeQuantumUlObj = document.getElementById("timeQuantumUl"), //时间段ul
 				appointDayObj = document.getElementById("appointDay");
 				
-			
-			getAppointTimeByYear();//获取某年的預約额度
+			var myCalendar = new SimpleCalendar('#calendar');
+//			getAppointTimeByYear();//获取某年的預約额度
 			
 			//页面初始进来
 			w.addEventListener("event", function(e) {
@@ -264,9 +259,9 @@
 
 			//点击选择日期
 			_('#divForm').on('tap', '.orderDate', function() {
+				getAppointTimeByYear();
 				thisOrderDate = this;
 				thisAppointTimeId = this.parentNode.children[1];
-				_('#time').popover('toggle');
 			})
 
 			//点击选择时间段
@@ -274,7 +269,7 @@
 				if(hasClass(this, "unuse")) {
 					_.toast('該時間段預約額度已滿');
 				} else {
-					thisOrderDate.value = appointDayObj.innerHTML + '-' + this.querySelector('p').innerHTML;
+					thisOrderDate.value = ((appointDayObj.innerHTML).substr(0,4))+'/'+ Number((appointDayObj.innerHTML).substr(4,2))+'/' +Number((appointDayObj.innerHTML).substr(6,2))+ ' ' + this.querySelector('p').innerHTML;
 					thisAppointTimeId.value = this.id;
 					_('#timeQuantum').popover('toggle');
 				}
@@ -295,14 +290,14 @@
 			});
 			
 			//通过年份得到預約時間
-			function getAppointTimeByYear(year) {
-				var myCalendar = new SimpleCalendar('#calendar');
+			function getAppointTimeByYear() {
 				u.mypost("appointMap/getAppointTimeByYear", {year: myCalendar.tyear}, false, function(data) {
 					if(data.code == 0) {
 						//格式化預約日期
 						var markObj = {};
 						markObj = formatDate(data.data[0],myCalendar.tmonth,myCalendar.tday);
 						myCalendar.addMark(markObj);
+						_('#time').popover('toggle');
 					}else{
 						_.toast(data.msg || '獲取資料異常')
 					}

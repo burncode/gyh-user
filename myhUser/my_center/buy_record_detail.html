@@ -114,8 +114,8 @@
 						name: item.name,
 						mobile: item.mobile,
 						identity:item.identity.substr(0,4)+'xxxxxxxxxx'+item.identity.substr(14,4),
-						appointYM: item.appointData.appointYM,
-						appointDay:Number(item.appointData.appointDay) < 10?'0'+item.appointData.appointDay:item.appointData.appointDay,
+						appointYM: item.appointData.appointYM.substr(0,4)+'/'+Number(item.appointData.appointYM.substr(4,2))+'/',
+						appointDay:Number(item.appointData.appointDay),
 						startTime:item.appointData.startTime,
 						endTime:item.appointData.endTime
 					});

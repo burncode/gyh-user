@@ -17,7 +17,7 @@
 		<div class="mui-content">
 			<div class="wallet-row">
 				<div class="wallet-zh">账户余額</div>
-				<div class="wallet-ye"><span>¥</span><span id="balance"></span></div>
+				<div class="wallet-ye"><span>¥</span><span id="balance">0.00</span></div>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell" id="cz">
@@ -72,7 +72,7 @@
 
 		function walletData() {
 			util.mypost("user_center/myMoneyIndex", {
-				privateToken: w.getUser()
+				privateToken: window.getUser()
 			}, true, function(data) {
 				if(data.code == 0) {
 					document.getElementById("balance").textContent = data.data[0][0].amount || '0.00';

@@ -190,7 +190,7 @@
 				if(inputItmems && inputItmems.length > 0) {
 					for(var i = 0; i < inputItmems.length; i++) {
 						if(u.isNull(inputItmems[i].value)) {
-							_.toast('請補充完整到診人資訊');
+							_.toast('請補充完整到診人資料');
 							return;
 						}
 					}
@@ -297,6 +297,8 @@
 						var markObj = {};
 						markObj = formatDate(data.data[0],myCalendar.tmonth,myCalendar.tday);
 						myCalendar.addMark(markObj);
+        				monthObj.value = myCalendar.tmonth;
+        				myCalendar.update();
 						_('#time').popover('toggle');
 					}else{
 						_.toast(data.msg || '獲取資料異常')

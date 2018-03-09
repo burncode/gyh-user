@@ -34,6 +34,13 @@
 							<span class="mui-pull-right choice-img choose-pay-way on"></span>
 						</a>
 					</li>
+					<li id="1" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<img class="mui-media-object mui-pull-left" src="../images/weixin.png">
+							<div class="mui-media-body mui-pull-left">微信支付</div>
+							<span class="mui-pull-right choice-img choose-pay-way"></span>
+						</a>
+					</li>
 					<li id="2" class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
@@ -97,6 +104,8 @@
 						},myerror);
 					}else if(payWay==2){//支付宝
 						pay('alipay');
+					}else if(payWay==1){//微信支付
+						pay('wxpay');
 					}
 				});
 				//忘記支付密碼
@@ -157,6 +166,8 @@
 		    	// 从服务器请求支付订单
 			    if(id=='alipay'){
 			    	pdata.payType = 2;
+			    }else if(id=='wxpay'){
+			    	pdata.payType = 1;
 			    }else{
 			        _.toast("不支持此支付通道！",null,"港醫匯");
 			        return;

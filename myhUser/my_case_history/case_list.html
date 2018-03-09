@@ -41,13 +41,12 @@
 			<div id="mescroll" class="mescroll">
 				<ul id="dataList" class="mui-table-view">
 					<div class='case-item' v-for="item in items" @tap="openDetail(item.illId)">
-						<div class='case-info'>
-							<span class='mui-ellipsis main-font-color font-size-16'>{{item.illName}}</span>
-						</div>
+						<p class='case-info mui-ellipsis'>
+							<span class='main-font-color font-size-16'>{{item.illName}}</span>
+							<span class="mui-pull-right font-color-666 font-size-14">年齡：{{item.age}} 性别：{{item.sex}}</span>
+						</p>
 						<div class='font-size-14'>
 							<p>就診人：{{item.realname}}</p>
-							<p>年 齡：{{item.age}}</p>
-							<p>性 别：{{item.sex}}</p>
 							<p>過 敏 史：{{item.allergyHistory}}</p>
 							<p>诊 断：{{item.result}}</p>
 							<p>分 期：{{item.stageType}}</p>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -8,265 +9,165 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>病曆詳情</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
-    	<link rel="stylesheet" href="../css/common.css" />
-    	<link rel="stylesheet" href="../css/case.css" />
-    	<link rel="stylesheet" href="../css/imagePreview.css" />
-    	<link rel="stylesheet" href="../css/center/case_detail.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/case.css" />
+		<link rel="stylesheet" href="../css/imagePreview.css" />
+		<link rel="stylesheet" href="../css/center/case_detail.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
 	</head>
+
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">病曆詳情</h1>
-			<a class="mui-btn mui-btn-link mui-pull-right mui-btn-blue" id="collect"><img src="../images/release.png"></a>
-		</header>
-		<div class="mui-content">
-			<div class="case-item" id="case-item">
-				<div class="case-info"><div class="mui-ellipsis caseName" id="illName"></div><div class="sex">性别：<span id="sex"></span></div><div class="age">年齡：<span id="age"></span></div></div>
-				<div class="case-detail">
-					<div class="case-detail-item"><div class="detail-title">就診人：</div><span id="realName"></span></div>
-					<div class="case-detail-item"><div class="detail-title">過敏史：</div><span id="allergyHistory"></span></div>
-					<div class="case-detail-item"><div class="detail-title">诊断：</div><span id="result"></span></div>
-					<div class="case-detail-item"><div class="detail-title">分期：</div><span id="stages"></span></div>
-					<div class="case-detail-item"><div class="detail-title">基本病情：</div><div id="situation" class="detail-content"></div></div>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">病曆詳情</h1>
+				<a class="mui-btn mui-btn-link mui-pull-right" @tap="openView()">编辑</a>
+			</header>
+			<div class="mui-content">
+				<div class="case-item" id="case-item">
+					<p class='case-info mui-ellipsis'>
+						<span class='main-font-color font-size-16'>{{illName}}</span>
+						<span class="mui-pull-right font-color-666 font-size-14">年齡：{{age}} 性别：{{sex}}</span>
+					</p>
+					<div class='font-size-14'>
+						<p>就診人：{{realname}}</p>
+						<p>過 敏 史：{{allergyHistory}}</p>
+						<p>诊 断：{{result}}</p>
+						<p>分 期：{{stages}}</p>
+						<p>基本病情：{{situation}}</p>
+					</div>
+				</div>
+				<div class="treatment font-size-16">就診記錄<span class="mui-pull-right main-font-color" @tap="delCase()">刪除病曆</span></div>
+				<div class="treatment-detail">
+					<div v-if="remarks.length == 0 " class='noContent'><div class='mui-icon iconfont icon-comiiszanwushuju'></div><div>暫無記錄</div></div>
+					<yd-timeline v-else>
+						<yd-timeline-item v-for="item in remarks">
+							<p>{{item.visitDate}}<span class="step">{{item.stage}}</span></p>
+							<p>{{item.content}}</p>
+							<img v-for="img in item.imgArr" :src="img" data-preview-src='' data-preview-group='1'></img>
+						</yd-timeline-item>
+					</yd-timeline>
 				</div>
 			</div>
-			<div class="treatment">就诊记录<span id="delCase" class="mui-pull-right main-font-color">刪除病曆</span></div>
-			<div class="treatment-detail" id="treatment-detail"></div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script src="../js/mui.zoom.js"></script>
 	<script src="../js/mui.previewimage.js"></script>
 	<script src="../js/common.js"></script>
 	<script>
-		(function(_,doc,u,w){
-			var list = doc.getElementById('treatment-detail');
-			var web = null,pdata = {}, div = null,illId = null;
-			var privateToken = null,data1 = null,imgServer = null;
-			var illName = null,sex = null,age = null,realName = null,allergyHistory = null,result = null,stages = null,situation = null;
-			var stageType = null,sexType = null;
-			_.plusReady(function(e){
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-               	web = plus.webview.currentWebview();//新建页面
-                illId = web.illId;
-                pdata.illId = illId;
-				list.innerHTML = "";
-				u.mypost("medical/getIllnessDetail",pdata,true,function(data){
-					if(data.code == 0){
-						data1 = data.data.ill;//病曆詳情
-						//分期
-						if(data1.stages == 1){
-							stageType = "Ⅰ期";
-						}else if(data1.stages == 2){
-							stageType = "Ⅱ期";
-						}else if(data1.stages == 3){
-							stageType = "Ⅲ期";
-						}else if(data1.stages == 4){
-							stageType = "Ⅳ期";
-						}else if(data1.stages == 0){
-							stageType = "无";
-						}
-						//性别
-						if(data1.sex == 1){
-							sexType = "男";
-						}else if(data1.sex == 2){
-							sexType = "女";
-						}
-						illName = data1.illName?data1.illName:'';
-						sex = sexType;
-						age = data1.age?data1.age:'';
-						realName = data1.realname?data1.realname:'';
-						allergyHistory = data1.allergyHistory?data1.allergyHistory:'';
-						result = data1.result?data1.result:'';
-						stages = stageType;
-						situation = data1.situation?data1.situation:'';
-						imgServer = data1.imgServer?data1.imgServer:'';//图片
-						doc.getElementById("illName").textContent = illName;
-						doc.getElementById("sex").textContent = sex;
-						doc.getElementById("age").textContent = age;
-						doc.getElementById("realName").textContent = realName;
-						doc.getElementById("allergyHistory").textContent = allergyHistory;
-						doc.getElementById("result").textContent = result;
-						doc.getElementById("stages").textContent = stages;
-						doc.getElementById("situation").textContent = situation;
-						var imghtmls = null;
-						//记录詳情
-						var len = data.data.remarks.length;
-						var src = null;
-						_.each(data.data.remarks,function(i,obj){
-							var img1Html = "",img2Html = "",img3Html = "",img4Html = "";
-							div = doc.createElement("div");
-							div.id = obj.illId;
-							if(obj.img){
-								if(obj.img.img0){
-									img1Html += "<img src='"+imgServer+obj.img.img0+"' data-preview-src='' data-preview-group='1'/>";
-								}
-								if(obj.img.img1){
-									img2Html += "<img src='"+imgServer+obj.img.img1+"' data-preview-src='' data-preview-group='1'/>";
-								}
-								if(obj.img.img2){
-									img3Html += "<img src='"+imgServer+obj.img.img2+"' data-preview-src='' data-preview-group='1'/>";
-								}
-								if(obj.img.img3){
-									img4Html += "<img src='"+imgServer+obj.img.img3+"' data-preview-src='' data-preview-group='1'/>";
-								}
-								imghtmls = img1Html+img2Html+img3Html+img4Html;
-							}else{
-								imghtmls = "";
-							}
-							var cls_pro = "process-1";
-							if(0 == i){
-								src = "../images/process-header.png";
-								cls_pro = "process-1";
-							}else if(i < len - 1){
-								src = "../images/process-body.png";
-								cls_pro = "process-2";
-							}else{
-								src = "../images/process-body-last.png";
-								cls_pro = "process-2";
-							}
-							div.className = "fuzhen";
-							div.innerHTML = "<img src='"+src+"' class='"+cls_pro+"'/>"+
-											"<div class='fuzhen-content'>"+
-												"<div class='fuzhen-item'><span class='fuzhen-date'>"+obj.visitDate+"</span><span class='step'>"+obj.stage+"</span></div>"+
-												"<div class='fuzhen-item-con'>"+obj.content+"</div>"+
-												"<div class='mui-content-padded'>"+
-												imghtmls+
-												"</div>"+
-											"</div>";
-							list.appendChild(div);
-						})
-					}else{
-						list.innerHTML = nodataHtmlInfo;
-					}
-				},myerror);
-				doc.getElementById("collect").addEventListener('tap',function(){
-					w.openView("edit_case.html",{illId:illId});
-				});
-				//刪除病曆
-				doc.getElementById("delCase").addEventListener('tap',function(){
-					_.confirm('是否確定刪除该病曆','提示',['是','否'],function(e){
-						if(e.index == 0){
-							u.mypost("medical/delIllness",{privateToken:privateToken,illId:illId},true,function(data){
-								if(data.code == 0){
-									_.toast('刪除成功');
-									plus.webview.getWebviewById('case_list').evalJS('getCaseList()');
-									_.later(function(){
-										_.back();
-									},500)
-								}
-							})
-						}
-					})
-				})
-			})
-			_.previewImage();
-		})(mui,document,util,window)
-		function getCaseDetail(){
-			var list = document.getElementById('treatment-detail');
+		var vm = null;
+		(function(_, doc, u, w) {
+			_.init();
 			var pdata = {};
-			var web = null;
-			var img1Html = "";
-			var img2Html = "";
-			var img3Html = "";
-			var img4Html = "";
-			var imghtmls = null;
-			var stageType = null,sexType = null;
-			privateToken = window.getItem("privateToken");
-			pdata.privateToken = privateToken;
-           	web = plus.webview.currentWebview();//新建页面
-            illId = web.illId;
-            pdata.illId = illId;
-			list.innerHTML = "";//添加病曆记录后清空之前的记录
-			util.mypost("medical/getIllnessDetail",pdata,true,function(data){
-				if(data.code == 0){
-					data1 = data.data.ill;//病曆詳情
-					//分期
-					if(data1.stages == 1){
-						stageType = "Ⅰ期";
-					}else if(data1.stages == 2){
-						stageType = "Ⅱ期";
-					}else if(data1.stages == 3){
-						stageType = "Ⅲ期";
-					}else if(data1.stages == 4){
-						stageType = "Ⅳ期";
-					}else if(data1.stages == 0){
-						stageType = "无";
-					}
-					//性别
-					if(data1.sex == 1){
-						sexType = "男";
-					}else if(data1.sex == 2){
-						sexType = "女";
-					}
-					illName = data1.illName?data1.illName:'';
-					sex = sexType?sexType:1;
-					age = data1.age?data1.age:'';
-					realName = data1.realname?data1.realname:'';
-					allergyHistory = data1.allergyHistory?data1.allergyHistory:'';
-					result = data1.result?data1.result:'';
-					stages = stageType?stageType:'';
-					situation = data1.situation?data1.situation:'';
-					imgServer = data1.imgServer?data1.imgServer:'';//图片
-					document.getElementById("illName").textContent = illName;
-					document.getElementById("sex").textContent = sex;
-					document.getElementById("age").textContent = age;
-					document.getElementById("realName").textContent = realName;
-					document.getElementById("allergyHistory").textContent = allergyHistory;
-					document.getElementById("result").textContent = result;
-					document.getElementById("stages").textContent = stages;
-					document.getElementById("situation").textContent = situation;
-					var img1Html = img2Html = img3Html =null;
-					//记录詳情
-					var len = data.data.remarks.length;
-					var src = null;
-					mui.each(data.data.remarks,function(i,obj){
-						img1Html = "";
-						img2Html = "";
-						img3Html = "";
-						img4Html = "";
-						div = document.createElement("div");
-						div.id = obj.illId;
-						if(obj.img){
-							if(obj.img.img0){
-								img1Html += "<img src='"+imgServer+obj.img.img0+"' data-preview-src='' data-preview-group='1'/>";
-							}
-							if(obj.img.img1){
-								img2Html += "<img src='"+imgServer+obj.img.img1+"' data-preview-src='' data-preview-group='1'/>";
-							}
-							if(obj.img.img2){
-								img3Html += "<img src='"+imgServer+obj.img.img2+"' data-preview-src='' data-preview-group='1'/>";
-							}
-							if(obj.img.img3){
-								img4Html += "<img src='"+imgServer+obj.img.img3+"' data-preview-src='' data-preview-group='1'/>";
-							}
-							imghtmls = img1Html+img2Html+img3Html+img4Html;
-						}else{
-							imghtmls = "";
-						}
-						if(0 == i){
-							src = "../images/process-header.png";
-						}else if(i < len - 1){
-							src = "../images/process-body.png";
-						}else{
-							src = "../images/process-body-last.png";
-						}
-						div.className = "fuzhen";
-						div.innerHTML = "<img src='"+src+"' class='process'/>"+
-										"<div class='fuzhen-content'>"+
-											"<div class='fuzhen-item'><span class='fuzhen-date'>"+obj.visitDate+"</span><span class='step'>"+obj.stage+"</span></div>"+
-											"<div class='fuzhen-item-con'>"+obj.content+"</div>"+
-											"<div class='mui-content-padded'>"+
-											imghtmls+
-											"</div>"+
-										"</div>";
-						list.appendChild(div);
+			vm = new Vue({
+				el: '#app',
+				data: {
+					illId: null,
+					illName: null,
+					realname: null,
+					allergyHistory: null,
+					sex: null,
+					age: null,
+					stages: null,
+					situation: null,
+					result: null,
+					remarks: []
+				},
+				mounted: function() {
+					var self = this;
+					_.plusReady(function(e) {
+						pdata.privateToken = w.getUser();
+						self.illId = plus.webview.currentWebview().illId;
+						pdata.illId = self.illId;
+						self.getData();
 					})
-				}else{
-					list.innerHTML = nodataHtmlInfo;
+				},
+				methods: {
+					getData: function() {
+						u.mypost("medical/getIllnessDetail", pdata, true, function(data) {
+							console.log('case data ======' + JSON.stringify(data));
+							if(data.code == 0) {
+								vm.remarks = convert(data.data.remarks || []);
+								data = data.data.ill; //病曆詳情
+								vm.illName = data.illName;
+								vm.realname = data.realname;
+								vm.age = data.age;
+								vm.sex = 1 == data.sex ? '男' : '女';
+								vm.allergyHistory = data.allergyHistory;
+								vm.result = data.result;
+								if(data.stages == 1) {
+									vm.stages = "Ⅰ期";
+								} else if(data.stages == 2) {
+									vm.stages = "Ⅱ期";
+								} else if(data.stages == 3) {
+									vm.stages = "Ⅲ期";
+								} else if(data.stages == 4) {
+									vm.stages = "Ⅳ期";
+								} else if(data.stages == 0) {
+									vm.stages = "无";
+								}
+								vm.situation = data.situation;
+							}else {
+								_.toast(data.msg || '請求異常')
+							}
+						})
+					},
+					openView: function() {
+						w.openView("edit_case.html", {
+							illId: vm.illId
+						});
+					},
+					delCase: function() {
+						_.confirm('是否確定刪除该病曆', '提示', ['是', '否'], function(e) {
+							if(e.index == 0) {
+								u.mypost("medical/delIllness", {
+									privateToken: privateToken,
+									illId: illId
+								}, true, function(data) {
+									if(data.code == 0) {
+										_.toast('刪除成功');
+										plus.webview.getWebviewById('case_list').evalJS('getCaseList()');
+										_.later(function() {
+											_.back();
+										}, 500)
+									}
+								})
+							}
+						})
+					}
 				}
-			},myerror);
+			})
+			
+			/**
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [],imgArr = [];
+				items.forEach(function(item) {
+					imgArr = [];
+					item.img&&item.img.img1?imgArr.push(imgServer + item.img.img1):'';
+					item.img&&item.img.img2?imgArr.push(imgServer + item.img.img2):'';
+					item.img&&item.img.img3?imgArr.push(imgServer + item.img.img3):'';
+					newItems.push({
+						visitDate: item.visitDate,
+						remarks: item.remarks,
+						content: item.content,
+						stage:item.stage,
+						imgArr: imgArr
+					});
+				});
+				return newItems;
+			}
+			_.previewImage();
+		})(mui, document, util, window)
+
+		function getCaseDetail() {
+			vm.getData();
 		}
+			
 	</script>
+
 </html>

@@ -98,7 +98,10 @@
 								if(pageNum == 1) vm.items = [];
 								vm.items = vm.items.concat(data);
 								vm.mescroll.endSuccess(data.length);
-							} else {
+							} else if(data.code == -1){
+								data = [];
+								vm.mescroll.endSuccess(data.length);
+							} else{
 								_.toast(data.msg || '請求失敗');
 								vm.mescroll.endErr();
 							}

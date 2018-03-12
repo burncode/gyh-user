@@ -71,7 +71,6 @@
 						<yd-textarea slot="right" placeholder="描述病情300字以內" maxlength="300" v-model="situation"></yd-textarea>
 					</yd-cell-item>
 				</yd-cell-group>
-				</yd-cell-group>
 			</div>
 		</div>
 	</body>
@@ -106,7 +105,7 @@
 							sex: vm.sex,
 							allergyHistory: vm.allergyHistory,
 							result: vm.result,
-							stages:vm.stages,
+							stages: vm.stages,
 							situation: vm.situation
 						}
 						if(u.isNull(pdata.illName)) {
@@ -151,4 +150,5 @@
 			})
 		})(mui, document, util, window)
 	</script>
+
 </html>

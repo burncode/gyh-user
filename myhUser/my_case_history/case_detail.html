@@ -124,8 +124,8 @@
 						_.confirm('是否確定刪除该病曆', '提示', ['是', '否'], function(e) {
 							if(e.index == 0) {
 								u.mypost("medical/delIllness", {
-									privateToken: privateToken,
-									illId: illId
+									privateToken:w.getUser(),
+									illId: vm.illId
 								}, true, function(data) {
 									if(data.code == 0) {
 										_.toast('刪除成功');

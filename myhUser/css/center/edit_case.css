@@ -35,25 +35,23 @@
 }
 
 .case-record {
-	width: 100%;
 	height: 35px;
 	line-height: 35px;
 	border-bottom: 1px solid #DEDEDE;
 	background-color: #FFFFFF;
-	margin-top: 10px;
 	padding-left: 15px;
 	padding-right: 15px;
-	font-size: 14px
+	margin: 0 0 10px;
 }
 
 .case-record-item {
 	float: left
 }
 
-.case-record-add {
+/*.case-record-add {
 	color: #33A2D7;
 	float: right
-}
+}*/
 
 #sheet a {
 	color: #333333

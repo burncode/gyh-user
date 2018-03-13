@@ -448,11 +448,11 @@
 }
 
 .yd-btn-block {
-	width: 100%;
+	width: 40%;
 	display: block;
-	font-size: 18px;
-	height: 50px;
-	margin-top: 25px
+	font-size: 13px;
+	height: 30px;
+	margin: 10px auto;
 }
 
 .yd-btn-circle {
@@ -460,7 +460,7 @@
 }
 
 .yd-btn-primary {
-	background-color: #04be02;
+	background-color: #33A2D7;
 	color: #fff
 }
 
@@ -699,7 +699,6 @@
 }
 
 .yd-cell-item:not(:last-child):after {
-	margin-left: 12px;
 	content: "";
 	position: absolute;
 	z-index: 0;
@@ -2049,7 +2048,7 @@
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	border-bottom: 1px solid #b2b2b2;
+	border-bottom: 1px solid #DEDEDE;
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
 	-webkit-transform-origin: 0 0;
@@ -2116,7 +2115,6 @@
 .yd-tab-panel {
 	position: relative;
 	overflow: hidden;
-	background-color: #fff
 }
 
 .yd-tab-panel-item {
@@ -3683,7 +3681,7 @@
 	-ms-flex-align: center;
 	align-items: center;
 	font-size: 14.000000000000002px;
-	color: #444
+	color: #33A2D7
 }
 
 .yd-accordion-title-full {

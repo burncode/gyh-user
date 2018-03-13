@@ -20,15 +20,23 @@
 			}
 			
 			.treatment-choice img {
-				width: 100px;
-				height: 100px;
+				width: 70px;
+				height: 70px;
 				border-radius: 3px;
-				margin-right: 10px;
 			}
 			
 			.treatment-choice p {
 				text-align: center;
 				margin: 10px 0;
+			}
+			
+			.noRemarks {
+				margin: 30% 0;
+				text-align: center;
+			}
+			
+			.content {
+				padding: 44px 0 0;
 			}
 		</style>
 	</head>
@@ -40,147 +48,107 @@
 				<h1 class="mui-title">编辑病曆</h1>
 				<a class="mui-btn mui-btn-link mui-pull-right" @tap="saveData()">保存</a>
 			</header>
-			<div class="mui-content">
-				<yd-cell-group>
-					<yd-cell-item>
-						<span slot="left">病曆名稱：</span>
-						<input slot="right" type="text" placeholder="請輸入病曆名稱" maxlength="16" v-model="illName">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">姓名：</span>
-						<input slot="right" type="text" placeholder="請輸入姓名" v-model="realName">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">年齡：</span>
-						<input slot="right" type="number" placeholder="請輸入年齡" v-model="age">
-					</yd-cell-item>
-					<yd-cell-item arrow type="label">
-						<span slot="left">性別：</span>
-						<select slot="right" v-model="sex">
-							<option value="1">男</option>
-							<option value="2">女</option>
-						</select>
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">過敏史：</span>
-						<input slot="right" type="text" maxlength="10" placeholder="以往過敏史，10字以內" v-model="allergyHistory">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">診斷結果：</span>
-						<input slot="right" type="text" placeholder="請輸入診斷結果" v-model="result">
-					</yd-cell-item>
-					<yd-cell-item arrow type="label">
-						<span slot="left">分期：</span>
-						<select slot="right" v-model="stages">
-							<option value="">請選擇分期</option>
-							<option value="1">Ⅰ期</option>
-							<option value="2">Ⅱ期</option>
-							<option value="3">Ⅲ期</option>
-							<option value="4">Ⅳ期</option>
-							<option value="0">无</option>
-						</select>
-					</yd-cell-item>
-					<yd-cell-item>
-						<yd-textarea slot="right" placeholder="描述病情300字以內" maxlength="300" v-model="situation"></yd-textarea>
-					</yd-cell-item>
-				</yd-cell-group>
-				<!--<form class="mui-input-group">
-					<div class="mui-input-row">
-						<label class="label">病曆名稱：</label>
-						<input type="text" placeholder="請輸入病曆名稱" id="illName" value="">
-					</div>
-					<div class="mui-input-row">
-						<label class="label">姓名：</label>
-						<input type="text" class="mui-input-clear" placeholder="請輸入姓名" id="realName" value="">
-					</div>
-					<div class="mui-input-row">
-						<label class="label">年齡：</label>
-						<input type="text" class="mui-input-clear" placeholder="請輸入年齡" id="age" value="">
-					</div>
-					<div class="mui-input-row">
-						<label class="label">性别：</label>
-						<div class="mui-card">
-							<div class="mui-input-row mui-radio mui-left" id="maleRadio">
-								<input name="radio1" type="radio" checked id="male" value="1">
-								<label class="label">男</label>
-							</div>
-							<div class="mui-radio mui-left" id="femaleRadio">
-								<input name="radio1" type="radio" id="female" value="2">
-								<label class="label">女</label>
-							</div>
-						</div>
-					</div>
-					<div class="mui-input-row">
-						<label class="label">過敏史：</label>
-						<input type="text" class="mui-input-clear" placeholder="以往過敏史，10字以內" id="allergyHistory" value="" maxlength="10">
-					</div>
-					<div class="mui-input-row">
-						<label class="label">診斷結果：</label>
-						<input type="text" class="zhenduan-result" id="result" value="">
-					</div>
-					<div class="mui-input-row">
-						<label class="label">分期：</label>
-						<input id="stages" class="fenqi" type="text" readonly="readonly">
-					</div>
-					<div class="mui-input-row" id="base">
-						<label class="label">基本病情：</label>
-						<textarea class="base-state-edit" id="situation" rows="5" placeholder="描述病情300字以內" maxlength="300"></textarea>
-					</div>
-				</form>-->
-				<div class="case-record font-size-16">
-					<div class="case-record-item">病曆记录</div>
-					<div class="mui-pull-right main-font-color" id="add-record">添加+</div>
-				</div>
-				<yd-accordion accordion>
-					<yd-accordion-item accordion v-for="item in remarks" :title="item.stage">
-						<yd-cell-group >
-							<yd-cell-item arrow>
-								<span slot="left">就診日期：</span>
-								<yd-datetime type='date' start-date="2018-01-01" end-date="2025-12-12" v-model="item.visitDate" slot="right"></yd-datetime>
-								<input type="hidden" v-model="item.id">
+			<div class="content">
+				<yd-tab>
+					<yd-tab-panel label="基本資料">
+						<yd-cell-group>
+							<yd-cell-item>
+								<span slot="left">病曆名稱：</span>
+								<input slot="right" type="text" placeholder="請輸入病曆名稱" maxlength="16" v-model="illName">
+							</yd-cell-item>
+							<yd-cell-item>
+								<span slot="left">姓名：</span>
+								<input slot="right" type="text" placeholder="請輸入姓名" v-model="realName">
+							</yd-cell-item>
+							<yd-cell-item>
+								<span slot="left">年齡：</span>
+								<input slot="right" type="number" placeholder="請輸入年齡" v-model="age">
 							</yd-cell-item>
 							<yd-cell-item arrow type="label">
-								<span slot="left">就診類型：</span>
-								<select slot="right" v-model="item.stage">
-									<option value="">請選擇就診類型</option>
-									<option value="初診">初診</option>
-									<option value="複診">複診</option>
-									<option value="入院">入院</option>
-									<option value="出院">出院</option>
-									<option value="手術">手術</option>
-									<option value="化驗">化驗</option>
-									<option value="影像">影像</option>
-									<option value="體征">體征</option>
-									<option value="病曆">病曆</option>
-									<option value="處方">處方</option>
+								<span slot="left">性別：</span>
+								<select slot="right" v-model="sex">
+									<option value="1">男</option>
+									<option value="2">女</option>
 								</select>
 							</yd-cell-item>
 							<yd-cell-item>
-								<yd-textarea slot="right" placeholder="病情記錄300字以內" maxlength="300" v-model="item.content"></yd-textarea>
+								<span slot="left">過敏史：</span>
+								<input slot="right" type="text" maxlength="10" placeholder="以往過敏史，10字以內" v-model="allergyHistory">
 							</yd-cell-item>
-							<yd-grids-group :rows="3" item-height="130px" class="treatment-choice">
-								<yd-grids-item>
-									<div slot="else">
-										<img id="img1" addIndex='1' :src="item.img1" />
-									</div>
-								</yd-grids-item>
-								<yd-grids-item>
-									<div slot="else">
-										<img id="img2" addIndex='2' :src="item.img2" />
-									</div>
-								</yd-grids-item>
-								<yd-grids-item>
-									<div slot="else">
-										<img id="img3" addIndex='3' :src="item.img3" />
-									</div>
-								</yd-grids-item>
-								<p>圖片最多只能上傳3張，且每張圖片不能超過2M</p>
-							</yd-grids-group>
+							<yd-cell-item>
+								<span slot="left">診斷結果：</span>
+								<input slot="right" type="text" placeholder="請輸入診斷結果" v-model="result">
+							</yd-cell-item>
+							<yd-cell-item arrow type="label">
+								<span slot="left">分期：</span>
+								<select slot="right" v-model="stages">
+									<option value="">請選擇分期</option>
+									<option value="1">Ⅰ期</option>
+									<option value="2">Ⅱ期</option>
+									<option value="3">Ⅲ期</option>
+									<option value="4">Ⅳ期</option>
+									<option value="0">无</option>
+								</select>
+							</yd-cell-item>
+							<yd-cell-item>
+								<yd-textarea slot="right" placeholder="描述病情300字以內" maxlength="300" v-model="situation"></yd-textarea>
+							</yd-cell-item>
 						</yd-cell-group>
-					</yd-accordion-item>
-				</yd-accordion>
+					</yd-tab-panel>
+					<yd-tab-panel label="就診記錄">
+						<yd-button size="large" type="primary" @click.native="toAddRecord">添加</yd-button>
+						<yd-accordion accordion>
+							<yd-accordion-item accordion v-for="(item,index) in remarks" :title="item.stage">
+								<yd-cell-group>
+									<yd-cell-item arrow>
+										<span slot="left">就診日期：</span>
+										<yd-datetime type='date' start-date="2015-01-01" end-date="2025-12-12" v-model="item.visitDate" slot="right"></yd-datetime>
+										<input type="hidden" v-model="item.id">
+									</yd-cell-item>
+									<yd-cell-item arrow type="label">
+										<span slot="left">就診類型：</span>
+										<select slot="right" v-model="item.stage">
+											<option value="">請選擇就診類型</option>
+											<option value="初診">初診</option>
+											<option value="複診">複診</option>
+											<option value="入院">入院</option>
+											<option value="出院">出院</option>
+											<option value="手術">手術</option>
+											<option value="化驗">化驗</option>
+											<option value="影像">影像</option>
+											<option value="體征">體征</option>
+											<option value="病曆">病曆</option>
+											<option value="處方">處方</option>
+										</select>
+									</yd-cell-item>
+									<yd-cell-item>
+										<yd-textarea slot="right" placeholder="病情記錄300字以內" maxlength="300" v-model="item.content"></yd-textarea>
+									</yd-cell-item>
+									<yd-grids-group :rows="3" item-height="100px" class="treatment-choice">
+										<yd-grids-item>
+											<div slot="else">
+												<img @tap="changeImg(index,1)" :src="item.img1" />
+											</div>
+										</yd-grids-item>
+										<yd-grids-item>
+											<div slot="else">
+												<img @tap="changeImg(index,2)" :src="item.img2" />
+											</div>
+										</yd-grids-item>
+										<yd-grids-item>
+											<div slot="else">
+												<img @tap="changeImg(index,3)" :src="item.img3" />
+											</div>
+										</yd-grids-item>
+										<p>圖片最多只能上傳3張，且每張圖片不能超過2M</p>
+									</yd-grids-group>
+								</yd-cell-group>
+							</yd-accordion-item>
+						</yd-accordion>
+					</yd-tab-panel>
+				</yd-tab>
 			</div>
-			<!--<div id="sheet" class="mui-popover mui-popover-bottom mui-popover-action">
+			<div id="sheet" class="mui-popover mui-popover-bottom mui-popover-action">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell">
 						<a>拍照上傳</a>
@@ -189,23 +157,16 @@
 						<a>從相冊選擇</a>
 					</li>
 				</ul>
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<a href="#sheet1" style="color: #666;">取消</a>
-					</li>
-				</ul>
-			</div>-->
+			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
-	<!--<script src="../js/mui.picker.min.js"></script>
-	<script src="../js/mui.poppicker.js"></script>-->
 	<script type="text/javascript" src="../js/vue.min.js"></script>
 	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script src="../js/common.js"></script>
 	<script type="text/javascript">
 		(function(_, doc, u, w) {
-
+			_.init();
 			var vm = new Vue({
 				el: '#app',
 				data: {
@@ -218,7 +179,10 @@
 					result: '',
 					situation: '',
 					stages: "",
-					remarks: []
+					remarks: [],
+					imgIndex: 0,
+					imgI: 1,
+					isEditImg:false
 				},
 				mounted: function() {
 					var self = this;
@@ -235,7 +199,6 @@
 						//读取病曆信息
 						u.mypost("medical/editIllnessView", pdata, true, function(data) {
 							if(data.code == 0) {
-								console.log('data=====' + JSON.stringify(data));
 								var dataIll = data.data.illnessHistory;
 								vm.illName = dataIll.illName;
 								vm.age = dataIll.age;
@@ -250,61 +213,166 @@
 						}, myerror);
 					},
 					saveData: function() {
-
 						console.log(JSON.stringify(vm.remarks));
-
-						//						var pdata = {
-						//							privateToken: w.getUser(),
-						//							illName: vm.illName,
-						//							realName: vm.realName,
-						//							age: vm.age,
-						//							sex: vm.sex,
-						//							allergyHistory: vm.allergyHistory,
-						//							result: vm.result,
-						//							stages: vm.stages,
-						//							situation: vm.situation
-						//						}
-						//						if(u.isNull(pdata.illName)) {
-						//							_.toast("請輸入病曆名稱");
-						//						} else if(u.isNull(pdata.realName)) {
-						//							_.toast("請輸入姓名");
-						//						} else if(u.isNull(pdata.age)) {
-						//							_.toast("請輸入年齡");
-						//						} else if(!u.checkAge(pdata.age)) {
-						//							_.toast("請輸入正确的年齡");
-						//						} else if(u.isNull(pdata.allergyHistory)) {
-						//							_.toast("請輸入過敏史");
-						//						} else if(pdata.allergyHistory.length > 10) {
-						//							_.toast("過敏史必须在10个字以内");
-						//						} else if(u.isNull(pdata.result)) {
-						//							_.toast("請輸入診斷結果");
-						//						} else if(u.isNull(pdata.stages)) {
-						//							_.toast("請選擇分期");
-						//						} else if(u.isNull(pdata.situation)) {
-						//							_.toast("請輸入基本病情");
-						//						} else if(pdata.situation.length > 300) {
-						//							_.toast("基本病情必須在300個字以內");
-						//						} else {
-						//							u.mypost("medical/addIllnessHistory", pdata, true, function(data) {
-						//								if(data.code == 0) {
-						//									_.toast("病曆添加成功");
-						//									var case_listWeb = plus.webview.getWebviewById("case_list")
-						//									if(case_listWeb) {
-						//										case_listWeb.evalJS("getCaseList()");
-						//									} else {
-						//										var regWeb = plus.webview.getWebviewById('order_register');
-						//										regWeb && regWeb.evalJS('getIllist()');
-						//										_.back();
-						//									}
-						//								} else {
-						//									_.toast(data.msg);
-						//								}
-						//							}, myerror);
-						//						}
+						if(u.isNull(vm.illName)) {
+							_.toast("請輸入病曆名稱");
+						} else if(u.isNull(vm.realName)) {
+							_.toast("請輸入姓名");
+						} else if(u.isNull(vm.age)) {
+							_.toast("請輸入年齡");
+						} else if(!u.checkAge(vm.age)) {
+							_.toast("請輸入正确的年齡");
+						} else if(u.isNull(vm.allergyHistory)) {
+							_.toast("請輸入過敏史");
+						} else if(vm.allergyHistory.length > 10) {
+							_.toast("過敏史必须在10个字以内");
+						} else if(u.isNull(vm.result)) {
+							_.toast("請輸入診斷結果");
+						} else if(u.isNull(vm.stages)) {
+							_.toast("請選擇分期");
+						} else if(u.isNull(vm.situation)) {
+							_.toast("請輸入基本病情");
+						} else if(vm.situation.length > 300) {
+							_.toast("基本病情必須在300個字以內");
+						} else if(isEmojiCharacter(vm.illName) || isEmojiCharacter(vm.realName) || isEmojiCharacter(vm.age) ||
+							isEmojiCharacter(vm.allergyHistory) || isEmojiCharacter(vm.result) || isEmojiCharacter(vm.situation)) {
+							_.toast("不支持表情輸入");
+						}else if(vm.remarks.length > 0 && !vm.isEditImg){
+							_.toast("就診記錄中圖片並未做任何修改");
+						} else {
+							//编辑病曆
+							var waiting = plus.nativeUI.showWaiting(); //添加等待框
+							var remarkIdsArr = [];
+							for(var i = 0; i < vm.remarks.length; i++) {
+								remarkIdsArr.push(vm.remarks[i].id);
+							}
+							var task = gettask(ASKURL + 'medical/editIllness', function(t, status) {
+								var data = JSON.parse(t.responseText || '{}');
+								//保存成功
+								if(status == 200) {
+									waiting ? waiting.close() : '';
+									if(data.code == 0) {
+										_.toast('保存成功');
+										plus.webview.getWebviewById("case_detail").evalJS("getCaseDetail()");
+										_.back();
+									} else {
+										_.toast(data.msg);
+									}
+								}
+							});
+							task.addData('token', token);
+							task.addData('privateToken', w.getUser());
+							task.addData('illId', vm.illId);
+							task.addData('illName', vm.illName);
+							task.addData('realName', vm.realName);
+							task.addData('age', vm.age);
+							task.addData('sex', vm.sex);
+							task.addData('allergyHistory', vm.allergyHistory);
+							task.addData('result', vm.result);
+							task.addData('stages', vm.stages);
+							task.addData('situation', vm.situation);
+							task.addData("remarkIds", remarkIdsArr.join('-')); //记录ids
+							var remark = null;
+							for(var i = 0; i < vm.remarks.length; i++) {
+								remark = vm.remarks[i];
+								task.addData('visitDate_' + remarkIdsArr[i], remark.visitDate); //日期
+								task.addData("content_" + remarkIdsArr[i], remark.content); //内容
+								task.addData("stages_" + remarkIdsArr[i], remark.stage); //类型
+								if(remark.img1.indexOf("../images/medical-add.png") == -1 && remark.img1.indexOf("https") == -1) {
+									task.addFile(remark.img1, {
+										key: "img1_" + remark.id
+									});
+								}
+								if(remark.img2.indexOf("../images/medical-add.png") == -1 && remark.img2.indexOf("https") == -1) {
+									task.addFile(remark.img2, {
+										key: "img2_" + remark.id
+									});
+								}
+								if(remark.img3.indexOf("../images/medical-add.png") == -1 && remark.img3.indexOf("https") == -1) {
+									task.addFile(remark.img3, {
+										key: "img3_" + remark.id
+									});
+								}
+							}
+							task.start();
+						}
+					},
+					toAddRecord: function() {
+						w.openView("add_record.html", {
+							illId: vm.illId
+						});
+					},
+					changeImg: function(index, i) {
+						if(vm.remarks[index]['img' + i].indexOf("medical-add.png") == -1 && vm.remarks[index]['img' + i].indexOf("https") == -1) {
+							plus.nativeUI.confirm("確定移除所選圖片嗎", function(e) {
+								if(0 == e.index) {
+									vm.remarks[index]['img' + i] = "../images/medical-add.png";
+								}
+							}, "警告", ['是', '否']);
+						} else {
+							vm.imgIndex = index;
+							vm.imgI = i;
+							_('#sheet').popover('show'); //显示
+						}
 					}
 				}
 			})
 
+			_('#sheet').on('tap', 'li', function() {
+				_('#sheet').popover('hide');
+				if(~this.innerHTML.indexOf('拍照上傳')) {
+					choiceCamera();
+				} else if(~this.innerHTML.indexOf('從相冊選擇')) {
+					choicePic();
+				}
+			});
+
+			function choiceCamera() {
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p) {
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						var dst = "_doc/temp" + new Date().getTime() + ".jpg";
+						plus.zip.compressImage({
+							src: entry.toLocalURL(),
+							dst: dst,
+							width: '50%',
+							overwrite: true
+						}, function(even) {
+							setImg(even.target);
+						});
+					}, function(e) {});
+				}, function(e) {}, {
+					index: 1,
+					filename: "_doc/camera/"
+				});
+			}
+
+			function choicePic() {
+				plus.gallery.pick(function(path) {
+					var dst = "_doc/temp" + new Date().getTime() + ".jpg";
+					plus.zip.compressImage({
+						src: path,
+						dst: dst,
+						width: '50%',
+						overwrite: true
+					}, function(even) {
+						setImg(even.target);
+					});
+				}, function(e) {}, {
+					filter: 'image'
+				});
+			}
+			//赋值src
+			function setImg(src) {
+				vm.remarks[vm.imgIndex]['img' + vm.imgI] = src;
+				vm.isEditImg = true;
+			}
+			//创建上传任务
+			function gettask(server, callback) {
+				return plus.uploader.createUpload(server, {
+					method: "POST"
+				}, callback);
+			}
 			/**
 			 * @param {Array} items 
 			 */
@@ -312,516 +380,17 @@
 				var newItems = [];
 				items.forEach(function(item) {
 					newItems.push({
-						id:item.id,
+						id: item.id,
 						visitDate: item.visitDate,
 						stage: item.stage,
 						content: item.content,
-						img1: item.img.img1 ? (imgServer + item.img.img1) : '../images/medical-add.png',
-						img2: item.img.img2 ? (imgServer + item.img.img2) : '../images/medical-add.png',
-						img3: item.img.img3 ? (imgServer + item.img.img3) : '../images/medical-add.png',
+						img1: item.img && item.img.img1 ? (imgServer + item.img.img1) : '../images/medical-add.png',
+						img2: item.img && item.img.img2 ? (imgServer + item.img.img2) : '../images/medical-add.png',
+						img3: item.img && item.img.img3 ? (imgServer + item.img.img3) : '../images/medical-add.png',
 					});
 				});
 				return newItems;
 			}
-
-			//			_.init({
-			//				swipeBack: false,
-			//				gestureConfig: {
-			//					longtap: true
-			//				}
-			//			});
-			//			var pdata = {},
-			//				privateToken = null,
-			//				data = null,
-			//				illId = null,
-			//				div = null,
-			//				imgServer = null;
-			//			var illName = null,
-			//				realName = null,
-			//				age = null,
-			//				sex = null,
-			//				allergyHistory = null,
-			//				result = null,
-			//				stages = null,
-			//				situation = null;
-			//			var saveObj = doc.getElementById("save"),
-			//				illNameObj = doc.getElementById("illName"),
-			//				nameObj = doc.getElementById("realName"),
-			//				ageObj = doc.getElementById("age"),
-			//				sexObj = doc.getElementsByName("radio1"),
-			//				allergyHistoryObj = doc.getElementById("allergyHistory"),
-			//				resultObj = doc.getElementById("result"),
-			//				stagesObj = doc.getElementById("stages"),
-			//				situationObj = doc.getElementById("situation"),
-			//				list = doc.getElementById('del-record');
-			//			var img1Html = "",
-			//				img2Html = "",
-			//				img3Html = "",
-			//				imghtmls = null;
-			//			var remarkIdsArr = new Array(); //记录id
-			//			var addIndex = '';
-			//			_.plusReady(function(e) {
-			//				privateToken = w.getItem("privateToken");
-			//				pdata.privateToken = privateToken;
-			//				web = plus.webview.currentWebview(); //新建页面
-			//				illId = web.illId;
-			//				pdata.illId = illId;
-			//				getData();
-			//				//刪除记录
-			//				_('#del-record').on('tap', '.delete-record', function(event) {
-			//					var elem = this;
-			//					var delDiv = elem.parentNode;
-			//					var pdata = {
-			//						remarkId: this.id,
-			//						privateToken: privateToken
-			//					};
-			//					_.confirm('確認刪除该条病曆记录吗？', '提示', ['確認', '取消'], function(e) {
-			//						if(e.index == 0) {
-			//							u.mypost("medical/delRemark", pdata, true, function(data) {
-			//								_.toast(data.msg);
-			//								if(data.code == 0) {
-			//									delDiv.parentNode.removeChild(delDiv);
-			//								}
-			//							}, myerror);
-			//						}
-			//					});
-			//				});
-			//				//添加記錄
-			//				doc.getElementById("add-record").addEventListener('tap', function() {
-			//					w.openView("add_record.html", {
-			//						illId: illId
-			//					});
-			//				});
-			//				_(doc).on('tap', "img", function() {
-			//					imgobj = this;
-			//					//					addIndex = this.getAttribute("addIndex");
-			//					addIndex = new Date().getTime();
-			//					_('#sheet').popover('show');
-			//				})
-			//				//编辑保存病曆
-			//				saveObj.addEventListener('tap', function() {
-			//					if(u.isNull(illNameObj.value)) {
-			//						_.toast("請輸入病曆名稱");
-			//						return;
-			//					} else if(u.isNull(nameObj.value)) {
-			//						_.toast("請輸入姓名");
-			//						return;
-			//					} else if(u.isNull(ageObj.value)) {
-			//						_.toast("請輸入年齡");
-			//						return;
-			//					} else if(!u.checkAge(ageObj.value)) {
-			//						_.toast("請輸入正确的年齡");
-			//						return;
-			//					} else if(u.isNull(allergyHistoryObj.value)) {
-			//						_.toast("請輸入過敏史");
-			//						return;
-			//					} else if(allergyHistoryObj.value.length > 10) {
-			//						_.toast("過敏史必须在10个字以内");
-			//						return;
-			//					} else if(u.isNull(resultObj.value)) {
-			//						_.toast("請輸入診斷結果");
-			//						return;
-			//					} else if(u.isNull(stagesObj.value)) {
-			//						_.toast("請選擇分期");
-			//						return;
-			//					} else if(u.isNull(situationObj.value)) {
-			//						_.toast("請輸入基本病情");
-			//						return;
-			//					} else if(situationObj.value.length > 300) {
-			//						_.toast("基本病情必須在300個字以內");
-			//						return;
-			//					} else if(isEmojiCharacter(illNameObj.value) || isEmojiCharacter(nameObj.value) || isEmojiCharacter(ageObj.value) ||
-			//						isEmojiCharacter(allergyHistoryObj.value) || isEmojiCharacter(resultObj.value) || isEmojiCharacter(situationObj.value)) {
-			//						_.toast("不支持表情輸入");
-			//						return;
-			//					}
-			//					//病曆詳情
-			//					var illName = illNameObj.value.trim(),
-			//						name = nameObj.value.trim(),
-			//						age = ageObj.value.trim(),
-			//						sex = getRadioBoxValue(sexObj),
-			//						allergyHistory = allergyHistoryObj.value.trim(),
-			//						result = resultObj.value.trim(),
-			//						stages1 = stagesObj.value,
-			//						situation = situationObj.value.trim();
-			//					var s = null;
-			//					if(stages1 == "Ⅰ期") {
-			//						s = 1;
-			//					} else if(stages1 == "Ⅱ期") {
-			//						s = 2;
-			//					} else if(stages1 == "Ⅲ期") {
-			//						s = 3;
-			//					} else if(stages1 == "Ⅳ期") {
-			//						s = 4;
-			//					} else if(stages1 == "无") {
-			//						s = 0;
-			//					}
-			//					//病曆记录詳情
-			//					var visitDateObjs = doc.getElementsByClassName("treatDate"),
-			//						stagesObjs = doc.getElementsByClassName("stage"), //记录类型
-			//						contentObjs = doc.getElementsByClassName("illRecord"); //病情記錄
-			//					var img1Objs = doc.getElementsByClassName("img1");
-			//					var img2Objs = doc.getElementsByClassName("img2");
-			//					var img3Objs = doc.getElementsByClassName("img3");
-			//					//编辑病曆
-			//					var waiting = plus.nativeUI.showWaiting(); //添加等待框
-			//					var task = gettask(ASKURL + 'medical/editIllness', function(t, status) {
-			//						var data = JSON.parse(t.responseText || '{}');
-			//						//保存成功
-			//						if(status == 200) {
-			//							waiting ? waiting.close() : '';
-			//							if(data.code == 0) {
-			//								_.toast(data.msg);
-			//								plus.webview.getWebviewById("case_detail").evalJS("getCaseDetail()");
-			//								w.openView("case_detail.html", {
-			//									illId: illId
-			//								});
-			//							} else {
-			//								_.toast(data.msg);
-			//							}
-			//						}
-			//					});
-			//					task.addData('token', token);
-			//					task.addData('privateToken', privateToken);
-			//					task.addData('illId', illId);
-			//					task.addData('illName', illName);
-			//					task.addData('realName', name);
-			//					task.addData('age', age);
-			//					task.addData('sex', sex);
-			//					task.addData('allergyHistory', allergyHistory);
-			//					task.addData('result', result);
-			//					task.addData('stages', s + "");
-			//					task.addData('situation', situation);
-			//					task.addData("remarkIds", remarkIdsArr.join('-')); //记录ids
-			//					//日期
-			//					for(var i = 0; i < visitDateObjs.length; i++) {
-			//						task.addData('visitDate_' + remarkIdsArr[i], visitDateObjs[i].value);
-			//					}
-			//					//内容
-			//					for(var i = 0; i < contentObjs.length; i++) {
-			//						task.addData("content_" + remarkIdsArr[i], contentObjs[i].value);
-			//					}
-			//					//类型
-			//					for(var i = 0; i < stagesObjs.length; i++) {
-			//						task.addData("stages_" + remarkIdsArr[i], stagesObjs[i].value);
-			//					}
-			//					//图片1
-			//					for(var i = 0; i < img1Objs.length; i++) {
-			//						var img1 = img1Objs[i].getAttribute("src");
-			//						if(img1 && img1.indexOf("../images/medical-add.png") == -1 && img1.indexOf("https") == -1) {
-			//							task.addFile(img1, {
-			//								key: "img1_" + remarkIdsArr[i]
-			//							});
-			//						}
-			//					}
-			//					//图片2
-			//					for(var i = 0; i < img2Objs.length; i++) {
-			//						var img2 = img2Objs[i].getAttribute("src");
-			//						if(img2 && img2.indexOf("../images/medical-add.png") == -1 && img2.indexOf("https") == -1) {
-			//							task.addFile(img2, {
-			//								key: "img2_" + remarkIdsArr[i]
-			//							});
-			//						}
-			//					}
-			//					//图片3
-			//					for(var i = 0; i < img3Objs.length; i++) {
-			//						var img3 = img3Objs[i].getAttribute("src");
-			//						if(img3 && img3.indexOf("../images/medical-add.png") == -1 && img3.indexOf("https") == -1) {
-			//							task.addFile(img3, {
-			//								key: "img3_" + remarkIdsArr[i]
-			//							});
-			//						}
-			//					}
-			//					task.start();
-			//				})
-			//			})
-			//			w.addEventListener("event", function(e) {
-			//				pdata.illId = e.detail.illId;
-			//				getData();
-			//			});
-			//			var stagePicker = new _.PopPicker();
-			//			stagePicker.setData([{
-			//				value: 'Ⅰ期',
-			//				text: 'Ⅰ期'
-			//			}, {
-			//				value: 'Ⅱ期',
-			//				text: 'Ⅱ期'
-			//			}, {
-			//				value: 'Ⅲ期',
-			//				text: 'Ⅲ期'
-			//			}, {
-			//				value: 'Ⅳ期',
-			//				text: 'Ⅳ期'
-			//			}, {
-			//				value: '无',
-			//				text: '无'
-			//			}]);
-			//			//普通示例
-			//			var treatPicker = new _.PopPicker();
-			//			treatPicker.setData([{
-			//				value: '初診',
-			//				text: '初診'
-			//			}, {
-			//				value: '複診',
-			//				text: '複診'
-			//			}, {
-			//				value: '入院',
-			//				text: '入院'
-			//			}, {
-			//				value: '出院',
-			//				text: '出院'
-			//			}, {
-			//				value: '手術',
-			//				text: '手術'
-			//			}, {
-			//				value: '化驗',
-			//				text: '化驗'
-			//			}, {
-			//				value: '影像',
-			//				text: '影像'
-			//			}, {
-			//				value: '體征',
-			//				text: '體征'
-			//			}, {
-			//				value: '病曆',
-			//				text: '病曆'
-			//			}, {
-			//				value: '處方',
-			//				text: '處方'
-			//			}]);
-			//			//分期
-			//			stagesObj.addEventListener('tap', function(event) {
-			//				stagePicker.show(function(items) {
-			//					var v = JSON.stringify(items[0].value);
-			//					v = v.substr(1, v.length - 2);
-			//					if(0 != v) {
-			//						stagesObj.value = v;
-			//					}
-			//				});
-			//			}, false);
-			//			_('#sheet').on('tap', 'li', function() {
-			//				_('#sheet').popover('hide');
-			//				if(~this.innerHTML.indexOf('拍照上傳')) {
-			//					choiceCamera()
-			//				} else if(~this.innerHTML.indexOf('從相冊選擇')) {
-			//					choicePic()
-			//				}
-			//			});
-			//
-			//			function choiceCamera() {
-			//				var cmr = plus.camera.getCamera();
-			//				cmr.captureImage(function(p) {
-			//					plus.io.resolveLocalFileSystemURL(p, function(entry) {
-			//						var dst = "_doc/temp" + addIndex + ".jpg";
-			//						plus.zip.compressImage({
-			//							src: entry.toLocalURL(),
-			//							dst: dst,
-			//							width: '50%',
-			//							overwrite: true
-			//						}, function(even) {
-			//							setImg(even.target);
-			//						});
-			//					}, function(e) {});
-			//				}, function(e) {}, {
-			//					index: 1,
-			//					filename: "_doc/camera/"
-			//				});
-			//			}
-			//
-			//			function choicePic() {
-			//				plus.gallery.pick(function(path) {
-			//					var dst = "_doc/temp" + addIndex + ".jpg";
-			//					plus.zip.compressImage({
-			//						src: path,
-			//						dst: dst,
-			//						width: '50%',
-			//						overwrite: true
-			//					}, function(even) {
-			//						setImg(even.target);
-			//					});
-			//				}, function(e) {}, {
-			//					filter: 'image'
-			//				});
-			//			}
-			//
-			//			function setImg(src) {
-			//				imgobj.src = src;
-			//			}
-			//			//创建上传任务
-			//			function gettask(server, callback) {
-			//				return plus.uploader.createUpload(server, {
-			//					method: "POST"
-			//				}, callback);
-			//			}
-			//			//就诊类型
-			//			_(doc).on('tap', '.stage', function(event) {
-			//				var self = this;
-			//				treatPicker.show(function(items) {
-			//					var v = JSON.stringify(items[0].value);
-			//					v = v.substr(1, v.length - 2);
-			//					if(0 == v) {} else {
-			//						self.value = v;
-			//					}
-			//				});
-			//				doc.activeElement.blur();
-			//			}, false);
-			//			//就診日期
-			//			var picker = null,
-			//				endYear = 2017,
-			//				endMonth = 1,
-			//				endDay = 1,
-			//				self = null;
-			//			endYear = getCurrentYear();
-			//			endMonth = getCurrentMouth();
-			//			endDay = getCurrentDay();
-			//			_(doc).on('tap', '.treatDate', function() {
-			//				self = this;
-			//				picker = new _.DtPicker({
-			//					"type": "date",
-			//					"beginYear": 2010,
-			//					"endYear": endYear,
-			//					"endMonth": endMonth,
-			//					"endDay": endDay
-			//				});
-			//				picker.show(function(rs) {
-			//					self.value = rs.text;
-			//					picker.dispose();
-			//				});
-			//				doc.activeElement.blur();
-			//			});
-			//			//病曆记录
-			//			_(doc).on('tap', '.illRecord', function(event) {
-			//				picker ? picker.hide() : '';
-			//				treatPicker ? treatPicker.hide() : '';
-			//			});
-			//			//获取当前年份
-			//			function getCurrentYear() {
-			//				return new Date().getFullYear();
-			//			}
-			//			//获取当前月份
-			//			function getCurrentMouth() {
-			//				return new Date().getMonth() + 1;
-			//
-			//			} //获取当前日
-			//			function getCurrentDay() {
-			//				return new Date().getDate();
-			//			}
-			//			//获取单选按钮
-			//			function getRadioBoxValue(obj) {
-			//				var value = 0;
-			//				for(i = 0; i < obj.length; i++) {
-			//					if(obj[i].checked) {
-			//						value = obj[i].value;
-			//					}
-			//				}
-			//				return value;
-			//			}
-			//
-			//			//长按刪除所选图片
-			//			_(doc).on("longtap", "img", function() {
-			//				var self = this;
-			//				if(self.src.indexOf("medical-add.png") == -1) {
-			//					plus.nativeUI.confirm("確定移除所選圖片嗎", function(e) {
-			//						if(0 == e.index) {
-			//							self.src = "../images/medical-add.png";
-			//						}
-			//					}, "警告", ['是', '否']);
-			//				}
-			//			})
-			//			_(doc).on('tap', "img", function() {
-			//				doc.activeElement.blur();
-			//			})
-			//			stagesObj.addEventListener('tap', function() {
-			//				doc.activeElement.blur();
-			//			});
-			//
-			//			function getData() {
-			//				//读取病曆信息
-			//				u.mypost("medical/editIllnessView", pdata, true, function(data) {
-			//					if(data.code == 0) {
-			//						list.innerHTML = "";
-			//						var dataIll = data.data.illnessHistory;
-			//						imgServer = data.data.imgServer; //图片
-			//						illName = dataIll.illName;
-			//						age = dataIll.age;
-			//						sex = dataIll.sex;
-			//						realName = dataIll.realname;
-			//						allergyHistory = dataIll.allergyHistory;
-			//						result = dataIll.result;
-			//						stages = dataIll.stages;
-			//						situation = dataIll.situation;
-			//						//分期
-			//						if(stages == 1) {
-			//							stagesObj.value = "Ⅰ期";
-			//						} else if(stages == 2) {
-			//							stagesObj.value = "Ⅱ期";
-			//						} else if(stages == 3) {
-			//							stagesObj.value = "Ⅲ期";
-			//						} else if(stages == 4) {
-			//							stagesObj.value = "Ⅳ期";
-			//						} else if(stages == 0) {
-			//							stagesObj.value = "无";
-			//						}
-			//						//性别
-			//						if(sex == 1) {
-			//							doc.getElementById("male").checked = true;
-			//						} else if(sex == 2) {
-			//							doc.getElementById("female").checked = true;
-			//						}
-			//						doc.getElementById("illName").value = illName;
-			//						doc.getElementById("realName").value = realName;
-			//						doc.getElementById("age").value = age;
-			//						doc.getElementById("allergyHistory").value = allergyHistory;
-			//						doc.getElementById("result").value = result;
-			//						doc.getElementById("situation").value = situation;
-			//						_.each(data.data.remarks, function(i, obj) {
-			//							remarkIdsArr.push(obj.id);
-			//							img1Html = "";
-			//							img2Html = "";
-			//							img3Html = "";
-			//							div = doc.createElement("div");
-			//							div.id = obj.id; //记录id
-			//							if(obj.img) {
-			//								if(obj.img.img1) {
-			//									img1Html += "<img class='img1' src='" + imgServer + obj.img.img1 + "' />";
-			//								} else {
-			//									img1Html += "<img class='img1' src='../images/medical-add.png'/>";
-			//								}
-			//								if(obj.img.img2) {
-			//									img2Html += "<img class='img2' src='" + imgServer + obj.img.img2 + "' />";
-			//								} else {
-			//									img2Html += "<img class='img2' src='../images/medical-add.png'/>";
-			//								}
-			//								if(obj.img.img3) {
-			//									img3Html += "<img class='img3' src='" + imgServer + obj.img.img3 + "' />";
-			//								} else {
-			//									img3Html += "<img class='img3' src='../images/medical-add.png'/>";
-			//								}
-			//								imghtmls = img1Html + img2Html + img3Html;
-			//							} else {
-			//								imghtmls = "<img class='img1' src='../images/medical-add.png'/><img class='img2' src='../images/medical-add.png'/><img class='img3' src='../images/medical-add.png'/>";
-			//							}
-			//							div.innerHTML = "<div class='case-record-content'>" +
-			//								"<div class='treatment-choice'>" +
-			//								"<div class='treatment-title'>就診日期</div>" +
-			//								"<input class='treatment-type treatDate' value='" + obj.visitDate + "' readonly='readonly' name='appDate' type='text'>" +
-			//								"<input class='treatment-type stage' type='text' value='" + obj.stage + "' readonly='readonly'>" +
-			//								"</div>" +
-			//								"<div class='treatment-choice'>" +
-			//								imghtmls +
-			//								"<p>圖片最多只能上傳3張，且每張圖片不能超過2M</p>" +
-			//								"</div>" +
-			//								"<div class='treatment-choice'>" +
-			//								"<div class='state-record'>病情記錄</div>" +
-			//								"<textarea class='state-description illRecord' rows='5' placeholder='描述病情300字以內' maxlength='300'>" + obj.content + "</textarea>" +
-			//								"</div>" +
-			//								"<div class='delete-record' id='" + obj.id + "'>刪除</div>" +
-			//								"</div>";
-			//							list.appendChild(div);
-			//						})
-			//					}
-			//				}, myerror);
-			//			}
 		})(mui, document, util, window)
 	</script>
 

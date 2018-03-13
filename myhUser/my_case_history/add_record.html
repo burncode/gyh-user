@@ -14,10 +14,9 @@
 			margin-bottom: 0;
 		}
 		.treatment-choice img {
-			width: 100px;
-			height: 100px;
-			border-radius: 3px;
-			margin-right: 10px;
+		    width: 70px;
+    		height: 70px;
+    		border-radius: 3px;
 		}
 		
 		.treatment-choice p {
@@ -37,7 +36,7 @@
 				<yd-cell-group>
 					<yd-cell-item arrow>
 						<span slot="left">就診日期：</span>
-						<yd-datetime type='date' start-date="2018-01-01" end-date="2025-12-12" v-model="visitDate" slot="right"></yd-datetime>
+						<yd-datetime type='date' start-date="2015-01-01" end-date="2025-12-12" v-model="visitDate" slot="right"></yd-datetime>
 					</yd-cell-item>
 					<yd-cell-item arrow type="label">
 						<span slot="left">就診類型：</span>
@@ -58,7 +57,7 @@
 					<yd-cell-item>
 						<yd-textarea slot="right" placeholder="病情記錄300字以內" maxlength="300" v-model="content"></yd-textarea>
 					</yd-cell-item>
-					<yd-grids-group :rows="3" item-height="130px" class="treatment-choice">
+					<yd-grids-group :rows="3" item-height="100px" class="treatment-choice">
 						<yd-grids-item>
 							<div slot="else">
 								<img id="img1" addIndex='1' src="../images/medical-add.png" />
@@ -99,11 +98,6 @@
 		(function(_, doc, u, w) {
 			_.init({gestureConfig:{longtap: true}});
 			var illId = null;
-			_.plusReady(function() {
-				web = plus.webview.currentWebview(); //新建页面
-				illId = web.illId
-			})
-
 			var imgobj = null,
 				addIndex = 1,imgs=[];
 			var vm = new Vue({
@@ -114,7 +108,10 @@
 					stages: ''
 				},
 				mounted: function() {
-
+					_.plusReady(function() {
+						web = plus.webview.currentWebview();
+						illId = web.illId
+					})
 				},
 				methods: {
 					saveData: function() {
@@ -143,8 +140,11 @@
 									var data = JSON.parse(t.responseText || '{}');
 									waiting ? waiting.close() : '';
 									if(data.code == 0) {
+										plus.webview.getWebviewById("edit_case").close('none');
 										_.toast("病曆記錄添加成功");
-										plus.webview.getWebviewById("case_detail").evalJS("getCaseDetail()");
+										var web = plus.webview.getWebviewById("case_detail");
+										web.evalJS("getCaseDetail()");
+										_.later(function(){web.show("slide-in-right")},500)
 									} else {
 										_.toast(data.msg);
 									}

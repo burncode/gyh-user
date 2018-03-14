@@ -179,7 +179,6 @@
 							var orderId = null;
 							if(type == 1) {
 								u.mypost("reg_num/reAppointSubmit", pdata, true, function(data) {
-									console.log('dta======' + JSON.stringify(data))
 									if(data.code == 0) {
 										orderId = data.data.orderId;
 										var ex = {

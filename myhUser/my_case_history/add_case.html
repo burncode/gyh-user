@@ -138,6 +138,8 @@
 									} else {
 										var regWeb = plus.webview.getWebviewById('order_register');
 										regWeb && regWeb.evalJS('getIllist()');
+										var mregWeb = plus.webview.getWebviewById('message_question_answer');
+										mregWeb && mregWeb.evalJS('getIllist()');
 										_.back();
 									}
 								} else {

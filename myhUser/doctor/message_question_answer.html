@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
@@ -9,204 +10,225 @@
 		<title>留言問答</title>
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<link rel="stylesheet" href="../css/input.css" />
-		<link rel="stylesheet" href="../css/iconfont.css" />
-		<link rel="stylesheet" href="../css/doctor/message_question_answer.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<style>
+			input[type=text],
+			input[type=number],
+			select {
+				margin-bottom: 0;
+			}
+			
+			img {
+				width: 70px;
+				height: 70px;
+				border-radius: 3px;
+			}
+			.check_box {
+				margin: 0 0 0 15px;
+				line-height: 18px;
+				padding: 10px 0;
+			}
+		</style>
 	</head>
+
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">留言問答</h1>
-		</header>
-		<div class="mui-content">
-			<div class="message-info">
-				<div class="message-title">醫&emsp;&emsp;生：<span id="docName"></span></div>
-				<div class="message-title">科&emsp;&emsp;室：<span id="officeName"></span></div>
-				<div class="message-title">咨&ensp;詢&ensp;費：<span class="consult-money">¥<span id="price"></span></span>
-				</div>
-				<div class="mui-input-row">
-					<label class="chose-lable">選擇病曆：</label>
-					<select id="illnessSelect" class="choice-case-select">
-						<option></option>
-					</select>
-				</div>
-			</div>
-			<div class="message-content">
-				<div class="message-textarea">
-					<textarea rows="5" maxlength="300" placeholder="輸入你想詢問的問題（300字以內）" class="textarea" id="content"></textarea>
-				</div>
-				<div id="message-img" class="message-img">
-					<img id="img1" addIndex='1' src="../images/medical-add.png" class="add-img" />
-					<img id="img2" addIndex='2' src="../images/medical-add.png" class="add-img" />
-					<img id="img3" addIndex='3' src="../images/medical-add.png" class="add-img" />
-					<p>圖片最多只能上傳3張，且每張圖片不能超過2M</p>
-				</div>
-			</div>
-			<div class="argee font-size-14">
-				<span id="res" style="color: #32A3D6;" class="mui-icon iconfont icon-xuanzhong"></span>&nbsp;<span id="user-manual">同意《用戶使用手冊》</span>
-				<div class="doctor-answer"><span style="color: red;">*</span>醫生会在24小时内回答您的问题，24小时内未回答自动退款。</div>
-			</div>
-			<div class="next">
-				<button class="mui-btn save-btn" id="commit-question" disabled="disabled">提交問題</button>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">留言問答</h1>
+				<a class="mui-btn mui-btn-link mui-pull-right" @tap="saveData()">提交</a>
+			</header>
+			<div class="mui-content">
+				<yd-cell-group>
+					<yd-cell-item>
+						<span slot="left">醫生：</span>
+						<input slot="right" type="text" v-model="docName" readonly>
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">科室：</span>
+						<input slot="right" type="text" v-model="officeName" readonly>
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">咨詢費 (¥)：</span>
+						<input slot="right" type="text" v-model="price" readonly>
+					</yd-cell-item>
+					<yd-cell-item arrow type="label" v-if="illness.length == 0" @click.native="addCase">
+						<span slot="left">選擇病曆：</span>
+						<span slot="right">去添加</span>
+					</yd-cell-item>
+					<yd-cell-item arrow type="label" v-else>
+						<span slot="left">選擇病曆：</span>
+						<select slot="right" v-model="illId">
+							<option value="">請選擇病曆</option>
+							<option v-for="item in illness" :value="item.illId">{{item.illName}}</option>
+						</select>
+					</yd-cell-item>
+					<yd-cell-item>
+						<yd-textarea slot="right" placeholder="輸入你想詢問的問題（300字以內）" maxlength="300" v-model="content"></yd-textarea>
+					</yd-cell-item>
+					<yd-grids-group :rows="3" item-height="100px" class="treatment-choice">
+						<yd-grids-item>
+							<div slot="else">
+								<img @tap="changeImg(1)" :src="img1" />
+							</div>
+						</yd-grids-item>
+						<yd-grids-item>
+							<div slot="else">
+								<img @tap="changeImg(2)" :src="img2" />
+							</div>
+						</yd-grids-item>
+						<yd-grids-item>
+							<div slot="else">
+								<img @tap="changeImg(3)" :src="img3" />
+							</div>
+						</yd-grids-item>
+						<p class="mui-text-center">圖片最多只能上傳3張，且每張圖片不能超過2M</p>
+					</yd-grids-group>
+					<div class="check_box">
+						<yd-checkbox value="true" disabled @click.native="toAgree">知情同意書</yd-checkbox>
+					</div>
+				</yd-cell-group>
 			</div>
 		</div>
 		<div id="sheet" class="mui-popover mui-popover-bottom mui-popover-action">
-			<ul class="mui-table-view"><li class="mui-table-view-cell">拍照上傳</li><li class="mui-table-view-cell">從相冊選擇</li></ul>
-			<ul class="mui-table-view"><li class="mui-table-view-cell"><a href="#sheet1">取消</a></li></ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">拍照上傳</li>
+				<li class="mui-table-view-cell">從相冊選擇</li>
+			</ul>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript">
+		var docId = null,vm = null;
 		(function(_, doc, u, w) {
-			_.init({
-				swipeBack: false,
-				gestureConfig: {
-					longtap: true
-				}
-			});
-			var docId = null,
-				price = null,
-				pdata = {},
-				privateToken = null;
-			var submitObj = doc.getElementById("commit-question"),
-				illnessSelectObj = doc.getElementById("illnessSelect"),contentObj = doc.getElementById("content");
-			var imgs = new Array(),
-				imgIndex = 0;
-			var web = null,messageData = null,
-				currentView = null,addIndex = '',illnessHistory = null,imgObj = null;
-			_.plusReady(function() {
-				privateToken = w.getItem("privateToken");
-				pdata.privateToken = privateToken;
-				currentView = plus.webview.currentWebview();
-				docId = currentView.docId; //提交問題获取docId
-				pdata.docId = docId;
-				doc.getElementById("content").value = "";
-				doc.getElementById("img1").src = "../images/medical-add.png";
-				doc.getElementById("img2").src = "../images/medical-add.png";
-				doc.getElementById("img3").src = "../images/medical-add.png";
-				u.mypost("leaving_msg/leavingMsgView", pdata, true, function(data) {
-					if(data.code == 0) {
-						messageData = data.data.doctor[0];
-						price = data.data.leavFee ? data.data.leavFee[0].leavMsgFee : ' 0 ';
-						doc.getElementById("docName").textContent = messageData ? messageData.docName : '';
-						doc.getElementById("price").textContent = price;
-						doc.getElementById("officeName").textContent = messageData ? messageData.officeName : '';
-						illnessSelectObj.innerHTML = "";
-						illnessHistory = data.data.illnessHistory;
-						if(illnessHistory && illnessHistory.length > 0) {
-							_.each(illnessHistory, function(i, o) {
-								illnessSelectObj.innerHTML += "<option value='" + o.illId + "'>" + o.illName + "</option>";
-							})
-						}
-					} else if(data.code == 500 && "未登錄" == data.msg) {
-						u.goLogin();
-					} else {
-						_.toast(data.msg || '服務器異常');
-					}
-				}, myerror);
-				
-				illnessSelectObj.addEventListener("tap", function() {
-					if(illnessHistory.length == undefined) {
-						this.setAttribute("disabled", "disabled");
-						_.toast("您還沒有病曆，請先添加病曆");
-						return;
-					}
-				});
-				
-				
-				privateToken = w.getItem("privateToken");
-				_(".message-content").on("tap", "img", function() {
-					imgObj = this;
-					addIndex = this.getAttribute("addIndex");
-					_('#sheet').popover('show');
-				})
-				_('#sheet').on('tap', 'li', function() {
-					_('#sheet').popover('hide');
-					if(~this.innerHTML.indexOf('拍照上傳')) {
-						choiceCamera()
-					} else if(~this.innerHTML.indexOf('從相冊選擇')) {
-						choicePic()
-					}
-				});
-
-				//长按刪除所选图片
-				_("#message-img").on("longtap", "img", function() {
-					var self = this;
-					if("../images/medical-add.png" != self.src) {
-						plus.nativeUI.confirm("確定移除所選圖片嗎", function(e) {
-							if(0 == e.index) {
-								self.src = "../images/medical-add.png";
-							}
-						}, "警告", ['確定', '取消']);
-					}
-				})
-
-				submitObj.addEventListener('tap', function(e) {
-					privateToken = w.getItem("privateToken");
-					if(u.isNull(contentObj.value)) {
-						_.toast("請輸入你想詢問的問題");
-						return;
-					} else if(contentObj.value.length > 300) {
-						_.toast("問題內容不能超過300字");
-						return;
-					} else if(isEmojiCharacter(contentObj.value)) {
-						_.toast("不支持表情輸入");
-						return;
-					}
-					var content = doc.getElementById("content").value;
-					var illId = illnessSelectObj.value;
-					var img1 = doc.getElementById("img1").src;
-					var img2 = doc.getElementById("img2").src;
-					var img3 = doc.getElementById("img3").src;
-					img1.indexOf("/images/medical-add.png") == -1 ? imgs.push(img1) : "";
-					img2.indexOf("/images/medical-add.png") == -1 ? imgs.push(img2) : "";
-					img3.indexOf("/images/medical-add.png") == -1 ? imgs.push(img3) : "";
-					//提交問題
-					var waiting = plus.nativeUI.showWaiting(); //添加等待框
-					var task = gettask(ASKURL + 'leaving_msg/commitStepFrt', function(t, status) {
-						//提交成功
-						if(status == 200) {
-							var data = JSON.parse(t.responseText || '{}');
-							waiting ? waiting.close() : '';
-							_.toast(data.msg);
-							if(data.code == 0) {
-								var ex = {
-									type: 5,
-									order_type: "留言問答定金", //代表是留言問答
-									orderId: data.data.orderId,
-									fee: price
-								}
-								u.close("doctor_detail.html");
-								setTimeout(function() {
-									w.openView("pay.html", ex);//到支付页面
-								}, 500)
-							}
-						}
+			_.init();
+			vm = new Vue({
+				el: '#app',
+				data: {
+					docName: '',
+					officeName: '',
+					price: '',
+					content: '',
+					illId: '',
+					illness: [],
+					img1: '../images/medical-add.png',
+					img2: '../images/medical-add.png',
+					img3: '../images/medical-add.png',
+					imgI: 1
+				},
+				mounted: function() {
+					var currentView = plus.webview.currentWebview();
+					docId = currentView.docId; //提交問題获取docId
+					this.leavingMsgView({
+						privateToken: w.getUser(),
+						docId: docId
 					});
-					task.addData('content', content);
-					task.addData('privateToken', privateToken);
-					task.addData('price', price);
-					task.addData('illId', illId);
-					task.addData('docId', docId);
-					task.addData('token', token);
-					if(imgs.length > 0) {
-						for(var i = 0; i < imgs.length; i++) {
-							task.addFile(imgs[i], {
-								key: "img" + i
+				},
+				methods: {
+					leavingMsgView: function(pdata) {
+						u.mypost("leaving_msg/leavingMsgView", pdata, true, function(data) {
+							if(data.code == 0) {
+								var messageData = data.data.doctor[0];
+								vm.price = data.data.leavFee ? data.data.leavFee[0].leavMsgFee : '0.00';
+								vm.docName = messageData.docName;
+								vm.officeName = messageData.officeName;
+								vm.illness = data.data.illnessHistory || [];
+							} else if(data.code == 500 && "未登錄" == data.msg) {
+								u.goLogin();
+							} else {
+								_.toast(data.msg || '服務器異常');
+							}
+						}, myerror);
+					},
+					saveData: function() {
+						if(u.isNull(vm.illId)) {
+							_.toast("請選擇病曆");
+						} else if(u.isNull(vm.content)) {
+							_.toast("請輸入你想詢問的問題");
+						} else if(vm.content.length > 300) {
+							_.toast("問題內容不能超過300字");
+						} else if(isEmojiCharacter(vm.content)) {
+							_.toast("不支持表情輸入");
+						} else {
+							var imgs = [];
+							vm.img1.indexOf("medical-add") == -1 ? imgs.push(vm.img1) : "";
+							vm.img2.indexOf("medical-add") == -1 ? imgs.push(vm.img2) : "";
+							vm.img3.indexOf("medical-add") == -1 ? imgs.push(vm.img3) : "";
+							//提交問題
+							var waiting = plus.nativeUI.showWaiting(); //添加等待框
+							var task = gettask(ASKURL + 'leaving_msg/commitStepFrt', function(t, status) {
+								//提交成功
+								if(status == 200) {
+									var data = JSON.parse(t.responseText || '{}');
+									waiting ? waiting.close() : '';
+									if(data.code == 0) {
+										var ex = {
+											type: 5,
+											order_type: "留言問答定金", //代表是留言問答
+											orderId: data.data.orderId,
+											fee: vm.price
+										}
+										u.close("doctor_detail.html");
+										setTimeout(function() {
+											w.openView("pay.html", ex); //到支付页面
+										}, 500)
+									}
+								}
 							});
+							task.addData('content', vm.content);
+							task.addData('privateToken', w.getUser());
+							task.addData('price', vm.price);
+							task.addData('illId', vm.illId);
+							task.addData('docId', docId);
+							task.addData('token', token);
+							if(imgs.length > 0) {
+								for(var i = 0; i < imgs.length; i++) {
+									task.addFile(imgs[i], {
+										key: "img" + i
+									});
+								}
+								imgs = [];
+							}
+							task.start();
 						}
-						imgs = [];
-					}
-					task.start();
-				});
+					},
+					addCase: function() {
+						w.openView("../my_case_history/add_case.html");
+					},
+					changeImg: function(i) {
+						if(vm['img' + i].indexOf("medical-add.png") == -1) {
+							plus.nativeUI.confirm("確定移除所選圖片嗎", function(e) {
+								if(0 == e.index) {
+									vm['img' + i] = "../images/medical-add.png";
+								}
+							}, "警告", ['是', '否']);
+						} else {
+							vm.imgI = i;
+							_('#sheet').popover('show'); //显示
+						}
+					},toAgree: function() {
+						w.openView("../know_agree.html");
+					},
+				}
+			})
+
+			_('#sheet').on('tap', 'li', function() {
+				_('#sheet').popover('hide');
+				if(~this.innerHTML.indexOf('拍照上傳')) {
+					choiceCamera()
+				} else if(~this.innerHTML.indexOf('從相冊選擇')) {
+					choicePic()
+				}
 			});
 
 			function choiceCamera() {
 				var cmr = plus.camera.getCamera();
 				cmr.captureImage(function(p) {
 					plus.io.resolveLocalFileSystemURL(p, function(entry) {
-						var dst = "_doc/temp" + addIndex + ".jpg";
+						var dst = "_doc/temp" + new Date().getTime() + ".jpg";
 						plus.zip.compressImage({
 							src: entry.toLocalURL(),
 							dst: dst,
@@ -224,7 +246,7 @@
 
 			function choicePic() {
 				plus.gallery.pick(function(path) {
-					var dst = "_doc/temp" + addIndex + ".jpg";
+					var dst = "_doc/temp" + new Date().getTime() + ".jpg";
 					plus.zip.compressImage({
 						src: path,
 						dst: dst,
@@ -239,7 +261,7 @@
 			}
 
 			function setImg(src) {
-				imgObj.setAttribute("src", src);
+				vm['img' + vm.imgI] = src;
 			}
 
 			function gettask(server, callback) {
@@ -247,36 +269,24 @@
 					method: "POST"
 				}, callback);
 			}
-			doc.getElementById("res").addEventListener("tap", function() {
-				if(hasClass(this, "icon-xuanzhong")) {
-					removeClass(this, "icon-xuanzhong");
-					addClass(this, "icon-weixuanzhong");
-					submitObj.setAttribute("disabled", "disabled");
-				} else {
-					removeClass(this, "icon-weixuanzhong");
-					addClass(this, "icon-xuanzhong");
-					submitObj.removeAttribute("disabled", "disabled");
-				}
-			})
-			doc.getElementById("user-manual").addEventListener('tap', function() {
-				w.openView("../user_manual.html")
-			});
-			doc.getElementById("content").addEventListener("input", function() {
-				if(this.value.length > 0) {
-					submitObj.removeAttribute("disabled");
-				} else {
-					submitObj.setAttribute("disabled", "disabled");
-				}
-			});
-			var oldBack = _.back;
-			_.back = function() {
-				doc.activeElement.blur();
-				oldBack();
-			};
-			_("#message-img").on('tap', "img", function() {
-				doc.activeElement.blur();
-			})
 		})(mui, document, util, window)
+		//获取病曆列表
+		function getIllist() {
+			var pdata = {
+				privateToken: window.getUser(),
+				docId: docId
+			}
+			//根据醫生id 获取基本信息
+			util.mypost("leaving_msg/leavingMsgView", pdata, false, function(data) {
+				if(data.code == 0) {
+					vm.illness = data.data.illnessHistory || [];
+				} else if(data.code == 500 && "未登錄" == data.msg) {
+					util.goLogin();
+				} else {
+					mui.toast(data.msg)
+				}
+			}, myerror);
+		}
 	</script>
 
 </html>

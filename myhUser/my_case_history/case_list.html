@@ -99,8 +99,8 @@
 								vm.items = vm.items.concat(data);
 								vm.mescroll.endSuccess(data.length);
 							} else if(data.code == -1){
-								data = [];
-								vm.mescroll.endSuccess(data.length);
+								vm.items = [];
+								vm.mescroll.endSuccess(vm.items.length);
 							} else{
 								_.toast(data.msg || '請求失敗');
 								vm.mescroll.endErr();

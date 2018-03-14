@@ -844,7 +844,7 @@
 	height: 50px;
 	border: none;
 	display: block;
-	color: #a9a9a9;
+	color: #555;
 	font-size: 15px;
 	margin-left: -4px
 }
@@ -3513,16 +3513,16 @@
 }
 
 .yd-checkbox>input[type=checkbox]:disabled~.yd-checkbox-text {
-	color: #ccc
+	color: #33A2D7
 }
 
 .yd-checkbox>input[type=checkbox]:disabled+.yd-checkbox-icon {
-	border-color: #ccc;
-	background-color: #f3f3f3
+	border-color: #33A2D7;
+	background-color: #fff
 }
 
 .yd-checkbox>input[type=checkbox]:disabled+.yd-checkbox-icon>i {
-	border-color: #ccc
+	border-color: #33A2D7
 }
 
 .yd-checkbox-icon {
@@ -3549,7 +3549,7 @@
 
 .yd-checkbox-text {
 	margin-left: 1px;
-	font-size: 15px;
+	font-size: 13px;
 	color: #666;
 	pointer-events: none
 }

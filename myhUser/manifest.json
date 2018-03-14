@@ -1254,8 +1254,7 @@
 					"info/info_detail.html",
 					"vaccine/vaccine_submit.html",
 					"my_center/contactService.html",
-					"guide.html",
-					"index.html"
+					"guide.html"
 				],
 				"priority": 3
 			},

@@ -132,7 +132,7 @@
 						u.mypost("leaving_msg/leavingMsgView", pdata, true, function(data) {
 							if(data.code == 0) {
 								var messageData = data.data.doctor[0];
-								vm.price = data.data.leavFee ? data.data.leavFee[0].leavMsgFee : '0.00';
+								vm.price = data.data.leavFee[0].leavMsgFee || '0.00';
 								vm.docName = messageData.docName;
 								vm.officeName = messageData.officeName;
 								vm.illness = data.data.illnessHistory || [];

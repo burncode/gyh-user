@@ -833,7 +833,8 @@
 	-webkit-align-items: center;
 	-ms-flex-align: center;
 	align-items: center;
-	text-align: left
+	text-align: left;
+	padding-left: 15px
 }
 
 .yd-cell-right select {

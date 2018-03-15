@@ -36,7 +36,7 @@
 			<div class="mui-content">
 				<yd-cell-group>
 					<yd-cell-item>
-						<span slot="left">預約定金：</span>
+						<span slot="left">預約定金 (¥) ：</span>
 						<input slot="right" type="number" v-model="fee" placeholder="請輸入預約定金" readonly>
 					</yd-cell-item>
 					<yd-cell-item>
@@ -45,7 +45,7 @@
 					</yd-cell-item>
 					<yd-cell-item arrow>
 						<span slot="left">选择時間：</span>
-						<yd-datetime type='datetime' :start-date="startTime" end-date="2019-12-12" v-model="appointTime" :minute-format="minuteFormat" slot="right"></yd-datetime>
+						<yd-datetime type='date' :start-date="startTime" end-date="2019-12-12" v-model="appointTime" slot="right"></yd-datetime>
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">聯系人：</span>
@@ -150,8 +150,6 @@
 							_.toast("請選擇預約時間");
 						} else if(u.isNull(vm.person)) {
 							_.toast("請輸入聯系人姓名");
-						} else if('請選擇出生年月' == vm.birthday) {
-							_.toast("請選擇出生年月");
 						} else if(u.isNull(vm.telephone)) {
 							_.toast("請輸入聯系電話");
 						} else if(!u.checkPhone(vm.telephone)) {
@@ -231,15 +229,14 @@
 			function getCurrentTime() {
 				var date = new Date();
 				var month = date.getMonth() + 1;
-				var strDate = date.getDate();
+				var strDate = date.getDate() + 1;
 				if(month >= 1 && month <= 9) {
 					month = "0" + month;
 				}
 				if(strDate >= 0 && strDate <= 9) {
 					strDate = "0" + strDate;
 				}
-				var currentdate = date.getFullYear() + "-" + month + "-" + strDate +
-					" " + (Number(date.getHours()) + 1) + ":00";
+				var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
 				return currentdate;
 			}
 		})(mui, document, util, window)

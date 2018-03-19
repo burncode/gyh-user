@@ -97,12 +97,13 @@
 			type = 1;
 		var vm = null;
 		(function(_, doc, u, w) {
+			var currentTime = getCurrentTime();
 			vm = new Vue({
 				el: '#app',
 				data: {
 					fee: '0.00',
-					appointTime: getCurrentTime(),
-					startTime: getCurrentTime(),
+					appointTime: currentTime,
+					startTime: currentTime,
 					sex: 1,
 					person: '',
 					userAddr: '',
@@ -118,7 +119,7 @@
 					_.plusReady(function() {
 						var currentView = plus.webview.currentWebview();
 						docId = currentView.docId;
-						appointId = currentView.appointId; //預約id
+						appointId = currentView.appointId;
 						type = currentView.type ? currentView.type : 2;
 						self.regNumView(docId);
 					})

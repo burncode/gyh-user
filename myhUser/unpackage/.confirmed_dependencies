@@ -1441,7 +1441,8 @@
       "doctor/pay.html",
       "my_center/contactService.html",
       "doctor/interview_submit_succeed.html",
-      "my_case_history/add_case.html"
+      "my_case_history/add_case.html",
+      "userLogin.html"
     ]
   },
   "msearch/setting.html": {

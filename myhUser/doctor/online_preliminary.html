@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="../css/common.css" />
 		<link rel="stylesheet" href="../css/doctor/doctor_server.css" />
 	</head>
+
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
@@ -42,7 +43,7 @@
 				<yd-cell-group>
 					<yd-cell-item arrow>
 						<span slot="left"><span class="star">*</span>鉤通時間：</span>
-						<yd-datetime type='date' :start-date="startTime" end-date="2019-12-12" v-model="hopeCallDate" slot="right"></yd-datetime>
+						<yd-datetime type='datetime' :start-date="startTime" end-date="2019-12-12" v-model="hopeCallDate" slot="right"></yd-datetime>
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>聯系人：</span>
@@ -85,7 +86,9 @@
 	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script src="../js/common.js"></script>
 	<script type="text/javascript">
-		var vm = null,type=1,docId=null;
+		var vm = null,
+			type = 1,
+			docId = null;
 		(function(_, doc, u, w) {
 			var currentTime = getCurrentTime();
 			vm = new Vue({
@@ -102,7 +105,7 @@
 					hopeCallDate: currentTime,
 					startTime: currentTime,
 					illness: [],
-					illnessId:'',
+					illnessId: '',
 					nickname: '',
 					telephone: '',
 					sex: 1,
@@ -170,18 +173,18 @@
 							pdata.content = vm.content;
 							pdata.illnessId = vm.illnessId;
 							pdata.price = vm.fee;
-							if(vm.fee == vm.phoneFeeFirst){
+							if(vm.fee == vm.phoneFeeFirst) {
 								pdata.phoneTimeLen = vm.timeLen[0].phoneTimeLenFirst;
 								pdata.timeLenKey = 'phoneTimeLenFirst';
-							}else if(vm.fee == vm.phoneFeeSecond){
+							} else if(vm.fee == vm.phoneFeeSecond) {
 								pdata.phoneTimeLen = vm.timeLen[0].phoneTimeLenSecond;
 								pdata.timeLenKey = 'phoneTimeLenSecond';
-							}else{
+							} else {
 								pdata.phoneTimeLen = vm.timeLen[0].phoneTimeLenThird;
 								pdata.timeLenKey = 'phoneTimeLenThird';
 							}
 							if(type == 1) {
-								pdata.oid = oid;//重新預約id
+								pdata.oid = oid; //重新預約id
 								u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
 									if(data.code == 0) {
 										var ex = {
@@ -236,6 +239,23 @@
 				return currentdate;
 			}
 		})(mui, document, util, window)
+		//获取病曆列表
+		function getIllist() {
+			var pdata = {
+				privateToken: window.getUser(),
+				docId: docId
+			}
+			//根据醫生id 获取基本信息
+			util.mypost("reg_num/regNumView", pdata, false, function(data) {
+				if(data.code == 0) {
+					vm.illness = data.data.illness || []; //病曆列表
+				} else if(data.code == 500 && "未登錄" == data.msg) {
+					util.goLogin();
+				} else {
+					mui.toast(data.msg)
+				}
+			}, myerror);
+		}
 	</script>
 
 </html>

@@ -140,6 +140,8 @@
 										regWeb && regWeb.evalJS('getIllist()');
 										var mregWeb = plus.webview.getWebviewById('message_question_answer');
 										mregWeb && mregWeb.evalJS('getIllist()');
+										var onlineWeb = plus.webview.getWebviewById('online_preliminary');
+										onlineWeb && onlineWeb.evalJS('getIllist()');
 										_.back();
 									}
 								} else {

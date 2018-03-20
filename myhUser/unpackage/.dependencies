@@ -1,72 +1,32 @@
 {
-  "my_case_history/add_case.html": {
-    "href": "my_case_history/add_case.html",
+  "my_center/myinfo.html": {
+    "href": "my_center/myinfo.html",
     "resources": [
       "js/vue.min.js",
       "js/dist/ydui.px.js",
       "css/dist/ydui.px.css"
     ],
-    "priority": 9
+    "priority": 3
   },
   "doctor/order_register.html": {
     "href": "doctor/order_register.html",
     "resources": [
-      "js/vue.min.js",
-      "js/dist/ydui.px.js",
-      "css/dist/ydui.px.css"
+      "css/doctor/doctor_server.css"
     ],
     "refer": [],
     "priority": 7
   },
-  "my_case_history/add_record.html": {
-    "href": "my_case_history/add_record.html",
+  "doctor/online_preliminary.html": {
+    "href": "doctor/online_preliminary.html",
     "resources": [
       "js/vue.min.js",
       "js/dist/ydui.px.js",
-      "css/dist/ydui.px.css"
+      "css/dist/ydui.px.css",
+      "css/doctor/doctor_server.css"
     ],
-    "priority": 8
-  },
-  "my_case_history/edit_case.html": {
-    "href": "my_case_history/edit_case.html",
-    "resources": [
-      "js/vue.min.js",
-      "js/dist/ydui.px.js",
-      "css/dist/ydui.px.css"
+    "refer": [
+      "my_case_history/add_case.html"
     ],
-    "refer": [],
-    "priority": 8
-  },
-  "my_case_history/case_detail.html": {
-    "href": "my_case_history/case_detail.html",
-    "resources": [
-      "js/vue.min.js",
-      "js/dist/ydui.px.js",
-      "css/dist/ydui.px.css"
-    ],
-    "refer": [],
-    "priority": 8
-  },
-  "my_case_history/case_list.html": {
-    "href": "my_case_history/case_list.html",
-    "resources": [
-      "js/vue.min.js",
-      "js/mescroll.min.js",
-      "img/mescroll-totop.png",
-      "css/mescroll/mescroll.min.css"
-    ],
-    "refer": [],
-    "priority": 8
-  },
-  "doctor/doctor_detail.html": {
-    "href": "doctor/doctor_detail.html",
-    "resources": [
-      "js/vue.min.js",
-      "js/mescroll.min.js",
-      "img/mescroll-totop.png",
-      "css/mescroll/mescroll.min.css"
-    ],
-    "refer": [],
-    "priority": 0
+    "priority": 5
   }
 }

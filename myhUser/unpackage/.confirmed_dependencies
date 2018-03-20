@@ -189,7 +189,10 @@
       "css/mui.picker.min.css",
       "css/common.css",
       "css/center/myinfo.css",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
     ],
     "refer": [
       "my_center/modify_payPwd.html",
@@ -508,7 +511,8 @@
       "doctor/order_register.html",
       "js/vue.min.js",
       "js/dist/ydui.px.js",
-      "css/dist/ydui.px.css"
+      "css/dist/ydui.px.css",
+      "css/doctor/doctor_server.css"
     ],
     "refer": [
       "know_agree.html",
@@ -1426,13 +1430,18 @@
       "images/service-1.png",
       "fonts/iconfont.ttf",
       "fonts/mui.ttf",
-      "css/mui.min.css"
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css",
+      "css/doctor/doctor_server.css"
     ],
     "refer": [
       "know_agree.html",
       "doctor/pay.html",
       "my_center/contactService.html",
-      "doctor/interview_submit_succeed.html"
+      "doctor/interview_submit_succeed.html",
+      "my_case_history/add_case.html"
     ]
   },
   "msearch/setting.html": {

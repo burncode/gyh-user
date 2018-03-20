@@ -11,25 +11,8 @@
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
 		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/doctor/doctor_server.css" />
 	</head>
-	<style>
-		input[type=text],
-		input[type=number],
-		select {
-			margin-bottom: 0;
-		}
-		
-		.check_box {
-			margin: 0 0 0 15px;
-			line-height: 18px;
-			padding: 10px 0;
-		}
-		
-		.star {
-			color: red;
-		}
-	</style>
-
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
@@ -55,6 +38,8 @@
 						<span slot="left" class="main-font-color">咨詢費：</span>
 						<span slot="right" class="main-font-color">¥ {{fee}}</span>
 					</yd-cell-item>
+				</yd-cell-group>
+				<yd-cell-group>
 					<yd-cell-item arrow>
 						<span slot="left"><span class="star">*</span>鉤通時間：</span>
 						<yd-datetime type='date' :start-date="startTime" end-date="2019-12-12" v-model="hopeCallDate" slot="right"></yd-datetime>
@@ -100,7 +85,7 @@
 	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script src="../js/common.js"></script>
 	<script type="text/javascript">
-		var vm = null,type=1;
+		var vm = null,type=1,docId=null;
 		(function(_, doc, u, w) {
 			var currentTime = getCurrentTime();
 			vm = new Vue({
@@ -163,7 +148,7 @@
 						if(u.isNull(vm.fee)) {
 							_.toast("請選擇时长");
 						} else if(u.isNull(vm.nickname)) {
-							_.toast("請輸入姓名");
+							_.toast("請輸入聯系人姓名");
 						} else if(u.isNull(vm.telephone)) {
 							_.toast("請輸入手機號碼");
 						} else if(!u.checkPhone(vm.telephone)) {
@@ -177,6 +162,7 @@
 						} else {
 							var pdata = {};
 							pdata.privateToken = w.getUser();
+							pdata.docId = docId;
 							pdata.person = vm.nickname;
 							pdata.sex = vm.sex;
 							pdata.telephone = vm.telephone;
@@ -194,41 +180,37 @@
 								pdata.phoneTimeLen = vm.timeLen[0].phoneTimeLenThird;
 								pdata.timeLenKey = 'phoneTimeLenThird';
 							}
-							
-							console.log('pdata=====' +JSON.stringify(pdata));
-							
-//							if(type == 1) {
-//								pdata.oid = oid;//重新預約id
-//								//重新預約  根据醫生id 获取基本信息
-//								u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
-//									if(data.code == 0) {
-//										var ex = {
-//											type: 4,
-//											order_type: "在線問診咨詢費",
-//											orderId: oid,
-//											fee: vm.fee
-//										}
-//										w.openView("pay.html", ex);
-//									} else {
-//										_.toast(data.msg);
-//									}
-//								}, myerror);
-//							} else if(type == 2) {
-//								u.mypost("diagnosis_online/diaDoPostTempOne", pdata, true, function(data) {
-//									if(data.code == 0) {
-//										orderId = data.data.orderId;
-//										var ex = {
-//											type: 4,
-//											order_type: "在線問診咨詢費",
-//											orderId: orderId,
-//											fee: vm.fee
-//										}
-//										w.openView("pay.html", ex);
-//									} else {
-//										_.toast(data.msg);
-//									}
-//								}, myerror);
-//							}
+							if(type == 1) {
+								pdata.oid = oid;//重新預約id
+								u.mypost("diagnosis_online/reDiaSubmit", pdata, true, function(data) {
+									if(data.code == 0) {
+										var ex = {
+											type: 4,
+											order_type: "在線問診咨詢費",
+											orderId: oid,
+											fee: vm.fee
+										}
+										w.openView("pay.html", ex);
+									} else {
+										_.toast(data.msg);
+									}
+								}, myerror);
+							} else if(type == 2) {
+								u.mypost("diagnosis_online/diaDoPostTempOne", pdata, true, function(data) {
+									if(data.code == 0) {
+										orderId = data.data.orderId;
+										var ex = {
+											type: 4,
+											order_type: "在線問診咨詢費",
+											orderId: orderId,
+											fee: vm.fee
+										}
+										w.openView("pay.html", ex);
+									} else {
+										_.toast(data.msg);
+									}
+								}, myerror);
+							}
 						}
 					},
 					toAgree: function() {

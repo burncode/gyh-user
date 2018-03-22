@@ -66,9 +66,10 @@
 			_.plusReady(function(){
 				//获取通道
 				plus.payment.getChannels(function(channels){
-			        channel=channels[0];
+					console.log(JSON.stringify(channels));
+			        var channel=channels[0];
 			        for(var i in channels){
-						var channel=channels[i];
+						channel=channels[i];
 						if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
 							continue;
 						}
@@ -83,13 +84,10 @@
 				doc.getElementById("pay").addEventListener('tap',function(){
 					if(u.isNull(totalObj.value)){
 	                    _.toast("請輸入支付金額");
-	                    return;
 	                }else if(!u.checkMoney(totalObj.value)){
 	                    _.toast("支付金額必須是數字");
-	                    return;
 	                }else if(isEmojiCharacter(totalObj.value)){
 	                    _.toast("不支持表情輸入");
-	                    return;
 	                }else{
 	                	payWay = doc.querySelector(".mui-table-view-cell.mui-selected").id;
 						if(payWay==1){//微信支付
@@ -155,13 +153,14 @@
 				    	_.ajax({
 							url: data.data.wxPayUrl,type: "get",data:null,timeout:60000,
 							success: function(data) {
-								data = JSON.parse(data);
-								plus.payment.request(pays[id],data,function(result){
+//								data = JSON.parse(data);
+								plus.payment.request(pays['wxpay'],data,function(result){
 					                plus.nativeUI.alert("充值成功！",function(){
 					                	plus.webview.getWebviewById("mywallet").evalJS("walletData()");
 					                	w.openView("mywallet.html");
 					                });
 					            },function(error){
+					            	_.alert("error==" + JSON.stringify(error))
 					            	if("canceled" == error.message.substr(error.message.length-8,8)){
 					            		_.toast("已取消操作")
 					            	}else if("客戶端未安裝" == error.message.substr(0,6)){

@@ -194,6 +194,23 @@
 			            		_.toast("請求異常，請重試")
 			            	}
 			            });
+				    }else if(id=='wxpay'){//微信支付
+				    	_.ajax({
+							url: data.data.wxPayUrl,type: "get",data:null,timeout:6000,
+							success: function(data) {
+								data = JSON.parse(data);
+								plus.payment.request(pays['wxpay'],data,function(result){
+				                	w.openView(targetWeb);
+					            },function(error){
+					            	if(error.code == '-8'){
+					            		_.toast("客户端未安装");
+					            	}
+					            });
+							},
+							error: function(xhr) {
+								_.toast("请求异常，请重试")
+							}
+						});
 				    }else{
 				        _.toast("不支持此支付通道！",null,"港醫匯");
 				    }

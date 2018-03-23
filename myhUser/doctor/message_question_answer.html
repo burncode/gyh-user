@@ -103,12 +103,14 @@
 					imgI: 1
 				},
 				mounted: function() {
-					var currentView = plus.webview.currentWebview();
-					docId = currentView.docId; //提交問題获取docId
-					this.leavingMsgView({
-						privateToken: w.getUser(),
-						docId: docId
-					});
+					_.plusReady(function(){
+						var currentView = plus.webview.currentWebview();
+						docId = currentView.docId; //提交問題获取docId
+						vm.leavingMsgView({
+							privateToken: w.getUser(),
+							docId: docId
+						});
+					})
 				},
 				methods: {
 					leavingMsgView: function(pdata) {

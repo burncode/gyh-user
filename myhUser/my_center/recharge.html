@@ -153,16 +153,14 @@
 				    	_.ajax({
 							url: data.data.wxPayUrl,type: "get",data:null,timeout:60000,
 							success: function(data) {
-//								data = JSON.parse(data);
 								plus.payment.request(pays['wxpay'],data,function(result){
 					                plus.nativeUI.alert("充值成功！",function(){
 					                	plus.webview.getWebviewById("mywallet").evalJS("walletData()");
 					                	w.openView("mywallet.html");
 					                });
 					            },function(error){
-					            	_.alert("error==" + JSON.stringify(error))
 					            	if("canceled" == error.message.substr(error.message.length-8,8)){
-					            		_.toast("已取消操作")
+					            		_.toast("已取消操作") 
 					            	}else if("客戶端未安裝" == error.message.substr(0,6)){
 					            		_.toast("客戶端未安裝")
 					            	}else{

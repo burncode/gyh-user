@@ -61,7 +61,7 @@
 					self.getData();
 				},
 				methods: {
-					getData: function(docId) {
+					getData: function() {
 						u.mypost("user_center/userCenterDetail", {
 							privateToken: w.getUser()
 						}, true, function(data) {
@@ -79,7 +79,7 @@
 					saveData: function() {
 						u.mypost("user_center/userDetailSave", {
 							privateToken: w.getUser(),
-							nickname: vm.nickname,
+							nickname: vm.nickname, 
 							sex: vm.sex,
 							birthday: vm.birthday
 						}, true, function(data) {

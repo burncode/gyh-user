@@ -198,12 +198,15 @@
 				    	_.ajax({
 							url: data.data.wxPayUrl,type: "get",data:null,timeout:6000,
 							success: function(data) {
-								data = JSON.parse(data);
 								plus.payment.request(pays['wxpay'],data,function(result){
 				                	w.openView(targetWeb);
 					            },function(error){
-					            	if(error.code == '-8'){
-					            		_.toast("客户端未安装");
+					            	if("canceled" == error.message.substr(error.message.length-8,8)){
+					            		_.toast("已取消操作")
+					            	}else if("客戶端未安裝" == error.message.substr(0,6)){
+					            		_.toast("客戶端未安裝")
+					            	}else{
+					            		_.toast("支付異常，請重試")
 					            	}
 					            });
 							},

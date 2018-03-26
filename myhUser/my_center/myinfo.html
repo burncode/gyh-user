@@ -58,7 +58,9 @@
 				},
 				mounted: function() {
 					var self = this;
-					self.getData();
+					_.plusReady(function(){
+						self.getData();
+					})
 				},
 				methods: {
 					getData: function() {

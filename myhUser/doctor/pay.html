@@ -199,7 +199,7 @@
 							url: data.data.wxPayUrl,type: "get",data:null,timeout:6000,
 							success: function(data) {
 								plus.payment.request(pays['wxpay'],data,function(result){
-				                	w.openView(targetWeb);
+				                	w.openView(targetWeb,{type:type});
 					            },function(error){
 					            	if("canceled" == error.message.substr(error.message.length-8,8)){
 					            		_.toast("已取消操作")
@@ -249,7 +249,6 @@
 					plus.nativeUI.alert(txt,function(){},'提示','确定');
 				}
 			}
-			
 			
 			_(doc).on("tap",".mui-table-view-cell",function(){
 				var ways = null,self = null;

@@ -29,7 +29,7 @@
 							</div>
 						</a>
 					</li>
-					<li id='2' class="mui-table-view-cell">
+					<!--<li id='2' class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							<img class="mui-media-object mui-pull-left" src="../images/zfb.png">
 							<div class="mui-media-body mui-pull-left">支付寶支付</div>
@@ -37,7 +37,7 @@
 								<span class="choose-pay-way"></span>
 							</div>
 						</a>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 			<button class="but" id="pay">支付</button>
@@ -66,7 +66,6 @@
 			_.plusReady(function(){
 				//获取通道
 				plus.payment.getChannels(function(channels){
-					console.log(JSON.stringify(channels));
 			        var channel=channels[0];
 			        for(var i in channels){
 						channel=channels[i];
@@ -103,10 +102,7 @@
 				if(!pc.serviceReady){
 					var txt=null;
 					switch(pc.id){
-						case "alipay":
-						txt="檢測到系統未安裝“支付寶快捷支付服務”，無法完成支付";
-						break;
-						default:
+						case "wxpay":
 						txt="系統未安裝“"+pc.description+"”服務，無法完成支付";
 						break;
 					}
@@ -123,7 +119,7 @@
 			    }else if(id=='wxpay'){
 			    	pdata.payType = 1;
 			    }else{
-			        _.toast("不支持此支付通道！",null,"港醫匯");
+			        _.toast("不支持此支付通道",null,"港醫匯");
 			        return;
 			    }
 				pdata.amount = totalObj.value * 100;//支付金額(totalObj.value * 100)
@@ -131,7 +127,7 @@
 					//支付寶支付
 					if(id=='alipay'){
 						plus.payment.request(pays[id],data.data.alipayReqStr,function(result){
-			                plus.nativeUI.alert("充值成功！",function(){
+			                plus.nativeUI.alert("充值成功",function(){
 			                	plus.webview.getWebviewById("mywallet").evalJS("walletData()");
 			                	w.openView("mywallet.html");
 			                });

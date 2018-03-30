@@ -101,12 +101,12 @@
 			function checkServices(pc){
 				if(!pc.serviceReady){
 					var txt=null;
-					switch(pc.id){
-						case "wxpay":
+					if("wxpay" == pc.id){
 						txt="系統未安裝“"+pc.description+"”服務，無法完成支付";
-						break;
+						plus.nativeUI.confirm(txt,function(e){
+							_.back();
+						},pc.description);
 					}
-					plus.nativeUI.confirm(txt,function(e){},pc.description);
 				}
 			}
 			//调用支付

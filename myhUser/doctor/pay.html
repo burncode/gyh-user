@@ -242,11 +242,9 @@
 			//检查服务的加载
 			function checkServices(pc){
 				if(!pc.serviceReady){
-					var txt=null;
-					if("alipay" == pc.id){
-						txt="檢測到系統未安裝“支付寶快捷支付服務”，請選擇余额支付";
+					if("wxpay" == pc.id){
+						_.toast("系統未安裝“"+pc.description+"”服務， 請選擇餘額支付");
 					}
-					plus.nativeUI.alert(txt,function(){},'提示','确定');
 				}
 			}
 			

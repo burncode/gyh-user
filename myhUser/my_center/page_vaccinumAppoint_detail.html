@@ -28,6 +28,7 @@
 			<div class="detail-content">
 				<p><label>就诊人 ：</label>{{contacts}}</p>
 				<p><label>預約時間 ：</label>{{appointTime}}</p>
+				<p><label>次數 ：</label>第 {{appointTimes}} 次</p>
 				<p><label>聯系手機 ：</label>{{appointTel}}</p>
 				<p><label>醫院地址 ：</label>{{hosAddr}}</p>
 				<p><label>备注 ：</label>{{userRemark}}</p>
@@ -54,6 +55,7 @@
 						appointTel: '',
 						hosAddr: '',
 						userRemark: '',
+						appointTimes:''
 					},
 					mounted: function() {
 						this.vaccinumName = web.vaccinumName;
@@ -65,6 +67,7 @@
 						this.hosAddr = web.hosAddr;
 						this.userRemark = web.userRemark;
 						this.appointTel = web.appointTel;
+						this.appointTimes = web.appointTimes;
 					}
 				})
 			})

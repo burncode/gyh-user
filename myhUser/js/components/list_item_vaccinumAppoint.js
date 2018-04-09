@@ -35,7 +35,8 @@
 					hosAddr:item.hosAddr,
 					userRemark:item.userRemark,
 					contacts:item.contacts,
-					appointTel:item.appointTel
+					appointTel:item.appointTel,
+					appointTimes:item.appointTimes
 				});
 			}
 		}

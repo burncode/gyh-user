@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>我的登记表</title>
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<style>
+			input[type=text],
+			input[type=number],
+			select {
+				margin-bottom: 0;
+			}
+			
+			.star {
+				color: red
+			}
+			.yd-textarea {
+			    padding: 10px 5px;
+			}
+			.yd-checkbox {
+			    padding: 5px;
+			}
+			.marg-5{
+		       margin: 10px 15px;
+			}
+			.yd-cell-box {
+			    margin-bottom: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">我的登记表</h1>
+				<a class="mui-btn mui-btn-link mui-pull-right" @tap="saveData()">保存</a>
+			</header>
+			<div class="mui-content">
+				<yd-cell-group>
+					<yd-cell-item>
+						<span slot="left"><span class="star">*</span>姓名：</span>
+						<input slot="right" type="text" placeholder="請輸入姓名" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left"><span class="star">*</span>联系电话：</span>
+						<input slot="right" type="text" placeholder="請輸入联系电话" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left"><span class="star">*</span>年齡：</span>
+						<input slot="right" type="number" placeholder="請輸入年齡" v-model="age">
+					</yd-cell-item>
+					<yd-cell-item arrow type="label">
+						<span slot="left"><span class="star">*</span>性別：</span>
+						<select slot="right" v-model="sex">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left"><span class="star">*</span>身份证号：</span>
+						<input slot="right" type="number" placeholder="請輸入身份证号" v-model="age">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">邮箱：</span>
+						<input slot="right" type="text" placeholder="請輸入联系电话" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item arrow>
+						<span slot="left">出生日期：</span>
+						<yd-datetime type="date" v-model="date" slot="right"></yd-datetime>
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">住址：</span>
+						<input slot="right" type="text" placeholder="請輸入住址" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">身高：</span>
+						<input slot="right" type="text" placeholder="請輸入身高" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">家庭医生：</span>
+						<input slot="right" type="text" placeholder="請輸入家庭医生" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">家庭医生电话：</span>
+						<input slot="right" type="text" placeholder="請輸入家庭医生电话" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-group>
+						<yd-cell-item>
+							<yd-textarea slot="right" placeholder="請如实填写輸入过敏史"></yd-textarea>
+						</yd-cell-item>
+					</yd-cell-group>
+					<div class="marg-5">
+						<p>最近是否接受手术</p>
+						<yd-switch v-model="switch1"></yd-switch>
+					</div>
+					<yd-cell-item>
+						<span slot="left">吸烟量：</span>
+						<input slot="right" type="text" placeholder="請輸入吸烟量" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">饮酒量：</span>
+						<input slot="right" type="text" placeholder="請輸入饮酒量" v-model="realName">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">使用药物：</span>
+						<input slot="right" type="text" placeholder="請輸入长期所使用药物" v-model="realName">
+					</yd-cell-item>
+					<p class="marg-5">请选择与你相关的项目</p>
+					<div class="marg-5">
+						<yd-checkbox-group v-model="checkbox3">
+							<yd-checkbox val="1">艾滋病</yd-checkbox>
+							<yd-checkbox val="2">高血压</yd-checkbox>
+							<yd-checkbox val="3">低血压</yd-checkbox>
+							<yd-checkbox val="4">心脏病</yd-checkbox>
+							<yd-checkbox val="5">怀孕</yd-checkbox>
+							<yd-checkbox val="6">喂母乳</yd-checkbox>
+							<yd-checkbox val="7">准备怀孕</yd-checkbox>
+							<yd-checkbox val="8">糖尿病</yd-checkbox>
+							<yd-checkbox val="9">皮肤病</yd-checkbox>
+							<yd-checkbox val="10">癫痫病</yd-checkbox>
+						</yd-checkbox-group>
+					</div>
+				</yd-cell-group>
+				<yd-cell-group>
+					<div class="marg-5"><yd-checkbox v-model="checkbox4" shape="circle">本人承诺以上信息均为如实填写，如有不实本人将承担所有责任。</yd-checkbox></div>
+				</yd-cell-group>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script src="../js/common.js"></script>
+	<script>
+		(function(_, doc, u, w) {
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					realName: '',
+					age: "",
+					sex: "1",
+					date: '2017-05-11',
+					switch1: '',
+					checkbox3: ['2'],
+					checkbox4: []
+				},
+				mounted: function() {
+
+				},
+				methods: {
+					saveData: function() {
+						var pdata = {
+							privateToken: w.getUser(),
+							realName: vm.realName,
+							age: vm.age,
+							sex: vm.sex
+						}
+						if(u.isNull(pdata.realName)) {
+							_.toast("請輸入姓名");
+						} else if(u.isNull(pdata.age)) {
+							_.toast("請輸入年齡");
+						} else if(!u.checkAge(pdata.age)) {
+							_.toast("請輸入正确的年齡");
+						} else {
+							u.mypost("medical/addIllnessHistory", pdata, true, function(data) {
+								if(data.code == 0) {
+									_.toast("病曆添加成功");
+									var case_listWeb = plus.webview.getWebviewById("case_list")
+									if(case_listWeb) {
+										case_listWeb.evalJS("getCaseList()");
+									} else {
+										var regWeb = plus.webview.getWebviewById('order_register');
+										regWeb && regWeb.evalJS('getIllist()');
+										var mregWeb = plus.webview.getWebviewById('message_question_answer');
+										mregWeb && mregWeb.evalJS('getIllist()');
+										var onlineWeb = plus.webview.getWebviewById('online_preliminary');
+										onlineWeb && onlineWeb.evalJS('getIllist()');
+										_.back();
+									}
+								} else {
+									_.toast(data.msg);
+								}
+							}, myerror);
+						}
+					}
+				}
+			})
+		})(mui, document, util, window)
+	</script>
+
+</html>

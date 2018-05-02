@@ -21,17 +21,25 @@
 			.star {
 				color: red
 			}
+			
 			.yd-textarea {
-			    padding: 10px 5px;
+				padding: 10px 5px;
 			}
+			
 			.yd-checkbox {
-			    padding: 5px;
+				padding: 5px;
 			}
-			.marg-5{
-		       margin: 10px 15px;
+			
+			.marg-5 {
+				margin: 10px 15px;
 			}
+			
 			.yd-cell-box {
-			    margin-bottom: 0;
+				margin-bottom: 0;
+			}
+			
+			input[type=tel] {
+				margin-bottom: 0;
 			}
 		</style>
 	</head>
@@ -40,18 +48,18 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">我的登记表</h1>
-				<a class="mui-btn mui-btn-link mui-pull-right" @tap="saveData()">保存</a>
+				<h1 class="mui-title">我的登記表</h1>
+				<a class="mui-btn mui-btn-link mui-pull-right" v-show="isShow" @tap="saveData()">保存</a>
 			</header>
 			<div class="mui-content">
 				<yd-cell-group>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>姓名：</span>
-						<input slot="right" type="text" placeholder="請輸入姓名" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入姓名" v-model="customName">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>联系电话：</span>
-						<input slot="right" type="text" placeholder="請輸入联系电话" v-model="realName">
+						<input slot="right" type="tel" placeholder="請輸入联系电话" v-model="tel">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>年齡：</span>
@@ -61,76 +69,75 @@
 						<span slot="left"><span class="star">*</span>性別：</span>
 						<select slot="right" v-model="sex">
 							<option value="1">男</option>
-							<option value="2">女</option>
+							<option value="0">女</option>
 						</select>
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>身份证号：</span>
-						<input slot="right" type="number" placeholder="請輸入身份证号" v-model="age">
+						<input slot="right" type="number" placeholder="請輸入身份证号" v-model="idcard">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">邮箱：</span>
-						<input slot="right" type="text" placeholder="請輸入联系电话" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入邮箱" v-model="email">
 					</yd-cell-item>
 					<yd-cell-item arrow>
 						<span slot="left">出生日期：</span>
-						<yd-datetime type="date" v-model="date" slot="right"></yd-datetime>
+						<yd-datetime type="date" start-date="1970-01-01" end-date="2018-1-1" v-model="birthday" slot="right"></yd-datetime>
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">住址：</span>
-						<input slot="right" type="text" placeholder="請輸入住址" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入住址" v-model="address">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">身高：</span>
-						<input slot="right" type="text" placeholder="請輸入身高" v-model="realName">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">家庭医生：</span>
-						<input slot="right" type="text" placeholder="請輸入家庭医生" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入身高" v-model="height">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">家庭医生电话：</span>
-						<input slot="right" type="text" placeholder="請輸入家庭医生电话" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入家庭医生电话" v-model="doctorTel">
 					</yd-cell-item>
 					<yd-cell-group>
 						<yd-cell-item>
-							<yd-textarea slot="right" placeholder="請如实填写輸入过敏史"></yd-textarea>
+							<yd-textarea slot="right" placeholder="*請如实填写填写过敏史，没有则填写无" v-model="allergyHistory"></yd-textarea>
 						</yd-cell-item>
 					</yd-cell-group>
-					<div class="marg-5">
-						<p>最近是否接受手术</p>
-						<yd-switch v-model="switch1"></yd-switch>
-					</div>
+					<yd-cell-item arrow type="label">
+						<span slot="left">最近是否接受手术：</span>
+						<select slot="right" v-model="lastHasOperation">
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">吸烟量：</span>
-						<input slot="right" type="text" placeholder="請輸入吸烟量" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入吸烟量" v-model="amountOfSmoking">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">饮酒量：</span>
-						<input slot="right" type="text" placeholder="請輸入饮酒量" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入饮酒量" v-model="amountOfDrinking">
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">使用药物：</span>
-						<input slot="right" type="text" placeholder="請輸入长期所使用药物" v-model="realName">
+						<input slot="right" type="text" placeholder="請輸入长期所使用药物" v-model="longUse">
 					</yd-cell-item>
 					<p class="marg-5">请选择与你相关的项目</p>
-					<div class="marg-5">
-						<yd-checkbox-group v-model="checkbox3">
-							<yd-checkbox val="1">艾滋病</yd-checkbox>
-							<yd-checkbox val="2">高血压</yd-checkbox>
-							<yd-checkbox val="3">低血压</yd-checkbox>
-							<yd-checkbox val="4">心脏病</yd-checkbox>
-							<yd-checkbox val="5">怀孕</yd-checkbox>
-							<yd-checkbox val="6">喂母乳</yd-checkbox>
-							<yd-checkbox val="7">准备怀孕</yd-checkbox>
-							<yd-checkbox val="8">糖尿病</yd-checkbox>
-							<yd-checkbox val="9">皮肤病</yd-checkbox>
-							<yd-checkbox val="10">癫痫病</yd-checkbox>
-						</yd-checkbox-group>
-					</div>
+					<yd-checkbox-group v-model="ill">
+						<yd-checkbox val="艾滋病" shape="circle"></yd-checkbox>
+						<yd-checkbox val="高血压" shape="circle"></yd-checkbox>
+						<yd-checkbox val="低血压" shape="circle"></yd-checkbox>
+						<yd-checkbox val="心脏病" shape="circle"></yd-checkbox>
+						<yd-checkbox val="怀孕" shape="circle"></yd-checkbox>
+						<yd-checkbox val="喂母乳" shape="circle"></yd-checkbox>
+						<yd-checkbox val="准备怀孕" shape="circle"></yd-checkbox>
+						<yd-checkbox val="糖尿病" shape="circle"></yd-checkbox>
+						<yd-checkbox val="皮肤病" shape="circle"></yd-checkbox>
+						<yd-checkbox val="癫痫病" shape="circle"></yd-checkbox>
+					</yd-checkbox-group>
 				</yd-cell-group>
 				<yd-cell-group>
-					<div class="marg-5"><yd-checkbox v-model="checkbox4" shape="circle">本人承诺以上信息均为如实填写，如有不实本人将承担所有责任。</yd-checkbox></div>
+					<div class="marg-5">
+						<yd-checkbox v-model="ispromise" shape="circle">本人承诺以上信息均为如实填写，如有不实本人将承担所有责任。</yd-checkbox>
+					</div>
 				</yd-cell-group>
 			</div>
 		</div>
@@ -144,52 +151,132 @@
 			var vm = new Vue({
 				el: '#app',
 				data: {
-					realName: '',
+					customName: '',
+					tel: '',
+					email: '',
+					createTime: '',
+					birthday: '',
 					age: "",
 					sex: "1",
-					date: '2017-05-11',
-					switch1: '',
-					checkbox3: ['2'],
-					checkbox4: []
+					address: '',
+					idcard: '',
+					height: '',
+					doctorTel: '',
+					allergyHistory: '',
+					amountOfSmoking: '',
+					ill: [],
+					address: '',
+					lastHasOperation: 0,
+					ispromise: true,
+					amountOfDrinking: '',
+					longUse: '',
+					isShow: false
 				},
 				mounted: function() {
-
+					u.mypost("consult/getList", {
+						privateToken: w.getUser(),
+						offset: 0,
+						limit: 10
+					}, false, function(data) {
+						if(data.code == 0) {
+							var data = data.data[0][0];
+							if(data) {
+								vm.customName = data.customName || '';
+								vm.tel = data.tel || '';
+								vm.email = data.email || '';
+								vm.birthday = data.birthday || '';
+								vm.age = data.age || '';
+								vm.sex = data.sex || '';
+								vm.address = data.address || '';
+								vm.idcard = data.idcard || '';
+								vm.height = data.height || '';
+								vm.doctorTel = data.doctorTel || '';
+								vm.allergyHistory = data.allergyHistory || '无';
+								vm.amountOfSmoking = data.amountOfSmoking || '';
+								vm.ill = data.ill || [];
+								vm.address = data.address || '';
+								vm.lastHasOperation = data.lastHasOperation || 0;
+								vm.ispromise = data.ispromise == 1 ? true : false || false;
+								vm.longUse = data.longUse || '';
+								console.log("dta=======" + JSON.stringify(data));
+							} else {
+								vm.isShow = true;
+							}
+						} else if(data.code == 500 && "未登錄" == data.msg) {
+							u.goLogin();
+						} else {
+							_.toast(data.msg);
+						}
+					}, myerror);
 				},
 				methods: {
 					saveData: function() {
 						var pdata = {
 							privateToken: w.getUser(),
-							realName: vm.realName,
+							customName: vm.customName,
+							tel: vm.tel,
+							email: vm.email,
+							createTime: vm.getNowFormatDate(),
+							birthday: vm.birthday,
 							age: vm.age,
-							sex: vm.sex
+							sex: vm.sex,
+							address: vm.address,
+							idcard: vm.idcard,
+							height: vm.height,
+							doctorTel: vm.doctorTel,
+							allergyHistory: vm.allergyHistory,
+							amountOfSmoking: vm.amountOfSmoking,
+							address: vm.address,
+							lastHasOperation: vm.lastHasOperation,
+							ispromise: vm.ispromise ? 1 : 0,
+							ill: vm.ill,
+							longUse: vm.longUse
 						}
-						if(u.isNull(pdata.realName)) {
+						if(u.isNull(pdata.customName)) {
 							_.toast("請輸入姓名");
+						} else if(u.isNull(pdata.tel)) {
+							_.toast("請輸入联系电话");
 						} else if(u.isNull(pdata.age)) {
 							_.toast("請輸入年齡");
-						} else if(!u.checkAge(pdata.age)) {
-							_.toast("請輸入正确的年齡");
+						} else if(u.isNull(pdata.age)) {
+							_.toast("請輸入年齡");
+						} else if(!u.checkIdCard(pdata.idcard)) {
+							_.toast("請輸入正确的身份证号");
+						} else if(u.isNull(pdata.allergyHistory)) {
+							_.toast("請如实填写填写过敏史");
+						} else if(!pdata.ispromise) {
+							_.toast("请确认选择承诺协议");
 						} else {
-							u.mypost("medical/addIllnessHistory", pdata, true, function(data) {
+							u.mypost("consult/save", pdata, true, function(data) {
 								if(data.code == 0) {
-									_.toast("病曆添加成功");
-									var case_listWeb = plus.webview.getWebviewById("case_list")
-									if(case_listWeb) {
-										case_listWeb.evalJS("getCaseList()");
-									} else {
-										var regWeb = plus.webview.getWebviewById('order_register');
-										regWeb && regWeb.evalJS('getIllist()');
-										var mregWeb = plus.webview.getWebviewById('message_question_answer');
-										mregWeb && mregWeb.evalJS('getIllist()');
-										var onlineWeb = plus.webview.getWebviewById('online_preliminary');
-										onlineWeb && onlineWeb.evalJS('getIllist()');
+									_.toast("登记成功");
+									_.later(function() {
 										_.back();
-									}
+									}, 500)
+								} else if(data.code == 500 && "未登錄" == data.msg) {
+									u.goLogin();
 								} else {
 									_.toast(data.msg);
 								}
 							}, myerror);
 						}
+					},
+					getNowFormatDate: function() {
+						var date = new Date();
+						var seperator1 = "-";
+						var seperator2 = ":";
+						var month = date.getMonth() + 1;
+						var strDate = date.getDate();
+						if(month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if(strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+						var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+							" " + date.getHours() + seperator2 + date.getMinutes() +
+							seperator2 + date.getSeconds();
+						return currentdate;
 					}
 				}
 			})

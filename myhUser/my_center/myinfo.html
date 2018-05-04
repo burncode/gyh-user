@@ -29,6 +29,10 @@
 					<span slot="left">昵稱：</span>
 					<input slot="right" type="text" v-model="nickname" placeholder="請輸入昵稱">
 				</yd-cell-item>
+				<yd-cell-item>
+					<span slot="left">手機號：</span>
+					<input slot="right" type="text" v-model="mobile" placeholder="請輸入手機號">
+				</yd-cell-item>
 				<yd-cell-item arrow type="label">
 					<span slot="left">性別：</span>
 					<select slot="right" v-model="sex">
@@ -54,6 +58,7 @@
 				data: {
 					nickname: '',
 					sex: 1,
+					mobile:'',
 					birthday: '1990-01-01'
 				},
 				mounted: function() {
@@ -67,8 +72,10 @@
 						u.mypost("user_center/userCenterDetail", {
 							privateToken: w.getUser()
 						}, true, function(data) {
+							console.log("data====" +JSON.stringify(data));
 							if(data.code == 0) {
 								vm.nickname = data.data.userInfo.nickname;
+								vm.mobile = data.data.userInfo.mobile;
 								vm.sex = data.data.userInfo.sex;
 								vm.birthday = data.data.userInfo.birthday.substr(0, 10);
 							} else if(data.code == 500 && "未登錄" == data.msg) {
@@ -83,6 +90,7 @@
 							privateToken: w.getUser(),
 							nickname: vm.nickname, 
 							sex: vm.sex,
+							mobile:vm.mobile,
 							birthday: vm.birthday
 						}, true, function(data) {
 							if(data.code == 0) {

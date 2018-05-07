@@ -21,7 +21,7 @@
 				</div>
 				<form id='login-form' class="mui-input-group">
 					<div class="mui-input-row">
-						<input id='account' type="tel" class="mui-input-clear mui-input" placeholder="請輸入賬號" value="">
+						<input id='account' type="tel" class="mui-input-clear mui-input" placeholder="請輸入身份證號或手機號" value="">
 					</div>
 					<div class="mui-input-row">
 						<input id='password' type="password" class="mui-input-clear mui-input" autocomplete="off" placeholder="請輸入密碼" value="">
@@ -61,7 +61,7 @@
 				var account = accountObj.value;
 				var password = passwordObj.value;
 				if(util.isNull(account)){
-					_.toast('請輸入登錄账号')
+					_.toast('請輸入身份證號或手機號')
 				}else if(util.isNull(password)){
 					_.toast('請輸入密碼')
 				}else{

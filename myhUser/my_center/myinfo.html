@@ -26,12 +26,16 @@
 			</header>
 			<div style="padding: 44px 0;">
 				<yd-cell-item>
-					<span slot="left">昵稱：</span>
-					<input slot="right" type="text" v-model="nickname" placeholder="請輸入昵稱">
+					<span slot="left">身份證號：</span>
+					<input slot="right" type="text" v-model="idcard" placeholder="請輸入身份證號">
 				</yd-cell-item>
 				<yd-cell-item>
 					<span slot="left">手機號：</span>
-					<input slot="right" type="text" v-model="mobile" placeholder="請輸入手機號">
+					<input slot="right" type="text" v-model="phone" placeholder="請輸入手機號">
+				</yd-cell-item>
+				<yd-cell-item>
+					<span slot="left">昵稱：</span>
+					<input slot="right" type="text" v-model="nickname" placeholder="請輸入昵稱">
 				</yd-cell-item>
 				<yd-cell-item arrow type="label">
 					<span slot="left">性別：</span>
@@ -58,12 +62,13 @@
 				data: {
 					nickname: '',
 					sex: 1,
-					mobile:'',
+					phone: '',
+					idcard: '',
 					birthday: '1990-01-01'
 				},
 				mounted: function() {
 					var self = this;
-					_.plusReady(function(){
+					_.plusReady(function() {
 						self.getData();
 					})
 				},
@@ -72,10 +77,11 @@
 						u.mypost("user_center/userCenterDetail", {
 							privateToken: w.getUser()
 						}, true, function(data) {
-							console.log("data====" +JSON.stringify(data));
+							console.log("data====" + JSON.stringify(data));
 							if(data.code == 0) {
 								vm.nickname = data.data.userInfo.nickname;
-								vm.mobile = data.data.userInfo.mobile;
+								vm.phone = data.data.userInfo.phone;
+								vm.idcard = data.data.userInfo.idcard;
 								vm.sex = data.data.userInfo.sex;
 								vm.birthday = data.data.userInfo.birthday.substr(0, 10);
 							} else if(data.code == 500 && "未登錄" == data.msg) {
@@ -86,20 +92,30 @@
 						}, myerror);
 					},
 					saveData: function() {
-						u.mypost("user_center/userDetailSave", {
+						var pdata = {
 							privateToken: w.getUser(),
-							nickname: vm.nickname, 
+							nickname: vm.nickname,
 							sex: vm.sex,
-							mobile:vm.mobile,
+							phone: vm.phone,
+							idcard: vm.idcard,
 							birthday: vm.birthday
-						}, true, function(data) {
-							if(data.code == 0) {
-								_.toast(data.msg);
-								plus.webview.getWebviewById("my_center/myD.html").evalJS("getMyInfo()");
-							} else {
-								_.toast(data.msg);
-							}
-						}, myerror);
+						};
+						if(u.isNull(pdata.nickname)) {
+							_.toast("請輸入昵稱");
+						} else if(u.isNull(pdata.phone)) {
+							_.toast("請輸入手機號");
+						} else if(u.isNull(pdata.idcard)) {
+							_.toast("請輸入身份證號");
+						} else {
+							u.mypost("user_center/userDetailSave", pdata, true, function(data) {
+								if(data.code == 0) {
+									_.toast(data.msg);
+									plus.webview.getWebviewById("my_center/myD.html").evalJS("getMyInfo()");
+								} else {
+									_.toast(data.msg);
+								}
+							}, myerror);
+						}
 					}
 				}
 			})

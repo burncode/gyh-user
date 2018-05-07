@@ -102,10 +102,10 @@
 						};
 						if(u.isNull(pdata.nickname)) {
 							_.toast("請輸入昵稱");
-						} else if(u.isNull(pdata.phone)) {
-							_.toast("請輸入手機號");
-						} else if(u.isNull(pdata.idcard)) {
-							_.toast("請輸入身份證號");
+						} else if(!u.checkPhone(pdata.phone)) {
+							_.toast("請輸入正確手機號");
+						} else if(!u.checkIdCard(pdata.idcard)) {
+							_.toast("請輸入正確的身份證號");
 						} else {
 							u.mypost("user_center/userDetailSave", pdata, true, function(data) {
 								if(data.code == 0) {

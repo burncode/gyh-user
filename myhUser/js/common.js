@@ -253,7 +253,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		var pReg = /^([0-9]|[0-9]{2}|100)$/;
 		return pReg.test(age);
 	};
-	u.checkCardId = function(cardId) {
+	u.checkCardId = function(cardId) {//银行卡号
 		var pReg = /^(\d{16}|\d{19})$/;
 		return pReg.test(cardId);
 	};

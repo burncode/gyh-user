@@ -26,8 +26,8 @@
 			</header>
 			<div style="padding: 44px 0;">
 				<yd-cell-item>
-					<span slot="left">身份證號：</span>
-					<input slot="right" type="text" v-model="idcard" placeholder="請輸入身份證號">
+					<span slot="left">證件號：</span>
+					<input slot="right" type="text" v-model="idcard" placeholder="請輸入證件號">
 				</yd-cell-item>
 				<yd-cell-item>
 					<span slot="left">手機號：</span>
@@ -77,7 +77,6 @@
 						u.mypost("user_center/userCenterDetail", {
 							privateToken: w.getUser()
 						}, true, function(data) {
-							console.log("data====" + JSON.stringify(data));
 							if(data.code == 0) {
 								vm.nickname = data.data.userInfo.nickname;
 								vm.phone = data.data.userInfo.phone;
@@ -104,13 +103,14 @@
 							_.toast("請輸入昵稱");
 						} else if(!u.checkPhone(pdata.phone)) {
 							_.toast("請輸入正確手機號");
-						} else if(!u.checkIdCard(pdata.idcard)) {
-							_.toast("請輸入正確的身份證號");
+						} else if(u.isNull(pdata.idcard)) {
+							_.toast("請輸入證件號");
 						} else {
 							u.mypost("user_center/userDetailSave", pdata, true, function(data) {
 								if(data.code == 0) {
 									_.toast(data.msg);
 									plus.webview.getWebviewById("my_center/myD.html").evalJS("getMyInfo()");
+									_.back();
 								} else {
 									_.toast(data.msg);
 								}

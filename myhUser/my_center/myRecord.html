@@ -13,7 +13,6 @@
 		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
 		<link rel="stylesheet" href="../css/center/myRecord.css" />
 	</head>
-
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
@@ -22,6 +21,8 @@
 				<a class="mui-btn mui-btn-link mui-pull-right" v-show="isShow" @tap="saveData()">保存</a>
 			</header>
 			<div class="mui-content">
+				<div class="group_title font-size-16">個人資料</div>
+				<p class="group_title">（ * 標注為必填項）</p>
 				<yd-cell-group>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>姓名：</span>
@@ -48,7 +49,7 @@
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left">郵箱：</span>
-						<input slot="right" type="text" v-model="email" :readonly="!isShow" placeholder="請輸入郵箱">
+						<input slot="right" type="text" v-model="email" :readonly="!isShow" placeholder="如有,請輸入郵箱">
 					</yd-cell-item>
 					<yd-cell-item arrow>
 						<span slot="left">出生日期：</span>
@@ -63,34 +64,11 @@
 						<input slot="right" type="text" v-model="height" :readonly="!isShow" placeholder="請輸入身高">
 					</yd-cell-item>
 					<yd-cell-item>
-						<span slot="left">家庭醫生電話：</span>
-						<input slot="right" type="text" v-model="doctorTel" :readonly="!isShow" placeholder="請輸入家庭醫生電話">
+						<span slot="left">家庭醫生及電話：</span>
+						<input slot="right" type="text" v-model="doctorTel" :readonly="!isShow" placeholder="如有,請輸入家庭醫生及電話">
 					</yd-cell-item>
-					<yd-cell-group>
-						<yd-cell-item>
-							<yd-textarea slot="right" placeholder="*請如实填写填写过敏史，没有则填写无" v-model="allergyHistory" :readonly="!isShow"></yd-textarea>
-						</yd-cell-item>
-					</yd-cell-group>
-					<yd-cell-item arrow type="label">
-						<span slot="left">最近是否接受手術：</span>
-						<select slot="right" v-model="lastHasOperation" :readonly="!isShow">
-							<option value="1">是</option>
-							<option value="0">否</option>
-						</select>
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">吸煙量：</span>
-						<input slot="right" type="text" v-model="amountOfSmoking" :readonly="!isShow" placeholder="請輸入吸煙量">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">飲酒量：</span>
-						<input slot="right" type="text" v-model="amountOfDrinking" :readonly="!isShow" placeholder="請輸入飲酒量">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">長期使用藥物：</span>
-						<input slot="right" type="text" v-model="longUse" :readonly="!isShow" placeholder="請輸入長期使用藥物">
-					</yd-cell-item>
-					<p class="marg-10">請選擇與你相關的項目</p>
+					<div class="group_title font-size-16">病历和禁忌</div>
+					<p class="marg-10 mui-text-center">（請選擇與你相關的項目）</p>
 					<form class="mui-input-group">
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label>愛滋病</label>
@@ -133,9 +111,34 @@
 							<input value="癲癇病" type="checkbox" v-model="ill" :disabled="!isShow">
 						</div>
 					</form>
+					<yd-cell-group>
+						<yd-cell-item>
+							<yd-textarea slot="right" placeholder="*請如實填寫過敏史，沒有則填寫無" v-model="allergyHistory" :readonly="!isShow"></yd-textarea>
+						</yd-cell-item>
+					</yd-cell-group>
+					<yd-cell-item arrow type="label">
+						<span slot="left">最近曾接受手術：</span>
+						<select slot="right" v-model="lastHasOperation" :readonly="!isShow">
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">吸煙量：</span>
+						<input slot="right" type="text" v-model="amountOfSmoking" :readonly="!isShow" placeholder="如有,請輸入每日吸煙量">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">飲酒量：</span>
+						<input slot="right" type="text" v-model="amountOfDrinking" :readonly="!isShow" placeholder="如有,請輸入每日飲酒量">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">長期使用藥物：</span>
+						<input slot="right" type="text" v-model="longUse" :readonly="!isShow" placeholder="如有,請列出名字及用量">
+					</yd-cell-item>
+
 					<div class="mui-input-row mui-checkbox mui-left marg-5">
-						<label>我承諾提供資料的真實性、完整性</label>
-						<input value="1" type="checkbox" v-model="ispromise" :disabled="!isShow" >
+						<label>我已確認登記資料的真實性和完整性</label>
+						<input value="1" type="checkbox" v-model="ispromise" :disabled="!isShow">
 					</div>
 			</div>
 		</div>

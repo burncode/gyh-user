@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
 		<link rel="stylesheet" href="../css/center/myRecord.css" />
 	</head>
+
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
@@ -33,7 +34,7 @@
 					</yd-cell-item>
 					<yd-cell-item>
 						<span slot="left"><span class="star">*</span>年齡：</span>
-						<input slot="right" type="number" v-model="age" :readonly="!isShow" placeholder="請輸入年齡">
+						<input slot="right" type="number" v-model="age" :readonly="!isShow" placeholder="請輸入年齡" maxlength="3">
 					</yd-cell-item>
 					<yd-cell-item arrow type="label">
 						<span slot="left"><span class="star">*</span>性別：</span>
@@ -71,7 +72,7 @@
 					<form class="mui-input-group">
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label>愛滋病  AIDS </label>
-							<input value="愛滋病" type="checkbox" v-model="ill" :disabled="!isShow">
+							<input value="艾滋病" type="checkbox" v-model="ill" :disabled="!isShow">
 						</div>
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label>高血壓  Hypertension</label>
@@ -91,7 +92,7 @@
 						</div>
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label>喂母乳 Breast feeding</label>
-							<input value="喂母乳" type="checkbox" v-model="ill" :disabled="!isShow">
+							<input value="餵母乳" type="checkbox" v-model="ill" :disabled="!isShow">
 						</div>
 						<div class="mui-input-row mui-checkbox mui-left">
 							<label>準備懷孕 Prepare for Pregnancy</label>
@@ -106,7 +107,7 @@
 							<input value="皮膚病" type="checkbox" v-model="ill" :disabled="!isShow">
 						</div>
 						<div class="mui-input-row mui-checkbox mui-left">
-							<label>癲癇病  Epilepsy</label>
+							<label>癲癇症  Epilepsy</label>
 							<input value="癲癇病" type="checkbox" v-model="ill" :disabled="!isShow">
 						</div>
 					</form>
@@ -136,7 +137,7 @@
 
 					<div class="mui-input-row mui-checkbox mui-left marg-5">
 						<label>我已確認登記資料的真實性和完整性</label>
-						<input value="1" type="checkbox" v-model="ispromise" :disabled="!isShow">
+						<input value="1" type="checkbox" v-model="ispromise" disabled="disabled">
 					</div>
 			</div>
 		</div>
@@ -178,6 +179,7 @@
 						offset: 0,
 						limit: 10
 					}, false, function(data) {
+						console.log("data=======" +JSON.stringify(data));
 						if(data.code == 0) {
 							var data = data.data[0] || [];
 							if(data.length > 0) {
@@ -242,25 +244,29 @@
 							_.toast("請輸入年齡");
 						} else if(!u.checkAge(pdata.age)) {
 							_.toast("請正確輸入年齡");
-						} else if(!u.checkIdCard(pdata.idcard)) {
+						} else if(pdata.idcard == "") {
 							_.toast("請輸入正確的身份證號");
 						} else if(u.isNull(pdata.allergyHistory)) {
-							_.toast("請如實填寫填寫過敏史");
+							_.toast("請如實注明敏感");
 						} else if(!pdata.ispromise) {
 							_.toast("請確認選擇承諾協議");
 						} else {
-							u.mypost("consult/save", pdata, true, function(data) {
-								if(data.code == 0) {
-									_.toast("登記成功");
-									_.later(function() {
-										_.back();
-									}, 500)
-								} else if(data.code == 500 && "未登錄" == data.msg) {
-									u.goLogin();
-								} else {
-									_.toast(data.msg);
+							_.confirm("是否確認提交?", "提示", ["取消", "提交"], function(e) {
+								if(e.index == 1) {
+									u.mypost("consult/save", pdata, true, function(data) {
+										if(data.code == 0) {
+											_.toast("登記成功");
+											_.later(function() {
+												_.back();
+											}, 500)
+										} else if(data.code == 500 && "未登錄" == data.msg) {
+											u.goLogin();
+										} else {
+											_.toast(data.msg);
+										}
+									}, myerror);
 								}
-							}, myerror);
+							})
 						}
 					},
 					getNowFormatDate: function() {

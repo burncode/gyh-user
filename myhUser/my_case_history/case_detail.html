@@ -88,7 +88,6 @@
 				methods: {
 					getData: function() {
 						u.mypost("medical/getIllnessDetail", pdata, true, function(data) {
-							console.log('case data ======' + JSON.stringify(data));
 							if(data.code == 0) {
 								vm.remarks = convert(data.data.remarks || []);
 								data = data.data.ill; //病曆詳情

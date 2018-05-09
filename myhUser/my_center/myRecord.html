@@ -179,7 +179,6 @@
 						offset: 0,
 						limit: 10
 					}, false, function(data) {
-						console.log("data=======" +JSON.stringify(data));
 						if(data.code == 0) {
 							var data = data.data[0] || [];
 							if(data.length > 0) {

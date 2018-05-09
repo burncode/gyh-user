@@ -78,7 +78,6 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		_.extend(true, pdata, {
 			'token': token
 		});
-		console.log(postUrl + '===pdata========' +  JSON.stringify(pdata));
 		setTimeout(function() {
 			_.ajax({
 				url: ASKURL + postUrl,
@@ -90,7 +89,9 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 					data = JSON.stringify(data);
 					data = traditionalized(data);
 					data = JSON.parse(data);
-					plus.nativeUI.closeWaiting();
+					if(show){
+						plus.nativeUI.closeWaiting();
+					}
 					_.isFunction(success) ? success(data) : '';
 				},
 				error: function(xhr) {

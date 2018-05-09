@@ -77,6 +77,7 @@
 						u.mypost("user_center/userCenterDetail", {
 							privateToken: w.getUser()
 						}, true, function(data) {
+							console.log(JSON.stringify(data));
 							if(data.code == 0) {
 								vm.nickname = data.data.userInfo.nickname;
 								vm.phone = data.data.userInfo.phone;

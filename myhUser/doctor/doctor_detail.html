@@ -160,8 +160,8 @@
 				u.mypost("doctor/getDoctorDetail", {docId: docId}, true, function(data) {
 					if(data.code == 0) {
 						doctorData = data.data.doctor[0];
-						vm.nickname = doctorData.nickname ? doctorData.nickname : '医生';
-						vm.docLevel = doctorData.docLevel ? doctorData.docLevel : '医生';
+						vm.nickname = doctorData.nickname ? doctorData.nickname : '醫生';
+						vm.docLevel = doctorData.docLevel ? doctorData.docLevel : '醫生';
 						vm.avatar = doctorData.avatar ? imgServer + doctorData.avatar : '../images/default-doctor.png';
 						vm.hospitalName = doctorData.hospitalName ? doctorData.hospitalName : '';
 						vm.officeName = doctorData.officeName ? doctorData.officeName : '';

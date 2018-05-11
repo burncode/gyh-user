@@ -70,7 +70,7 @@
 						_.toast("請輸入您的電話");
 					}else{
 						pdata.privateToken = privateToken;
-						pdata.content = "医生姓名：" + content_1Obj.value + ";專科：" + content_3Obj.value +";電話:" + content_5Obj.value +  ";电郵:" + content_4Obj.value + ";醫院:" + content_2Obj.value + ";备注:" + content_6Obj.value;
+						pdata.content = "醫生姓名：" + content_1Obj.value + ";專科：" + content_3Obj.value +";電話:" + content_5Obj.value +  ";电郵:" + content_4Obj.value + ";醫院:" + content_2Obj.value + ";备注:" + content_6Obj.value;
 						u.mypost("user_center/feedback",pdata,true,function(data){
 							if(data.code == 0){
 							    _.toast("提交成功");

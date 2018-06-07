@@ -120,7 +120,8 @@
       "js/common.js",
       "css/mui.min.css",
       "css/common.css",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "css/center/setting.css"
     ],
     "refer": [
       "userLogin.html",
@@ -172,7 +173,8 @@
       "js/common.js",
       "css/mui.min.css",
       "css/common-form.css",
-      "css/input.css"
+      "css/input.css",
+      "css/center/setPayPwd.css"
     ],
     "refer": [],
     "priority": 0
@@ -932,7 +934,8 @@
       "img/collection.png",
       "img/about.png",
       "img/service.png",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "img/record.png"
     ],
     "refer": [
       "userLogin.html",
@@ -1643,6 +1646,21 @@
       "my_center/page_appointList.html",
       "my_center/page_vaccinumAppointList.html"
     ],
+    "priority": 0
+  },
+  "my_center/myRecord.html": {
+    "href": "my_center/myRecord.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/dist/ydui.px.css",
+      "css/center/myRecord.css"
+    ],
+    "refer": [],
     "priority": 0
   }
 }

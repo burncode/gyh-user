@@ -22,9 +22,9 @@
 				<span class="mui-icon iconfont icon-doctor"></span>
 				<span class="mui-tab-label">醫生</span>
 			</a>
-			<a id="goInfo" class="mui-tab-item" href="communicate/communicate_circle.html">
+			<a id="goInfo" class="mui-tab-item" href="">
 				<span class="mui-icon iconfont icon-contract"></span>
-				<span class="mui-tab-label">交流圈</span>
+				<span class="mui-tab-label">发现</span>
 			</a>
 			<a id="goMycenter" class="mui-tab-item" href="my_center/myD.html">
 				<span class="mui-icon iconfont icon-my"></span>
@@ -40,12 +40,6 @@
 					preloadPages: [{
 						url: "my_center/contactService.html",
 						id: "contactService",
-						styles: {
-							popGesture: "hide"
-						}
-					}, {
-						url: "communicate/post_detail.html",
-						id: "post_detail",
 						styles: {
 							popGesture: "hide"
 						}
@@ -69,7 +63,7 @@
 				}else{
 					bottom = "51px";
 				}
-				var subpages = ['index.html', 'doctor/doctor_list.html', 'communicate/communicate_circle.html', 'my_center/myD.html'];
+				var subpages = ['index.html', 'doctor/doctor_list.html', '', 'my_center/myD.html'];
 				var subpage_style = {
 					top: 0,
 					bottom: bottom
@@ -80,7 +74,7 @@
 					//检查更新
 					if(sessionStorage.getItem('upgrade') != '1') {
 						plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-							checkUpdate(inf.version); //跳转第三方平台更新违反goole市场政策
+							checkUpdate(inf.version); //跳转第三方平台更新违反google市场政策
 							sessionStorage.setItem('upgrade', '1');
 						});
 					}

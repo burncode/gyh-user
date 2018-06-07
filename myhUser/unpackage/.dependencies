@@ -1,1 +1,41 @@
-{}
+{
+  "my_center/setPayPwd.html": {
+    "href": "my_center/setPayPwd.html",
+    "resources": [
+      "css/center/setPayPwd.css"
+    ],
+    "priority": 7
+  },
+  "my_center/setting.html": {
+    "href": "my_center/setting.html",
+    "resources": [
+      "css/center/setting.css"
+    ],
+    "refer": [],
+    "priority": 2
+  },
+  "my_center/myRecord.html": {
+    "href": "my_center/myRecord.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/common.css",
+      "fonts/iconfont-nodata.ttf",
+      "css/dist/ydui.px.css",
+      "css/center/myRecord.css"
+    ],
+    "priority": 8
+  },
+  "my_center/myD.html": {
+    "href": "my_center/myD.html",
+    "resources": [
+      "img/record.png"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}

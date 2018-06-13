@@ -1213,6 +1213,7 @@ input[type=submit]:enabled:active {
 	width: 24px;
 	height: 24px
 }
+
 .mui-bar {
 	position: fixed;
 	z-index: 10;
@@ -1228,6 +1229,7 @@ input[type=submit]:enabled:active {
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
+
 .mui-bar .mui-title {
 	right: 40px;
 	left: 40px;
@@ -1320,12 +1322,14 @@ input[type=submit]:enabled:active {
 	border-bottom: 0;
 	-webkit-touch-callout: none
 }
+
 @supports (bottom: constant(safe-area-inset-bottom)) or (bottom: env(safe-area-inset-bottom)) {
-  .mui-bar-tab {
-    padding-bottom: constant(safe-area-inset-bottom);
-  	padding-bottom: env(safe-area-inset-bottom);
-  }
+	.mui-bar-tab {
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
 }
+
 .mui-bar-tab .mui-tab-item {
 	display: table-cell;
 	overflow: hidden;
@@ -2056,7 +2060,7 @@ input[type=submit]:enabled:active {
 }
 
 .mui-content>.mui-table-view:first-child {
-	margin-top: 15px
+	/*margin-top: 15px*/
 }
 
 .mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell:last-child:after,
@@ -2577,7 +2581,7 @@ select:focus {
 .mui-checkbox input[type=checkbox]:before,
 .mui-radio input[type=radio]:before {
 	font-family: Muiicons;
-	font-size: 28px;
+	font-size: 22px;
 	font-weight: 400;
 	line-height: 1;
 	text-decoration: none;
@@ -3975,31 +3979,29 @@ body>.mui-progressbar {
 	position: relative;
 	display: inline-block;
 	overflow: hidden;
-	width: 120px;
-	height: 35px;
-	padding: 0 40px;
+	width: 90px;
+	height: 25px;
+	padding: 0 25px;
 	vertical-align: top;
 	vertical-align: middle;
 	border: solid 1px #bbb;
 	border-radius: 3px;
-	background-color: #efeff4
 }
 
 .mui-numbox [class*=btn-numbox],
 .mui-numbox [class*=numbox-btn] {
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: 400;
 	line-height: 100%;
 	position: absolute;
 	top: 0;
 	overflow: hidden;
-	width: 40px;
+	width: 25px;
 	height: 100%;
 	padding: 0;
 	color: #555;
 	border: none;
 	border-radius: 0;
-	background-color: #f9f9f9
 }
 
 .mui-numbox [class*=btn-numbox]:active,
@@ -4033,14 +4035,14 @@ body>.mui-progressbar {
 	width: 100%!important;
 	height: 100%;
 	margin: 0;
-	padding: 0 3px!important !important;
 	text-align: center;
 	text-overflow: ellipsis;
 	word-break: normal;
 	border: none!important;
 	border-right: solid 1px #ccc!important;
 	border-left: solid 1px #ccc!important;
-	border-radius: 0!important
+	border-radius: 0!important;
+	font-size: 13px;
 }
 
 .mui-input-row .mui-numbox {

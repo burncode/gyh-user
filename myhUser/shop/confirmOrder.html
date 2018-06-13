@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<style>
+			input[type=text] {
+				padding: 10px 15px 10px 0;
+			}
+			
+			.yd-cell-right input[type=text],
+			.yd-cell-right input[type=number] {
+				padding-left: 5px !important;
+				margin-bottom: 0;
+			}
+			
+			.yd-cell:after {
+				border-bottom: 1px solid #d9d9d9;
+			}
+			
+			.yd-cell-box {
+				margin-bottom: 10px;
+			}
+			
+			.mui-table-view:before {
+				height: 0;
+			}
+			
+			.mui-bar-tab {
+				height: 45px;
+			}
+			
+			.left-sum {
+				line-height: 45px;
+				margin: 0 0 0 10px;
+			}
+			
+			.detail-btn-pay {
+				height: 45px;
+				background-color: #33A2D7;
+				color: #fff;
+				border: 0;
+				border-radius: 0;
+			}
+			
+			.mui-bar .mui-btn {
+				top: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">确认订单</h1>
+		</header>
+		<div id="app" class="mui-content">
+			<div>
+				<yd-cell-group>
+					<yd-cell-item>
+						<span slot="left">收货人：</span>
+						<input slot="right" type="text" placeholder="请输入收货人姓名">
+					</yd-cell-item>
+					<yd-cell-item>
+						<span slot="left">联系电话：</span>
+						<input slot="right" type="number" placeholder="请输入收货人联系电话" maxlength="11">
+					</yd-cell-item>
+					<yd-cell-item arrow>
+						<span slot="left">收货地址：</span>
+						<input slot="right" type="text" @click.stop="show = true" v-model="model" readonly placeholder="请选择">
+					</yd-cell-item>
+					<yd-cell-item>
+						<input slot="right" type="text" placeholder="地址详情">
+					</yd-cell-item>
+				</yd-cell-group>
+				<yd-cityselect v-model="show" :callback="result" :items="district"></yd-cityselect>
+			</div>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell mui-media">
+					<img class="mui-media-object mui-pull-left" src="../images/default-record.png">
+					<div class="mui-media-body">
+						<div>商品名称</div>
+						<p class="main-font-color">价格: ¥360.00</p>
+					</div>
+				</li>
+			</ul>
+			<div style="margin: 10px 0;">
+				<yd-cell-group>
+					<yd-cell-item>
+						<span slot="left">订单总额</span>
+						<span slot="right">¥{{sTotal}}</span>
+					</yd-cell-item>
+				</yd-cell-group>
+			</div>
+			<yd-cell-group>
+				<yd-cell-item>
+					<span slot="left">买家留言：</span>
+					<input slot="right" type="text" placeholder="选填:如有留言请填写">
+				</yd-cell-item>
+			</yd-cell-group>
+			<nav class="mui-bar mui-bar-tab">
+				<div class="mui-pull-left left-sum font-color-666 font-size-16">合计: <span class="main-font-color">¥{{sTotal}}</span></div>
+				<button type="button" class="mui-btn mui-pull-right detail-btn-pay">提交订单</button>
+			</nav>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script type="text/javascript" src="../js/dist/jd_province_city_area_id.js"></script>
+	<script src="../js/common.js"></script>
+	<script>
+		(function(_, doc, u, w) {
+			_.init(), _(".mui-scroll-wrapper").scroll();
+			var sPrice = 360;
+			var vue = new Vue({
+				el: "#app",
+				data: {
+					show: false,
+					model: '',
+					district: w.YDUI_DISTRICT,
+					sTotal:0
+				},
+				mounted: function() {
+					var self = this;
+				},
+				methods: {
+					result:function(ret) {
+						this.model = ret.itemName1 + ' ' + ret.itemName2 + ' ' + ret.itemName3;
+					}
+				}
+			})
+		})(mui, document, util, window)
+	</script>
+
+</html>

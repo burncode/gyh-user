@@ -1,1 +1,73 @@
-.info-title{width:95%;text-align:center;margin-top:10px}.info-img{width:100%;height:150px}.info-img img{width:100%;height:100%}.info-content{width:95%;margin:0 auto;overflow:hidden;font-size:14px;margin-bottom:30px;color:#666;line-height:24px}.detail-btn{width:100%;height:80px;background-color:#FFFFFF}.detail-btn-know{width:70%;height:100%;float:left;padding-left:2.5%}.detail-btn-pay{width:30%;height:80px;line-height:60px;text-align:center;background-color:#fcd865;color:#6d3f12;float:left}.know-agree{width:100%;height:30px;overflow:hidden;color:#999;font-size:14px}.pay-money{width:100%;color:#33A2D7}.pay-title{color:#666;font-size:14px}.RMB{font-size:12px}.mui-content{background-color:#fff}
+.info-title {
+	width: 95%;
+	text-align: center;
+	margin-top: 10px
+}
+
+.info-img {
+	width: 100%;
+	height: 150px
+}
+
+.info-img img {
+	width: 100%;
+	height: 100%
+}
+
+.info-content {
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+	font-size: 14px;
+	margin-bottom: 30px;
+	color: #666;
+	line-height: 24px
+}
+
+.detail-btn {
+	height: 80px;
+	background-color: #FFFFFF
+}
+
+.detail-btn-know {
+	width: 70%;
+	height: 100%;
+	float: left;
+	padding-left: 2.5%
+}
+
+.detail-btn-pay {
+	width: 30%;
+	height: 80px;
+	line-height: 60px;
+	text-align: center;
+	background-color: #fcd865;
+	color: #6d3f12;
+	float: left
+}
+
+.know-agree {
+	width: 100%;
+	height: 30px;
+	overflow: hidden;
+	color: #999;
+	font-size: 14px
+}
+
+.pay-money {
+	width: 100%;
+	color: #33A2D7
+}
+
+.pay-title {
+	color: #666;
+	font-size: 14px
+}
+
+.RMB {
+	font-size: 12px
+}
+
+.mui-content {
+	background-color: #fff
+}

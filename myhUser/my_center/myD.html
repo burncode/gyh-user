@@ -14,7 +14,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 id="title" class="mui-title">個人中心</h1>
-			<a class="mui-icon-extra mui-icon-extra-cart mui-btn-link" @tap="toCart()"></a>
+			<a class="mui-icon-extra mui-icon-extra-cart mui-btn-link" id="toCart"></a>
 			<a class="mui-pull-right mui-icon-gear mui-icon mui-icon-left-nav" id="setting"></a>
 		</header>
 		<div class="mui-content mui-scroll-wrapper">
@@ -201,6 +201,9 @@
 			doc.getElementById("setting").addEventListener('tap', function() {
 				w.openView("setting.html")
 			});
+			document.getElementById("toCart").addEventListener('tap',function(){
+				w.openView("../shop/cart.html");
+			})
 			doc.getElementById("modify").addEventListener('tap', function() {
 				if(!w.getUser()){
 					w.openView("../userLogin.html");

@@ -54,7 +54,7 @@
 						<input name="checkbox" value="" type="checkbox" v-model="checkAllFlag">
 					</div>
 				</div>
-				<div class="action-btn buy-btn">结算</div>
+				<div class="action-btn buy-btn" @tap="toConfirm">结算</div>
 				<div class="action-btn del-btn" @tap="delGoods">删除({{ selectedNum }})</div>
 				<div class="total">合计：<span>¥<b>{{ totalPrice }}</b></span></div>
 			</nav>
@@ -199,6 +199,13 @@
 					this.selectedNum = 0;
 					this.checkAllFlag = false;
 					this.delFlag = !this.delFlag;
+				},
+				toConfirm:function(){
+					if(this.totalPrice > 0){
+						window.openView("confirmOrder.html");
+					}else{
+						mui.toast("請選擇所要購買的商品")
+					}
 				}
 
 			},

@@ -1206,7 +1206,8 @@
 					"my_center/feedback.html",
 					"my_center/my_favorite.html",
 					"my_center/my_appoint.html",
-					"my_center/myRecord.html"
+					"my_center/myRecord.html",
+					"shop/cart.html"
 				],
 				"priority": 3
 			},
@@ -1255,7 +1256,8 @@
 					"vaccine/vaccine_submit.html",
 					"my_center/contactService.html",
 					"guide.html",
-					"shop/shopIndex3.html"
+					"shop/shopIndex3.html",
+					"shop/shopIndex.html"
 				],
 				"priority": 3
 			},
@@ -1390,7 +1392,8 @@
 					"user_manual.html",
 					"doctor/pay.html",
 					"my_center/contactService.html",
-					"doctor/doctor_detail.html"
+					"doctor/doctor_detail.html",
+					"my_case_history/add_case.html"
 				],
 				"priority": 1
 			},
@@ -1983,6 +1986,13 @@
 				"refer": [
 					"shop/confirmOrder.html",
 					"shop/cart.html"
+				],
+				"priority": 0
+			},
+			"shop/cart.html": {
+				"resources": [],
+				"refer": [
+					"shop/confirmOrder.html"
 				],
 				"priority": 0
 			}

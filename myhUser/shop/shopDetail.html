@@ -70,14 +70,14 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">详情</h1>
+				<h1 class="mui-title">詳情</h1>
 				<a class="mui-icon-extra mui-icon-extra-cart mui-btn-link mui-pull-right" @tap="toCart()">
 					<span v-if="cartNum > 0" class="mui-badge mui-badge-danger badge-pos">{{cartNum}}</span>
 				</a>
 			</header>
 			<nav class="mui-bar mui-bar-tab">
-				<button type="button" class="detail-btn-cart" @tap="addToCart()">加入购物车</button>
-				<button type="button" class="detail-btn-pay" @tap="toBuy()">立即购买</button>
+				<button type="button" class="detail-btn-cart" @tap="addToCart()">加入購物車</button>
+				<button type="button" class="detail-btn-pay" @tap="toBuy()">立即購買</button>
 			</nav>
 			<div class="mui-content">
 				<div class="info-title">{{name}}</div>
@@ -124,7 +124,7 @@
 				},
 				methods: {
 					addToCart: function() { //添加到购物车
-						_.toast("成功加入购物车");
+						_.toast("成功加入購物車");
 						this.cartNum++;
 					},
 					toBuy: function() {

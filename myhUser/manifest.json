@@ -1995,6 +1995,13 @@
 					"shop/confirmOrder.html"
 				],
 				"priority": 0
+			},
+			"shop/shopIndex.html": {
+				"resources": [],
+				"refer": [
+					"shop/shopDetail.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

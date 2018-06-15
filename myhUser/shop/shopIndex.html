@@ -16,16 +16,7 @@
 		.yd-scrolltab {
 			top: 44px;
 		}
-		
-		.img {
-			width: 100px;
-		}
-		
-		.yd-scrolltab-item {
-			padding: 0 5px;
-		}
-		
-		.yd-scrolltab-active .yd-scrolltab-title {
+		.yd-scrolltab-active .yd-scrolltab-title{
 			color: #33A2D7;
 		}
 	</style>
@@ -38,7 +29,7 @@
 			<div class="mui-content">
 				<yd-scrolltab>
 					<yd-scrolltab-panel :label="item.label" v-for="item  in list">
-						<yd-list :theme="1">
+						<yd-list :theme="3">
 							<yd-list-item v-for="i in 15">
 								<img slot="img" v-lazy="item.imgsrc" @tap="toDetail(item)">
 								<span slot="title">{{item.label}}</span>
@@ -72,7 +63,7 @@
 							imgsrc: '../images/1.jpg'
 						},
 						{
-							label: '保健品2',
+							label: '儿童保健品儿童保健品儿童保健品',
 							imgsrc: '../images/1.jpg'
 						},
 						{

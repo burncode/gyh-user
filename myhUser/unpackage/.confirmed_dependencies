@@ -1682,5 +1682,10 @@
 		"refer": [
 			"shop/confirmOrder.html"
 		]
+	},
+	"shop/shopIndex.html": {
+		"refer": [
+			"shop/shopDetail.html"
+		]
 	}
 }

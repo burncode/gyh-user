@@ -16,7 +16,9 @@
 			.mui-bar-tab {
 				height: 44px;
 			}
-			
+			.mui-bar .mui-btn-link{
+				font-size: 25px;
+			}
 			.detail-btn-pay,
 			.detail-btn-cart {
 				line-height: 32px;
@@ -37,14 +39,9 @@
 			
 			.badge-pos {
 				position: absolute;
-				top: 6px;
+				top: -3px;
 				right: 5px;
 			}
-			
-			.mui-bar .mui-btn-link {
-				font-size: 25px;
-			}
-			
 			.mui-content {
 				background-color: #fff;
 			}
@@ -63,6 +60,19 @@
 				color: #666;
 				line-height: 24px
 			}
+			
+			.cart-div {
+				width:40px;
+				background-color: #33A2D7;
+				height: 40px;
+				position: absolute;
+				bottom: 80px;
+				right: 10px;
+				border-radius: 100%;
+				text-align: center;
+				color: #fff;
+			    line-height: 45px;
+			}
 		</style>
 	</head>
 
@@ -71,19 +81,22 @@
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">詳情</h1>
-				<a class="mui-icon-extra mui-icon-extra-cart mui-btn-link mui-pull-right" @tap="toCart()">
-					<span v-if="cartNum > 0" class="mui-badge mui-badge-danger badge-pos">{{cartNum}}</span>
-				</a>
+				<a class="mui-pull-right mui-icon-extra mui-icon-extra-custom mui-btn-link" @tap="toContact()"></a>
 			</header>
-			<nav class="mui-bar mui-bar-tab">
-				<button type="button" class="detail-btn-cart" @tap="addToCart()">加入購物車</button>
-				<button type="button" class="detail-btn-pay" @tap="toBuy()">立即購買</button>
-			</nav>
 			<div class="mui-content">
 				<div class="info-title">{{name}}</div>
 				<!--<div class="info-title">{{frice}}</div>-->
 				<div class="info-content" v-html="detail"></div>
 			</div>
+			<div class="cart-div">
+				<span class="mui-icon-extra mui-icon-extra-cart" @tap="toCart()">
+					<span v-if="cartNum > 0" class="mui-badge mui-badge-danger badge-pos">{{cartNum}}</span>
+				</span>
+			</div>
+			<nav class="mui-bar mui-bar-tab">
+				<button type="button" class="detail-btn-cart" @tap="addToCart()">加入購物車</button>
+				<button type="button" class="detail-btn-pay" @tap="toBuy()">立即購買</button>
+			</nav>
 		</div>
 	</body>
 	<script type="text/javascript" src="../js/mui.min.js"></script>
@@ -128,6 +141,7 @@
 						this.cartNum++;
 					},
 					toBuy: function() {
+						w.openView("confirmOrder.html");
 						//						if(!w.getUser()){
 						//							w.openView("../userLogin.html");
 						//						}else{
@@ -148,10 +162,12 @@
 						//								}
 						//							},myerror);
 						//						}
-						w.openView("confirmOrder.html");
 					},
 					toCart: function() {
 						w.openView("cart.html")
+					},
+					toContact:function(){
+						w.openView("../my_center/contactService.html");
 					}
 				}
 			})

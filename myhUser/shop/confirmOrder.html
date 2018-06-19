@@ -93,7 +93,7 @@
 				<yd-cell-group>
 					<yd-cell-item>
 						<span slot="left">订单总额</span>
-						<span slot="right">¥{{sTotal}}</span>
+						<span slot="right">（含运费20元）  ¥{{sTotal}}</span>
 					</yd-cell-item>
 				</yd-cell-group>
 			</div>
@@ -124,7 +124,7 @@
 					show: false,
 					model: '',
 					district: w.YDUI_DISTRICT,
-					sTotal:0
+					sTotal:380
 				},
 				mounted: function() {
 					var self = this;

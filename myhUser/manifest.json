@@ -183,7 +183,7 @@
 						"retina40": "F:/gyhDQY2017/ios/640x1136.png",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
 						"retina47": "F:/gyhDQY2017/ios/750x1334.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
 						"retina55": "F:/gyhDQY2017/ios/1242x2208.png",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-						"retina55l": "F:/gyhDQY2017/ios/2208x1242.png"
+						"retina55l": "F:/gyhDQY2017/ios/2208x1242.png","iphonex":"F:/gyhDQY2017/ios/1125x2436.png","iphonexl":"F:/gyhDQY2017/ios/2436X1125.png"
 					},
 					"ipad": {
 						"portrait": "F:/gyhDQY2017/ios/768x1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/

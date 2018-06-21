@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品订单详情页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<style>
+			.price {
+				color: #33a2d7;
+			}
+			
+			p {
+				color: #333;
+			}
+			
+			.mui-table-view-cell {
+				margin: 0;
+			}
+			
+			#userArr {
+				margin: 10px 0 0;
+			}
+			
+			.mui-table-view-cell:after {
+				height: 1px;
+				right: 15px;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after {
+				height: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-pull-left mui-action-back mui-icon mui-icon-left-nav"></a>
+				<h1 id="title" class="mui-title">訂單详情</h1>
+			</header>
+			<div id="mui-scroll-wrapper" class="mui-content mui-fullscreen">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media">
+							<img v-bind:src="cover" class="mui-media-object mui-pull-left">
+							<div class="mui-media-body">
+								<div class="mui-ellipsis-2">{{packageTitle}}</div>
+								<p class="price font-size-14">¥{{price}}<span class="mui-pull-right">{{status}}</span></p>
+							</div>
+						</li>
+					</ul>
+					<ul id="userArr" class="mui-table-view">
+						<li v-for="obj in userArr" class="mui-table-view-cell">
+							<p>接種人 : {{obj.name}}</p>
+							<p>手機號 : {{obj.mobile}}</p>
+							<p>身份證號 : {{obj.identity}}</p>
+							<p>預約日期 : {{obj.appointYM}}{{obj.appointDay}}</p>
+							<p>預約時間 : {{obj.startTime}}-{{obj.endTime}}</p>
+						</li>
+					</ul>
+					<yd-timeline>
+						<yd-timeline-item>
+							<p>【南宁市】您的订单正在配送途中，请您准备签收，感谢您的耐心等待。京东扫码付，单单享立减。</p>
+							<p style="margin-top: 10px;">2017-08-18 08:24:18</p>
+						</yd-timeline-item>
+						<yd-timeline-item>
+							<p>【南宁市】您的订单已到达【南宁安吉站】</p>
+							<p style="margin-top: 10px;">2017-08-18 07:25:08</p>
+						</yd-timeline-item>
+						<yd-timeline-item>
+							<p>【南宁市】您的订单在京东【南宁分拨中心】发货完成，准备送往京东【南宁安吉站】</p>
+							<p style="margin-top: 10px;">2017-08-17 21:44:08</p>
+						</yd-timeline-item>
+					</yd-timeline>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script src="../js/common.js"></script>
+	<script>
+		(function(_, doc, u, w) {
+			_.init();
+			var oid = null,
+				status = null,
+				cover = '';
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					packageTitle: '',
+					price: 0,
+					state: '',
+					cover: '../images/default-news.png',
+					userArr: []
+				}
+			});
+			_.plusReady(function() {
+				var privateToken = w.getUser();
+				oid = plus.webview.currentWebview().oid;
+				status = plus.webview.currentWebview().status;
+				cover = plus.webview.currentWebview().cover || '../images/default-news.png';
+				util.mypost('user_center/orderDetail', {
+					privateToken: privateToken,
+					id: oid
+				}, null, function(data) {
+					if(data.code == 0) {
+						vm.cover = cover;
+						vm.packageTitle = data.data.packageTitle;
+						vm.price = data.data.price;
+						vm.status = status;
+						vm.userArr = convert(data.data.userArr || []);
+					} else {
+						_.toast(data.msg || '請求失敗');
+					}
+				}, myerror)
+			});
+
+			/**
+			 * 1、将服务端返回数据，转换成前端需要的格式
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						name: item.name,
+						mobile: item.mobile,
+						identity: item.identity.substr(0, 4) + 'xxxxxxxxxx' + item.identity.substr(14, 4),
+						appointYM: item.appointData.appointYM.substr(0, 4) + '/' + Number(item.appointData.appointYM.substr(4, 2)) + '/',
+						appointDay: Number(item.appointData.appointDay),
+						startTime: item.appointData.startTime,
+						endTime: item.appointData.endTime
+					});
+				});
+				return newItems;
+			}
+		})(mui, document, util, window)
+	</script>
+
+</html>

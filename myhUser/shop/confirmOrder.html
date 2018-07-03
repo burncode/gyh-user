@@ -59,49 +59,54 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">确认订单</h1>
 		</header>
-		<div id="app" class="mui-content">
-			<div>
+		<div id="app" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div>
+					<yd-cell-group>
+						<yd-cell-item>
+							<span slot="left">收货人：</span>
+							<input slot="right" type="text" placeholder="请输入收货人姓名" v-model="consignee">
+						</yd-cell-item>
+						<yd-cell-item>
+							<span slot="left">联系电话：</span>
+							<input slot="right" type="number" placeholder="请输入收货人联系电话" maxlength="11" v-model="mobile">
+						</yd-cell-item>
+						<yd-cell-item arrow>
+							<span slot="left">收货地址：</span>
+							<input slot="right" type="text" @click.stop="show = true" v-model="address" readonly placeholder="请选择">
+						</yd-cell-item>
+						<yd-cell-item>
+							<input slot="right" type="text" placeholder="地址详情">
+						</yd-cell-item>
+					</yd-cell-group>
+					<yd-cityselect v-model="show" :callback="result" :items="district"></yd-cityselect>
+				</div>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell mui-media" v-for="good in goods_list">
+						<img class="mui-media-object mui-pull-left" :src="good.img_url">
+						<div class="mui-media-body">{{good.good_name}}
+							<p class="main-font-color">价格: ¥{{good.price}}</p>
+							<p>x{{good.good_num}}</p>
+						</div>
+					</li>
+				</ul>
+				<div style="margin: 10px 0;">
+					<yd-cell-group>
+						<yd-cell-item>
+							<span slot="left">订单总额</span>
+							<span slot="right">（含运费20元）  ¥{{order_amount}}</span>
+						</yd-cell-item>
+					</yd-cell-group>
+				</div>
 				<yd-cell-group>
 					<yd-cell-item>
-						<span slot="left">收货人：</span>
-						<input slot="right" type="text" placeholder="请输入收货人姓名">
-					</yd-cell-item>
-					<yd-cell-item>
-						<span slot="left">联系电话：</span>
-						<input slot="right" type="number" placeholder="请输入收货人联系电话" maxlength="11">
-					</yd-cell-item>
-					<yd-cell-item arrow>
-						<span slot="left">收货地址：</span>
-						<input slot="right" type="text" @click.stop="show = true" v-model="model" readonly placeholder="请选择">
-					</yd-cell-item>
-					<yd-cell-item>
-						<input slot="right" type="text" placeholder="地址详情">
-					</yd-cell-item>
-				</yd-cell-group>
-				<yd-cityselect v-model="show" :callback="result" :items="district"></yd-cityselect>
-			</div>
-			<ul class="mui-table-view mui-table-view-chevron">
-				<li class="mui-table-view-cell mui-media">
-					<img class="mui-media-object mui-pull-left" src="../images/default-record.png">
-					<div class="mui-media-body">商品名称<p class="main-font-color">价格: ¥360.00</p></div>
-				</li>
-			</ul>
-			<div style="margin: 10px 0;">
-				<yd-cell-group>
-					<yd-cell-item>
-						<span slot="left">订单总额</span>
-						<span slot="right">（含运费20元）  ¥{{sTotal}}</span>
+						<span slot="left">买家留言：</span>
+						<input slot="right" type="text" placeholder="选填:如有留言请填写" v-model="user_note">
 					</yd-cell-item>
 				</yd-cell-group>
 			</div>
-			<yd-cell-group>
-				<yd-cell-item>
-					<span slot="left">买家留言：</span>
-					<input slot="right" type="text" placeholder="选填:如有留言请填写">
-				</yd-cell-item>
-			</yd-cell-group>
 			<nav class="mui-bar mui-bar-tab">
-				<div class="mui-pull-left left-sum font-color-666 font-size-16">合计: <span class="main-font-color">¥{{sTotal}}</span></div>
+				<div class="mui-pull-left left-sum font-color-666 font-size-16">合计: <span class="main-font-color">¥{{total_amount}}</span></div>
 				<button type="button" class="mui-btn mui-pull-right detail-btn-pay">提交订单</button>
 			</nav>
 		</div>
@@ -119,9 +124,29 @@
 				el: "#app",
 				data: {
 					show: false,
-					model: '',
+					consignee:'',
+					address: '',
+					mobile:'',
 					district: w.YDUI_DISTRICT,
-					sTotal:380
+					total_amount:400,
+					order_amount:400,
+					user_note:'',
+					goods_list:[{
+						good_name:'商品名称111',
+						img_url:'../images/default-record.png',
+						price:'360.00',
+						good_num:1
+					},{
+						good_name:'商品名称22222',
+						img_url:'../images/default-record.png',
+						price:'160.00',
+						good_num:3
+					},{
+						good_name:'商品名称22222',
+						img_url:'../images/default-record.png',
+						price:'160.00',
+						good_num:2
+					}]
 				},
 				mounted: function() {
 					var self = this;

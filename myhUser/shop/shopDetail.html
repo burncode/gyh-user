@@ -65,7 +65,7 @@
 				width:40px;
 				background-color: #33A2D7;
 				height: 40px;
-				position: absolute;
+				position: fixed;
 				bottom: 80px;
 				right: 10px;
 				border-radius: 100%;
@@ -84,9 +84,9 @@
 				<a class="mui-pull-right mui-icon-extra mui-icon-extra-custom mui-btn-link" @tap="toContact()"></a>
 			</header>
 			<div class="mui-content">
-				<div class="info-title">{{name}}</div>
-				<!--<div class="info-title">{{frice}}</div>-->
-				<div class="info-content" v-html="detail"></div>
+				<div class="info-title">{{goods_name}}</div>
+				<div class="info-title">¥{{shop_price}}</div>
+				<div class="info-content" v-html="goods_content"></div>
 			</div>
 			<div class="cart-div">
 				<span class="mui-icon-extra mui-icon-extra-cart" @tap="toCart">
@@ -109,26 +109,24 @@
 				el: "#app",
 				data: {
 					cartNum: 0,
-					name: '',
-					frice: 0.00,
-					detail: ''
+					goods_name: '',
+					goods_content:'',
+					shop_price: 0.00
 				},
 				mounted: function() {
 					var self = this;
 					var pdata = {
 						privateToken: w.getItem("privateToken"),
-						geneId: '23'
+						goods_id: '1'
 					}
 					_.plusReady(function() {
-						u.mypost("gene_check/geneCheckDetail", pdata, true, function(data) {
+						u.mypost("goods/getDetail", pdata, true, function(data) {
 							if(data.code == 0) {
-								data = data.data[0][0];
-								name = data ? data.name : '';
-								detail = data ? data.detail : nodataHtmlInfo;
-								price = data ? data.price : '0.0';
-								self.name = name;
-								//							self.price = price;
-								self.detail = detail;
+								console.log("detail===" + JSON.stringify(data));
+								data = data.data;
+								self.goods_name = data.goods_name;
+								self.goods_content = data.goods_content;
+								self.shop_price = data.shop_price || '0.0';
 							} else if(data.code == 500 && '未登錄' == data.msg) {
 								u.goLogin();
 							}

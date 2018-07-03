@@ -118,8 +118,29 @@
 				},
 				mounted: function() {
 					var self = this;
+					self.getListDataFromNet();
 				},
 				methods: {
+					getListDataFromNet: function() {
+						util.mypost('goods/getListByType', {
+							privateToken: w.getUser(),
+							limit:5,
+							offset:0,
+							typeId:0
+						}, false, function(data) {
+							if(data.code == 0) {
+								console.log("data====" + JSON.stringify(data));
+//								data = data.data || [];
+//								vm.list = data.news || [];
+							} else if(data.code == 500 && "未登錄" == data.msg) {
+								util.goLogin();
+							} else {
+								_.toast(data.msg || '請求失敗');
+							}
+						}, function(err) {
+							console.log("err====" + JSON.stringify(err));
+						})
+					},
 					toDetail: function(item) {
 						w.openView("shopDetail.html")
 					}

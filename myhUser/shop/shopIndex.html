@@ -1,151 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>商城</title>
-		<link rel="stylesheet" href="../css/mui.min.css" />
-		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/common.css" />
+		<style>
+			.btn{
+			    margin: 10px;
+			    padding: 5px 10px;
+			    font-size: 12px;
+			    border-radius: 6px;
+			}
+		</style>
 	</head>
-	<style>
-		.yd-scrolltab {
-			top: 44px;
-		}
-		.yd-scrolltab-active .yd-scrolltab-title{
-			color: #33A2D7;
-		}
-	</style>
 
 	<body>
-		<div id="app">
-			<header class="mui-bar mui-bar-nav">
-				<h1 class="mui-title">商城</h1>
-			</header>
-			<div class="mui-content">
-				<yd-scrolltab>
-					<yd-scrolltab-panel :label="item.label" v-for="item  in list">
-						<yd-list :theme="3">
-							<yd-list-item v-for="i in 15">
-								<img slot="img" v-lazy="item.imgsrc" @tap="toDetail(item)">
-								<span slot="title">{{item.label}}</span>
-							</yd-list-item>
-						</yd-list>
-					</yd-scrolltab-panel>
-				</yd-scrolltab>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" id="back"></a>
+			<h1 class="mui-title" id="title">商城</h1>
+		</header>
+		<div class="mui-content">
+			<div id="noData" class='noContent'>
+				<div class='mui-icon iconfont icon-comiiszanwushuju'></div>
+				<div>頁面加載失敗</div>
+				<button type="button" id="reload" class="mui-btn btn">重新加載</button>
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../js/mui.min.js"></script>
-	<script type="text/javascript" src="../js/vue.min.js"></script>
-	<script type="text/javascript" src="../js/vue_lazyload.js"></script>
-	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
-	<script type="text/javascript" src="../js/common.js"></script>
+
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/common.js"></script>
 	<script>
-		var vm = null;
 		(function(_, doc, u, w) {
-			Vue.use(VueLazyload, {
-				preLoad: 1.3,
-				error: '../images/default-news.png',
-				loading: '../images/default-news.png',
-				attempt: 1
-			});
-			//创建vue对象
-			vm = new Vue({
-				el: "#app",
-				data: {
-					list: [{
-							label: '保健品',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '儿童保健品儿童保健品儿童保健品',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品3',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品4',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品5',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品6',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品7',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品8',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品9',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品10',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品11',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品12',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品13',
-							imgsrc: '../images/1.jpg'
-						},
-						{
-							label: '保健品14',
-							imgsrc: '../images/1.jpg'
+			_.init();
+			var currentWeb = null,
+				url = "http://m.v65.javamall.com.cn/store_themes/18/index.html?menu=store&store_id=18",
+				netWV = null;
+			var noDataObj = document.getElementById("noData"),titleObj = document.getElementById("title"),
+				reloadObj = document.getElementById("reload"),backObj = document.getElementById("back");
+			_.plusReady(function() {
+				currentWeb = plus.webview.currentWebview();
+				loadWeb();
+
+				reloadObj.addEventListener('tap', function(e) {
+					loadWeb();
+				}, false);
+
+				backObj.addEventListener("tap", function() {
+					netWV.canBack(function(event) {
+						var canBack = event.canBack;
+						if(canBack) {
+							netWV.back();
 						}
-					]
-				},
-				mounted: function() {
-					var self = this;
-					self.getListDataFromNet();
-				},
-				methods: {
-					getListDataFromNet: function() {
-						util.mypost('goods/getListByType', {
-							privateToken: w.getUser(),
-							limit:5,
-							offset:0,
-							typeId:0
-						}, false, function(data) {
-							if(data.code == 0) {
-								console.log("data====" + JSON.stringify(data));
-//								data = data.data || [];
-//								vm.list = data.news || [];
-							} else if(data.code == 500 && "未登錄" == data.msg) {
-								util.goLogin();
-							} else {
-								_.toast(data.msg || '請求失敗');
-							}
-						}, function(err) {
-							console.log("err====" + JSON.stringify(err));
-						})
-					},
-					toDetail: function(item) {
-						w.openView("shopDetail.html")
-					}
-				}
+					});
+				})
 			});
+
+			//加载页面
+			function loadWeb() {
+				var network = plus.networkinfo.getCurrentType();
+				if(network == 1) {
+					_.toast("網絡異常")
+					removeClass(noDataObj, "mui-hidden");
+				} else {
+					netWV = plus.webview.create(url, "", {
+						top: '44',
+						bottom: 0
+					});
+					netWV.addEventListener('loading', function(e) {
+						plus.nativeUI.showWaiting();
+						if(plus.networkinfo.getCurrentType() == 1){
+							netWV.close();
+							plus.nativeUI.closeWaiting();
+						}
+					}, false);
+					netWV.addEventListener('loaded', function(e) {
+						console.log("getTitle()==" +netWV.getTitle());
+						titleObj.innerText = netWV.getTitle().substr(0,4);
+						plus.nativeUI.closeWaiting();
+					}, false);
+					currentWeb.append(netWV);
+				}
+			}
+
+			function hiddenTabbar() {
+				var viewStyle = currentWeb.getStyle(); //动态隐藏tabbar
+				console.log("hiddenTabbar viewStyle.bottom==" + viewStyle.bottom);
+				if(viewStyle.bottom != 0) {
+					currentWeb.setStyle({
+						bottom: '0'
+					});
+				}
+			}
+
+			function showTabbar() {
+				var viewStyle = currentWeb.getStyle(); //动态显示tabbar
+				console.log("showTabbar viewStyle.bottom==" + viewStyle.bottom);
+				if(viewStyle.bottom == 0) {
+					currentWeb.setStyle({
+						bottom: bottom
+					});
+				}
+			}
 		})(mui, document, util, window)
 	</script>
+
 </html>

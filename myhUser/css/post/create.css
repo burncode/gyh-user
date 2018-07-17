@@ -1,0 +1,18 @@
+.yd-cell-right input[type=text],
+			input[type=text] {
+				padding-left: 0;
+			}
+			
+			.yd-checkbox {
+				padding: 15px 0 0 15px
+			}
+			
+			.release-post-img {
+				margin: 15px;
+			}
+			.release-post-img img{
+				max-width: 200px;
+			}
+			.mui-btn, button{
+				font-size: 12px;padding: 6px;line-height: 1;
+			}

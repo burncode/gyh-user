@@ -78,6 +78,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 		_.extend(true, pdata, {
 			'token': token
 		});
+		console.log("pdata=======" + JSON.stringify(pdata));
 		setTimeout(function() {
 			_.ajax({
 				url: ASKURL + postUrl,

@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<link rel="stylesheet" href="../css/icons-extra/icons-extra.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/post/post-item.css" />
+		<link rel="stylesheet" href="../css/post/detail.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<div class="mui-content">
+			<div id="mescroll" class="mescroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="author font-size-12">
+							<div class="left">
+								<img class="author-avatar" :src="avatar">
+								<div class="author-name">{{postNickname}}</div>
+							</div>
+							<div class="right">{{postDate}}</div>
+						</div>
+						<div class="desc font-size-14">
+							{{postTitle}}
+							<div class="desc-icon">
+								<div class="desc-item" @tap="clickLike()">
+									<i class="mui-icon-extra mui-icon-extra-heart" v-bind:class="{'main-font-color': isClickLike}"></i>
+									<span class="number">{{clickCount}}</span>
+								</div>
+								<div class="desc-item">
+									<i class="mui-icon mui-icon-chatbubble"></i>
+									<span class="number">{{commentCount}}</span>
+								</div>
+							</div>
+						</div>
+					</li>
+					<div v-if="imgShow" class="img-div comment-img">
+						<yd-lightbox :num="1">
+							<yd-lightbox-img :src="img"></yd-lightbox-img>
+						</yd-lightbox>
+					</div>
+				</ul>
+				<div class="title-comments">全部评论</div>
+				<app-list :data='commentList'></app-list>
+			</div>
+			<footer>
+				<div class="footer-center">
+					<textarea type="text" class='input-text' v-model="content_comment" placeholder="输入内容"></textarea>
+				</div>
+				<button class="footer-right" @tap="submit()">发送</button>
+			</footer>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script type="text/javascript" src="../js/mescroll.min.js"></script>
+	<script type="text/javascript" src="../js/components/post/list_coments.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+		(function(_, doc, u, w) {
+			_.init();
+			function getDefaultData() {
+				return {
+					id: '',
+					postTitle: '',
+					postNickname: '',
+					postDate: '',
+					content: '',
+					avatar: '',
+					clickCount: 0,
+					commentCount: 0,
+					commentList: [],
+					img: '',
+					content_comment: '',
+					imgShow: false,
+					isClickLike: false
+				}
+			}
+			var vm = new Vue({
+				el: '.mui-content',
+				data: getDefaultData(),
+				mounted: function() {
+					var self = this;
+					self.mescroll = new MeScroll("mescroll", {
+						up: {
+							callback: self.upCallback, //上拉回调
+						},
+						toTop: { //配置回到顶部按钮
+							src: "../img/mescroll-totop.png"
+						},
+						empty: { //配置列表无任何数据的提示
+							warpId: "dataList",
+							tip: nodataHtmlInfo
+						}
+					});
+					//初始化vue后,显示vue模板布局
+					document.getElementById("dataList").style.display = "block";
+					_.plusReady(function() {
+						var currentWeb = plus.webview.currentWebview();
+						vm.id = currentWeb.p_id;
+						vm.postTitle = currentWeb.postTitle;
+						vm.postNickname = currentWeb.postNickname;
+						vm.postDate = currentWeb.postDate;
+						vm.content = currentWeb.content;
+						vm.clickCount = currentWeb.clickCount;
+						vm.commentCount = currentWeb.commentCount;
+						vm.avatar = currentWeb.avatar;
+					})
+				},
+				methods: {
+					resetData: function() { //重置数据
+						Object.assign(this.$data, getDefaultData());
+					},
+					upCallback: function(page) {
+						vm.getListDataFromNet(page.num, page.size);
+					},
+					getListDataFromNet: function(pageNum, pageSize, postType) {
+						util.mypost('post/detailPost', {
+							privateToken: w.getUser(),
+							offset: (pageNum - 1) * pageSize,
+							limit: pageSize,
+							postId: vm.id
+						}, false, function(data) {
+							if(data.code == 0) {
+								console.log("data==" + JSON.stringify(data));
+								vm.isClickLike = (data.data.isClickLike == '已點贊') ? true : false;
+								console.log("isClickLike====" + vm.isClickLike);
+								if(data.data.post[0].img) {
+									vm.imgShow = true;
+									vm.img = imgServer + data.data.post[0].img.img0;
+								} else {
+									vm.imgShow = false;
+								}
+								data = convert(data.data.commentList || []);
+								vm.commentList = data;
+								vm.mescroll.endSuccess(data.length);
+							} else {
+								_.toast(data.msg || '請求失敗');
+								vm.mescroll.endErr();
+							}
+						}, function() {
+							vm.mescroll.endErr();
+						})
+					},
+					submit: function() {
+						u.mypost('post/addComment', {
+							privateToken: w.getUser(),
+							postId: vm.id,
+							content: vm.content_comment
+						}, true, function(data) {
+							if(data.code == 0) {
+								_.toast(data.msg);
+							} else {
+								_.toast(data.msg || '請求失敗');
+							}
+						}, null)
+					},
+					clickLike: function() {
+						console.log("clickLike.....");
+						if(!w.getUser()) {
+							w.openView("../userLogin.html");
+						} else {
+							var pdata = {
+								postId: vm.id,
+								privateToken: w.getUser()
+							}
+							//取消点赞
+							if(vm.isClickLike) {
+								u.mypost('post/cancelLike', pdata, true, function(data) {
+									if(data.code == 0) {
+										_.toast("取消成功");
+										vm.isClickLike = false;
+										vm.clickCount--;
+									} else {
+										_.toast("取消失敗");
+									}
+								}, myerror);
+							} else {
+								//点赞
+								u.mypost("post/clickLike", pdata, false, function(data) {
+									if(data.code == 0) {
+										u.mypost("post/detailPost", pdata, true, function(data) {
+											if(data.code == 0) {
+												_.toast("點贊成功");
+												vm.isClickLike = true;
+												vm.clickCount++;
+											}
+										}, myerror);
+									} else {
+										_.toast("點贊失敗");
+									}
+								}, myerror);
+							}
+						}
+					}
+				}
+			});
+			/**
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item, index) {
+					newItems.push({
+						id: item.id,
+						recmdNickname: item.recmdNickname,
+						recmdDate: dateUtils.format(item.recmdDate),
+						avatar: imgServer + item.avatar,
+						recmdContent: item.recmdContent,
+						index: index + 1
+					});
+				});
+				return newItems;
+			}
+
+			/**
+			 * 格式化时间的辅助类，将一个时间转换成x小时前、y天前等
+			 */
+			var dateUtils = {
+				UNITS: {
+					'年': 31557600000,
+					'月': 2629800000,
+					'天': 86400000,
+					'小时': 3600000,
+					'分钟': 60000,
+					'秒': 1000
+				},
+				humanize: function(milliseconds) {
+					var humanize = '';
+					mui.each(this.UNITS, function(unit, value) {
+						if(milliseconds >= value) {
+							humanize = Math.floor(milliseconds / value) + unit + '前';
+							return false;
+						}
+						return true;
+					});
+					return humanize || '刚刚';
+				},
+				format: function(dateStr) {
+					var date = this.parse(dateStr)
+					var diff = Date.now() - date.getTime();
+					if(diff < this.UNITS['天']) {
+						return this.humanize(diff);
+					}
+
+					var _format = function(number) {
+						return(number < 10 ? ('0' + number) : number);
+					};
+					return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay());
+				},
+				parse: function(str) { //将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+					var a = str.split(/[^0-9]/);
+					return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+				}
+			};
+		})(mui, document, util, window)
+	</script>
+
+</html>

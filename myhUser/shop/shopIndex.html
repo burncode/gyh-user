@@ -82,6 +82,10 @@
 						titleObj.innerText = netWV.getTitle().substr(0,4);
 						plus.nativeUI.closeWaiting();
 					}, false);
+					netWV.addEventListener('onerror', function(e) {
+						netWV.close();
+						plus.nativeUI.closeWaiting();
+					}, false);
 					currentWeb.append(netWV);
 				}
 			}

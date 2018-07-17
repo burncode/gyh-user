@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<link rel="stylesheet" href="../css/post/create.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">发帖</h1>
+				<a class="mui-pull-right mui-btn-link" @tap="submit()">提交</a>
+			</header>
+			<div class="mui-content">
+				<yd-cell-group>
+					<yd-cell-item>
+						<yd-input slot="right" max="20" v-model="title" required :show-clear-icon="false" placeholder="写个20字以内标题吧"></yd-input>
+					</yd-cell-item>
+					<yd-cell-item>
+						<yd-textarea slot="right" placeholder="描述你想说的吧" v-model="content" maxlength="300"></yd-textarea>
+					</yd-cell-item>
+					<yd-checkbox v-model="isAnonymous">匿名发表</yd-checkbox>
+					<div class="release-post-img">
+						<img :src="imgSrc" @tap="showSheet()"/>
+						<div v-if="showDel" @tap="delImg"><button type="button" class="mui-btn mui-btn-red">移除</button></div>
+						<div>圖片大小不能超過2M</div>
+					</div>
+				</yd-cell-group>
+			</div>
+			<div id="sheet" class="mui-popover mui-popover-bottom mui-popover-action ">
+				<!-- 可选择菜单 -->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a>拍照上傳</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a>從相冊選擇</a>
+					</li>
+				</ul>
+				<!-- 取消菜单 -->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#sheet1">取消</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+		(function(_, doc, u, w) {
+			_.init();
+			var url = ASKURL + 'post/postAdd';
+			var vmSelf = null;
+			var addIndex = 0;
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					title: '',
+					content: '',
+					isAnonymous: false,
+					showDel:false,
+					imgSrc: '../img/add-img.png'
+				},
+				mounted: function() {
+					vmSelf = this;
+				},
+				methods: {
+					showSheet: function() {
+						_('#sheet').popover('show');
+					},
+					delImg: function() { //长按刪除所选图片
+						plus.nativeUI.confirm("確定移除所選圖片嗎", function(e) {
+							if(0 == e.index) {
+								vmSelf.imgSrc = "../img/add-img.png";
+								vmSelf.showDel = false;
+							}
+						}, "警告", ['確定', '取消']);
+					},
+					submit: function() {
+						if(u.isNull(vmSelf.title)) {
+							_.toast("請輸入标题");
+						} else if(vmSelf.title.length > 20) {
+							_.toast("标题不能超过20个字");
+						} else if(u.isNull(vmSelf.content)) {
+							_.toast("請輸入正文");
+						} else if(vmSelf.content.length > 300) {
+							_.toast("正文不能超过300个字");
+						} else {
+							//提交問題
+							var waiting = plus.nativeUI.showWaiting(); //添加等待框
+							var task = gettask(ASKURL + 'post/postAdd', function(t, status) {
+								//提交成功
+								if(status == 200) {
+									var data = JSON.parse(t.responseText || '{}');
+									waiting ? waiting.close() : '';
+									console.log(JSON.stringify(data));
+									if(data.code == 0) {
+										_.toast("帖子發布成功");
+										u.close();
+									}else if(data.code == 500 && '未登录' == data.msg){
+										u.goLogin();
+									} else {
+										_.toast(data.msg);
+									}
+								}
+							});
+							task.addData('content', vmSelf.content);
+							task.addData('privateToken', w.getUser());
+							console.log("privateToken===" + w.getUser());
+							task.addData('title', vmSelf.title);
+							task.addData('isAnonymous', vmSelf.isAnonymous?1:0);
+							task.addData('token', token);
+							if(vmSelf.imgSrc.indexOf("add-img.png") == -1){
+								task.addFile(vmSelf.imgSrc, {
+									key: "img0"
+								});
+							}
+							task.start();
+						}
+					}
+				}
+			});
+
+			_('#sheet').on('tap', 'li', function() {
+				_('#sheet').popover('hide');
+				if(~this.innerHTML.indexOf('拍照上傳')) {
+					choiceCamera()
+				} else if(~this.innerHTML.indexOf('從相冊選擇')) {
+					choicePic()
+				}
+			});
+
+			function gettask(server, callback) {
+				return plus.uploader.createUpload(server, {
+					method: "POST"
+				}, callback);
+			}
+
+			function choiceCamera() {
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p) {
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						addIndex = Math.random(100);
+						var dst = "_doc/temp" + addIndex + ".jpg";
+						plus.zip.compressImage({
+							src: entry.toLocalURL(),
+							dst: dst,
+							width: '50%',
+							overwrite: true
+						}, function(even) {
+							setImg(even.target);
+						});
+					}, function(e) {});
+				}, function(e) {}, {
+					index: 1,
+					filename: "_doc/camera/"
+				});
+			}
+
+			function choicePic() {
+				plus.gallery.pick(function(path) {
+					addIndex = Math.random(100);
+					var dst = "_doc/temp" + addIndex + ".jpg";
+					plus.zip.compressImage({
+						src: path,
+						dst: dst,
+						width: '50%',
+						overwrite: true
+					}, function(even) {
+						setImg(even.target);
+					});
+				}, function(e) {}, {
+					filter: 'image'
+				});
+			}
+
+			function setImg(src) {
+				vm.imgSrc = src;
+				vm.showDel = true;
+			}
+		})(mui, document, util, window)
+	</script>
+
+</html>

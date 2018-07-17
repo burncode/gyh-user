@@ -1,0 +1,64 @@
+.mui-table-view .author-avatar {
+	width: 35px;
+	height: 35px;
+	border-radius: 20px;
+	background-position: 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #ececec;
+}
+
+.author-name {
+	color: #666;
+	margin-left: 10px;
+}
+
+.desc {
+	padding: 16px 0 0;
+}
+
+.author .left,
+.author {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.author {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.desc .desc-icon .desc-item {
+	-webkit-box-align: center;
+	align-items: center;
+	min-width: 25%;
+	max-width: 50%;
+	margin-top: 10px;
+}
+
+.desc .desc-icon .desc-item,
+.desc .desc-icon {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.desc .desc-icon .number {
+	display: block;
+	margin-left: 4px;
+}
+
+.mui-icon-extra,
+.mui-icon {
+	font-size: 18px;
+}
+
+.comment-img img{
+	max-height: 200px;
+	max-width: 300px;
+}

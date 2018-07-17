@@ -34,17 +34,21 @@
 				<app-carousel :carouse-data="carouseData"></app-carousel>
 				<div class="gridDiv">
 					<ul class="mui-table-view mui-grid-view mui-grid-9">
-						<li @tap="openView('doctor/hospital_list.html')" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<li @tap="openView('doctor/hospital_list.html')" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
 							<img class="icon-img" src="images/index/icon_hos.png">
 							<div class="mui-media-body font-size-12">在線診療</div>
 						</li>
-						<li @tap="openView('gene_detect/gene_detect_list.html')" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<li @tap="openView('gene_detect/gene_detect_list.html')" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
 							<img class="icon-img" src="images/index/icon_server.png">
 							<div class="mui-media-body font-size-12">檢測服務</div>
 						</li>
-						<li @tap="openView('vaccine/vaccine_kind.html')" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<li @tap="openView('vaccine/vaccine_kind.html')" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
 							<img class="icon-img" src="images/index/icon_vac.png">
 							<div class="mui-media-body font-size-12">疫苗接種</div>
+						</li>
+						<li @tap="openView('shop/shopIndex.html')" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+							<img class="icon-img" src="images/index/icon_vac.png">
+							<div class="mui-media-body font-size-12">在線商城</div>
 						</li>
 					</ul>
 					<div class="search-div">

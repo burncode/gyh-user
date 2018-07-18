@@ -1,73 +1,65 @@
+.mui-table-view-cell.mui-active{
+	background-color: #fff;
+}
+
 .img-div {
-				background-color: #fff;
-				padding: 10px;
-			}
-			
-			footer {
-				position: fixed;
-				width: 100%;
-				height: auto;
-				border-top: solid 1px #bbb;
-				left: 0;
-				bottom: -2px;
-				overflow: hidden;
-				background-color: #fafafa;
-			}
-			
-			.footer-center .input-text {
-				border: solid 1px #ddd;
-				padding: 0.73rem 0.31rem 0.11rem 3.12rem !important;
-				font-size: 0.75rem !important;
-				line-height: 1 !important;
-				font-family: verdana !important;
-				overflow: hidden;
-			}
-			
-			.footer-center [class*=input] {
-				width: 100%;
-				height: 100%;
-				border-radius: 5px;
-			}
-			
-			.footer-center {
-				height: 100%;
-				padding: 5px 0 5px;
-			}
-			
-			.footer-right {
-				position: absolute;
-				width: 3.12rem;
-				height: 3.12rem;
-				right: 0;
-				top: 0;
-				border: 0;
-			}
-			
-			textarea {
-				margin-bottom: 0;
-			}
-			
-			.mescroll {
-				top: 45px;
-			}
-			
-			.floor {
-				position: relative;
-				bottom: 18px;
-				color: #999;
-				left: 10px;
-			}
-			
-			.content {
-				margin: 10px 0 0;
-			}
-			
-			.mui-table-view .mui-media-object img {
-				height: 40px;
-				width: 40px;
-				border-radius: 40px;
-			}
-			
-			.title-comments {
-				margin: 10px;
-			}
+	background-color: #fff;
+	padding: 10px;
+}
+
+footer {
+	position: fixed;
+	width: 100%;
+	height: auto;
+	border-top: solid 1px #bbb;
+	left: 0;
+	bottom: -2px;
+	overflow: hidden;
+	background-color: #fafafa;
+}
+
+.footer-center .input-text {
+	border: solid 1px #ddd;
+	padding: 10px;
+	font-size: 12px;
+	font-family: verdana !important;
+	overflow: hidden;
+}
+
+.footer-center input[type=text] {
+ 	margin-bottom: 0;
+}
+
+.mescroll {
+	top: 45px;
+}
+
+.floor {
+	position: relative;
+	bottom: 18px;
+	color: #999;
+	left: 10px;
+}
+
+.content {
+	margin: 10px 0 0;
+}
+
+.mui-table-view .mui-media-object img {
+	height: 40px;
+	width: 40px;
+	border-radius: 40px;
+}
+
+.title-comments {
+	margin: 10px;
+}
+
+
+.yd-cell-box{
+	margin-bottom: 0;
+}
+.yd-cell-box .btn_div{
+    text-align: right;
+    margin: 15px 10px 0;
+}

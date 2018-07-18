@@ -34,12 +34,8 @@
 							{{postTitle}}
 							<div class="desc-icon">
 								<div class="desc-item" @tap="clickLike()">
-									<i class="mui-icon-extra mui-icon-extra-heart" v-bind:class="{'main-font-color': isClickLike}"></i>
+									<i class="mui-icon-extra mui-icon-extra-heart" v-bind:class="{'mui-icon-extra-heart-filled main-font-color': isClickLike}"></i>
 									<span class="number">{{clickCount}}</span>
-								</div>
-								<div class="desc-item">
-									<i class="mui-icon mui-icon-chatbubble"></i>
-									<span class="number">{{commentCount}}</span>
 								</div>
 							</div>
 						</div>
@@ -55,9 +51,21 @@
 			</div>
 			<footer>
 				<div class="footer-center">
-					<textarea type="text" class='input-text' v-model="content_comment" placeholder="输入内容"></textarea>
+					<yd-cell-group v-if="showTextArea">
+						<yd-cell-item>
+							<yd-textarea :show-counter="false" slot="right" placeholder="请输入您的评论" maxlength="100" v-model="content_comment"></yd-textarea>
+						</yd-cell-item>
+						<div class="btn_div">
+							<yd-button type="primary">发表</yd-button>
+						</div>
+					</yd-cell-group>
+					<yd-cell-group v-if="!showTextArea" @tap="showTextAreaF()">
+						<yd-cell-item>
+							<span slot="right" @tap="clickLike()"><i class="mui-icon-extra mui-icon-extra-heart" v-bind:class="{'mui-icon-extra-heart-filled main-font-color': isClickLike}"></i></span>
+							<yd-input slot="left"  placeholder="写评论" :readonly="true"></yd-input>
+						</yd-cell-item>
+					</yd-cell-group>
 				</div>
-				<button class="footer-right" @tap="submit()">发送</button>
 			</footer>
 		</div>
 	</body>
@@ -70,6 +78,7 @@
 	<script type="text/javascript">
 		(function(_, doc, u, w) {
 			_.init();
+
 			function getDefaultData() {
 				return {
 					id: '',
@@ -84,7 +93,8 @@
 					img: '',
 					content_comment: '',
 					imgShow: false,
-					isClickLike: false
+					isClickLike: false,
+					showTextArea: false
 				}
 			}
 			var vm = new Vue({
@@ -105,7 +115,7 @@
 						}
 					});
 					//初始化vue后,显示vue模板布局
-					document.getElementById("dataList").style.display = "block";
+					doc.getElementById("dataList").style.display = "block";
 					_.plusReady(function() {
 						var currentWeb = plus.webview.currentWebview();
 						vm.id = currentWeb.p_id;
@@ -133,9 +143,7 @@
 							postId: vm.id
 						}, false, function(data) {
 							if(data.code == 0) {
-								console.log("data==" + JSON.stringify(data));
 								vm.isClickLike = (data.data.isClickLike == '已點贊') ? true : false;
-								console.log("isClickLike====" + vm.isClickLike);
 								if(data.data.post[0].img) {
 									vm.imgShow = true;
 									vm.img = imgServer + data.data.post[0].img.img0;
@@ -167,7 +175,6 @@
 						}, null)
 					},
 					clickLike: function() {
-						console.log("clickLike.....");
 						if(!w.getUser()) {
 							w.openView("../userLogin.html");
 						} else {
@@ -203,6 +210,9 @@
 								}, myerror);
 							}
 						}
+					},
+					showTextAreaF: function() {
+						vm.showTextArea = true;
 					}
 				}
 			});

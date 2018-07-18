@@ -17,7 +17,7 @@
 		'<span class="number">{{item.clickCount}}</span>' +
 		'</div>' +
 		'<div class="desc-item">' +
-		'<i class="mui-icon mui-icon-chatbubble"></i>' +
+		'<i class="mui-icon mui-icon-chat"></i>' +
 		'<span class="number">{{item.commentCount}}</span>' +
 		'</div>' +
 		'</div>' +

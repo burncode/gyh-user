@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的帖子</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<link rel="stylesheet" href="../css/post/post-item.css" />
+		<style>
+			.img-div {
+				margin: 10px 0;
+			}
+			.postContent {
+				background-color: #EEEEEE;
+				padding: 5px;
+				border-radius: 5px;
+				margin: 10px 0 0 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">我的帖子</h1>
+			</header>
+			<div class="mui-content">
+				<yd-tab :callback="fn">
+					<yd-tab-panel label="我的帖子" tabkey="1">
+						<ul id="dataList" class="mui-table-view">
+							<li class="mui-table-view-cell" v-for="item in postList">
+								<div class="desc">
+									<div class="font-size-16">{{item.postTitle}}</div>
+									<div class="font-size-14 font-color-666 img-div">{{item.postContent}}</div>
+									<div class="mui-text-right">{{item.postDate}}</div>
+								</div>
+							</li>
+						</ul>
+					</yd-tab-panel>
+					<yd-tab-panel label="我的評論" tabkey="2">
+						<ul id="dataList" class="mui-table-view">
+							<li class="mui-table-view-cell" v-for="item in myPostComment">
+								<div class="author font-size-12">
+									<div class="left">
+										<img class="author-avatar" v-lazy="item.avatar">
+										<div class="author-name">{{item.nickname}}</div>
+									</div>
+									<div class="right">{{item.postDate}}</div>
+								</div>
+								<div class="desc font-size-14">
+									{{item.commentContent}}
+									<div class="postContent font-color-666">
+										<div class="font-size-14">{{item.postTitle}}</div>
+										<div class="font-size-12">{{item.postContent}}</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</yd-tab-panel>
+				</yd-tab>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script type="text/javascript" src="../js/components/post/list_item.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script>
+		(function(_, doc, u, w) {
+			_.init();
+			//创建vue对象
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					postList: [],
+					myPostComment: []
+				},
+				mounted: function() {
+					//首先加载我的帖子数据
+					this.getListDataFromNet('user_center/postList', 1);
+				},
+				methods: {
+					fn: function(label, key) {
+						if(2 == key && vm.myPostComment.length == 0) {
+							vm.getListDataFromNet('user_center/myPostComment', 2);
+						}
+					},
+					getListDataFromNet: function(postType, type) {
+						util.mypost('user_center/myPostReply', {
+							privateToken: w.getUser()
+						}, true, function(data) {
+							if(data.code == 0) {
+								if(data.data.result.length > 0) {
+									if(type == 1) {
+										vm.postList = convert(data.data.result || []);
+									} else {
+										vm.myPostComment = _convert(data.data.result || []);
+									}
+								}else{
+									_.toast("暫無發帖")
+								}
+							} else {
+								_.toast(data.msg || '請求失敗');
+							}
+						}, myerror)
+					}
+				}
+			});
+
+			/**
+			 * 格式化时间的辅助类，将一个时间转换成x小时前、y天前等
+			 */
+			var dateUtils = {
+				UNITS: {
+					'年': 31557600000,
+					'月': 2629800000,
+					'天': 86400000,
+					'小时': 3600000,
+					'分钟': 60000,
+					'秒': 1000
+				},
+				humanize: function(milliseconds) {
+					var humanize = '';
+					mui.each(this.UNITS, function(unit, value) {
+						if(milliseconds >= value) {
+							humanize = Math.floor(milliseconds / value) + unit + '前';
+							return false;
+						}
+						return true;
+					});
+					return humanize || '刚刚';
+				},
+				format: function(dateStr) {
+					var date = this.parse(dateStr)
+					var diff = Date.now() - date.getTime();
+					if(diff < this.UNITS['天']) {
+						return this.humanize(diff);
+					}
+
+					var _format = function(number) {
+						return(number < 10 ? ('0' + number) : number);
+					};
+					return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay());
+				},
+				parse: function(str) { //将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+					var a = str.split(/[^0-9]/);
+					return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+				}
+			};
+
+			/**
+			 * @param {Array} items 
+			 */
+			function convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						id: item.id,
+						postTitle: item.postTitle,
+						postContent: item.postContent,
+						postDate: dateUtils.format(item.dateline)
+					});
+				});
+				return newItems;
+			}
+			/**
+			 * @param {Array} items 我的評論
+			 */
+			function _convert(items) {
+				var newItems = [];
+				items.forEach(function(item) {
+					newItems.push({
+						postId: item.postId,
+						nickname: item.nickname,
+						postTitle: item.postTitle,
+						commentContent: item.commentContent,
+						postContent: item.postContent,
+						postDate: dateUtils.format(item.dateline),
+						avatar: imgServer + item.avatar
+					});
+				});
+				return newItems;
+			}
+		})(mui, document, util, window)
+	</script>
+
+</html>

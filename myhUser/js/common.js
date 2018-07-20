@@ -90,6 +90,7 @@ var nodataHtmlInfo = "<div class='noContent'><div class='mui-icon iconfont icon-
 					data = JSON.stringify(data);
 					data = traditionalized(data);
 					data = JSON.parse(data);
+					console.log("data====" +JSON.stringify(data));
 					if(show){
 						plus.nativeUI.closeWaiting();
 					}

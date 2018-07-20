@@ -36,9 +36,9 @@
 .desc .desc-icon .desc-item {
 	-webkit-box-align: center;
 	align-items: center;
-	min-width: 25%;
+	min-width: 20%;
 	max-width: 50%;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .desc .desc-icon .desc-item,
@@ -51,11 +51,6 @@
 .desc .desc-icon .number {
 	display: block;
 	margin-left: 4px;
-}
-
-.mui-icon-extra,
-.mui-icon {
-	font-size: 20px;
 }
 
 .comment-img img{

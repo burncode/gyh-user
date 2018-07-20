@@ -15,7 +15,7 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">发帖</h1>
+				<h1 class="mui-title">發帖</h1>
 				<a class="mui-pull-right mui-btn-link" @tap="submit()">提交</a>
 			</header>
 			<div class="mui-content">
@@ -26,7 +26,6 @@
 					<yd-cell-item>
 						<yd-textarea slot="right" placeholder="描述你想说的吧" v-model="content" maxlength="300"></yd-textarea>
 					</yd-cell-item>
-					<yd-checkbox v-model="isAnonymous">匿名发表</yd-checkbox>
 					<div class="release-post-img">
 						<img :src="imgSrc" @tap="showSheet()"/>
 						<div v-if="showDel" @tap="delImg"><button type="button" class="mui-btn mui-btn-red">移除</button></div>
@@ -120,7 +119,6 @@
 							task.addData('privateToken', w.getUser());
 							console.log("privateToken===" + w.getUser());
 							task.addData('title', vmSelf.title);
-							task.addData('isAnonymous', vmSelf.isAnonymous?1:0);
 							task.addData('token', token);
 							if(vmSelf.imgSrc.indexOf("add-img.png") == -1){
 								task.addFile(vmSelf.imgSrc, {

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dist/ydui.px.css" />
+		<style>
+			.yd-cell-item {
+				border-bottom: 1px solid #DEDEDE;
+			}
+			
+			.yd-textarea>textarea {
+				height: 150px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">寫評論</h1>
+				<a class="mui-pull-right mui-btn-link" @tap="submit()">发表</a>
+			</header>
+			<div class="mui-content">
+				<yd-cell-group>
+					<yd-cell-item>
+						<yd-textarea slot="right" placeholder="请输入您的评论" v-model="content_comment" maxlength="200"></yd-textarea>
+					</yd-cell-item>
+				</yd-cell-group>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/mui.min.js"></script>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+		(function(_, doc, u, w) {
+			_.init();
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					pid: '',
+					content_comment: ''
+				},
+				mounted: function() {
+					_.plusReady(function() {
+						vm.pid = plus.webview.currentWebview().postId;
+						console.log("vm.pid=====" + vm.pid);
+					})
+				},
+				methods: {
+					submit: function() {
+						if(w.getUser()) {
+							if(!u.isNull(vm.content_comment)) {
+								u.mypost('post/addComment', {
+									privateToken: w.getUser(),
+									postId: vm.pid,
+									content: vm.content_comment
+								}, true, function(data) {
+									if(data.code == 0) {
+										_.toast(data.msg);
+										_.later(function() {
+											_.back();
+										}, 500)
+									} else if("未登錄" == data.msg && data.code == 500) {
+										u.goLogin();
+									} else {
+										_.toast(data.msg || '請求失敗');
+									}
+								}, myerror)
+							}else{
+								_.toast('请输入您的评论');
+							}
+						} else {
+							w.openView("../userLogin.html");
+						}
+					}
+				}
+			});
+		})(mui, document, util, window)
+	</script>
+
+</html>

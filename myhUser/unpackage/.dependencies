@@ -1,1 +1,14 @@
-{}
+{
+  "shop/shopIndex.html": {
+    "href": "shop/shopIndex.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/common.css",
+      "fonts/iconfont-nodata.ttf"
+    ],
+    "priority": 2
+  }
+}

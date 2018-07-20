@@ -27,13 +27,13 @@
 		},
 		methods: {
 			open_detail: function(item) {
-				if(item.orderType) { //疫苗订单详情页
+				if(item.orderType) { //疫苗订单詳情页
 					window.openView('buy_record_detail.html', {
 						oid: item.oid,
 						status:item.status,
 						cover:item.cover
 					});
-				}else{//检测服务详情页面
+				}else{//检测服务詳情页面
 					window.openView('../gene_detect/gene_detect_detail.html',{geneId:item.gid});
 				}
 			},

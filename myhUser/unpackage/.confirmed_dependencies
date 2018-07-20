@@ -1,1751 +1,1819 @@
 {
-	"guide.html": {
-		"href": "guide.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/login/guide.css",
-			"images/guidance-1.png",
-			"images/guidance-2.png",
-			"images/guidance-3.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"resetPwd.html": {
-		"href": "resetPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css",
-			"css/login/resetPwd.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"forgetPwd.html": {
-		"href": "forgetPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css",
-			"css/login/forgetPwd.css",
-			"fonts/mui.ttf",
-			"images/default-news.png"
-		],
-		"refer": [
-			"resetPwd.html"
-		],
-		"priority": 0
-	},
-	"my_center/about.html": {
-		"href": "my_center/about.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/center/about.css",
-			"images/logo-copyright.png",
-			"images/logo.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/feedback.html": {
-		"href": "my_center/feedback.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/center/feedback.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/setting.html"
-		],
-		"priority": 0
-	},
-	"my_center/about_software.html": {
-		"href": "my_center/about_software.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"images/logo-copyright.png",
-			"fonts/mui.ttf",
-			"images/logo.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/help_detail.html": {
-		"href": "my_center/help_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/iconfont.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/help.html": {
-		"href": "my_center/help.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/center/help.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/help_detail.html"
-		],
-		"priority": 0
-	},
-	"my_center/setting.html": {
-		"href": "my_center/setting.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/center/setting.css"
-		],
-		"refer": [
-			"userLogin.html",
-			"my_center/feedback.html",
-			"my_center/about_software.html",
-			"my_center/help.html",
-			"my_center/about.html",
-			"my_center/modify_payPwd.html",
-			"my_center/modify_pwd.html",
-			"my_center/setPayPwd.html"
-		],
-		"priority": 0
-	},
-	"my_center/modify_payPwd.html": {
-		"href": "my_center/modify_payPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css",
-			"css/center/modify_payPwd.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/myinfo.html"
-		],
-		"priority": 0
-	},
-	"my_center/modify_pwd.html": {
-		"href": "my_center/modify_pwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/center/modify_pwd.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"my_center/setPayPwd.html": {
-		"href": "my_center/setPayPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css",
-			"css/center/setPayPwd.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/myinfo.html": {
-		"href": "my_center/myinfo.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/mui.poppicker.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/mui.picker.min.css",
-			"css/common.css",
-			"css/center/myinfo.css",
-			"fonts/mui.ttf",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css"
-		],
-		"refer": [
-			"my_center/modify_payPwd.html",
-			"my_center/modify_pwd.html",
-			"userLogin.html",
-			"my_center/setPayPwd.html"
-		],
-		"priority": 0
-	},
-	"know_agree.html": {
-		"href": "know_agree.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/detail.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/contactService.html": {
-		"href": "my_center/contactService.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"images/default-person.png",
-			"css/common.css",
-			"css/center/contactService.css",
-			"images/kf.jpg",
-			"images/kf_myh.jpg",
-			"fonts/iconfont-nodata.ttf",
-			"images/kf_gyh.jpg",
-			"images/kf1.JPG",
-			"images/kf1.png",
-			"images/123.png",
-			"images/1231231.png",
-			"images/kefu.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"gene_detect/gene_detect_detail.html": {
-		"href": "gene_detect/gene_detect_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/detail.css",
-			"css/iconfont.css",
-			"css/medicine/gene_detect_detail.css",
-			"images/service-1.png",
-			"fonts/iconfont.ttf"
-		],
-		"refer": [
-			"doctor/pay.html",
-			"know_agree.html",
-			"userLogin.html",
-			"my_center/contactService.html"
-		],
-		"priority": 0
-	},
-	"vaccine/vaccine_detail.html": {
-		"href": "vaccine/vaccine_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/detail.css",
-			"css/iconfont.css",
-			"css/medicine/vaccine_detail.css",
-			"images/service-1.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"doctor/pay.html",
-			"my_center/contactService.html",
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"my_center/buy_record.html": {
-		"href": "my_center/buy_record.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"images/default-record.png",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/pay/confirmCss.css",
-			"css/order/buy_record.css",
-			"fonts/mui.ttf",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/components/list_item_vaccinum.js",
-			"js/vue_lazyload.js",
-			"img/mescroll-totop.png",
-			"images/default-news.png",
-			"css/mescroll/mescroll.min.css",
-			"js/components/list_my_order.js"
-		],
-		"refer": [
-			"gene_detect/gene_detect_detail.html",
-			"doctor/pay.html",
-			"vaccine/vaccine_detail.html",
-			"my_center/buy_record_detail.html"
-		],
-		"priority": 0
-	},
-	"doctor/purchase_succeed.html": {
-		"href": "doctor/purchase_succeed.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"css/order.css",
-			"images/order-bg.png",
-			"images/succeed.png",
-			"js/vue.min.js",
-			"css/order_succeed.css"
-		],
-		"refer": [
-			"my_center/buy_record.html",
-			"my_center/qa_record.html",
-			"my_center/myInterview.html",
-			"my_center/my_appoint.html"
-		],
-		"priority": 0
-	},
-	"doctor/interview_submit_succeed.html": {
-		"href": "doctor/interview_submit_succeed.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"css/order.css",
-			"images/check-bg.png",
-			"images/succeed.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/myInterview.html"
-		],
-		"priority": 0
-	},
-	"my_center/resetPayPwd.html": {
-		"href": "my_center/resetPayPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/forgetPayPwd.html": {
-		"href": "my_center/forgetPayPwd.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/input.css",
-			"css/center/forgetPayPwd.css",
-			"images/default-news.png"
-		],
-		"refer": [
-			"my_center/resetPayPwd.html"
-		],
-		"priority": 0
-	},
-	"doctor/order_audit.html": {
-		"href": "doctor/order_audit.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/order.css",
-			"images/check-bg.png",
-			"images/succeed.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/my_order.html"
-		],
-		"priority": 0
-	},
-	"my_center/qa_details.html": {
-		"href": "my_center/qa_details.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.zoom.js",
-			"js/mui.previewimage.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/common.css",
-			"css/imagePreview.css",
-			"fonts/mui.ttf",
-			"css/qa_details.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/qa_record.html": {
-		"href": "my_center/qa_record.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/order/qa_record.css",
-			"fonts/mui.ttf",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [
-			"my_center/qa_details.html"
-		],
-		"priority": 0
-	},
-	"doctor/submit_succeed.html": {
-		"href": "doctor/submit_succeed.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"css/order.css",
-			"images/check-bg.png",
-			"images/succeed.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/qa_record.html"
-		],
-		"priority": 0
-	},
-	"doctor/pay.html": {
-		"href": "doctor/pay.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/doctor/pay.css",
-			"images/weixin.png",
-			"images/zfb.png",
-			"images/choice-before.png",
-			"images/choice-after.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"doctor/purchase_succeed.html",
-			"doctor/interview_submit_succeed.html",
-			"my_center/setPayPwd.html",
-			"my_center/forgetPayPwd.html",
-			"doctor/order_audit.html",
-			"doctor/submit_succeed.html"
-		],
-		"priority": 0
-	},
-	"my_case_history/add_case.html": {
-		"href": "my_case_history/add_case.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/mui.poppicker.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/case.css",
-			"css/mui.picker.min.css",
-			"css/mui.poppicker.css",
-			"css/center/add_case.css",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"doctor/order_register.html": {
-		"href": "doctor/order_register.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/mui.picker.min.css",
-			"css/iconfont.css",
-			"css/input.css",
-			"css/common.css",
-			"css/order_register.css",
-			"fonts/iconfont-nodata.ttf",
-			"images/service-1.png",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"doctor/order_register.html",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css",
-			"css/doctor/doctor_server.css"
-		],
-		"refer": [
-			"know_agree.html",
-			"my_case_history/add_case.html",
-			"doctor/pay.html",
-			"my_center/contactService.html",
-			"doctor/order_audit.html",
-			"userLogin.html",
-			"doctor/order_register.html",
-			"doctor/purchase_succeed.html"
-		],
-		"priority": 0
-	},
-	"my_center/evaluate.html": {
-		"href": "my_center/evaluate.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/center/feedback.css"
-		],
-		"refer": [
-			"my_center/order_detail.html",
-			"my_center/interview_details.html"
-		],
-		"priority": 0
-	},
-	"my_center/order_detail.html": {
-		"href": "my_center/order_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/order/order_detail.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"doctor/pay.html",
-			"doctor/cancel_succeed.html",
-			"doctor/order_register.html",
-			"my_center/evaluate.html"
-		],
-		"priority": 0
-	},
-	"my_center/my_order.html": {
-		"href": "my_center/my_order.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/pay/confirmCss.css",
-			"css/center/myorder.css",
-			"fonts/mui.ttf",
-			"js/webviewGroup.js",
-			"my_center/page_vaccinumAppointList.html"
-		],
-		"refer": [
-			"doctor/pay.html",
-			"my_center/order_detail.html",
-			"my_center/page_appointList.html",
-			"my_center/page_vaccinumAppointList.html"
-		],
-		"priority": 0
-	},
-	"doctor/cancel_succeed.html": {
-		"href": "doctor/cancel_succeed.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"css/order.css",
-			"images/order-bg.png",
-			"images/succeed.png",
-			"fonts/mui.ttf",
-			"js/vue.min.js",
-			"css/order_succeed.css"
-		],
-		"refer": [
-			"my_center/myInterview.html",
-			"my_center/my_order.html",
-			"my_center/my_appoint.html"
-		],
-		"priority": 0
-	},
-	"my_center/interview_details.html": {
-		"href": "my_center/interview_details.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/common.css"
-		],
-		"refer": [
-			"doctor/cancel_succeed.html",
-			"my_center/evaluate.html",
-			"doctor/online_preliminary.html"
-		],
-		"priority": 0
-	},
-	"my_center/myInterview.html": {
-		"href": "my_center/myInterview.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/iconfont.css",
-			"css/common.css",
-			"css/pay/confirmCss.css",
-			"css/order/myInterview.css",
-			"fonts/mui.ttf",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css",
-			"css/order/qa_record.css"
-		],
-		"refer": [
-			"my_center/interview_details.html"
-		],
-		"priority": 0
-	},
-	"my_case_history/add_record.html": {
-		"href": "my_case_history/add_record.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/mui.poppicker.js",
-			"js/common.js",
-			"images/medical-add.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/case.css",
-			"css/mui.picker.min.css",
-			"css/mui.poppicker.css",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css"
-		],
-		"refer": [
-			"my_case_history/case_detail.html"
-		],
-		"priority": 0
-	},
-	"my_case_history/edit_case.html": {
-		"href": "my_case_history/edit_case.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/mui.poppicker.js",
-			"js/common.js",
-			"images/medical-add.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/case.css",
-			"css/mui.picker.min.css",
-			"css/mui.poppicker.css",
-			"css/center/edit_case.css",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css"
-		],
-		"refer": [
-			"my_case_history/add_record.html",
-			"my_case_history/case_detail.html"
-		],
-		"priority": 0
-	},
-	"my_case_history/case_detail.html": {
-		"href": "my_case_history/case_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.zoom.js",
-			"js/mui.previewimage.js",
-			"js/common.js",
-			"images/process-header.png",
-			"images/process-body-last.png",
-			"images/process-body.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/case.css",
-			"css/imagePreview.css",
-			"css/center/case_detail.css",
-			"images/release.png",
-			"fonts/mui.ttf",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css"
-		],
-		"refer": [
-			"my_case_history/edit_case.html"
-		],
-		"priority": 0
-	},
-	"my_case_history/case_list.html": {
-		"href": "my_case_history/case_list.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/case.css",
-			"css/pullRefresh.css",
-			"images/add.png",
-			"fonts/mui.ttf",
-			"js/vue.min.js",
-			"js/mescroll.min.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [
-			"my_case_history/case_detail.html",
-			"my_case_history/add_case.html"
-		],
-		"priority": 0
-	},
-	"my_center/recharge.html": {
-		"href": "my_center/recharge.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/common.css",
-			"css/center/recharge.css",
-			"images/weixin.png",
-			"images/zfb.png",
-			"images/choice-before.png",
-			"images/choice-after.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/mywallet.html"
-		],
-		"priority": 0
-	},
-	"my_center/records.html": {
-		"href": "my_center/records.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/center/records.css",
-			"fonts/mui.ttf",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/wallet_cash.html": {
-		"href": "my_center/wallet_cash.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.picker.min.js",
-			"js/mui.poppicker.js",
-			"js/city.data-3.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/mui.picker.min.css",
-			"css/mui.poppicker.css",
-			"css/center/wallet_cash.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/mywallet.html": {
-		"href": "my_center/mywallet.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/center/mywallet.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"my_center/recharge.html",
-			"my_center/records.html",
-			"my_center/wallet_cash.html"
-		],
-		"priority": 0
-	},
-	"communicate/release_post.html": {
-		"href": "communicate/release_post.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"images/medical-add.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/iconfont.css",
-			"css/center/release_post.css",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"fonts/iconfont-nodata.ttf"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/tab_post.html": {
-		"href": "my_center/tab_post.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"images/default-person.png",
-			"images/default-record.png",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/iconfont.css",
-			"css/common.css",
-			"css/center/tab_post.css",
-			"images/release.png",
-			"img/input.png",
-			"fonts/iconfont-nodata.ttf",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"userLogin.html",
-			"communicate/release_post.html"
-		],
-		"priority": 0
-	},
-	"info/info_detail.html": {
-		"href": "info/info_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"js/clipboard.min.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/detail.css",
-			"css/iconfont.css",
-			"css/info/info_detail.css",
-			"images/transmit.png",
-			"images/wechat.png",
-			"images/circle.png",
-			"images/xinlang.png",
-			"images/copy.png",
-			"images/love.png",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"img/collection.png",
-			"fonts/iconfont-nodata.ttf",
-			"js/vue.min.js",
-			"css/info/list-to-detail.css"
-		],
-		"refer": [
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"my_center/swipe.html": {
-		"href": "my_center/swipe.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/center/swipe.css",
-			"img/shanc.png"
-		],
-		"refer": [
-			"info/info_detail.html"
-		],
-		"priority": 0
-	},
-	"my_center/myD.html": {
-		"href": "my_center/myD.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"js/mui.zoom.js",
-			"js/mui.previewimage.js",
-			"images/default-person.png",
-			"css/mui.min.css",
-			"css/my.css",
-			"css/common.css",
-			"css/imagePreview.css",
-			"css/center/myD.css",
-			"img/photo.png",
-			"img/modify.png",
-			"img/inquiry.png",
-			"img/appointment.png",
-			"img/question-record.png",
-			"img/purchase-record.png",
-			"img/medical-record.png",
-			"img/wallet.png",
-			"img/note.png",
-			"img/collection.png",
-			"img/about.png",
-			"img/service.png",
-			"fonts/mui.ttf",
-			"img/record.png",
-			"css/icons-extra/icons-extra.css"
-		],
-		"refer": [
-			"userLogin.html",
-			"my_center/about.html",
-			"my_center/setting.html",
-			"my_center/myinfo.html",
-			"my_center/myInterview.html",
-			"my_center/my_order.html",
-			"my_center/qa_record.html",
-			"my_center/buy_record.html",
-			"my_case_history/case_list.html",
-			"my_center/mywallet.html",
-			"my_center/tab_post.html",
-			"my_center/swipe.html",
-			"my_center/contactService.html",
-			"my_center/feedback.html",
-			"my_center/my_favorite.html",
-			"my_center/my_appoint.html",
-			"my_center/myRecord.html",
-			"shop/cart.html"
-		],
-		"priority": 0
-	},
-	"communicate/communicate_circle.html": {
-		"href": "communicate/communicate_circle.html",
-		"resources": [
-			"images/praise-after.png",
-			"images/praise-before.png",
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"images/default-person.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css"
-		],
-		"refer": [
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"tabbar.html": {
-		"href": "tabbar.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/common.css",
-			"css/iconfont-nav.css",
-			"js/mui.min.js",
-			"js/common.js",
-			"fonts/iconfont-nav.ttf",
-			"index.html",
-			"fonts/iconfont-nodata.ttf",
-			"css/icons-extra/icons-extra.css"
-		],
-		"refer": [
-			"my_center/myD.html",
-			"index.html",
-			"communicate/communicate_circle.html",
-			"doctor/doctor_list.html",
-			"communicate/post_detail.html",
-			"doctor/search.html",
-			"info/info_detail.html",
-			"vaccine/vaccine_submit.html",
-			"my_center/contactService.html",
-			"guide.html",
-			"shop/shopIndex3.html",
-			"shop/shopIndex.html",
-			"m_post/index.html"
-		],
-		"priority": 0
-	},
-	"my_center/boundpho.html": {
-		"href": "my_center/boundpho.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/common.css",
-			"css/login/boundpho.css",
-			"images/default-news.png"
-		],
-		"refer": [
-			"tabbar.html"
-		],
-		"priority": 0
-	},
-	"communicate/post_detail.html": {
-		"href": "communicate/post_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/mui.zoom.js",
-			"js/mui.previewimage.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/pullRefresh.css",
-			"css/iconfont-icon.css",
-			"css/imagePreview.css",
-			"css/center/post_detail.css",
-			"images/release.png",
-			"images/praise-before.png",
-			"fonts/mui.ttf",
-			"fonts/iconfont-nodata.ttf",
-			"images/praise-after.png"
-		],
-		"refer": [
-			"communicate/release_post.html",
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"user_manual.html": {
-		"href": "user_manual.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"register.html": {
-		"href": "register.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/iconfont.css",
-			"css/input.css",
-			"css/login/register.css",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"images/default-news.png"
-		],
-		"refer": [
-			"user_manual.html",
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"userLogin.html": {
-		"href": "userLogin.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common-form.css",
-			"css/login/userLogin.css",
-			"img/icon_close.png",
-			"images/logo.png",
-			"images/weixin.png",
-			"images/qq.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"guide.html",
-			"forgetPwd.html",
-			"userLogin.html",
-			"my_center/boundpho.html",
-			"communicate/post_detail.html",
-			"my_center/myD.html",
-			"my_center/contactService.html",
-			"tabbar.html",
-			"register.html",
-			"msearch/search.html",
-			"vaccine/vaccine_submit.html",
-			"doctor/search.html"
-		],
-		"priority": 0
-	},
-	"doctor/message_question_answer.html": {
-		"href": "doctor/message_question_answer.html",
-		"resources": [
-			"images/service-1.png",
-			"js/mui.min.js",
-			"js/common.js",
-			"images/medical-add.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"css/doctor/message_question_answer.css"
-		],
-		"refer": [
-			"user_manual.html",
-			"doctor/pay.html",
-			"my_center/contactService.html",
-			"doctor/doctor_detail.html",
-			"my_case_history/add_case.html"
-		],
-		"priority": 0
-	},
-	"doctor/doctor_detail.html": {
-		"href": "doctor/doctor_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/mui.zoom.js",
-			"js/mui.previewimage.js",
-			"js/common.js",
-			"images/default-doctor.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/iconfont.css",
-			"css/imagePreview.css",
-			"css/doctor/doctor_detail.css",
-			"images/default-person.png",
-			"images/note.png",
-			"images/online.png",
-			"images/appointment.png",
-			"fonts/mui.ttf",
-			"images/note2.png",
-			"images/online2.png",
-			"fonts/iconfont.ttf",
-			"js/vue.min.js",
-			"js/mescroll.min.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [
-			"userLogin.html",
-			"doctor/message_question_answer.html",
-			"doctor/order_register.html",
-			"doctor/online_preliminary.html"
-		],
-		"priority": 0
-	},
-	"doctor/doctor_list.html": {
-		"href": "doctor/doctor_list.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"js/util/util.js",
-			"images/default-doctor.png",
-			"css/mui.min.css",
-			"css/base.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/main/doctorList.css",
-			"images/type.png",
-			"images/hospital.png",
-			"fonts/mui.ttf",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/vue_lazyload.js",
-			"js/components/list_item_doctors.js",
-			"img/mescroll-totop.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [
-			"doctor/doctor_detail.html"
-		],
-		"priority": 0
-	},
-	"vaccine/vaccine_kind.html": {
-		"href": "vaccine/vaccine_kind.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"js/util/util.js",
-			"images/default-news.png",
-			"images/default-record.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/list.css",
-			"css/medicine/vaccine_kind.css",
-			"js/common.js",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"vaccine/vaccine_detail.html"
-		],
-		"priority": 0
-	},
-	"medicine_center/medicine_detail.html": {
-		"href": "medicine_center/medicine_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"images/default-banner.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/detail.css",
-			"css/medicine/medicine_detail.css",
-			"images/m-add.png"
-		],
-		"refer": [
-			"userLogin.html",
-			"my_case_history/case_list.html",
-			"my_center/contactService.html"
-		],
-		"priority": 0
-	},
-	"medicine_center/medicine_center.html": {
-		"href": "medicine_center/medicine_center.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"js/util/util.js",
-			"images/default-news.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/base.css",
-			"css/medicine/medicine_center.css"
-		],
-		"refer": [
-			"medicine_center/medicine_detail.html"
-		],
-		"priority": 0
-	},
-	"doctor/doctor_list_hospital.html": {
-		"href": "doctor/doctor_list_hospital.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"js/util/util.js",
-			"images/default-doctor.png",
-			"css/mui.min.css",
-			"css/base.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/main/doctorList.css"
-		],
-		"refer": [
-			"doctor/doctor_detail.html"
-		],
-		"priority": 0
-	},
-	"doctor/hospital_list.html": {
-		"href": "doctor/hospital_list.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"images/default-news.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/main/hospital.css",
-			"images/icon_add.png",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"doctor/doctor_list_hospital.html",
-			"doctor/doctor_list_search.html"
-		],
-		"priority": 0
-	},
-	"info/info_index.html": {
-		"href": "info/info_index.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/info/info_index.css"
-		],
-		"refer": [
-			"userLogin.html",
-			"info/info_detail.html"
-		],
-		"priority": 0
-	},
-	"gene_detect/gene_detect_list.html": {
-		"href": "gene_detect/gene_detect_list.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"js/common.js",
-			"images/default-news.png",
-			"images/default-record.png",
-			"css/mui.min.css",
-			"css/pullRefresh.css",
-			"css/common.css",
-			"css/list.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"gene_detect/gene_detect_detail.html"
-		],
-		"priority": 0
-	},
-	"message_list.html": {
-		"href": "message_list.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/pullRefresh.css",
-			"css/center/message_list.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"vaccine/vaccine_detail.html",
-			"my_center/interview_details.html",
-			"gene_detect/gene_detect_detail.html",
-			"medicine_center/medicine_detail.html",
-			"my_center/order_detail.html",
-			"my_center/qa_details.html"
-		],
-		"priority": 0
-	},
-	"index.html": {
-		"href": "index.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.min.js",
-			"js/mui.pullToRefresh.material.min.js",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"js/common.js",
-			"images/default-doctor.png",
-			"images/default-news.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/input.css",
-			"css/pullRefresh.css",
-			"css/main/index.css",
-			"images/search-icon.png",
-			"images/index/icon_hos.png",
-			"images/index/icon_med.png",
-			"images/index/icon_server.png",
-			"images/index/icon_vac.png",
-			"images/alarm.png",
-			"img/icon_index_info.png",
-			"images/service-icon.png",
-			"img/btn_more.png",
-			"img/icon_index_doctors.png",
-			"fonts/mui.ttf",
-			"img/address.png",
-			"img/subject.png",
-			"js/vue.min.js",
-			"js/vue_lazyload.js",
-			"js/mescroll.min.js",
-			"js/components/vue_carousel.js",
-			"images/default-banner.png",
-			"css/mescroll/mescroll.min.css"
-		],
-		"refer": [
-			"doctor/doctor_list.html",
-			"info/info_detail.html",
-			"vaccine/vaccine_kind.html",
-			"medicine_center/medicine_center.html",
-			"doctor/hospital_list.html",
-			"userLogin.html",
-			"info/info_index.html",
-			"gene_detect/gene_detect_list.html",
-			"message_list.html",
-			"my_center/contactService.html",
-			"doctor/doctor_detail.html",
-			"doctor/order_register.html",
-			"msearch/setting.html",
-			"msearch/search.html",
-			"doctor/search.html",
-			"shop/shopIndex.html"
-		],
-		"priority": 0
-	},
-	"doctor/online_preliminary.html": {
-		"resources": [
-			"css/base.css",
-			"js/mui.picker.min.js",
-			"css/case.css",
-			"js/mui.min.js",
-			"css/mui.picker.min.css",
-			"js/common.js",
-			"css/common.css",
-			"css/iconfont.css",
-			"css/input.css",
-			"images/service-1.png",
-			"fonts/iconfont.ttf",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"css/dist/ydui.px.css",
-			"css/doctor/doctor_server.css"
-		],
-		"refer": [
-			"know_agree.html",
-			"doctor/pay.html",
-			"my_center/contactService.html",
-			"doctor/interview_submit_succeed.html",
-			"my_case_history/add_case.html",
-			"userLogin.html"
-		]
-	},
-	"msearch/setting.html": {
-		"resources": [
-			"msearch/js/mui.view.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"fonts/mui.ttf"
-		],
-		"refer": []
-	},
-	"msearch/search.html": {
-		"resources": [
-			"js/mui.view.js",
-			"css/mui.min.css",
-			"js/common.js",
-			"js/mui.min.js",
-			"css/msearch/search.css",
-			"css/common.css"
-		],
-		"refer": [
-			"msearch/doctor_list_search.html"
-		]
-	},
-	"msearch/doctor_list_search.html": {
-		"resources": [
-			"css/mui.min.css",
-			"js/common.js",
-			"js/mui.min.js",
-			"images/default-doctor.png",
-			"css/base.css",
-			"css/main/doctorList.css",
-			"css/common.css",
-			"images/type.png",
-			"fonts/mui.ttf",
-			"images/hospital.png",
-			"fonts/iconfont-nodata.ttf"
-		],
-		"refer": [
-			"doctor/doctor_detail.html"
-		]
-	},
-	"doctor/search.html": {
-		"refer": [
-			"doctor/doctor_list_search.html"
-		],
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.view.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/msearch/search.css"
-		]
-	},
-	"doctor/doctor_list_search.html": {
-		"refer": [
-			"doctor/doctor_detail.html"
-		],
-		"resources": [
-			"js/mui.min.js",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/vue_lazyload.js",
-			"js/components/list_item_doctors.js",
-			"js/common.js",
-			"img/mescroll-totop.png",
-			"images/default-doctor.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/mescroll/mescroll.min.css",
-			"css/main/doctorList.css"
-		]
-	},
-	"my_center/buy_record_detail.html": {
-		"href": "my_center/buy_record_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/common.js",
-			"images/default-news.png",
-			"css/mui.min.css",
-			"css/common.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/page_appointList.html": {
-		"href": "my_center/page_appointList.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/components/list_item_appoint.js",
-			"js/common.js",
-			"img/mescroll-totop.png",
-			"css/mui.min.css",
-			"css/mescroll/mescroll.min.css",
-			"css/pay/confirmCss.css",
-			"css/center/myorder.css",
-			"css/center/page_appointList.css",
-			"css/common.css"
-		],
-		"refer": [
-			"my_center/order_detail.html",
-			"doctor/pay.html"
-		],
-		"priority": 0
-	},
-	"my_center/page_vaccinumAppointList.html": {
-		"href": "my_center/page_vaccinumAppointList.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/components/list_item_vaccinum.js",
-			"js/vue_lazyload.js",
-			"js/common.js",
-			"img/mescroll-totop.png",
-			"images/default-news.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/mescroll/mescroll.min.css",
-			"css/order/buy_record.css",
-			"js/components/list_item_vaccinumAppoint.js",
-			"css/center/page_appointList.css"
-		],
-		"refer": [
-			"userLogin.html",
-			"my_center/buy_record_detail.html",
-			"my_center/page_vaccinumAppoint_detail.html"
-		],
-		"priority": 0
-	},
-	"vaccine/vaccine_submit.html": {
-		"href": "vaccine/vaccine_submit.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"js/simple-calendar.js",
-			"images/default-record.png",
-			"css/mui.min.css",
-			"css/simple-calendar.css",
-			"css/vaccine/vaccine_submit.css"
-		],
-		"refer": [
-			"doctor/pay.html",
-			"userLogin.html"
-		],
-		"priority": 0
-	},
-	"my_center/my_favorite.html": {
-		"href": "my_center/my_favorite.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mescroll.min.js",
-			"js/vue.min.js",
-			"js/vue_lazyload.js",
-			"js/common.js",
-			"images/default-news.png",
-			"img/mescroll-totop.png",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/mescroll/mescroll.min.css",
-			"css/center/my_favorite.css"
-		],
-		"refer": [
-			"info/info_detail.html"
-		],
-		"priority": 0
-	},
-	"my_center/page_vaccinumAppoint_detail.html": {
-		"href": "my_center/page_vaccinumAppoint_detail.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/order/order_detail.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"my_center/my_appoint.html": {
-		"href": "my_center/my_appoint.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/webviewGroup.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"my_center/page_vaccinumAppointList.html"
-		],
-		"refer": [
-			"my_center/page_appointList.html",
-			"my_center/page_vaccinumAppointList.html"
-		],
-		"priority": 0
-	},
-	"my_center/myRecord.html": {
-		"href": "my_center/myRecord.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/dist/ydui.px.css",
-			"css/center/myRecord.css"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"shop/shopIndex3.html": {
-		"refer": [
-			"shop/shopDetail.html"
-		],
-		"resources": []
-	},
-	"shop/shopDetail.html": {
-		"refer": [
-			"shop/confirmOrder.html",
-			"shop/cart.html"
-		],
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/icons-extra/icons-extra.css"
-		]
-	},
-	"shop/cart.html": {
-		"refer": [
-			"shop/confirmOrder.html"
-		],
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/common.js",
-			"images/1.jpg",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/shop/cart.css"
-		]
-	},
-	"shop/shopIndex.html": {
-		"refer": [
-			"shop/shopDetail.html"
-		],
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/vue_lazyload.js",
-			"js/dist/ydui.px.js",
-			"js/common.js",
-			"images/default-news.png",
-			"images/1.jpg",
-			"css/mui.min.css",
-			"css/dist/ydui.px.css",
-			"css/common.css"
-		]
-	},
-	"shop/confirmOrder.html": {
-		"href": "shop/confirmOrder.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"js/dist/ydui.px.js",
-			"js/dist/jd_province_city_area_id.js",
-			"js/common.js",
-			"css/mui.min.css",
-			"css/dist/ydui.px.css",
-			"css/common.css",
-			"images/default-record.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"m_post/index.html": {
-		"refer": [
-			"m_post/create.html",
-			"m_post/detail.html"
-		]
-	},
-	"m_post/create.html": {
-		"refer": [
-			"userLogin.html"
-		]
-	}
+  "guide.html": {
+    "href": "guide.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/login/guide.css",
+      "images/guidance-1.png",
+      "images/guidance-2.png",
+      "images/guidance-3.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "resetPwd.html": {
+    "href": "resetPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css",
+      "css/login/resetPwd.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "forgetPwd.html": {
+    "href": "forgetPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css",
+      "css/login/forgetPwd.css",
+      "fonts/mui.ttf",
+      "images/default-news.png"
+    ],
+    "refer": [
+      "resetPwd.html"
+    ],
+    "priority": 0
+  },
+  "my_center/about.html": {
+    "href": "my_center/about.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/center/about.css",
+      "images/logo-copyright.png",
+      "images/logo.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/feedback.html": {
+    "href": "my_center/feedback.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/center/feedback.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/setting.html"
+    ],
+    "priority": 0
+  },
+  "my_center/about_software.html": {
+    "href": "my_center/about_software.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "images/logo-copyright.png",
+      "fonts/mui.ttf",
+      "images/logo.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/help_detail.html": {
+    "href": "my_center/help_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/iconfont.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/help.html": {
+    "href": "my_center/help.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/center/help.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/help_detail.html"
+    ],
+    "priority": 0
+  },
+  "my_center/setting.html": {
+    "href": "my_center/setting.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/center/setting.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "my_center/feedback.html",
+      "my_center/about_software.html",
+      "my_center/help.html",
+      "my_center/about.html",
+      "my_center/modify_payPwd.html",
+      "my_center/modify_pwd.html",
+      "my_center/setPayPwd.html"
+    ],
+    "priority": 0
+  },
+  "my_center/modify_payPwd.html": {
+    "href": "my_center/modify_payPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css",
+      "css/center/modify_payPwd.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/myinfo.html"
+    ],
+    "priority": 0
+  },
+  "my_center/modify_pwd.html": {
+    "href": "my_center/modify_pwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/center/modify_pwd.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "my_center/setPayPwd.html": {
+    "href": "my_center/setPayPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css",
+      "css/center/setPayPwd.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/myinfo.html": {
+    "href": "my_center/myinfo.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/mui.picker.min.css",
+      "css/common.css",
+      "css/center/myinfo.css",
+      "fonts/mui.ttf",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [
+      "my_center/modify_payPwd.html",
+      "my_center/modify_pwd.html",
+      "userLogin.html",
+      "my_center/setPayPwd.html"
+    ],
+    "priority": 0
+  },
+  "know_agree.html": {
+    "href": "know_agree.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/detail.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/contactService.html": {
+    "href": "my_center/contactService.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "images/default-person.png",
+      "css/common.css",
+      "css/center/contactService.css",
+      "images/kf.jpg",
+      "images/kf_myh.jpg",
+      "fonts/iconfont-nodata.ttf",
+      "images/kf_gyh.jpg",
+      "images/kf1.JPG",
+      "images/kf1.png",
+      "images/123.png",
+      "images/1231231.png",
+      "images/kefu.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "gene_detect/gene_detect_detail.html": {
+    "href": "gene_detect/gene_detect_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/detail.css",
+      "css/iconfont.css",
+      "css/medicine/gene_detect_detail.css",
+      "images/service-1.png",
+      "fonts/iconfont.ttf"
+    ],
+    "refer": [
+      "doctor/pay.html",
+      "know_agree.html",
+      "userLogin.html",
+      "my_center/contactService.html"
+    ],
+    "priority": 0
+  },
+  "vaccine/vaccine_detail.html": {
+    "href": "vaccine/vaccine_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/detail.css",
+      "css/iconfont.css",
+      "css/medicine/vaccine_detail.css",
+      "images/service-1.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "doctor/pay.html",
+      "my_center/contactService.html",
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "my_center/buy_record.html": {
+    "href": "my_center/buy_record.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "images/default-record.png",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/pay/confirmCss.css",
+      "css/order/buy_record.css",
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/components/list_item_vaccinum.js",
+      "js/vue_lazyload.js",
+      "img/mescroll-totop.png",
+      "images/default-news.png",
+      "css/mescroll/mescroll.min.css",
+      "js/components/list_my_order.js"
+    ],
+    "refer": [
+      "gene_detect/gene_detect_detail.html",
+      "doctor/pay.html",
+      "vaccine/vaccine_detail.html",
+      "my_center/buy_record_detail.html"
+    ],
+    "priority": 0
+  },
+  "doctor/purchase_succeed.html": {
+    "href": "doctor/purchase_succeed.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "css/order.css",
+      "images/order-bg.png",
+      "images/succeed.png",
+      "js/vue.min.js",
+      "css/order_succeed.css"
+    ],
+    "refer": [
+      "my_center/buy_record.html",
+      "my_center/qa_record.html",
+      "my_center/myInterview.html",
+      "my_center/my_appoint.html"
+    ],
+    "priority": 0
+  },
+  "doctor/interview_submit_succeed.html": {
+    "href": "doctor/interview_submit_succeed.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "css/order.css",
+      "images/check-bg.png",
+      "images/succeed.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/myInterview.html"
+    ],
+    "priority": 0
+  },
+  "my_center/resetPayPwd.html": {
+    "href": "my_center/resetPayPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/forgetPayPwd.html": {
+    "href": "my_center/forgetPayPwd.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/input.css",
+      "css/center/forgetPayPwd.css",
+      "images/default-news.png"
+    ],
+    "refer": [
+      "my_center/resetPayPwd.html"
+    ],
+    "priority": 0
+  },
+  "doctor/order_audit.html": {
+    "href": "doctor/order_audit.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/order.css",
+      "images/check-bg.png",
+      "images/succeed.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/my_order.html"
+    ],
+    "priority": 0
+  },
+  "my_center/qa_details.html": {
+    "href": "my_center/qa_details.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/common.css",
+      "css/imagePreview.css",
+      "fonts/mui.ttf",
+      "css/qa_details.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/qa_record.html": {
+    "href": "my_center/qa_record.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/order/qa_record.css",
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [
+      "my_center/qa_details.html"
+    ],
+    "priority": 0
+  },
+  "doctor/submit_succeed.html": {
+    "href": "doctor/submit_succeed.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "css/order.css",
+      "images/check-bg.png",
+      "images/succeed.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/qa_record.html"
+    ],
+    "priority": 0
+  },
+  "doctor/pay.html": {
+    "href": "doctor/pay.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/doctor/pay.css",
+      "images/weixin.png",
+      "images/zfb.png",
+      "images/choice-before.png",
+      "images/choice-after.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "doctor/purchase_succeed.html",
+      "doctor/interview_submit_succeed.html",
+      "my_center/setPayPwd.html",
+      "my_center/forgetPayPwd.html",
+      "doctor/order_audit.html",
+      "doctor/submit_succeed.html"
+    ],
+    "priority": 0
+  },
+  "my_case_history/add_case.html": {
+    "href": "my_case_history/add_case.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/case.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/center/add_case.css",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "doctor/order_register.html": {
+    "href": "doctor/order_register.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/iconfont.css",
+      "css/input.css",
+      "css/common.css",
+      "css/order_register.css",
+      "fonts/iconfont-nodata.ttf",
+      "images/service-1.png",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "doctor/order_register.html",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css",
+      "css/doctor/doctor_server.css"
+    ],
+    "refer": [
+      "know_agree.html",
+      "my_case_history/add_case.html",
+      "doctor/pay.html",
+      "my_center/contactService.html",
+      "doctor/order_audit.html",
+      "userLogin.html",
+      "doctor/order_register.html",
+      "doctor/purchase_succeed.html"
+    ],
+    "priority": 0
+  },
+  "my_center/evaluate.html": {
+    "href": "my_center/evaluate.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/center/feedback.css"
+    ],
+    "refer": [
+      "my_center/order_detail.html",
+      "my_center/interview_details.html"
+    ],
+    "priority": 0
+  },
+  "my_center/order_detail.html": {
+    "href": "my_center/order_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/order/order_detail.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "doctor/pay.html",
+      "doctor/cancel_succeed.html",
+      "doctor/order_register.html",
+      "my_center/evaluate.html"
+    ],
+    "priority": 0
+  },
+  "my_center/my_order.html": {
+    "href": "my_center/my_order.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/pay/confirmCss.css",
+      "css/center/myorder.css",
+      "fonts/mui.ttf",
+      "js/webviewGroup.js",
+      "my_center/page_vaccinumAppointList.html"
+    ],
+    "refer": [
+      "doctor/pay.html",
+      "my_center/order_detail.html",
+      "my_center/page_appointList.html",
+      "my_center/page_vaccinumAppointList.html"
+    ],
+    "priority": 0
+  },
+  "doctor/cancel_succeed.html": {
+    "href": "doctor/cancel_succeed.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "css/order.css",
+      "images/order-bg.png",
+      "images/succeed.png",
+      "fonts/mui.ttf",
+      "js/vue.min.js",
+      "css/order_succeed.css"
+    ],
+    "refer": [
+      "my_center/myInterview.html",
+      "my_center/my_order.html",
+      "my_center/my_appoint.html"
+    ],
+    "priority": 0
+  },
+  "my_center/interview_details.html": {
+    "href": "my_center/interview_details.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "doctor/cancel_succeed.html",
+      "my_center/evaluate.html",
+      "doctor/online_preliminary.html"
+    ],
+    "priority": 0
+  },
+  "my_center/myInterview.html": {
+    "href": "my_center/myInterview.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/iconfont.css",
+      "css/common.css",
+      "css/pay/confirmCss.css",
+      "css/order/myInterview.css",
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css",
+      "css/order/qa_record.css"
+    ],
+    "refer": [
+      "my_center/interview_details.html"
+    ],
+    "priority": 0
+  },
+  "my_case_history/add_record.html": {
+    "href": "my_case_history/add_record.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/common.js",
+      "images/medical-add.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/case.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [
+      "my_case_history/case_detail.html"
+    ],
+    "priority": 0
+  },
+  "my_case_history/edit_case.html": {
+    "href": "my_case_history/edit_case.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/common.js",
+      "images/medical-add.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/case.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/center/edit_case.css",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [
+      "my_case_history/add_record.html",
+      "my_case_history/case_detail.html"
+    ],
+    "priority": 0
+  },
+  "my_case_history/case_detail.html": {
+    "href": "my_case_history/case_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/common.js",
+      "images/process-header.png",
+      "images/process-body-last.png",
+      "images/process-body.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/case.css",
+      "css/imagePreview.css",
+      "css/center/case_detail.css",
+      "images/release.png",
+      "fonts/mui.ttf",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [
+      "my_case_history/edit_case.html"
+    ],
+    "priority": 0
+  },
+  "my_case_history/case_list.html": {
+    "href": "my_case_history/case_list.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/case.css",
+      "css/pullRefresh.css",
+      "images/add.png",
+      "fonts/mui.ttf",
+      "js/vue.min.js",
+      "js/mescroll.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [
+      "my_case_history/case_detail.html",
+      "my_case_history/add_case.html"
+    ],
+    "priority": 0
+  },
+  "my_center/recharge.html": {
+    "href": "my_center/recharge.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/common.css",
+      "css/center/recharge.css",
+      "images/weixin.png",
+      "images/zfb.png",
+      "images/choice-before.png",
+      "images/choice-after.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/mywallet.html"
+    ],
+    "priority": 0
+  },
+  "my_center/records.html": {
+    "href": "my_center/records.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/center/records.css",
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/wallet_cash.html": {
+    "href": "my_center/wallet_cash.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/city.data-3.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/center/wallet_cash.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/mywallet.html": {
+    "href": "my_center/mywallet.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/center/mywallet.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "my_center/recharge.html",
+      "my_center/records.html",
+      "my_center/wallet_cash.html"
+    ],
+    "priority": 0
+  },
+  "communicate/release_post.html": {
+    "href": "communicate/release_post.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "images/medical-add.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/iconfont.css",
+      "css/center/release_post.css",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "fonts/iconfont-nodata.ttf"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/tab_post.html": {
+    "href": "my_center/tab_post.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "images/default-person.png",
+      "images/default-record.png",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/iconfont.css",
+      "css/common.css",
+      "css/center/tab_post.css",
+      "images/release.png",
+      "img/input.png",
+      "fonts/iconfont-nodata.ttf",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "userLogin.html",
+      "communicate/release_post.html"
+    ],
+    "priority": 0
+  },
+  "info/info_detail.html": {
+    "href": "info/info_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "js/clipboard.min.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/detail.css",
+      "css/iconfont.css",
+      "css/info/info_detail.css",
+      "images/transmit.png",
+      "images/wechat.png",
+      "images/circle.png",
+      "images/xinlang.png",
+      "images/copy.png",
+      "images/love.png",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "img/collection.png",
+      "fonts/iconfont-nodata.ttf",
+      "js/vue.min.js",
+      "css/info/list-to-detail.css"
+    ],
+    "refer": [
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "my_center/swipe.html": {
+    "href": "my_center/swipe.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/center/swipe.css",
+      "img/shanc.png"
+    ],
+    "refer": [
+      "info/info_detail.html"
+    ],
+    "priority": 0
+  },
+  "my_center/myD.html": {
+    "href": "my_center/myD.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "images/default-person.png",
+      "css/mui.min.css",
+      "css/my.css",
+      "css/common.css",
+      "css/imagePreview.css",
+      "css/center/myD.css",
+      "img/photo.png",
+      "img/modify.png",
+      "img/inquiry.png",
+      "img/appointment.png",
+      "img/question-record.png",
+      "img/purchase-record.png",
+      "img/medical-record.png",
+      "img/wallet.png",
+      "img/note.png",
+      "img/collection.png",
+      "img/about.png",
+      "img/service.png",
+      "fonts/mui.ttf",
+      "img/record.png",
+      "css/icons-extra/icons-extra.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "my_center/about.html",
+      "my_center/setting.html",
+      "my_center/myinfo.html",
+      "my_center/myInterview.html",
+      "my_center/my_order.html",
+      "my_center/qa_record.html",
+      "my_center/buy_record.html",
+      "my_case_history/case_list.html",
+      "my_center/mywallet.html",
+      "my_center/tab_post.html",
+      "my_center/swipe.html",
+      "my_center/contactService.html",
+      "my_center/feedback.html",
+      "my_center/my_favorite.html",
+      "my_center/my_appoint.html",
+      "my_center/myRecord.html",
+      "shop/cart.html"
+    ],
+    "priority": 0
+  },
+  "communicate/communicate_circle.html": {
+    "href": "communicate/communicate_circle.html",
+    "resources": [
+      "images/praise-after.png",
+      "images/praise-before.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "images/default-person.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css"
+    ],
+    "refer": [
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "tabbar.html": {
+    "href": "tabbar.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/common.css",
+      "css/iconfont-nav.css",
+      "js/mui.min.js",
+      "js/common.js",
+      "fonts/iconfont-nav.ttf",
+      "index.html",
+      "fonts/iconfont-nodata.ttf",
+      "css/icons-extra/icons-extra.css"
+    ],
+    "refer": [
+      "my_center/myD.html",
+      "index.html",
+      "communicate/communicate_circle.html",
+      "doctor/doctor_list.html",
+      "communicate/post_detail.html",
+      "doctor/search.html",
+      "info/info_detail.html",
+      "vaccine/vaccine_submit.html",
+      "my_center/contactService.html",
+      "guide.html",
+      "shop/shopIndex3.html",
+      "shop/shopIndex.html",
+      "m_post/index.html"
+    ],
+    "priority": 0
+  },
+  "my_center/boundpho.html": {
+    "href": "my_center/boundpho.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/common.css",
+      "css/login/boundpho.css",
+      "images/default-news.png"
+    ],
+    "refer": [
+      "tabbar.html"
+    ],
+    "priority": 0
+  },
+  "communicate/post_detail.html": {
+    "href": "communicate/post_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/pullRefresh.css",
+      "css/iconfont-icon.css",
+      "css/imagePreview.css",
+      "css/center/post_detail.css",
+      "images/release.png",
+      "images/praise-before.png",
+      "fonts/mui.ttf",
+      "fonts/iconfont-nodata.ttf",
+      "images/praise-after.png"
+    ],
+    "refer": [
+      "communicate/release_post.html",
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "user_manual.html": {
+    "href": "user_manual.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "register.html": {
+    "href": "register.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/iconfont.css",
+      "css/input.css",
+      "css/login/register.css",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "images/default-news.png"
+    ],
+    "refer": [
+      "user_manual.html",
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "userLogin.html": {
+    "href": "userLogin.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common-form.css",
+      "css/login/userLogin.css",
+      "img/icon_close.png",
+      "images/logo.png",
+      "images/weixin.png",
+      "images/qq.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "guide.html",
+      "forgetPwd.html",
+      "userLogin.html",
+      "my_center/boundpho.html",
+      "communicate/post_detail.html",
+      "my_center/myD.html",
+      "my_center/contactService.html",
+      "tabbar.html",
+      "register.html",
+      "msearch/search.html",
+      "vaccine/vaccine_submit.html",
+      "doctor/search.html"
+    ],
+    "priority": 0
+  },
+  "doctor/message_question_answer.html": {
+    "href": "doctor/message_question_answer.html",
+    "resources": [
+      "images/service-1.png",
+      "js/mui.min.js",
+      "js/common.js",
+      "images/medical-add.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "css/doctor/message_question_answer.css"
+    ],
+    "refer": [
+      "user_manual.html",
+      "doctor/pay.html",
+      "my_center/contactService.html",
+      "doctor/doctor_detail.html",
+      "my_case_history/add_case.html"
+    ],
+    "priority": 0
+  },
+  "doctor/doctor_detail.html": {
+    "href": "doctor/doctor_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/common.js",
+      "images/default-doctor.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/iconfont.css",
+      "css/imagePreview.css",
+      "css/doctor/doctor_detail.css",
+      "images/default-person.png",
+      "images/note.png",
+      "images/online.png",
+      "images/appointment.png",
+      "fonts/mui.ttf",
+      "images/note2.png",
+      "images/online2.png",
+      "fonts/iconfont.ttf",
+      "js/vue.min.js",
+      "js/mescroll.min.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "doctor/message_question_answer.html",
+      "doctor/order_register.html",
+      "doctor/online_preliminary.html"
+    ],
+    "priority": 0
+  },
+  "doctor/doctor_list.html": {
+    "href": "doctor/doctor_list.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "js/util/util.js",
+      "images/default-doctor.png",
+      "css/mui.min.css",
+      "css/base.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/main/doctorList.css",
+      "images/type.png",
+      "images/hospital.png",
+      "fonts/mui.ttf",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/vue_lazyload.js",
+      "js/components/list_item_doctors.js",
+      "img/mescroll-totop.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [
+      "doctor/doctor_detail.html"
+    ],
+    "priority": 0
+  },
+  "vaccine/vaccine_kind.html": {
+    "href": "vaccine/vaccine_kind.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "js/util/util.js",
+      "images/default-news.png",
+      "images/default-record.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/list.css",
+      "css/medicine/vaccine_kind.css",
+      "js/common.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "vaccine/vaccine_detail.html"
+    ],
+    "priority": 0
+  },
+  "medicine_center/medicine_detail.html": {
+    "href": "medicine_center/medicine_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "images/default-banner.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/detail.css",
+      "css/medicine/medicine_detail.css",
+      "images/m-add.png"
+    ],
+    "refer": [
+      "userLogin.html",
+      "my_case_history/case_list.html",
+      "my_center/contactService.html"
+    ],
+    "priority": 0
+  },
+  "medicine_center/medicine_center.html": {
+    "href": "medicine_center/medicine_center.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "js/util/util.js",
+      "images/default-news.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/base.css",
+      "css/medicine/medicine_center.css"
+    ],
+    "refer": [
+      "medicine_center/medicine_detail.html"
+    ],
+    "priority": 0
+  },
+  "doctor/doctor_list_hospital.html": {
+    "href": "doctor/doctor_list_hospital.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "js/util/util.js",
+      "images/default-doctor.png",
+      "css/mui.min.css",
+      "css/base.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/main/doctorList.css"
+    ],
+    "refer": [
+      "doctor/doctor_detail.html"
+    ],
+    "priority": 0
+  },
+  "doctor/hospital_list.html": {
+    "href": "doctor/hospital_list.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "images/default-news.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/main/hospital.css",
+      "images/icon_add.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "doctor/doctor_list_hospital.html",
+      "doctor/doctor_list_search.html"
+    ],
+    "priority": 0
+  },
+  "info/info_index.html": {
+    "href": "info/info_index.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/info/info_index.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "info/info_detail.html"
+    ],
+    "priority": 0
+  },
+  "gene_detect/gene_detect_list.html": {
+    "href": "gene_detect/gene_detect_list.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "js/common.js",
+      "images/default-news.png",
+      "images/default-record.png",
+      "css/mui.min.css",
+      "css/pullRefresh.css",
+      "css/common.css",
+      "css/list.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "gene_detect/gene_detect_detail.html"
+    ],
+    "priority": 0
+  },
+  "message_list.html": {
+    "href": "message_list.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/pullRefresh.css",
+      "css/center/message_list.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "vaccine/vaccine_detail.html",
+      "my_center/interview_details.html",
+      "gene_detect/gene_detect_detail.html",
+      "medicine_center/medicine_detail.html",
+      "my_center/order_detail.html",
+      "my_center/qa_details.html"
+    ],
+    "priority": 0
+  },
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.min.js",
+      "js/mui.pullToRefresh.material.min.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "js/common.js",
+      "images/default-doctor.png",
+      "images/default-news.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/input.css",
+      "css/pullRefresh.css",
+      "css/main/index.css",
+      "images/search-icon.png",
+      "images/index/icon_hos.png",
+      "images/index/icon_med.png",
+      "images/index/icon_server.png",
+      "images/index/icon_vac.png",
+      "images/alarm.png",
+      "img/icon_index_info.png",
+      "images/service-icon.png",
+      "img/btn_more.png",
+      "img/icon_index_doctors.png",
+      "fonts/mui.ttf",
+      "img/address.png",
+      "img/subject.png",
+      "js/vue.min.js",
+      "js/vue_lazyload.js",
+      "js/mescroll.min.js",
+      "js/components/vue_carousel.js",
+      "images/default-banner.png",
+      "css/mescroll/mescroll.min.css"
+    ],
+    "refer": [
+      "doctor/doctor_list.html",
+      "info/info_detail.html",
+      "vaccine/vaccine_kind.html",
+      "medicine_center/medicine_center.html",
+      "doctor/hospital_list.html",
+      "userLogin.html",
+      "info/info_index.html",
+      "gene_detect/gene_detect_list.html",
+      "message_list.html",
+      "my_center/contactService.html",
+      "doctor/doctor_detail.html",
+      "doctor/order_register.html",
+      "msearch/setting.html",
+      "msearch/search.html",
+      "doctor/search.html",
+      "shop/shopIndex.html"
+    ],
+    "priority": 0
+  },
+  "doctor/online_preliminary.html": {
+    "resources": [
+      "css/base.css",
+      "js/mui.picker.min.js",
+      "css/case.css",
+      "js/mui.min.js",
+      "css/mui.picker.min.css",
+      "js/common.js",
+      "css/common.css",
+      "css/iconfont.css",
+      "css/input.css",
+      "images/service-1.png",
+      "fonts/iconfont.ttf",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "css/dist/ydui.px.css",
+      "css/doctor/doctor_server.css"
+    ],
+    "refer": [
+      "know_agree.html",
+      "doctor/pay.html",
+      "my_center/contactService.html",
+      "doctor/interview_submit_succeed.html",
+      "my_case_history/add_case.html",
+      "userLogin.html"
+    ]
+  },
+  "msearch/setting.html": {
+    "resources": [
+      "msearch/js/mui.view.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "msearch/search.html": {
+    "resources": [
+      "js/mui.view.js",
+      "css/mui.min.css",
+      "js/common.js",
+      "js/mui.min.js",
+      "css/msearch/search.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "msearch/doctor_list_search.html"
+    ]
+  },
+  "msearch/doctor_list_search.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/common.js",
+      "js/mui.min.js",
+      "images/default-doctor.png",
+      "css/base.css",
+      "css/main/doctorList.css",
+      "css/common.css",
+      "images/type.png",
+      "fonts/mui.ttf",
+      "images/hospital.png",
+      "fonts/iconfont-nodata.ttf"
+    ],
+    "refer": [
+      "doctor/doctor_detail.html"
+    ]
+  },
+  "doctor/search.html": {
+    "refer": [
+      "doctor/doctor_list_search.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.view.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/msearch/search.css"
+    ]
+  },
+  "doctor/doctor_list_search.html": {
+    "refer": [
+      "doctor/doctor_detail.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/vue_lazyload.js",
+      "js/components/list_item_doctors.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "images/default-doctor.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/mescroll/mescroll.min.css",
+      "css/main/doctorList.css"
+    ]
+  },
+  "my_center/buy_record_detail.html": {
+    "href": "my_center/buy_record_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/common.js",
+      "images/default-news.png",
+      "css/mui.min.css",
+      "css/common.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/page_appointList.html": {
+    "href": "my_center/page_appointList.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/components/list_item_appoint.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "css/mui.min.css",
+      "css/mescroll/mescroll.min.css",
+      "css/pay/confirmCss.css",
+      "css/center/myorder.css",
+      "css/center/page_appointList.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "my_center/order_detail.html",
+      "doctor/pay.html"
+    ],
+    "priority": 0
+  },
+  "my_center/page_vaccinumAppointList.html": {
+    "href": "my_center/page_vaccinumAppointList.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/components/list_item_vaccinum.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "images/default-news.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/mescroll/mescroll.min.css",
+      "css/order/buy_record.css",
+      "js/components/list_item_vaccinumAppoint.js",
+      "css/center/page_appointList.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "my_center/buy_record_detail.html",
+      "my_center/page_vaccinumAppoint_detail.html"
+    ],
+    "priority": 0
+  },
+  "vaccine/vaccine_submit.html": {
+    "href": "vaccine/vaccine_submit.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "js/simple-calendar.js",
+      "images/default-record.png",
+      "css/mui.min.css",
+      "css/simple-calendar.css",
+      "css/vaccine/vaccine_submit.css"
+    ],
+    "refer": [
+      "doctor/pay.html",
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "my_center/my_favorite.html": {
+    "href": "my_center/my_favorite.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/vue_lazyload.js",
+      "js/common.js",
+      "images/default-news.png",
+      "img/mescroll-totop.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/mescroll/mescroll.min.css",
+      "css/center/my_favorite.css"
+    ],
+    "refer": [
+      "info/info_detail.html"
+    ],
+    "priority": 0
+  },
+  "my_center/page_vaccinumAppoint_detail.html": {
+    "href": "my_center/page_vaccinumAppoint_detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/order/order_detail.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "my_center/my_appoint.html": {
+    "href": "my_center/my_appoint.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/webviewGroup.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "my_center/page_vaccinumAppointList.html"
+    ],
+    "refer": [
+      "my_center/page_appointList.html",
+      "my_center/page_vaccinumAppointList.html"
+    ],
+    "priority": 0
+  },
+  "my_center/myRecord.html": {
+    "href": "my_center/myRecord.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/dist/ydui.px.css",
+      "css/center/myRecord.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "shop/shopIndex3.html": {
+    "refer": [
+      "shop/shopDetail.html"
+    ],
+    "resources": []
+  },
+  "shop/shopDetail.html": {
+    "refer": [
+      "shop/confirmOrder.html",
+      "shop/cart.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/icons-extra/icons-extra.css"
+    ]
+  },
+  "shop/cart.html": {
+    "refer": [
+      "shop/confirmOrder.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/common.js",
+      "images/1.jpg",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/shop/cart.css"
+    ]
+  },
+  "shop/shopIndex.html": {
+    "refer": [
+      "shop/shopDetail.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/vue_lazyload.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "images/default-news.png",
+      "images/1.jpg",
+      "css/mui.min.css",
+      "css/dist/ydui.px.css",
+      "css/common.css"
+    ]
+  },
+  "shop/confirmOrder.html": {
+    "href": "shop/confirmOrder.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/dist/jd_province_city_area_id.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/dist/ydui.px.css",
+      "css/common.css",
+      "images/default-record.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "m_post/index.html": {
+    "refer": [
+      "m_post/create.html",
+      "m_post/detail.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/mescroll.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/vue_lazyload.js",
+      "js/components/post/list_item.js",
+      "js/common.js",
+      "images/default-doctor.png",
+      "img/mescroll-totop.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/mescroll/mescroll.min.css",
+      "css/dist/ydui.px.css",
+      "css/icons-extra/icons-extra.css",
+      "css/post/post-item.css"
+    ]
+  },
+  "m_post/create.html": {
+    "refer": [
+      "userLogin.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "img/add-img.png",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/dist/ydui.px.css",
+      "css/post/create.css"
+    ]
+  },
+  "m_post/createComment.html": {
+    "href": "m_post/createComment.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/common.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/dist/ydui.px.css"
+    ],
+    "refer": [
+      "userLogin.html"
+    ],
+    "priority": 0
+  },
+  "m_post/detail.html": {
+    "href": "m_post/detail.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "js/dist/ydui.px.js",
+      "js/mescroll.min.js",
+      "js/components/post/list_coments.js",
+      "js/common.js",
+      "img/mescroll-totop.png",
+      "css/mui.min.css",
+      "css/mescroll/mescroll.min.css",
+      "css/dist/ydui.px.css",
+      "css/icons-extra/icons-extra.css",
+      "css/common.css",
+      "css/post/post-item.css",
+      "css/post/detail.css"
+    ],
+    "refer": [
+      "userLogin.html",
+      "m_post/createComment.html"
+    ],
+    "priority": 0
+  }
 }

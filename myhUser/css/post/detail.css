@@ -7,29 +7,6 @@
 	padding: 10px;
 }
 
-footer {
-	position: fixed;
-	width: 100%;
-	height: auto;
-	border-top: solid 1px #bbb;
-	left: 0;
-	bottom: -2px;
-	overflow: hidden;
-	background-color: #fafafa;
-}
-
-.footer-center .input-text {
-	border: solid 1px #ddd;
-	padding: 10px;
-	font-size: 12px;
-	font-family: verdana !important;
-	overflow: hidden;
-}
-
-.footer-center input[type=text] {
- 	margin-bottom: 0;
-}
-
 .mescroll {
 	top: 45px;
 }
@@ -52,14 +29,5 @@ footer {
 }
 
 .title-comments {
-	margin: 10px;
-}
-
-
-.yd-cell-box{
-	margin-bottom: 0;
-}
-.yd-cell-box .btn_div{
-    text-align: right;
-    margin: 15px 10px 0;
+	margin: 0 0 10px 10px;
 }

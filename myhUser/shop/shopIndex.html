@@ -30,7 +30,6 @@
 			</div>
 		</div>
 	</body>
-
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/common.js"></script>
 	<script>
@@ -44,7 +43,6 @@
 			_.plusReady(function() {
 				currentWeb = plus.webview.currentWebview();
 				loadWeb();
-
 				reloadObj.addEventListener('tap', function(e) {
 					loadWeb();
 				}, false);
@@ -78,7 +76,6 @@
 						}
 					}, false);
 					netWV.addEventListener('loaded', function(e) {
-						console.log("getTitle()==" +netWV.getTitle());
 						titleObj.innerText = netWV.getTitle().substr(0,4);
 						plus.nativeUI.closeWaiting();
 					}, false);

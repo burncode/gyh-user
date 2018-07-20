@@ -45,7 +45,7 @@
 				attempt: 1
 			});
 			var info_detail = null;
-			var titleNView = { //详情页原生导航配置
+			var titleNView = { //詳情页原生导航配置
 				backgroundColor: '#fff', //导航栏背景色
 				titleText: '', //导航栏标题
 				titleColor: '#000000', //文字颜色
@@ -58,7 +58,7 @@
 			_.plusReady(function() {
 				info_detail = plus.webview.getWebviewById('info_detail');
 				if(!info_detail){
-					//预加载详情页
+					//预加载詳情页
 					info_detail = _.preload({
 						url: '../info/info_detail.html',
 						id: 'info_detail',
@@ -128,7 +128,7 @@
 						})
 					},
 					openDetail: function(item) {
-						//触发子窗口变更新闻详情
+						//触发子窗口变更新闻詳情
 						_.fire(info_detail, 'get_detail', {
 							nid: item.nid,
 							title: item.title,

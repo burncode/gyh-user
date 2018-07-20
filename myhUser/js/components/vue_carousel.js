@@ -25,13 +25,13 @@
 		},
 		methods: {
 			tap: function(item) {
-				//触发子窗口变更新闻详情
+				//触发子窗口变更新闻詳情
 				mui.fire(info_detail, 'get_detail', {
 					nid: item.nid,
 					title: item.title,
 					thumbnail: item.thumbnail
 				});
-				//更改详情页原生导航条信息
+				//更改詳情页原生导航条信息
 				titleNView.titleText = item.title;
 				info_detail.setStyle({
 					"titleNView": titleNView

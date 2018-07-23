@@ -86,7 +86,6 @@
 							flag: postType || 1
 						}, true, function(data) {
 							if(data.code == 0) {
-								console.log("data==" + JSON.stringify(data));
 								data = convert(data.data.postList || []);
 								if(1 == vm.postType){
 									if(pageNum == 1) vm.post_hot = [];
@@ -164,7 +163,7 @@
 						}
 						return true;
 					});
-					return humanize || '刚刚';
+					return humanize || '剛剛';
 				},
 				format: function(dateStr) {
 					var date = this.parse(dateStr)

@@ -49,7 +49,7 @@
 								<div class="author font-size-12">
 									<div class="left">
 										<img class="author-avatar" src="item.avatar">
-										<div class="author-name">{{item.nickname}}</div>
+		 								<div class="author-name">{{item.nickname}}</div>
 									</div>
 									<div class="right">{{item.postDate}}</div>
 								</div>
@@ -135,7 +135,7 @@
 						}
 						return true;
 					});
-					return humanize || '刚刚';
+					return humanize || '剛剛';
 				},
 				format: function(dateStr) {
 					var date = this.parse(dateStr)

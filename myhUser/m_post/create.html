@@ -21,10 +21,10 @@
 			<div class="mui-content">
 				<yd-cell-group>
 					<yd-cell-item>
-						<yd-input slot="right" max="20" v-model="title" required :show-clear-icon="false" placeholder="写个20字以内标题吧"></yd-input>
+						<yd-input slot="right" max="20" v-model="title" required :show-clear-icon="false" placeholder="寫個20字以內標題吧"></yd-input>
 					</yd-cell-item>
 					<yd-cell-item>
-						<yd-textarea slot="right" placeholder="描述你想说的吧" v-model="content" maxlength="300"></yd-textarea>
+						<yd-textarea slot="right" placeholder="描述你想說的吧" v-model="content" maxlength="300"></yd-textarea>
 					</yd-cell-item>
 					<div class="release-post-img">
 						<img :src="imgSrc" @tap="showSheet()"/>
@@ -95,7 +95,7 @@
 						} else if(u.isNull(vmSelf.content)) {
 							_.toast("請輸入正文");
 						} else if(vmSelf.content.length > 300) {
-							_.toast("正文不能超过300个字");
+							_.toast("正文不能超過300個字");
 						} else {
 							//提交問題
 							var waiting = plus.nativeUI.showWaiting(); //添加等待框
@@ -104,9 +104,8 @@
 								if(status == 200) {
 									var data = JSON.parse(t.responseText || '{}');
 									waiting ? waiting.close() : '';
-									console.log(JSON.stringify(data));
 									if(data.code == 0) {
-										_.toast("帖子發布成功");
+										_.toast("提交成功,等待審核後發佈");
 										u.close();
 									}else if(data.code == 500 && '未登录' == data.msg){
 										u.goLogin();
@@ -117,7 +116,6 @@
 							});
 							task.addData('content', vmSelf.content);
 							task.addData('privateToken', w.getUser());
-							console.log("privateToken===" + w.getUser());
 							task.addData('title', vmSelf.title);
 							task.addData('token', token);
 							if(vmSelf.imgSrc.indexOf("add-img.png") == -1){

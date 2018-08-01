@@ -24,12 +24,12 @@
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h1 class="mui-title">寫評論</h1>
-				<a class="mui-pull-right mui-btn-link" @tap="submit()">发表</a>
+				<a class="mui-pull-right mui-btn-link" @tap="submit()">提交</a>
 			</header>
 			<div class="mui-content">
 				<yd-cell-group>
 					<yd-cell-item>
-						<yd-textarea slot="right" placeholder="请输入您的评论" v-model="content_comment" maxlength="200"></yd-textarea>
+						<yd-textarea slot="right" placeholder="請輸入您的評論" v-model="content_comment" maxlength="200"></yd-textarea>
 					</yd-cell-item>
 				</yd-cell-group>
 			</div>
@@ -51,7 +51,6 @@
 				mounted: function() {
 					_.plusReady(function() {
 						vm.pid = plus.webview.currentWebview().postId;
-						console.log("vm.pid=====" + vm.pid);
 					})
 				},
 				methods: {
@@ -64,7 +63,7 @@
 									content: vm.content_comment
 								}, true, function(data) {
 									if(data.code == 0) {
-										_.toast(data.msg);
+										_.toast("提交成功,等待審核後發佈");
 										_.later(function() {
 											_.back();
 										}, 500)
@@ -75,7 +74,7 @@
 									}
 								}, myerror)
 							}else{
-								_.toast('请输入您的评论');
+								_.toast('請輸入您的評論');
 							}
 						} else {
 							w.openView("../userLogin.html");

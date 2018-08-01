@@ -70,7 +70,7 @@
 					</li>
 					<li class="mui-table-view-cell" id="my_post.html">
 						<div class="mui-navigate-right">
-							<span class="my-icon1"><img src="../img/collection.png"></span>我的帖子
+							<span class="my-icon1"><img src="../img/note.png"></span>我的帖子
 						</div>
 					</li>
 					<li class="mui-table-view-cell" id="my_favorite.html">
@@ -205,9 +205,6 @@
 			doc.getElementById("setting").addEventListener('tap', function() {
 				w.openView("setting.html")
 			});
-//			document.getElementById("toCart").addEventListener('tap',function(){
-//				w.openView("../shop/cart.html");
-//			})
 			doc.getElementById("modify").addEventListener('tap', function() {
 				if(!w.getUser()){
 					w.openView("../userLogin.html");

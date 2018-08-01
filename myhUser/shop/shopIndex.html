@@ -38,8 +38,8 @@
 			var currentWeb = null,
 				url = "http://m.v65.javamall.com.cn/store_themes/18/index.html?menu=store&store_id=18",
 				netWV = null;
-			var noDataObj = document.getElementById("noData"),titleObj = document.getElementById("title"),
-				reloadObj = document.getElementById("reload"),backObj = document.getElementById("back");
+			var noDataObj = doc.getElementById("noData"),titleObj = doc.getElementById("title"),
+				reloadObj = doc.getElementById("reload"),backObj = doc.getElementById("back");
 			_.plusReady(function() {
 				currentWeb = plus.webview.currentWebview();
 				loadWeb();
@@ -52,6 +52,8 @@
 						var canBack = event.canBack;
 						if(canBack) {
 							netWV.back();
+						}else{
+							plus.webview.hide(currentWeb,"slide-out-right");
 						}
 					});
 				})

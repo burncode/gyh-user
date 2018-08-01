@@ -15,6 +15,7 @@
 			.img-div {
 				margin: 10px 0;
 			}
+			
 			.postContent {
 				background-color: #EEEEEE;
 				padding: 5px;
@@ -48,8 +49,8 @@
 							<li class="mui-table-view-cell" v-for="item in myPostComment">
 								<div class="author font-size-12">
 									<div class="left">
-										<img class="author-avatar" src="item.avatar">
-		 								<div class="author-name">{{item.nickname}}</div>
+										<img class="author-avatar" :src="item.avatar">
+										<div class="author-name">{{item.nickname}}</div>
 									</div>
 									<div class="right">{{item.postDate}}</div>
 								</div>
@@ -72,7 +73,7 @@
 	<script type="text/javascript" src="../js/dist/ydui.px.js"></script>
 	<script type="text/javascript" src="../js/components/post/list_item.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
-	<script type="text/javascript" src="../js/util/time-util.js" ></script>
+	<script type="text/javascript" src="../js/util/time-util.js"></script>
 	<script>
 		(function(_, doc, u, w) {
 			_.init();
@@ -104,7 +105,7 @@
 									} else {
 										vm.myPostComment = _convert(data.data.result || []);
 									}
-								}else{
+								} else {
 									_.toast("暫無發帖")
 								}
 							} else {
@@ -114,22 +115,22 @@
 					}
 				}
 			});
-			/**
-			 * @param {Array} items 
-			 */
-			function convert(items) {
-				var newItems = [];
-				items.forEach(function(item) {
-					newItems.push({
-						id: item.id,
-						postTitle: item.postTitle,
-						postContent: item.postContent,
-						postDate: dateUtils.format(item.dateline)
-					});
-				});
-				return newItems;
-			}
 		})(mui, document, util, window)
+		/**
+		 * @param {Array} items 
+		 */
+		function convert(items) {
+			var newItems = [];
+			items.forEach(function(item) {
+				newItems.push({
+					id: item.id,
+					postTitle: item.postTitle,
+					postContent: item.postContent,
+					postDate: dateUtils.format(item.dateline)
+				});
+			});
+			return newItems;
+		}
 		/**
 		 * @param {Array} items 我的評論
 		 */

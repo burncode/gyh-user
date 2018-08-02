@@ -21,7 +21,6 @@
 			<h1 class="mui-title">醫生詳情</h1>
 		</header>
 		<div id="app">
-
 			<div class="doctor-introduce">
 				<div class="introduce-info">
 					<img :src="avatar" />
@@ -174,21 +173,21 @@
 			})
 		})(mui, document, util, window)
 		/**
-			 * 1、将服务端返回数据，转换成前端需要的格式
-			 * @param {Array} items 
-			 */
-			function convert(items) {
-				var newItems = [];
-				items.forEach(function(item) {
-					newItems.push({
-						username: item.username,
-						content: item.content,
-						evaluateTime: dateUtils.format(item.evaluateTime),
-						avatar: imgServer + item.avatar,
-					});
+		 * 1、将服务端返回数据，转换成前端需要的格式
+		 * @param {Array} items 
+		 */
+		function convert(items) {
+			var newItems = [];
+			items.forEach(function(item) {
+				newItems.push({
+					username: item.username,
+					content: item.content,
+					evaluateTime: dateUtils.format(item.evaluateTime),
+					avatar: imgServer + item.avatar,
 				});
-				return newItems;
-			}
+			});
+			return newItems;
+		}
 	</script>
 
 </html>

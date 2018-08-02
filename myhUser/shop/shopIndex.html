@@ -21,6 +21,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-icon mui-icon-left-nav mui-pull-left" id="back"></a>
 			<h1 class="mui-title" id="title">商城</h1>
+			<a id="a_reload" class="mui-icon mui-icon-reload mui-pull-right"></a>
 		</header>
 		<div class="mui-content">
 			<div id="noData" class='noContent'>
@@ -39,14 +40,16 @@
 				url = "http://m.v65.javamall.com.cn/store_themes/18/index.html?menu=store&store_id=18",
 				netWV = null;
 			var noDataObj = doc.getElementById("noData"),titleObj = doc.getElementById("title"),
-				reloadObj = doc.getElementById("reload"),backObj = doc.getElementById("back");
+				reloadObj = doc.getElementById("reload"),a_reloadObj= doc.getElementById("a_reload"),backObj = doc.getElementById("back");
 			_.plusReady(function() {
 				currentWeb = plus.webview.currentWebview();
 				loadWeb();
 				reloadObj.addEventListener('tap', function(e) {
 					loadWeb();
 				}, false);
-
+				a_reloadObj.addEventListener('tap', function(e) {
+					netWV.reload(true);
+				}, false);
 				backObj.addEventListener("tap", function() {
 					netWV.canBack(function(event) {
 						var canBack = event.canBack;

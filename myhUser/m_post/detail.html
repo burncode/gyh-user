@@ -64,7 +64,7 @@
 	<script type="text/javascript" src="../js/mescroll.min.js"></script>
 	<script type="text/javascript" src="../js/components/post/list_coments.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
-	<script type="text/javascript" src="../js/util/time-util.js" ></script>
+	<script type="text/javascript" src="../js/util/time-util.js"></script>
 	<script type="text/javascript">
 		(function(_, doc, u, w) {
 			_.init();
@@ -93,20 +93,6 @@
 				data: getDefaultData(),
 				mounted: function() {
 					var self = this;
-					self.mescroll = new MeScroll("mescroll", {
-						up: {
-							callback: self.upCallback, //上拉回调
-						},
-						toTop: { //配置回到顶部按钮
-							src: "../img/mescroll-totop.png"
-						},
-						empty: { //配置列表无任何数据的提示
-							warpId: "dataList",
-							tip: nodataHtmlInfo
-						}
-					});
-					//初始化vue后,显示vue模板布局
-					doc.getElementById("dataList").style.display = "block";
 					_.plusReady(function() {
 						var currentWeb = plus.webview.currentWebview();
 						vm.id = currentWeb.p_id;
@@ -116,6 +102,20 @@
 						vm.clickCount = currentWeb.clickCount;
 						vm.commentCount = currentWeb.commentCount;
 						vm.avatar = currentWeb.avatar;
+						self.mescroll = new MeScroll("mescroll", {
+							up: {
+								callback: self.upCallback, //上拉回调
+							},
+							toTop: { //配置回到顶部按钮
+								src: "../img/mescroll-totop.png"
+							},
+							empty: { //配置列表无任何数据的提示
+								warpId: "dataList",
+								tip: nodataHtmlInfo
+							}
+						});
+						//初始化vue后,显示vue模板布局
+						doc.getElementById("dataList").style.display = "block";
 					})
 				},
 				methods: {
@@ -197,7 +197,7 @@
 					}
 				}
 			});
-			
+
 		})(mui, document, util, window)
 		/**
 		 * @param {Array} items 

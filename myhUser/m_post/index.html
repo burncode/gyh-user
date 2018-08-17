@@ -67,7 +67,10 @@
 					post_last: []
 				},
 				mounted: function() {
-					mescroll = initMescroll("mescroll", "dataList", this.upCallback);
+					var self = this;
+					_.plusReady(function(){
+						mescroll = initMescroll("mescroll", "dataList", self.upCallback);
+					})
 				},
 				methods: {
 					fn:function(label, key) {

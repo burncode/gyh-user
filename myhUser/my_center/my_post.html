@@ -85,8 +85,10 @@
 					myPostComment: []
 				},
 				mounted: function() {
-					//首先加载我的帖子数据
-					this.getListDataFromNet('user_center/postList', 1);
+					var self = this;//首先加载我的帖子数据
+					_.plusReady(function(){
+						self.getListDataFromNet('user_center/postList', 1);
+					})
 				},
 				methods: {
 					fn: function(label, key) {

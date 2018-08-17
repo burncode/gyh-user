@@ -7,14 +7,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/common.css" />
-		<style>
-			.btn{
-			    margin: 10px;
-			    padding: 5px 10px;
-			    font-size: 12px;
-			    border-radius: 6px;
-			}
-		</style>
 	</head>
 
 	<body>
@@ -27,7 +19,6 @@
 			<div id="noData" class='noContent'>
 				<div class='mui-icon iconfont icon-comiiszanwushuju'></div>
 				<div>頁面加載失敗</div>
-				<button type="button" id="reload" class="mui-btn btn">重新加載</button>
 			</div>
 		</div>
 	</body>
@@ -40,13 +31,10 @@
 				url = "http://m.v65.javamall.com.cn/store_themes/18/index.html?menu=store&store_id=18",
 				netWV = null;
 			var noDataObj = doc.getElementById("noData"),titleObj = doc.getElementById("title"),
-				reloadObj = doc.getElementById("reload"),a_reloadObj= doc.getElementById("a_reload"),backObj = doc.getElementById("back");
+				a_reloadObj= doc.getElementById("a_reload"),backObj = doc.getElementById("back");
 			_.plusReady(function() {
 				currentWeb = plus.webview.currentWebview();
 				loadWeb();
-				reloadObj.addEventListener('tap', function(e) {
-					loadWeb();
-				}, false);
 				a_reloadObj.addEventListener('tap', function(e) {
 					netWV.reload(true);
 				}, false);
